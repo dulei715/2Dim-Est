@@ -10,8 +10,8 @@ public class SquareWave extends GeneralWave {
     private Double extendedMaxValue = null;
 
     public SquareWave(Double epsilon, Integer b) {
+        super(b);
         this.epsilon = epsilon;
-        this.b = b;
         this.constP = Math.exp(this.epsilon) / (2*this.b*Math.exp(this.epsilon) + 1);
         this.constQ = 1 - 2 * this.b * this.constP;
         this.extendedMaxValue = 1 + 2*b*Math.exp(this.epsilon) - this.b;

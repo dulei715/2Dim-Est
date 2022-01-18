@@ -4,6 +4,10 @@ public abstract class GeneralWave {
 
     protected Integer b;
 
+    public GeneralWave(Integer b) {
+        this.b = b;
+    }
+
     protected abstract Double getWaveValue(Double inputValue);
 
     public Double getReturnProbability(Double realValue, Double sanitizedValue) {
