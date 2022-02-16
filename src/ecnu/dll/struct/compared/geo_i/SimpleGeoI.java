@@ -15,7 +15,7 @@ public class SimpleGeoI extends GeoIndistinguishability {
     }
 
     @Override
-    public PolarPoint getNoiseValue() {
+    public PolarPoint getNoisePolarPoint() {
         Double randomAngle = Math.random() * 2 * Math.PI;
         Double randomRadius = (getLambertWValue((Math.random() - 1)/Math.E) + 1) * (-1) / Math.E;
         return new PolarPoint(randomRadius, randomAngle);

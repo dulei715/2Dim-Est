@@ -12,7 +12,7 @@ public abstract class GeoIndistinguishability {
         this.angle = angle;
     }
 
-    public abstract PolarPoint getNoiseValue();
+    public abstract PolarPoint getNoisePolarPoint();
 
     public static void main(String[] args) {
         System.out.println("Hello Goe-I!");
