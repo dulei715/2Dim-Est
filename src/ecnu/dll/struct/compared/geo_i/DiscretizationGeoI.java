@@ -11,7 +11,7 @@ public class DiscretizationGeoI extends SimpleGeoI{
     }
 
     public TwoDimensionalPoint getNoisePosition() {
-
+        return null;
     }
 
 }
