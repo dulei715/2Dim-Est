@@ -8,6 +8,19 @@ import java.util.Arrays;
 public class BasicCalculation {
     public static final int ESTIMATION_VALUE_INDEX = 0;
     public static final int WEIGHTED_INDEX = 1;
+
+    public static double get1Norm(double[] pointA, double[] pointB) {
+        if (pointA.length != pointB.length) {
+            throw new RuntimeException("The dimensionality of two points are not equal!");
+        }
+        int len = pointA.length;
+        double result = 0;
+        for (int i = 0; i < len; i++) {
+            result += Math.abs(pointA[i]-pointB[i]);
+        }
+        return result;
+    }
+
     public static double get2Norm(double[] pointA, double[] pointB) {
         if (pointA.length != pointB.length) {
             throw new RuntimeException("The dimensionality of two points are not equal!");

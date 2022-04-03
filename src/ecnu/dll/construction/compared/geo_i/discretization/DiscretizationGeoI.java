@@ -1,10 +1,9 @@
-package ecnu.dll.struct.compared.geo_i;
+package ecnu.dll.construction.compared.geo_i.discretization;
 
-import tools.struct.PolarPoint;
-import tools.struct.point.Point;
+import ecnu.dll.construction.compared.geo_i.SimpleGeoI;
 import tools.struct.point.TwoDimensionalPoint;
 
-public class DiscretizationGeoI extends SimpleGeoI{
+public class DiscretizationGeoI extends SimpleGeoI {
 
     public DiscretizationGeoI(Double radius, Double angle) {
         super(radius, angle);

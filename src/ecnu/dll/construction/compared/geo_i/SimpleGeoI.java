@@ -1,4 +1,4 @@
-package ecnu.dll.struct.compared.geo_i;
+package ecnu.dll.construction.compared.geo_i;
 
 import tools.struct.PolarPoint;
 

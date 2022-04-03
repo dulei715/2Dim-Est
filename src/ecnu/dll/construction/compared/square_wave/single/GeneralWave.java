@@ -1,12 +1,21 @@
-package ecnu.dll.struct.compared.square_wave.single;
+package ecnu.dll.construction.compared.square_wave.single;
 
 public abstract class GeneralWave {
 
-    protected Integer b;
+    protected Integer b = null;
+    protected Double constQ = null;
+    protected Double epsilon = null;
 
-    public GeneralWave(Integer b) {
-        this.b = b;
+    public GeneralWave(Double epsilon) {
+        this.epsilon = epsilon;
     }
+
+    public GeneralWave(Integer b, Double constQ, Double epsilon) {
+        this.b = b;
+        this.constQ = constQ;
+        this.epsilon = epsilon;
+    }
+
 
     protected abstract Double getWaveValue(Double inputValue);
 
