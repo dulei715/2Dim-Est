@@ -1,6 +1,7 @@
 package tools.basic;
 
 import tools.io.print.MyPrint;
+import tools.struct.point.Point;
 
 import java.text.DecimalFormat;
 import java.util.Arrays;
@@ -21,6 +22,40 @@ public class BasicCalculation {
         return result;
     }
 
+    public static double get1Norm(double[] pointA) {
+        int len = pointA.length;
+        double result = 0;
+        for (int i = 0; i < len; i++) {
+            result += Math.abs(pointA[i]);
+        }
+        return result;
+    }
+
+    public static double get1Norm(Point pointA, Point pointB) {
+        if (pointA.getDimensionalSize() != pointB.getDimensionalSize()) {
+            throw new RuntimeException("The dimensionality of two points are not equal!");
+        }
+        int len = pointA.getDimensionalSize();
+        double result = 0;
+        Double[] pointAArray = pointA.getValueArray();
+        Double[] pointBArray = pointB.getValueArray();
+        for (int i = 0; i < len; i++) {
+            result += Math.abs(pointAArray[i] - pointBArray[i]);
+        }
+        return result;
+    }
+
+    public static double get1Norm(Point pointA) {
+        int len = pointA.getDimensionalSize();
+        double result = 0;
+        Double[] pointAArray = pointA.getValueArray();
+        for (int i = 0; i < len; i++) {
+            result += Math.abs(pointAArray[i]);
+        }
+        return result;
+    }
+
+
     public static double get2Norm(double[] pointA, double[] pointB) {
         if (pointA.length != pointB.length) {
             throw new RuntimeException("The dimensionality of two points are not equal!");
@@ -29,6 +64,15 @@ public class BasicCalculation {
         double result = 0;
         for (int i = 0; i < len; i++) {
             result += Math.pow(pointA[i]-pointB[i], 2);
+        }
+        return Math.sqrt(result);
+    }
+
+    public static double get2Norm(double[] pointA) {
+        int len = pointA.length;
+        double result = 0;
+        for (int i = 0; i < len; i++) {
+            result += Math.pow(pointA[i], 2);
         }
         return Math.sqrt(result);
     }
@@ -233,8 +277,6 @@ public class BasicCalculation {
 
 
     public static void main(String[] args) {
-//        String result = getRandomValueInRange(10, 200, 2);
-//        System.out.println(result);
         String[] result2 = getRandomStringValueArrayInRange(10, 200, 2, 10);
         MyPrint.showStringArray(result2);
     }

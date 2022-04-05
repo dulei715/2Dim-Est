@@ -5,6 +5,19 @@ import tools.io.print.MyPrint;
 import java.util.Random;
 
 public class RandomUtil {
+
+    /**
+     *
+     * @param lowerBound （包含在内）
+     * @param upperBound （不包含在内）
+     * @return
+     */
+    public static Double getRandomDouble(Double lowerBound, Double upperBound) {
+        double randomValue = Math.random();
+        double realValue = randomValue * (upperBound - lowerBound) + lowerBound;
+        return realValue;
+    }
+
     /**
      *
      * @param lowerBound (包含在内)
