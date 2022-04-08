@@ -255,8 +255,13 @@ public class MyPrint {
         showListDoubleArray(data, ", ", "; ");
     }
 
-    public static void showMap(Map<Double, Integer> resultMap) {
-        for (Map.Entry<Double, Integer> entry : resultMap.entrySet()) {
+//    public static void showMap(Map<Double, Integer> resultMap) {
+//        for (Map.Entry<Double, Integer> entry : resultMap.entrySet()) {
+//            System.out.println(entry.getKey() + ": " + entry.getValue());
+//        }
+//    }
+    public static <S, T> void showMap(Map<S, T> resultMap) {
+        for (Map.Entry<S, T> entry : resultMap.entrySet()) {
             System.out.println(entry.getKey() + ": " + entry.getValue());
         }
     }

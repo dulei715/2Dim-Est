@@ -3,7 +3,7 @@ package ecnu.dll.construction.newscheme;
 import tools.RandomUtil;
 import tools.basic.BasicCalculation;
 import tools.io.write.PointWrite;
-import tools.struct.point.TwoDimensionalPoint;
+import tools.struct.point.TwoDimensionalDoublePoint;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +35,7 @@ public class RhombusPlane {
         this.constP = this.constQ * Math.exp(this.epsilon);
     }
 
-    protected Double getWaveValue(TwoDimensionalPoint inputValue) {
+    protected Double getWaveValue(TwoDimensionalDoublePoint inputValue) {
         if (BasicCalculation.get1Norm(inputValue) <= this.constB) {
             return this.constP;
         }
@@ -51,7 +51,7 @@ public class RhombusPlane {
      * @param realValue
      * @return
      */
-    public TwoDimensionalPoint getNoiseValue(TwoDimensionalPoint realValue) {
+    public TwoDimensionalDoublePoint getNoiseValue(TwoDimensionalDoublePoint realValue) {
         Double xIndex = realValue.getXIndex();
         Double yIndex = realValue.getYIndex();
         if (xIndex < 0 || xIndex > 1 || yIndex < 0 || yIndex > 1) {
@@ -64,7 +64,7 @@ public class RhombusPlane {
         if (tempRandomA < totalLowProbability) {
             // 含低概率部分:对应面积为 2b^2+4b+1
             // 再次分割为占比 (2b^2+3b+1):b
-            double smallRectangleRatio = constB / this.constValues[1];
+            double smallRectangleRatio = this.constB / this.constValues[1];
             if (tempRandomB < smallRectangleRatio) {
                 // 小矩形部分: x随机返回[0,1); y随机返回[-b,0)
                 xOutput = Math.random();
@@ -95,24 +95,29 @@ public class RhombusPlane {
             yOutputTemp = RandomUtil.getRandomDouble(-halfIntervalSize, halfIntervalSize) / Math.sqrt(2);
             xOutput = xOutputTemp - yOutputTemp;
             yOutput = xOutputTemp + yOutputTemp;
-
+            xOutput += xIndex;
+            yOutput += yIndex;
         }
-        return new TwoDimensionalPoint(xOutput, yOutput);
+        return new TwoDimensionalDoublePoint(xOutput, yOutput);
     }
 
     public static void main(String[] args) {
-        int size = 1000;
+        int size = 20000;
         double xInput, yInput;
         double epsilon = 0.5;
-        TwoDimensionalPoint outputPoint;
+        TwoDimensionalDoublePoint outputPoint;
         RhombusPlane rhombusPlane = new RhombusPlane(epsilon);
-        List<TwoDimensionalPoint> pointList = new ArrayList<>();
+        List<TwoDimensionalDoublePoint> pointList = new ArrayList<>();
+        String outputPath = "D:\\test\\output.txt";
         PointWrite pointWrite = new PointWrite();
+        pointWrite.startWriting(outputPath);
         for (int i = 0; i < size; i++) {
             xInput = Math.random();
             yInput = Math.random();
-            outputPoint = rhombusPlane.getNoiseValue(new TwoDimensionalPoint(xInput, yInput));
+            outputPoint = rhombusPlane.getNoiseValue(new TwoDimensionalDoublePoint(xInput, yInput));
+            pointList.add(outputPoint);
         }
+        pointWrite.writeDoublePoint(pointList);
     }
 
 

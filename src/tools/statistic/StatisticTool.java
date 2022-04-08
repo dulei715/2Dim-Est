@@ -1,7 +1,13 @@
 package tools.statistic;
 
+import com.sun.deploy.util.ArrayUtil;
 import tools.basic.BasicArray;
 import tools.io.print.MyPrint;
+import tools.struct.point.TwoDimensionalIntegerPoint;
+
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 public class StatisticTool {
 
@@ -134,6 +140,31 @@ public class StatisticTool {
         } while (Math.abs(newLogLikelihood - beforeLogLikelihood) >= stopValue);
         return newValueArray;
     }
+
+
+    /**
+     * 统计整数坐标点的个数，偏移量x为+b, y为+b
+     * @param collection
+     * @return
+     */
+    public static Map<TwoDimensionalIntegerPoint, Integer> countTwoDimensionalIntegerPointNumber(Collection<TwoDimensionalIntegerPoint> collection) {
+        Map<TwoDimensionalIntegerPoint, Integer> resultMap = new HashMap<>();
+        TwoDimensionalIntegerPoint tempPoint;
+        Integer tempCount;
+        for (TwoDimensionalIntegerPoint point : collection) {
+            tempCount = resultMap.get(point);
+            if (tempCount == null) {
+                resultMap.put(point, 1);
+            } else {
+                ++tempCount;
+                resultMap.put(point, tempCount);
+            }
+        }
+        return resultMap;
+    }
+
+
+
 
     public static void main(String[] args) {
         Double[] initialCountArray = new Double[]{50.0/3, 50.0/3, 50.0/3};

@@ -91,6 +91,7 @@ public class BasicArray {
         setDoubleArrayTo(element, 0.0);
     }
 
+
     public static Integer[] toIntegerArray(String[] arr) {
         Integer[] result = new Integer[arr.length];
         for (int i = 0; i < arr.length; i++) {
@@ -205,4 +206,6 @@ public class BasicArray {
         }
         return sum;
     }
+
+
 }

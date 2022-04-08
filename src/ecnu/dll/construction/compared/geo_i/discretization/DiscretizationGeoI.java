@@ -1,7 +1,7 @@
 package ecnu.dll.construction.compared.geo_i.discretization;
 
 import ecnu.dll.construction.compared.geo_i.SimpleGeoI;
-import tools.struct.point.TwoDimensionalPoint;
+import tools.struct.point.TwoDimensionalDoublePoint;
 
 public class DiscretizationGeoI extends SimpleGeoI {
 
@@ -9,7 +9,7 @@ public class DiscretizationGeoI extends SimpleGeoI {
         super(radius, angle);
     }
 
-    public TwoDimensionalPoint getNoisePosition() {
+    public TwoDimensionalDoublePoint getNoisePosition() {
         return null;
     }
 

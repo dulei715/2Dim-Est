@@ -2,17 +2,17 @@ package tools.struct.point;
 
 import java.util.Objects;
 
-public class TwoDimensionalPoint extends Point implements Comparable<TwoDimensionalPoint> {
+public class TwoDimensionalDoublePoint extends Point implements Comparable<TwoDimensionalDoublePoint> {
 
-    public TwoDimensionalPoint() {
+    public TwoDimensionalDoublePoint() {
         super(0.0, 0.0);
     }
 
-    public TwoDimensionalPoint(double xIndex, double yIndex) {
+    public TwoDimensionalDoublePoint(double xIndex, double yIndex) {
         super(xIndex, yIndex);
     }
 
-    public TwoDimensionalPoint(double[] indexes) {
+    public TwoDimensionalDoublePoint(double[] indexes) {
         super(indexes);
     }
 
@@ -48,9 +48,9 @@ public class TwoDimensionalPoint extends Point implements Comparable<TwoDimensio
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        TwoDimensionalPoint twoDimensionalPoint = (TwoDimensionalPoint) o;
-        return Double.compare(twoDimensionalPoint.getXIndex(), valueArray[0]) == 0 &&
-                Double.compare(twoDimensionalPoint.getYIndex(), valueArray[1]) == 0;
+        TwoDimensionalDoublePoint twoDimensionalDoublePoint = (TwoDimensionalDoublePoint) o;
+        return Double.compare(twoDimensionalDoublePoint.getXIndex(), valueArray[0]) == 0 &&
+                Double.compare(twoDimensionalDoublePoint.getYIndex(), valueArray[1]) == 0;
     }
 
     @Override
@@ -60,13 +60,13 @@ public class TwoDimensionalPoint extends Point implements Comparable<TwoDimensio
 
 
     @Override
-    public int compareTo(TwoDimensionalPoint twoDimensionalPoint) {
-        if (this == twoDimensionalPoint) return 0;
-        int xCMP = this.valueArray[0].compareTo(twoDimensionalPoint.valueArray[0]);
+    public int compareTo(TwoDimensionalDoublePoint twoDimensionalDoublePoint) {
+        if (this == twoDimensionalDoublePoint) return 0;
+        int xCMP = this.valueArray[0].compareTo(twoDimensionalDoublePoint.valueArray[0]);
         if (xCMP != 0) {
             return xCMP;
         }
-        int yCMP = this.valueArray[1].compareTo(twoDimensionalPoint.valueArray[1]);
+        int yCMP = this.valueArray[1].compareTo(twoDimensionalDoublePoint.valueArray[1]);
         return yCMP;
     }
 }

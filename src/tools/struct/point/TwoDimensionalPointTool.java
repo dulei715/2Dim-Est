@@ -12,19 +12,19 @@ public class TwoDimensionalPointTool {
 
     /**
      * 获取两个集合各个点之间的距离值的统计量（用于距离数据）
-     * @param taskTwoDimensionalPointList
-     * @param workerTwoDimensionalPointList
+     * @param taskTwoDimensionalDoublePointList
+     * @param workerTwoDimensionalDoublePointList
      * @param interval
      * @return
      */
-    public static Map<Double, Integer> getDistanceStatisticDataFromNormData(List<TwoDimensionalPoint> taskTwoDimensionalPointList, List<TwoDimensionalPoint> workerTwoDimensionalPointList, double interval) {
+    public static Map<Double, Integer> getDistanceStatisticDataFromNormData(List<TwoDimensionalDoublePoint> taskTwoDimensionalDoublePointList, List<TwoDimensionalDoublePoint> workerTwoDimensionalDoublePointList, double interval) {
         TreeMap<Double, Integer> countResultMap = new TreeMap<>();
-        TwoDimensionalPoint taskTwoDimensionalPoint, workerTwoDimensionalPoint;
-        for (int i = 0; i < taskTwoDimensionalPointList.size(); i++) {
-            taskTwoDimensionalPoint = taskTwoDimensionalPointList.get(i);
-            for (int j = 0; j < workerTwoDimensionalPointList.size(); j++) {
-                workerTwoDimensionalPoint = workerTwoDimensionalPointList.get(j);
-                Double distance = BasicCalculation.get2Norm(taskTwoDimensionalPoint.getIndex(), workerTwoDimensionalPoint.getIndex());
+        TwoDimensionalDoublePoint taskTwoDimensionalDoublePoint, workerTwoDimensionalDoublePoint;
+        for (int i = 0; i < taskTwoDimensionalDoublePointList.size(); i++) {
+            taskTwoDimensionalDoublePoint = taskTwoDimensionalDoublePointList.get(i);
+            for (int j = 0; j < workerTwoDimensionalDoublePointList.size(); j++) {
+                workerTwoDimensionalDoublePoint = workerTwoDimensionalDoublePointList.get(j);
+                Double distance = BasicCalculation.get2Norm(taskTwoDimensionalDoublePoint.getIndex(), workerTwoDimensionalDoublePoint.getIndex());
                 Double ceilDistance = Math.ceil(distance / interval);
                 Double keyDistance = ceilDistance * interval;
                 if (!countResultMap.containsKey(keyDistance)) {
@@ -40,20 +40,20 @@ public class TwoDimensionalPointTool {
 
     /**
      * 获取两个集合各个点之间的距离值的统计量（用于经纬度数据）
-     * @param taskTwoDimensionalPointList
-     * @param workerTwoDimensionalPointList
+     * @param taskTwoDimensionalDoublePointList
+     * @param workerTwoDimensionalDoublePointList
      * @param interval
      * @return
      */
-    public static Map<Double, Integer> getDistanceStatisticDataFromLLData(List<TwoDimensionalPoint> taskTwoDimensionalPointList, List<TwoDimensionalPoint> workerTwoDimensionalPointList, double interval) {
+    public static Map<Double, Integer> getDistanceStatisticDataFromLLData(List<TwoDimensionalDoublePoint> taskTwoDimensionalDoublePointList, List<TwoDimensionalDoublePoint> workerTwoDimensionalDoublePointList, double interval) {
         TreeMap<Double, Integer> countResultMap = new TreeMap<>();
-        TwoDimensionalPoint taskTwoDimensionalPoint, workerTwoDimensionalPoint;
-        for (int i = 0; i < taskTwoDimensionalPointList.size(); i++) {
-            taskTwoDimensionalPoint = taskTwoDimensionalPointList.get(i);
-            for (int j = 0; j < workerTwoDimensionalPointList.size(); j++) {
-                workerTwoDimensionalPoint = workerTwoDimensionalPointList.get(j);
+        TwoDimensionalDoublePoint taskTwoDimensionalDoublePoint, workerTwoDimensionalDoublePoint;
+        for (int i = 0; i < taskTwoDimensionalDoublePointList.size(); i++) {
+            taskTwoDimensionalDoublePoint = taskTwoDimensionalDoublePointList.get(i);
+            for (int j = 0; j < workerTwoDimensionalDoublePointList.size(); j++) {
+                workerTwoDimensionalDoublePoint = workerTwoDimensionalDoublePointList.get(j);
 //                Double distance = BasicCalculation.get2Norm(taskPoint.getIndex(), workerPoint.getIndex());
-                Double distance = BasicCalculation.getDistanceFrom2LngLat(taskTwoDimensionalPoint.getYIndex(), taskTwoDimensionalPoint.getXIndex(), workerTwoDimensionalPoint.getYIndex(), workerTwoDimensionalPoint.getXIndex());
+                Double distance = BasicCalculation.getDistanceFrom2LngLat(taskTwoDimensionalDoublePoint.getYIndex(), taskTwoDimensionalDoublePoint.getXIndex(), workerTwoDimensionalDoublePoint.getYIndex(), workerTwoDimensionalDoublePoint.getXIndex());
                 Double ceilDistance = Math.ceil(distance / interval);
                 Double keyDistance = ceilDistance * interval;
                 if (!countResultMap.containsKey(keyDistance)) {
@@ -68,14 +68,14 @@ public class TwoDimensionalPointTool {
     }
 
 
-    public static Integer getEqualPointNumberBetweenTwoList(List<TwoDimensionalPoint> taskTwoDimensionalPointList, List<TwoDimensionalPoint> workerTwoDimensionalPointList) {
-        TwoDimensionalPoint taskTwoDimensionalPoint, workerTwoDimensionalPoint;
+    public static Integer getEqualPointNumberBetweenTwoList(List<TwoDimensionalDoublePoint> taskTwoDimensionalDoublePointList, List<TwoDimensionalDoublePoint> workerTwoDimensionalDoublePointList) {
+        TwoDimensionalDoublePoint taskTwoDimensionalDoublePoint, workerTwoDimensionalDoublePoint;
         int equalNumber = 0;
-        for (int i = 0; i < taskTwoDimensionalPointList.size(); i++) {
-            taskTwoDimensionalPoint = taskTwoDimensionalPointList.get(i);
-            for (int j = 0; j < workerTwoDimensionalPointList.size(); j++) {
-                workerTwoDimensionalPoint = workerTwoDimensionalPointList.get(j);
-                if (taskTwoDimensionalPoint.equals(workerTwoDimensionalPoint)) {
+        for (int i = 0; i < taskTwoDimensionalDoublePointList.size(); i++) {
+            taskTwoDimensionalDoublePoint = taskTwoDimensionalDoublePointList.get(i);
+            for (int j = 0; j < workerTwoDimensionalDoublePointList.size(); j++) {
+                workerTwoDimensionalDoublePoint = workerTwoDimensionalDoublePointList.get(j);
+                if (taskTwoDimensionalDoublePoint.equals(workerTwoDimensionalDoublePoint)) {
                     ++ equalNumber;
                 }
             }
@@ -87,9 +87,9 @@ public class TwoDimensionalPointTool {
         String basicPath = "E:\\1.学习\\4.数据集\\dataset\\original\\chengdu_total_dataset_km\\task_worker_1_2_0";
         String taskPath = basicPath + "\\task_point.txt";
         String workerPath = basicPath + "\\worker_point.txt";
-        List<TwoDimensionalPoint> taskTwoDimensionalPointList = PointRead.readPointWithFirstLineCount(taskPath);
-        List<TwoDimensionalPoint> workerTwoDimensionalPointList = PointRead.readPointWithFirstLineCount(workerPath);
-        Map<Double, Integer> resultMap = getDistanceStatisticDataFromNormData(taskTwoDimensionalPointList, workerTwoDimensionalPointList, 5);
+        List<TwoDimensionalDoublePoint> taskTwoDimensionalDoublePointList = PointRead.readPointWithFirstLineCount(taskPath);
+        List<TwoDimensionalDoublePoint> workerTwoDimensionalDoublePointList = PointRead.readPointWithFirstLineCount(workerPath);
+        Map<Double, Integer> resultMap = getDistanceStatisticDataFromNormData(taskTwoDimensionalDoublePointList, workerTwoDimensionalDoublePointList, 5);
         MyPrint.showMap(resultMap);
     }
 
