@@ -49,6 +49,26 @@ public class DiscretizedRhombusPlane {
         this.constP = this.constQ * Math.exp(epsilon);
     }
 
+    public DiscretizedRhombusPlane(Double epsilon, Double gridLength, Double inputLength) {
+        this.epsilon = epsilon;
+        this.gridLength = gridLength;
+        //todo: 假设向上取整
+        double mA = Math.exp(epsilon) - 1 - epsilon;
+        double mB = 1 - (1 - epsilon) * Math.exp(epsilon);
+        this.sizeB = (int)Math.ceil((2*mB+Math.sqrt(4*mB*mB+2*Math.exp(epsilon)*mA*mB))/(2*Math.exp(epsilon)*mA));
+        //todo: 假设向上取整
+        this.sizeD = (int)Math.ceil(inputLength / gridLength);
+        this.constValues[0] = 2*this.sizeB*(this.sizeB+1)+1;
+        this.constValues[1] = this.sizeD * (this.sizeD + 4*this.sizeB) - 4*this.sizeB - 1;
+        this.constValues[2] = this.constValues[0] + this.constValues[1];
+        this.constValues[4] = this.sizeD * (1 + this.sizeB);
+        this.constValues[3] = this.constValues[2] - this.constValues[4];
+
+        this.constQ = 1 / (this.constValues[0] * Math.exp(epsilon) + this.constValues[1]);
+        this.constP = this.constQ * Math.exp(epsilon);
+    }
+
+
 
 //    private
     public TwoDimensionalIntegerPoint getNoiseValue(TwoDimensionalDoublePoint realValue) {

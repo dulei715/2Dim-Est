@@ -11,6 +11,12 @@ import java.util.Map;
 
 public class StatisticTool {
 
+    /**
+     * 极大似然估计
+     * @param value
+     * @param matrix
+     * @return
+     */
     public static Double getLogLikelihood(final Double[] value, final Double[][] matrix) {
         Double sum = 0.0;
         Double innerSum;
@@ -22,6 +28,59 @@ public class StatisticTool {
             sum += Math.log(innerSum);
         }
         return sum;
+    }
+
+    public static Double getLocalLikelihood(final Double[] value, final Double[][] matrix, final Double[] localPoint) {
+        return null;
+    }
+
+    /**
+     * 用于一维 Wave mechanism
+     * @param values
+     * @param binomialCoefficients 必须是奇数个
+     * @return
+     */
+    private static Double[] getSmooth(Double[] values, Integer[] binomialCoefficients) {
+        Double[] ratios = new Double[binomialCoefficients.length];
+        Double outerRatioSum;
+        Integer sum = BasicArray.getSum(binomialCoefficients);
+        for (int i = 0; i < ratios.length; i++) {
+            ratios[i] = binomialCoefficients[i] * 1.0 / sum;
+        }
+        Integer midIndex = binomialCoefficients.length / 2;
+        Double[] result = new Double[values.length];
+        for (int i = 0; i < midIndex; i++) {
+            outerRatioSum = 0.0;
+            for (int j = 0; j <= midIndex - i; j++) {
+                outerRatioSum += ratios[j];
+            }
+            result[i] = values[0] * outerRatioSum;
+            for (int j = midIndex - i + 1, k = 1; j < ratios.length; j++, k++) {
+                result[i] += values[k] * ratios[j];
+            }
+        }
+
+        for (int i = result.length - midIndex; i < result.length; i++) {
+            outerRatioSum = 0.0;
+            for (int j = midIndex + result.length - i - 1; j < ratios.length; j++) {
+                outerRatioSum += ratios[j];
+            }
+            result[i] = values[result.length - 1] * outerRatioSum;
+//            for (int j = 0; j < midIndex + result.length - i - 1; j++) {
+//                result[i] += values[] * binomialCoefficients[j]
+//            }
+            for (int j = 0, k = i - midIndex; k < result.length - 1; j++, k++) {
+                result[i] += values[k] * ratios[j];
+            }
+        }
+
+        for (int i = midIndex; i < result.length - midIndex; i++) {
+            result[i] = 0.0;
+            for (int j = 0; j < ratios.length; j++) {
+                result[i] += values[i-midIndex+j] * ratios[j];
+            }
+        }
+        return result;
     }
 
 
@@ -58,55 +117,6 @@ public class StatisticTool {
         return newValueArray;
     }
 
-    /**
-     *
-     * @param values
-     * @param binomialCoefficients 必须是奇数个
-     * @return
-     */
-    private static Double[] getSmooth(Double[] values, Integer[] binomialCoefficients) {
-        Double[] ratios = new Double[binomialCoefficients.length];
-        Double outerRatioSum;
-        Integer sum = BasicArray.getSum(binomialCoefficients);
-        for (int i = 0; i < ratios.length; i++) {
-            ratios[i] = binomialCoefficients[i] * 1.0 / sum;
-        }
-        Integer midIndex = binomialCoefficients.length / 2;
-        Double[] result = new Double[values.length];
-        for (int i = 0; i < midIndex; i++) {
-             outerRatioSum = 0.0;
-            for (int j = 0; j <= midIndex - i; j++) {
-                outerRatioSum += ratios[j];
-            }
-            result[i] = values[0] * outerRatioSum;
-            for (int j = midIndex - i + 1, k = 1; j < ratios.length; j++, k++) {
-                result[i] += values[k] * ratios[j];
-            }
-        }
-
-        for (int i = result.length - midIndex; i < result.length; i++) {
-            outerRatioSum = 0.0;
-            for (int j = midIndex + result.length - i - 1; j < ratios.length; j++) {
-                outerRatioSum += ratios[j];
-            }
-            result[i] = values[result.length - 1] * outerRatioSum;
-//            for (int j = 0; j < midIndex + result.length - i - 1; j++) {
-//                result[i] += values[] * binomialCoefficients[j]
-//            }
-            for (int j = 0, k = i - midIndex; k < result.length - 1; j++, k++) {
-                result[i] += values[k] * ratios[j];
-            }
-        }
-
-        for (int i = midIndex; i < result.length - midIndex; i++) {
-            result[i] = 0.0;
-            for (int j = 0; j < ratios.length; j++) {
-                result[i] += values[i-midIndex+j] * ratios[j];
-            }
-        }
-        return result;
-    }
-
     public static Double[] getExpectationMaximizationSmooth(final Double[][] matrix, final Double[] noiseValueCountArray, Double stopValue, Integer[] binomialCoefficients, final Double[] initialValueCountArray) {
         Double[] pValueArray = new Double[initialValueCountArray.length];
         Double[] beforeValueArray = new Double[initialValueCountArray.length];
@@ -139,6 +149,15 @@ public class StatisticTool {
             newLogLikelihood = getLogLikelihood(newValueArray, matrix);
         } while (Math.abs(newLogLikelihood - beforeLogLikelihood) >= stopValue);
         return newValueArray;
+    }
+
+
+    /**
+     *
+     * @return
+     */
+    public static Double[] getExpectationMaximizationSmooth () {
+        return null;
     }
 
 
