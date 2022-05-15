@@ -1,4 +1,4 @@
-package ecnu.dll.construction.compared.square_wave.single;
+package ecnu.dll.construction.basicscheme.square_wave;
 
 public abstract class GeneralWave {
 

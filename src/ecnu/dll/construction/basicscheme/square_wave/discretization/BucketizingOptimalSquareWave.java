@@ -1,6 +1,6 @@
-package ecnu.dll.construction.compared.square_wave.single.discretization;
+package ecnu.dll.construction.basicscheme.square_wave.discretization;
 
-import ecnu.dll.construction.compared.square_wave.single.SquareWave;
+import ecnu.dll.construction.basicscheme.square_wave.SquareWave;
 import tools.RandomUtil;
 
 public class BucketizingOptimalSquareWave extends SquareWave {

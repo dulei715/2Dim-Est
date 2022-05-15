@@ -1,6 +1,6 @@
-package ecnu.dll.construction.compared.geo_i.discretization;
+package ecnu.dll.construction.basicscheme.geo_i.discretization;
 
-import ecnu.dll.construction.compared.geo_i.SimpleGeoI;
+import ecnu.dll.construction.basicscheme.geo_i.SimpleGeoI;
 import tools.struct.point.TwoDimensionalDoublePoint;
 
 public class DiscretizationGeoI extends SimpleGeoI {
