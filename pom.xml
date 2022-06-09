@@ -24,6 +24,12 @@
             <version>3.6.1</version>
         </dependency>
 
+        <dependency>
+            <groupId>cn.edu.ecnu</groupId>
+            <artifactId>clp-java-1.80</artifactId>
+            <version>1.01.01</version>
+        </dependency>
+
     </dependencies>
 
     <properties>
