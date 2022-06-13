@@ -1,11 +1,12 @@
 package ecnu.dll.construction.newscheme.discretization;
 
-import tools.RandomUtil;
-import tools.io.write.PointWrite;
-import tools.statistic.StatisticTool;
-import tools.struct.Grid;
-import tools.struct.point.TwoDimensionalIntegerPoint;
-import tools.struct.point.TwoDimensionalDoublePoint;
+
+import cn.edu.ecnu.basic.RandomUtil;
+import cn.edu.ecnu.io.write.PointWrite;
+import cn.edu.ecnu.statistic.StatisticTool;
+import cn.edu.ecnu.struct.Grid;
+import cn.edu.ecnu.struct.point.TwoDimensionalDoublePoint;
+import cn.edu.ecnu.struct.point.TwoDimensionalIntegerPoint;
 
 import java.util.ArrayList;
 import java.util.List;

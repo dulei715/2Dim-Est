@@ -30,6 +30,12 @@
             <version>1.01.01</version>
         </dependency>
 
+        <dependency>
+            <groupId>cn.edu.ecnu</groupId>
+            <artifactId>java-tools</artifactId>
+            <version>1.01.01</version>
+        </dependency>
+
     </dependencies>
 
     <properties>

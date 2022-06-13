@@ -1,20 +1,19 @@
 package ecnu.dll.construction.basicscheme.geo_i;
 
-import tools.struct.PolarPoint;
 
-public abstract class GeoIndistinguishability {
+import cn.edu.ecnu.math.LambertW;
+import cn.edu.ecnu.struct.PolarPoint;
+import ecnu.dll.construction._config.Constant;
 
-    protected Double radius = null;
-    protected Double angle = null;
+public class GeoIndistinguishability {
 
-    public GeoIndistinguishability(Double radius, Double angle) {
-        this.radius = radius;
-        this.angle = angle;
+
+    public static PolarPoint getNoise(double epsilon) {
+        Double randomAngle = Math.random() * 2 * Math.PI;
+        Double randomRadius = (LambertW.getMinusOneValue((Math.random() - 1)/Math.E, Constant.DEFAULT_PRECISION) + 1) * (-1) / epsilon;
+        return new PolarPoint(randomRadius, randomAngle);
     }
 
-    public abstract PolarPoint getNoisePolarPoint();
 
-    public static void main(String[] args) {
-        System.out.println("Hello Goe-I!");
-    }
+
 }
