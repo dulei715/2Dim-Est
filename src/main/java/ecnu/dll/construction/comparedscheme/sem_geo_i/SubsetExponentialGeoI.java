@@ -2,6 +2,9 @@ package ecnu.dll.construction.comparedscheme.sem_geo_i;
 
 import cn.edu.ecnu.basic.BasicArray;
 import cn.edu.ecnu.basic.BasicCalculation;
+import cn.edu.ecnu.basic.BasicSearch;
+import cn.edu.ecnu.basic.RandomUtil;
+import cn.edu.ecnu.basic.cumulate.CumulativeFunction;
 import cn.edu.ecnu.collection.ListUtils;
 import cn.edu.ecnu.collection.SetUtils;
 import cn.edu.ecnu.differential_privacy.cdp.basic_struct.DistanceAble;
@@ -12,11 +15,16 @@ import java.util.*;
 
 public class SubsetExponentialGeoI<X extends DistanceAble<X>, R> {
     private Double epsilon;
+    private Integer setSizeK;
+    private Double omega;
     private UtilityFunction<X, R> utilityFunction;
+
     private List<X> inputElementList;
     private List<R> outputElementList;
 
-    private PaddedExponentialMechanism<X, R> pEM;
+    private Double[] massArray;
+
+//    private PaddedExponentialMechanism<X, R> pEM;
 
     // dis
     private Double[] dis;
@@ -25,6 +33,16 @@ public class SubsetExponentialGeoI<X extends DistanceAble<X>, R> {
     private List<Integer>[][] disset;
 
     private Integer[][] discount;
+
+    public SubsetExponentialGeoI(Double epsilon, Integer setSizeK, List<X> inputElementList, List<R> outputElementList) throws IllegalAccessException, InstantiationException {
+        this.epsilon = epsilon;
+        this.setSizeK = setSizeK;
+        this.inputElementList = inputElementList;
+        this.outputElementList = outputElementList;
+
+        this.massArray = new Double[this.inputElementList.size()];
+        this.initializeTotalDistanceAndElementGivenDistance();
+    }
 
     private void addElement(TreeMap<Double, List<Integer>>[] treeMapArray, int mainElementIndex, int judgeElementIndex, Double distance) {
         List<Integer> tempList;
@@ -88,26 +106,26 @@ public class SubsetExponentialGeoI<X extends DistanceAble<X>, R> {
 
     /**
      * 计算 Omega
-     * @return Omega
      */
-    public Double normalizer(int k) {
+    public void normalizer() {
         int res, former;
-        Double omega = 0.0;
+        this.omega = 0.0;
+
         int m = this.disset.length;
         int z = this.disset[0].length;
         int res_k;
-        double[] mass = new double[m];
+//        double[] this.massArray = new double[m];
         double radixValue = Math.exp(-this.epsilon);
         Double tempResult, tempValue;
         X elemA, elemB;
-        
+
         BasicArray.setIntArrayTo(this.discount, 0);
         for (int i = 0; i < m; i++) {
             res = m;
-            former = MathUtils.getBinaomialResult(m, k);
+            former = MathUtils.getBinomialResult(m, this.setSizeK);
             for (int j = 0; j < z; j++) {
                 res -= this.disset[i][j].size();
-                res_k = MathUtils.getBinaomialResult(res, k);
+                res_k = MathUtils.getBinomialResult(res, this.setSizeK);
                 this.discount[i][j] = former - res_k;
                 former = res_k;
             }
@@ -115,7 +133,7 @@ public class SubsetExponentialGeoI<X extends DistanceAble<X>, R> {
 
 
         for (int i = 0; i < m; i++) {
-            mass[i] = BasicCalculation.getInnerProduct(this.discount[i], this.dis, radixValue);
+            this.massArray[i] = BasicCalculation.getInnerProduct(this.discount[i], this.dis, radixValue);
         }
 
         // 计算Omega
@@ -124,13 +142,64 @@ public class SubsetExponentialGeoI<X extends DistanceAble<X>, R> {
             for (int j = 0; j < m; j++) {
                 elemB = this.inputElementList.get(j);
                 tempValue = Math.exp(this.epsilon * elemA.getDistance(elemB));
-                tempResult = (tempValue * mass[i] - mass[j]) / (tempValue - 1);
-                if (omega < tempResult){
-                    omega = tempResult;
+                tempResult = (tempValue * this.massArray[i] - this.massArray[j]) / (tempValue - 1);
+                if (this.omega < tempResult){
+                    this.omega = tempResult;
                 }
             }
         }
-        return omega;
+
+    }
+
+   private Double[] getDisprobs(int i) {
+        Double[] result = new Double[dis.length];
+        for (int j = 0; j < result.length; j++) {
+            result[j] = this.discount[i][j] * Math.exp(-this.epsilon*this.dis[j]) / this.omega;
+        }
+        return result;
+   }
+
+    /**
+     *
+     * @param i 输入元素在List里的坐标
+     * @return 选出的元素的坐标集合
+     */
+    public Set<Integer> sampler(int i) {
+        Double r = RandomUtil.getRandomDouble(0.0, 1.0);
+        if (r >= this.massArray[i] / this.omega) {
+            return null;
+        }
+        Set<Integer> resultSet = new HashSet<>();
+        // 分别记录选取的等于最小距离的元素的坐标集合和大于最小距离的元素的坐标集合
+        List<Integer> resultPartList;
+
+        // 这三步是根据r获取选取到的距离id
+        Double[] disprobs = this.getDisprobs(i);
+        Double[] cumulativeDisprobs = CumulativeFunction.getCumulativeDistribution(disprobs);
+        int disid = BasicSearch.binarySearch(cumulativeDisprobs, r, BasicSearch.LATTER);
+
+        List<Integer> smallestDistanceElementsIndexList = this.disset[i][disid];
+        List<Integer> allLargerDistanceElementsIndexList = ListUtils.combine(this.disset[i], disid + 1, this.dis.length - 1);
+        int sizeeq = smallestDistanceElementsIndexList.size();
+        int sizegt = allLargerDistanceElementsIndexList.size();
+
+        Integer[] partCounts = new Integer[this.setSizeK];
+        for (int j = 0; j < this.setSizeK; j++) {
+            partCounts[j] = MathUtils.getBinomialResult(sizeeq, j + 1) * MathUtils.getBinomialResult(sizegt, this.setSizeK - j - 1);
+        }
+        // eqnum-1代表选中的partCounts的随机元素，同时eqnum表示选择选择sizeeq集合中的元素的个数（多少个最小距离）
+        Integer eqnum = RandomUtil.getRandomIndexGivenStatisticPoint(partCounts) + 1;
+
+
+        List<Integer> positionList = RandomUtil.getRandomIntegerArrayWithoutRepeat(0, sizeeq - 1, eqnum);
+        resultPartList = BasicArray.getElementListInGivenIndexes(smallestDistanceElementsIndexList, positionList);
+        resultSet.addAll(resultPartList);
+
+        positionList = RandomUtil.getRandomIntegerArrayWithoutRepeat(0, sizegt - 1, this.setSizeK - eqnum);
+        resultPartList = BasicArray.getElementListInGivenIndexes(allLargerDistanceElementsIndexList, positionList);
+        resultSet.addAll(resultPartList);
+
+        return resultSet;
 
     }
 
