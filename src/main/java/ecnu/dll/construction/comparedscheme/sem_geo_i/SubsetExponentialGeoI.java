@@ -1,5 +1,6 @@
 package ecnu.dll.construction.comparedscheme.sem_geo_i;
 
+import Jama.Matrix;
 import cn.edu.ecnu.basic.BasicArray;
 import cn.edu.ecnu.basic.BasicCalculation;
 import cn.edu.ecnu.basic.BasicSearch;
@@ -17,14 +18,14 @@ public class SubsetExponentialGeoI<X extends DistanceAble<X>, R> {
     private Double epsilon;
     private Integer setSizeK;
     private Double omega;
-    private UtilityFunction<X, R> utilityFunction;
+//    private UtilityFunction<X, R> utilityFunction;
 
     private List<X> inputElementList;
     private List<R> outputElementList;
 
-    private Double[] massArray;
+    private Double differentElementsDistanceSum;
 
-//    private PaddedExponentialMechanism<X, R> pEM;
+    private Double[] massArray;
 
     // dis
     private Double[] dis;
@@ -34,14 +35,21 @@ public class SubsetExponentialGeoI<X extends DistanceAble<X>, R> {
 
     private Integer[][] discount;
 
-    public SubsetExponentialGeoI(Double epsilon, Integer setSizeK, List<X> inputElementList, List<R> outputElementList) throws IllegalAccessException, InstantiationException {
+    public SubsetExponentialGeoI(Double epsilon, List<X> inputElementList, List<R> outputElementList) throws IllegalAccessException, InstantiationException {
         this.epsilon = epsilon;
-        this.setSizeK = setSizeK;
+//        this.setSizeK = setSizeK;
         this.inputElementList = inputElementList;
         this.outputElementList = outputElementList;
 
         this.massArray = new Double[this.inputElementList.size()];
         this.initializeTotalDistanceAndElementGivenDistance();
+        this.setSetSizeKWithMeanEpsilon();
+    }
+
+    private void setSetSizeKWithMeanEpsilon() {
+        int m = this.inputElementList.size();
+        double epsilonMean = this.differentElementsDistanceSum * this.epsilon / (m*(m-1));
+        this.setSizeK = (int) Math.ceil(m / (Math.exp(epsilonMean) + 1));
     }
 
     private void addElement(TreeMap<Double, List<Integer>>[] treeMapArray, int mainElementIndex, int judgeElementIndex, Double distance) {
@@ -68,19 +76,31 @@ public class SubsetExponentialGeoI<X extends DistanceAble<X>, R> {
         TreeMap<Double, List<Integer>> tempTreeMap;
 
         TreeSet<Double> distanceSet = new TreeSet<>();
+        this.differentElementsDistanceSum = 0.0;
         for (int i = 0; i < inputListSize; i++) {
             elementA = this.inputElementList.get(i);
-            for (int j = i; j < inputListSize; j++) {
+            // 处理 j=i 情况
+            distanceSet.add(0.0);
+            this.addElement(treeMapArray, i, i, 0.0);
+            // 处理 j>i 情况
+            for (int j = i + 1; j < inputListSize; j++) {
                 elementB = this.inputElementList.get(j);
                 tempDistance = elementA.getDistance(elementB);
                 // 将每个distance添加到distanceSet里去重并排序
                 distanceSet.add(tempDistance);
-
-                // 投建treeMapArray
+                // 构建treeMapArray
                 this.addElement(treeMapArray, i, j, tempDistance);
                 this.addElement(treeMapArray, j, i, tempDistance);
-                ListUtils.quickSort(treeMapArray[i].get(tempDistance));
+
+                this.differentElementsDistanceSum += tempDistance * 2;
+
             }
+
+            // 按照字典顺序排序
+            for (Map.Entry<Double, List<Integer>> entry : treeMapArray[i].entrySet()) {
+                ListUtils.quickSort(entry.getValue());
+            }
+//            ListUtils.quickSort(treeMapArray[i].get(tempDistance));
         }
 
         // 构建dis (此处已经排好序)
@@ -202,6 +222,54 @@ public class SubsetExponentialGeoI<X extends DistanceAble<X>, R> {
         return resultSet;
 
     }
+
+    /**
+     *
+     * @param reportedSubset 用户提交的隐私处理过的report（每个report是一个子集，子集元素是原元素在inputList中的索引）
+     * @return
+     */
+    public double[] estimator(List<Set<Integer>> reportedSubset) {
+        // 计算h矩阵
+        int reportedSize = reportedSubset.size();
+        double unitValue = 1.0 / reportedSize;
+        int m = this.inputElementList.size();
+        int z = this.dis.length;
+        int res, former, tempBinomialValue, tempElementIndex;
+        double[][] h = new double[m][m];
+        Matrix noiseStatisticMatrix, matrixH, resultMatrix;
+        double partmass;
+        double[][] noiseStatistic = new double[1][m];
+        BasicArray.setDoubleArrayToZero(noiseStatistic);
+        for (int i = 0; i < m; i++) {
+            res = m - 1;
+            former = MathUtils.getBinomialResult(res, this.setSizeK - 1);
+            h[i][i] = former / this.omega;
+            partmass = 0.0;
+            for (int a = 0; a < z - 1; a++) {
+                res -= disset[i][a].size();
+                tempBinomialValue = MathUtils.getBinomialResult(res, this.setSizeK - 1);
+                partmass += (former - tempBinomialValue) * Math.exp(-this.epsilon*this.dis[a]) / this.omega;
+                former = tempBinomialValue;
+                for (int j = 0; j < this.disset[i][a+1].size(); j++) {
+                    tempElementIndex = this.disset[i][a+1].get(j);
+                    h[i][tempElementIndex] = partmass + former * Math.exp(-this.epsilon * this.dis[a+1]) / this.omega;
+                }
+            }
+        }
+        // 估计频率分布
+        for (Set<Integer> subsetElement : reportedSubset) {
+            for (Integer index : subsetElement) {
+                noiseStatistic[1][index] += unitValue;
+            }
+        }
+        noiseStatisticMatrix = new Matrix(noiseStatistic);
+        matrixH = new Matrix(h);
+//        inverseMatrixH = matrixH.inverse();
+        resultMatrix = noiseStatisticMatrix.arrayRightDivide(matrixH);
+        return resultMatrix.getArray()[0];
+    }
+
+
 
 
 }
