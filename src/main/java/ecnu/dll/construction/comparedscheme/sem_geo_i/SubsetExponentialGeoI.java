@@ -14,14 +14,14 @@ import cn.edu.ecnu.math.MathUtils;
 
 import java.util.*;
 
-public class SubsetExponentialGeoI<X extends DistanceAble<X>, R> {
+public class SubsetExponentialGeoI<X extends DistanceAble<X>> {
     private Double epsilon;
     private Integer setSizeK;
     private Double omega;
 //    private UtilityFunction<X, R> utilityFunction;
 
     private List<X> inputElementList;
-    private List<R> outputElementList;
+//    private List<R> outputElementList;
 
     private Double differentElementsDistanceSum;
 
@@ -35,11 +35,11 @@ public class SubsetExponentialGeoI<X extends DistanceAble<X>, R> {
 
     private Integer[][] discount;
 
-    public SubsetExponentialGeoI(Double epsilon, List<X> inputElementList, List<R> outputElementList) throws IllegalAccessException, InstantiationException {
+    public SubsetExponentialGeoI(Double epsilon, List<X> inputElementList) throws IllegalAccessException, InstantiationException {
         this.epsilon = epsilon;
 //        this.setSizeK = setSizeK;
         this.inputElementList = inputElementList;
-        this.outputElementList = outputElementList;
+//        this.outputElementList = outputElementList;
 
         this.massArray = new Double[this.inputElementList.size()];
         this.initializeTotalDistanceAndElementGivenDistance();

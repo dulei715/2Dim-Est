@@ -1,6 +1,5 @@
 package ecnu.dll.construction.comparedscheme.msw_hdg;
 
-import cn.edu.ecnu.struct.point.Point;
 import cn.edu.ecnu.struct.point.TwoDimensionalIntegerPoint;
 import ecnu.dll.construction.basicscheme.square_wave.discretization.BucketizingOptimalSquareWave;
 import javafx.util.Pair;
@@ -29,7 +28,11 @@ public class BucketizingMultiDimensionalSquareWave {
         return IndexFlag.Y;
     }
 
-
+    /**
+     * Pair的第一个参数标志着坐标类别，第二个参数标志着坐标的值
+     * @param point
+     * @return
+     */
     public Pair<Integer, Integer> getNoiseIndex(TwoDimensionalIntegerPoint point) {
         Integer indexFlagValue = this.getRandomIndexFlag();
         if (IndexFlag.X.equals(indexFlagValue)) {
@@ -56,6 +59,11 @@ public class BucketizingMultiDimensionalSquareWave {
         return result;
     }
 
+    /**
+     * 这里的二维整数点是元素坐标点的二元组合
+     * @param valueList
+     * @return
+     */
     public TreeMap<TwoDimensionalIntegerPoint, Double> statistic(List<Pair<Integer, Integer>> valueList) {
         Map<Integer, List<Integer>> valueListMap = splitCountByIndexFlag(valueList);
         TreeMap<Integer, Double> xStatistic = this.xSquareWave.statistic(valueListMap.get(IndexFlag.X));
