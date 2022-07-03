@@ -5,7 +5,7 @@ import org.junit.Test;
 public class ClpTest {
     @Test
     public void fun1() {
-
+        System.out.println("Hello CPL");
     }
 
     @Test

@@ -1,35 +1,19 @@
 package ecnu.dll.construction.newscheme.discretization;
 
 
+import cn.edu.ecnu.basic.BasicArray;
 import cn.edu.ecnu.basic.RandomUtil;
 import cn.edu.ecnu.io.write.PointWrite;
 import cn.edu.ecnu.statistic.StatisticTool;
 import cn.edu.ecnu.struct.Grid;
 import cn.edu.ecnu.struct.point.TwoDimensionalDoublePoint;
 import cn.edu.ecnu.struct.point.TwoDimensionalIntegerPoint;
-import ecnu.dll.construction.newscheme.basic.DiscretizedPlaneInterface;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.TreeMap;
 
-public class DiscretizedRhombusPlane implements DiscretizedPlaneInterface {
-    protected Double epsilon = null;
-    // 记录grid边长的大小
-    protected Double gridLength = null;
-    // 记录输入的正方形边长除以grid边长的大小
-    protected Integer sizeInputLen = null;
-    protected Integer sizeB = null;
-    // 记录输入长度除以grid长度的大小
-    protected Integer sizeD = null;
-    protected Double constP = null;
-    protected Double constQ = null;
-
-    protected Double[][] transformMatrix;
-
-    private List<TwoDimensionalIntegerPoint> rawIntegerPointTypeList = null;
-    private List<TwoDimensionalIntegerPoint> noiseIntegerPointTypeList = null;
+public class DiscretizedRhombusPlane extends AbstractDiscretizedPlane {
 
     /**
      * 1. 高概率部分 2b^2+2b+1
@@ -38,37 +22,19 @@ public class DiscretizedRhombusPlane implements DiscretizedPlaneInterface {
      * 4. 总面积中大矩形部分 2b^2+3db-2b+d^2-d
      * 5. 总面积中小矩形部分 d+db
      */
-    private Integer[] constValues = new Integer[5];
+    private Integer[] constValues;
 
     public DiscretizedRhombusPlane(Double epsilon, Double gridLength, Double constB, Double inputLength) {
-        this.epsilon = epsilon;
-        this.gridLength = gridLength;
-        //todo: 假设向上取整
-        this.sizeB = (int)Math.ceil(constB / gridLength);
-        //todo: 假设向上取整
-        this.sizeD = (int)Math.ceil(inputLength / gridLength);
-        this.constValues[0] = 2*this.sizeB*(this.sizeB+1)+1;
-        this.constValues[1] = this.sizeD * (this.sizeD + 4*this.sizeB) - 4*this.sizeB - 1;
-        this.constValues[2] = this.constValues[0] + this.constValues[1];
-        this.constValues[4] = this.sizeD * (1 + this.sizeB);
-        this.constValues[3] = this.constValues[2] - this.constValues[4];
-
-        this.constQ = 1 / (this.constValues[0] * Math.exp(epsilon) + this.constValues[1]);
-        this.constP = this.constQ * Math.exp(epsilon);
-        this.rawIntegerPointTypeList = getRawIntegerPointTypeList(this.sizeD);
-        this.noiseIntegerPointTypeList = getNoiseIntegerPointTypeList(this.sizeD, this.sizeB);
-        this.setTransformMatrix();
+        super(epsilon,gridLength,constB,inputLength);
     }
 
     public DiscretizedRhombusPlane(Double epsilon, Double gridLength, Double inputLength) {
-        this.epsilon = epsilon;
-        this.gridLength = gridLength;
-        //todo: 假设向上取整
-        double mA = Math.exp(epsilon) - 1 - epsilon;
-        double mB = 1 - (1 - epsilon) * Math.exp(epsilon);
-        this.sizeB = (int)Math.ceil((2*mB+Math.sqrt(4*mB*mB+2*Math.exp(epsilon)*mA*mB))/(2*Math.exp(epsilon)*mA));
-        //todo: 假设向上取整
-        this.sizeD = (int)Math.ceil(inputLength / gridLength);
+        super(epsilon,gridLength,inputLength);
+    }
+
+    @Override
+    protected void setConstPQ() {
+        this.constValues = new Integer[5];
         this.constValues[0] = 2*this.sizeB*(this.sizeB+1)+1;
         this.constValues[1] = this.sizeD * (this.sizeD + 4*this.sizeB) - 4*this.sizeB - 1;
         this.constValues[2] = this.constValues[0] + this.constValues[1];
@@ -77,40 +43,34 @@ public class DiscretizedRhombusPlane implements DiscretizedPlaneInterface {
 
         this.constQ = 1 / (this.constValues[0] * Math.exp(epsilon) + this.constValues[1]);
         this.constP = this.constQ * Math.exp(epsilon);
-        this.rawIntegerPointTypeList = getRawIntegerPointTypeList(this.sizeD);
-        this.noiseIntegerPointTypeList = getNoiseIntegerPointTypeList(this.sizeD, this.sizeB);
-        this.setTransformMatrix();
     }
 
-    public static List<TwoDimensionalIntegerPoint> getRawIntegerPointTypeList(Integer sizeD) {
-        int  totalSize = sizeD * sizeD;
-        List<TwoDimensionalIntegerPoint> resultList = new ArrayList<>(totalSize);
-        for (int i = 0; i < sizeD; i++) {
-            for (int j = 0; j < sizeD; j++) {
-                resultList.add(new TwoDimensionalIntegerPoint(i, j));
-            }
-        }
-        return resultList;
+    @Override
+    protected Integer getOptimalSizeB() {
+        double mA = Math.exp(this.epsilon) - 1 - this.epsilon;
+        double mB = 1 - (1 - this.epsilon) * Math.exp(this.epsilon);
+        return (int)Math.ceil((2*mB+Math.sqrt(4*mB*mB+2*Math.exp(epsilon)*mA*mB))/(2*Math.exp(epsilon)*mA) * this.sizeD);
     }
 
-    public static List<TwoDimensionalIntegerPoint> getNoiseIntegerPointTypeList(Integer sizeD, Integer sizeB) {
-        Integer positiveBound = sizeD + sizeB;
+    @Override
+    public void setNoiseIntegerPointTypeList() {
+        Integer positiveBound = this.sizeD + this.sizeB;
         // 记录右上边界线在x轴和y轴的截距
-        Integer positiveIntercept = sizeB + 2 * sizeD - 2;
+        Integer positiveIntercept = this.sizeB + 2 * this.sizeD - 2;
         // 记录左上和右下边界线分别在x轴和y轴上的截距(的绝对值)
-        Integer negativeIntercept = sizeB + sizeD - 1;
+        Integer negativeIntercept = this.sizeB + this.sizeD - 1;
 
-        List<TwoDimensionalIntegerPoint> result = new ArrayList<>();
-        for (int i = -sizeB; i < positiveBound; i++) {
-            for (int j = -sizeB; j < positiveBound; j++) {
-                if (i + j + sizeB >= 0 && i + j - positiveIntercept <= 0 && i - j + negativeIntercept >= 0 && i - j - negativeIntercept <= 0) {
-                    result.add(new TwoDimensionalIntegerPoint(i, j));
+        this.noiseIntegerPointTypeList = new ArrayList<>();
+        for (int i = -this.sizeB; i < positiveBound; i++) {
+            for (int j = -this.sizeB; j < positiveBound; j++) {
+                if (i + j + this.sizeB >= 0 && i + j - positiveIntercept <= 0 && i - j + negativeIntercept >= 0 && i - j - negativeIntercept <= 0) {
+                    this.noiseIntegerPointTypeList.add(new TwoDimensionalIntegerPoint(i, j));
                 }
             }
         }
-        return result;
     }
 
+    @Override
     public void setTransformMatrix() {
         int outputSize = this.noiseIntegerPointTypeList.size();
         int inputSize = this.rawIntegerPointTypeList.size();
@@ -215,16 +175,7 @@ public class DiscretizedRhombusPlane implements DiscretizedPlaneInterface {
         return new TwoDimensionalIntegerPoint(xOutput, yOutput);
     }
 
-    @Override
-    public TreeMap<TwoDimensionalIntegerPoint, Double> statistic(List<TwoDimensionalIntegerPoint> valueList) {
-        Integer[] noiseValueCountArray = StatisticTool.countHistogramNumber(this.noiseIntegerPointTypeList,valueList);
-        Double[] resultRatio = StatisticTool.getTwoDimensionalExpectationMaximizationSmooth(this.transformMatrix, noiseValueCountArray, Constant.DEFAULT_STOP_VALUE_TAO, Constant.DEFAULT_ONE_DIMENSIONAL_COEFFICIENTS, this.initAverageRatio);
-        TreeMap<TwoDimensionalIntegerPoint, Double> resultMap = new TreeMap<>();
-        for (int i = 0; i < this.rawIntegerPointTypeList.size(); i++) {
-            resultMap.put(this.rawIntegerPointTypeList.get(i), resultRatio[i]);
-        }
-        return resultMap;
-    }
+
 
     public static void main(String[] args) {
         int size = 20000;
