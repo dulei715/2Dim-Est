@@ -78,8 +78,15 @@ public abstract class AbstractDiscretizedPlane implements DiscretizedPlaneInterf
         }
     }
 
+    /**
+     * 记录所有可能返回的cell的坐标
+     */
     public abstract void setNoiseIntegerPointTypeList();
 
+    /**
+     * 记录输出cell和输入cell之间的概率转换矩阵
+     * 横坐标为输出cell，纵坐标为输入cell
+     */
     public abstract void setTransformMatrix();
 
 

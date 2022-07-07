@@ -1,7 +1,6 @@
 package ecnu.dll.construction.newscheme.discretization;
 
 
-import cn.edu.ecnu.basic.BasicArray;
 import cn.edu.ecnu.basic.RandomUtil;
 import cn.edu.ecnu.io.write.PointWrite;
 import cn.edu.ecnu.statistic.StatisticTool;
@@ -13,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+@SuppressWarnings("ALL")
 public class DiscretizedRhombusPlane extends AbstractDiscretizedPlane {
 
     /**
