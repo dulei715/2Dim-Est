@@ -1,4 +1,4 @@
-function y = drawTwoDimensionalPoint(path, factorK, constA)
+function y = drawTwoDimensionalPoint(path, begineLine, factorK, constA)
 % taskPath = [fileParentPath, '\task_point.txt'];
 % workerPath = [fileParentPath, '\worker_point.txt'];
 % disp(taskPath);
@@ -7,7 +7,7 @@ function y = drawTwoDimensionalPoint(path, factorK, constA)
 points = textread(path);
 %size = points(1);
 
-points = points(2:end,:).*factorK+constA;
+points = points(begineLine:end,:).*factorK+constA;
 %taskColor = 'black';
 %workerColor = 'red';
 %disp(tasks(:,1))
