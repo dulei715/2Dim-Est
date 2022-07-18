@@ -11,7 +11,7 @@ import javafx.util.Pair;
 import java.util.*;
 
 @SuppressWarnings("ALL")
-public class DiscretizedDiskPlane extends AbstractDiscretizedPlane {
+public class DiscretizedDiskScheme extends AbstractDiscretizedScheme {
 
     private Integer index45;
     // 记录内部cell个数
@@ -49,13 +49,13 @@ public class DiscretizedDiskPlane extends AbstractDiscretizedPlane {
     private Double[] lowSplitPartArray = new Double[2];
 
 
-    public DiscretizedDiskPlane(Double epsilon, Double gridLength, Double constB, Double inputLength) {
-        super(epsilon, gridLength, constB, inputLength);
+    public DiscretizedDiskScheme(Double epsilon, Double gridLength, Double constB, Double inputLength, Double kParameter, Double xLeft, Double yLeft) {
+        super(epsilon, gridLength, constB, inputLength, kParameter, xLeft, yLeft);
         this.setIndex45();
     }
 
-    public DiscretizedDiskPlane(Double epsilon, Double gridLength, Double inputLength) {
-        super(epsilon, gridLength, inputLength);
+    public DiscretizedDiskScheme(Double epsilon, Double gridLength, Double inputLength, Double kParameter, Double xLeft, Double yLeft) {
+        super(epsilon, gridLength, inputLength, kParameter, xLeft, yLeft);
         this.setIndex45();
     }
 
@@ -129,7 +129,7 @@ public class DiscretizedDiskPlane extends AbstractDiscretizedPlane {
     }
 
     @Override
-    protected Integer getOptimalSizeB() {
+    public Integer getOptimalSizeB() {
         double mA = Math.exp(this.epsilon) - 1 - this.epsilon;
         double mB = 1 - (1 - this.epsilon) * Math.exp(this.epsilon);
         return (int)Math.ceil((2*mB+Math.sqrt(4*mB*mB+Math.PI*Math.exp(epsilon)*mA*mB))/(Math.PI*Math.exp(epsilon)*mA) * this.sizeD);

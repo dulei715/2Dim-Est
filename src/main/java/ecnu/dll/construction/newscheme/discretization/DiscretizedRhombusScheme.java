@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Map;
 
 @SuppressWarnings("ALL")
-public class DiscretizedRhombusPlane extends AbstractDiscretizedPlane {
+public class DiscretizedRhombusScheme extends AbstractDiscretizedScheme {
 
     /**
      * 1. 高概率部分 2b^2+2b+1
@@ -24,12 +24,12 @@ public class DiscretizedRhombusPlane extends AbstractDiscretizedPlane {
      */
     private Integer[] constValues;
 
-    public DiscretizedRhombusPlane(Double epsilon, Double gridLength, Double constB, Double inputLength) {
-        super(epsilon,gridLength,constB,inputLength);
+    public DiscretizedRhombusScheme(Double epsilon, Double gridLength, Double constB, Double inputLength, Double kParameter, Double xLeft, Double yLeft) {
+        super(epsilon, gridLength, constB, inputLength, kParameter, xLeft, yLeft);
     }
 
-    public DiscretizedRhombusPlane(Double epsilon, Double gridLength, Double inputLength) {
-        super(epsilon,gridLength,inputLength);
+    public DiscretizedRhombusScheme(Double epsilon, Double gridLength, Double inputLength, Double kParameter, Double xLeft, Double yLeft) {
+        super(epsilon, gridLength, inputLength, kParameter, xLeft, yLeft);
     }
 
     @Override
@@ -46,7 +46,7 @@ public class DiscretizedRhombusPlane extends AbstractDiscretizedPlane {
     }
 
     @Override
-    protected Integer getOptimalSizeB() {
+    public Integer getOptimalSizeB() {
         double mA = Math.exp(this.epsilon) - 1 - this.epsilon;
         double mB = 1 - (1 - this.epsilon) * Math.exp(this.epsilon);
         return (int)Math.ceil((2*mB+Math.sqrt(4*mB*mB+2*Math.exp(epsilon)*mA*mB))/(2*Math.exp(epsilon)*mA) * this.sizeD);
@@ -186,7 +186,7 @@ public class DiscretizedRhombusPlane extends AbstractDiscretizedPlane {
         Integer[] integerIndexes;
         TwoDimensionalDoublePoint doubleValuePoint;
         TwoDimensionalIntegerPoint outputPoint;
-        DiscretizedRhombusPlane rhombusPlane = new DiscretizedRhombusPlane(epsilon, gridLen, lenB, lenD);
+        DiscretizedRhombusScheme rhombusPlane = new DiscretizedRhombusScheme(epsilon, gridLen, lenB, lenD, 0.0, 0.0);
         List<TwoDimensionalIntegerPoint> pointList = new ArrayList<>();
         String outputPath = "D:\\test\\output3.txt";
         PointWrite pointWrite = new PointWrite();
