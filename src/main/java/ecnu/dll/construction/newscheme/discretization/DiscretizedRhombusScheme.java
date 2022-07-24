@@ -26,10 +26,18 @@ public class DiscretizedRhombusScheme extends AbstractDiscretizedScheme {
 
     public DiscretizedRhombusScheme(Double epsilon, Double gridLength, Double constB, Double inputLength, Double kParameter, Double xLeft, Double yLeft) {
         super(epsilon, gridLength, constB, inputLength, kParameter, xLeft, yLeft);
+        this.setConstPQ();
+        this.setRawIntegerPointTypeList();
+        this.setNoiseIntegerPointTypeList();
+        this.setTransformMatrix();
     }
 
     public DiscretizedRhombusScheme(Double epsilon, Double gridLength, Double inputLength, Double kParameter, Double xLeft, Double yLeft) {
         super(epsilon, gridLength, inputLength, kParameter, xLeft, yLeft);
+        this.setConstPQ();
+        this.setRawIntegerPointTypeList();
+        this.setNoiseIntegerPointTypeList();
+        this.setTransformMatrix();
     }
 
     @Override
@@ -114,7 +122,7 @@ public class DiscretizedRhombusScheme extends AbstractDiscretizedScheme {
             // 含低概率部分:对应面积为 2b^2-2b+4bd+d^2
             // 再次分割为占比 (2b^2+3bd-2b-d+d^2):(d+d*b)
             double smallRectangleRatio = this.constValues[4] * 1.0 / this.constValues[2];
-            //todo: 修改两个为离散的
+            //修改两个为离散的
             if (tempRandomB < smallRectangleRatio) {
                 // 小矩形部分: x随机返回[0,d-1]; y随机返回[-b-1,-1],其中-b-1部分对应着b+d-1部分
                 xOutput = RandomUtil.getRandomInteger(0, this.sizeD - 1);
@@ -126,7 +134,6 @@ public class DiscretizedRhombusScheme extends AbstractDiscretizedScheme {
                 // 大矩形部分: x随机返回[-b,b+d-1]; y随机返回 [0,b+d-2]
                 xOutput = RandomUtil.getRandomInteger(-this.sizeB, this.sizeB + this.sizeD - 1);
                 yOutput = RandomUtil.getRandomInteger(0, this.sizeB + this.sizeD - 2);
-                // todo:lll
                 if (xOutput - yOutput + this.sizeB + this.sizeD - 1 < 0) {
                     // 左上角边长为b的三角形
                     //平移还原到右下角
@@ -144,7 +151,7 @@ public class DiscretizedRhombusScheme extends AbstractDiscretizedScheme {
             // 只含高概率部分
             // 和d为1的时候情况相同
             double smallRectangleRatio = (this.sizeB + 1) * 1.0 / this.constValues[0];
-            //todo: 修改两个为离散的
+            //修改两个为离散的
             if (tempRandomB < smallRectangleRatio) {
                 // 小矩形部分: x随机返回[0,0]; y随机返回[-b-1,-1],其中-b-1部分对应着b部分
                 xOutput = 0;

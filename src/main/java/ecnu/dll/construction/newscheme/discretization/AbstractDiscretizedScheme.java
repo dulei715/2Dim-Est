@@ -26,7 +26,7 @@ public abstract class AbstractDiscretizedScheme implements DiscretizedPlaneInter
     // 记录输入区域边长值
     protected Double inputLength = null;
     // 记录输入的正方形边长除以grid边长的大小
-    protected Integer sizeInputLen = null;
+//    protected Integer sizeInputLen = null;
     protected Integer sizeB = null;
     // 记录输入长度除以grid长度的大小
     protected Integer sizeD = null;
@@ -49,15 +49,15 @@ public abstract class AbstractDiscretizedScheme implements DiscretizedPlaneInter
         this.epsilon = epsilon;
         this.gridLength = gridLength;
         this.inputLength = inputLength;
-        //todo: 假设向下取整 (为了提高精度，尽量让高概率部分小)
+        //假设向下取整 (为了提高精度，尽量让高概率部分小)
         this.sizeB = (int)Math.floor(constB / gridLength);
-        //todo: 假设向上取整 (为了包含所有可能的点)
+        //假设向上取整 (为了包含所有可能的点)
         this.sizeD = (int)Math.ceil(inputLength / gridLength);
         this.kParameter = kParameter;
-        this.setConstPQ();
-        this.setRawIntegerPointTypeList();
-        this.setNoiseIntegerPointTypeList();
-        this.setTransformMatrix();
+//        this.setConstPQ();
+//        this.setRawIntegerPointTypeList();
+//        this.setNoiseIntegerPointTypeList();
+//        this.setTransformMatrix();
     }
 
     public AbstractDiscretizedScheme(Double epsilon, Double gridLength, Double inputLength, Double kParameter, Double xLeft, Double yLeft) {
@@ -67,15 +67,15 @@ public abstract class AbstractDiscretizedScheme implements DiscretizedPlaneInter
         this.epsilon = epsilon;
         this.gridLength = gridLength;
         this.inputLength = inputLength;
-        //todo: 假设向上取整
+        //假设向上取整
         this.sizeB = this.getOptimalSizeB();
-        //todo: 假设向上取整
+        //假设向上取整
         this.sizeD = (int)Math.ceil(inputLength / gridLength);
         this.kParameter = kParameter;
-        this.setConstPQ();
-        this.setRawIntegerPointTypeList();
-        this.setNoiseIntegerPointTypeList();
-        this.setTransformMatrix();
+//        this.setConstPQ();
+//        this.setRawIntegerPointTypeList();
+//        this.setNoiseIntegerPointTypeList();
+//        this.setTransformMatrix();
     }
 
     protected abstract void setConstPQ();
