@@ -3,10 +3,10 @@ package ecnu.dll.construction.newscheme.discretization;
 import cn.edu.ecnu.basic.BasicArray;
 import cn.edu.ecnu.basic.RandomUtil;
 import cn.edu.ecnu.collection.SetUtils;
-import cn.edu.ecnu.struct.BasicPair;
+import cn.edu.ecnu.struct.pair.IdentityPair;
 import cn.edu.ecnu.struct.point.TwoDimensionalIntegerPoint;
 import ecnu.dll.construction.newscheme.discretization.state.DiscretizedDiskPlaneState;
-import javafx.util.Pair;
+import ecnu.dll.construction.newscheme.discretization.tool.DiscretizedDiskSchemeTool;
 
 import java.util.*;
 
@@ -22,17 +22,13 @@ public class DiscretizedDiskScheme extends AbstractDiscretizedScheme {
     private Double edge45Area = null;
 
 
-    // 记录内部cell个数
-//    @Deprecated 被innerCellIndexList记录
-//    private Integer innerCellSizes = null;
-    // 记录坐标方向和45方向的cell个数
-//    private Integer edgeCellSize = null;
+
     // 记录0到45方向之间（不含边界）的内侧点坐标
-    private List<BasicPair<Integer, Integer>> innerCellIndexList = null;
+    private List<IdentityPair<Integer>> innerCellIndexList = null;
     // 记录0和45方向之间（不含边界）的最外侧点坐标
-    private List<BasicPair<Integer, Integer>> outerCellIndexList = null;
-    // 记录
-    private List<BasicPair<Integer, Integer>> outputBorderOuterCellList = null;
+    private List<IdentityPair<Integer>> outerCellIndexList = null;
+    // 记录中心点为最右上方点时，外侧点的坐标
+    private List<IdentityPair<Integer>> outputBorderOuterCellList = null;
 
     // 记录坐标和45方向之间（不含边界）的最外侧点应该近似的面积大小
     private List<Double> outerCellAreaSizeList = null;
@@ -94,70 +90,9 @@ public class DiscretizedDiskScheme extends AbstractDiscretizedScheme {
         }
     }
 
-    /**
-     * 根据给定的原始cell，返回整个输出空间中除去高概率部分和中间概率部分的纯低概率的cell的有序集合
-     * @param realPoint
-     * @return
-     */
-    private TreeSet<TwoDimensionalIntegerPoint> getResidualPureLowCellsByPoint(TwoDimensionalIntegerPoint realPoint) {
-        Integer realPointX = realPoint.getXIndex();
-        Integer realPointY = realPoint.getYIndex();
 
-        /*
-            1. 构建集合包含：2π范围内部点，四段高概率坐标轴(含原始点)，四段高概率45轴，四部分外边界点
-         */
-        List<TwoDimensionalIntegerPoint> list = new ArrayList<>();
-        Pair<Integer, Integer> tempPair;
-        Integer tempX, tempY;
-        // (1) 2π范围内部点
-        for (int i = 0; i < this.innerCellIndexList.size(); i++) {
-            tempPair = this.innerCellIndexList.get(i);
-            tempX = tempPair.getKey();
-            tempY = tempPair.getValue();
-            list.add(new TwoDimensionalIntegerPoint(realPointX+tempX, realPointY+tempY));
-            list.add(new TwoDimensionalIntegerPoint(realPointX+tempY, realPointY+tempX));
-            list.add(new TwoDimensionalIntegerPoint(realPointX-tempX, realPointY+tempY));
-            list.add(new TwoDimensionalIntegerPoint(realPointX-tempY, realPointY+tempX));
-            list.add(new TwoDimensionalIntegerPoint(realPointX-tempX, realPointY-tempY));
-            list.add(new TwoDimensionalIntegerPoint(realPointX-tempY, realPointY-tempX));
-            list.add(new TwoDimensionalIntegerPoint(realPointX+tempX, realPointY-tempY));
-            list.add(new TwoDimensionalIntegerPoint(realPointX+tempY, realPointY-tempX));
-        }
-        // 四段高概率坐标轴(含原始点)
-        list.add(realPoint);
-        for (int i = 1; i <= this.sizeB; i++) {
-            list.add(new TwoDimensionalIntegerPoint(realPointX+i, realPointY));
-            list.add(new TwoDimensionalIntegerPoint(realPointX-i, realPointY));
-            list.add(new TwoDimensionalIntegerPoint(realPointX, realPointY+i));
-            list.add(new TwoDimensionalIntegerPoint(realPointX, realPointY-i));
-        }
-        // 四段高概率45轴(包含混合概率45轴点)
-        for (int i = 1; i <= this.upperIndex45; i++) {
-            list.add(new TwoDimensionalIntegerPoint(realPointX+i, realPointY+i));
-            list.add(new TwoDimensionalIntegerPoint(realPointX-i, realPointY+i));
-            list.add(new TwoDimensionalIntegerPoint(realPointX+i, realPointY-i));
-            list.add(new TwoDimensionalIntegerPoint(realPointX-i, realPointY-i));
-        }
-        // 四部分外边界点
-        for (int i = 0; i < this.outerCellIndexList.size(); i++) {
-            tempPair = this.outerCellIndexList.get(i);
-            tempX = tempPair.getKey();
-            tempY = tempPair.getValue();
-            list.add(new TwoDimensionalIntegerPoint(realPointX+tempX, realPointY+tempY));
-            list.add(new TwoDimensionalIntegerPoint(realPointX+tempY, realPointY+tempX));
-            list.add(new TwoDimensionalIntegerPoint(realPointX-tempX, realPointY+tempY));
-            list.add(new TwoDimensionalIntegerPoint(realPointX-tempY, realPointY+tempX));
-            list.add(new TwoDimensionalIntegerPoint(realPointX-tempX, realPointY-tempY));
-            list.add(new TwoDimensionalIntegerPoint(realPointX-tempY, realPointY-tempX));
-            list.add(new TwoDimensionalIntegerPoint(realPointX+tempX, realPointY-tempY));
-            list.add(new TwoDimensionalIntegerPoint(realPointX+tempY, realPointY-tempX));
-        }
 
-        /*
-            2. 从noise列表中除去上面集合的点
-         */
-        return SetUtils.getResidualOrderedElement(this.noiseIntegerPointTypeList, list);
-    }
+
 
     @Override
     public Integer getOptimalSizeB() {
@@ -167,46 +102,16 @@ public class DiscretizedDiskScheme extends AbstractDiscretizedScheme {
     }
 
     private void setOuterCellIndex() {
-        double sqrt2 = Math.sqrt(2);
-        double tempDiff = this.sizeB / sqrt2 - 0.5;
-        double r_1 = Math.floor(tempDiff) * sqrt2 + 1/sqrt2;
-        double r = Math.sqrt(r_1 * (r_1  + sqrt2) + 1);
-        int outerCellSize = (int)Math.ceil(tempDiff) - (int)Math.floor(r / this.sizeB);
-        this.outerCellIndexList = new ArrayList<>(outerCellSize);
-        int xIndexTemp;
-        for (int i = 1; i <= outerCellSize; i++) {
-            xIndexTemp = (int) Math.ceil(Math.sqrt(this.sizeB * this.sizeB - Math.pow(i-0.5,2))-0.5);
-            this.outerCellIndexList.add(new BasicPair<>(xIndexTemp, i));
-        }
+        this.outerCellIndexList = DiscretizedDiskSchemeTool.calculateOuterCellIndexList(this.sizeB);
     }
 
 
-
-    // 需要先调用setOuterCellIndex
-//    private void setInnerCellSize() {
-//        int tempSize = this.upperIndex45 * (this.upperIndex45 - 2 * this.outerCellIndexList.size() - 1) / 2;
-//        for (int i = 0; i < this.outerCellIndexList.size(); i++) {
-//            // 加上每个外部cell对应的x坐标值
-//            tempSize += this.outerCellIndexList.get(i).getKey();
-//        }
-//        this.innerCellSize = tempSize;
-//    }
     // 需要先调用setOuterCellIndex
     private void setInnerCell() {
-        BasicPair<Integer, Integer> tempPair;
-        Integer tempX, tempY;
-        TreeSet<BasicPair<Integer, Integer>> treeSet = new TreeSet<>();
-        for (int k = 0; k < this.outerCellIndexList.size(); k++) {
-            tempPair = this.outerCellIndexList.get(k);
-            tempX = tempPair.getKey();
-            tempY = tempPair.getValue();
-            for (int i = k + 2; i < tempX; i++) {
-                treeSet.add(new BasicPair<>(i, tempY));
-            }
-        }
-        this.innerCellIndexList = new ArrayList<>(treeSet);
-//        this.innerCellSize = this.innerCellIndexList.size();
+        this.innerCellIndexList = DiscretizedDiskSchemeTool.getInnerCell(this.outerCellIndexList);
     }
+
+
 
     /**
      * 设置0到45之间（不含边界）的外边界经过shrink后的面积
@@ -215,32 +120,25 @@ public class DiscretizedDiskScheme extends AbstractDiscretizedScheme {
         this.outerCellAreaSizeList = new ArrayList<>(this.outerCellIndexList.size());
         int tempX, tempY;
         double delta, tempShrinkAreaSize;
-        Pair<Integer, Integer> tempPair;
+        IdentityPair<Integer> tempPair;
         for (int i = 0; i < this.outerCellIndexList.size(); i++) {
             tempPair = this.outerCellIndexList.get(i);
             tempX = tempPair.getKey();
             tempY = tempPair.getValue();
-            delta = this.sizeB * 1.0 / (tempX * tempX + tempY * tempY) - 1;
-            tempShrinkAreaSize = 4 * (delta * tempX + 0.5) * (delta * tempY + 0.5);
+            tempShrinkAreaSize = DiscretizedDiskSchemeTool.getShrinkAreaSize(this.sizeB, tempX, tempY);
             this.outerCellAreaSizeList.add(tempShrinkAreaSize);
         }
     }
+
+
 
     /**
      * 设置0到45之间（不含边界）的输出边界cell列表
      */
     private void setOutputBorderOuterCellList() {
 
-        this.outputBorderOuterCellList = new ArrayList<>();
-        int tempX, tempY, borderX;
-        Pair<Integer, Integer> tempPair;
-        for (int i = 1; i < this.sizeD; i++) {
-            this.outputBorderOuterCellList.add(new BasicPair<>(this.sizeD + this.sizeB - 1, i));
-        }
-        for (int i = 0; i < this.outerCellIndexList.size(); i++) {
-            tempPair = this.outerCellIndexList.get(i);
-            this.outputBorderOuterCellList.add(new BasicPair<>(tempPair.getKey(), tempPair.getValue() + this.sizeD - 1));
-        }
+        this.outputBorderOuterCellList = DiscretizedDiskSchemeTool.getOutputBorderOuterCellList(this.outerCellIndexList, this.sizeD, this.sizeB);
+
     }
 
 
@@ -270,11 +168,6 @@ public class DiscretizedDiskScheme extends AbstractDiscretizedScheme {
         this.lowSplitPartArray = new Double[3];
 
         // 设置高概率分段部分
-//        highSplitPartArray[0] = 8.0 * this.innerCellIndexList.size();
-//        highSplitPartArray[1] = highSplitPartArray[0] + 4 * this.sizeB;
-//        highSplitPartArray[2] = highSplitPartArray[1] + 4 * Math.ceil(this.sizeB / Math.sqrt(2)-0.5);
-//        highSplitPartArray[3] = highSplitPartArray[2] + 1;
-//        highParameter = highSplitPartArray[4] = highSplitPartArray[3] + totalShrinkArea;
         this.highSplitPartArray[0] = 1.0;
         this.highSplitPartArray[1] = this.highSplitPartArray[0] + this.sizeB * 4;
         this.highSplitPartArray[2] = this.highSplitPartArray[1] + this.lowerIndex45 * 4;
@@ -284,8 +177,6 @@ public class DiscretizedDiskScheme extends AbstractDiscretizedScheme {
 
 
         // 设置低概率分段部分
-//        lowSplitPartArray[0] = originalLowAreaSize;
-//        lowParameter = lowSplitPartArray[1] = lowSplitPartArray[0] + this.outerCellAreaSizeList.size() - totalShrinkArea;
         this.lowSplitPartArray[0] = originalLowAreaSize;
         this.lowSplitPartArray[1] = this.lowSplitPartArray[0] + (1 - this.edge45Area) * 4;
         lowParameter = this.lowSplitPartArray[2] = this.lowSplitPartArray[1] + (this.outerCellAreaSizeList.size() - totalShrinkArea) * 8;
@@ -328,7 +219,7 @@ public class DiscretizedDiskScheme extends AbstractDiscretizedScheme {
         /*
             设置高概率边界集合状态和两侧(高概率和低概率)的状态
          */
-        Pair<Integer, Integer> tempPair;
+        IdentityPair<Integer> tempPair;
         int tempX, tempY, borderX;
         int k;
         this.setOutputBorderOuterCellList();
@@ -357,59 +248,12 @@ public class DiscretizedDiskScheme extends AbstractDiscretizedScheme {
 
     }
 
+
+
     @Override
     public void setNoiseIntegerPointTypeList() {
-        TreeSet<TwoDimensionalIntegerPoint> treeSet = new TreeSet<>();
-        /*
-            添加原始cell和其经过右移、上移sizeD个cell所覆盖的cell （含坐标方向）
-         */
-        int moveDistance, upperIndex;
-        moveDistance = upperIndex = this.sizeB + this.sizeD;
-        for (int i = -this.sizeB; i < 0; i++) {
-            for (int j = 0; j < this.sizeD; j++) {
-                treeSet.add(new TwoDimensionalIntegerPoint(i, j));
-                treeSet.add(new TwoDimensionalIntegerPoint(i + moveDistance, j));
-            }
-        }
-        for (int i = 0; i < this.sizeD; i++) {
-            for (int j = -this.sizeB; j < upperIndex; j++) {
-                treeSet.add(new TwoDimensionalIntegerPoint(i, j));
-            }
-        }
 
-
-        /*
-            添加被打散为四部分的高概率cell (含45方向)
-         */
-//        int upperIndex45 = (int) Math.ceil(this.sizeB / Math.sqrt(2)-0.5);
-
-        // 处理45方向
-        for (int i = 1; i <= this.upperIndex45; i++) {
-            treeSet.add(new TwoDimensionalIntegerPoint(-i, -i));
-            treeSet.add(new TwoDimensionalIntegerPoint(-i, i + this.sizeD - 1));
-            treeSet.add(new TwoDimensionalIntegerPoint(i + this.sizeD - 1, -i));
-            treeSet.add(new TwoDimensionalIntegerPoint(i + this.sizeD - 1, i + this.sizeD - 1));
-        }
-        // 处理其他部分
-        Pair<Integer, Integer> tempPair;
-        int tempX, j;
-        for (int k = 0; k < this.outerCellIndexList.size(); k++) {
-            tempPair = this.outerCellIndexList.get(k);
-            j = tempPair.getValue();
-            tempX = tempPair.getKey();
-            for (int i = j + 1; i <= tempX; i++) {
-                treeSet.add(new TwoDimensionalIntegerPoint(-i, -j));
-                treeSet.add(new TwoDimensionalIntegerPoint(-j, -i));
-                treeSet.add(new TwoDimensionalIntegerPoint(-i, j + this.sizeD - 1));
-                treeSet.add(new TwoDimensionalIntegerPoint(-j, i + this.sizeD - 1));
-                treeSet.add(new TwoDimensionalIntegerPoint(i + this.sizeD - 1, -j));
-                treeSet.add(new TwoDimensionalIntegerPoint(j + this.sizeD - 1, -i));
-                treeSet.add(new TwoDimensionalIntegerPoint(i + this.sizeD - 1, j + this.sizeD - 1));
-                treeSet.add(new TwoDimensionalIntegerPoint(j + this.sizeD - 1, i + this.sizeD - 1));
-            }
-
-        }
-        this.noiseIntegerPointTypeList = new ArrayList<>(treeSet);
+        this.noiseIntegerPointTypeList = DiscretizedDiskSchemeTool.getNoiseIntegerPointTypeList(this.outerCellIndexList, this.sizeD, this.sizeB, this.upperIndex45);
     }
 
     @Override
@@ -468,8 +312,8 @@ public class DiscretizedDiskScheme extends AbstractDiscretizedScheme {
         double splitPointA = this.constP * this.highSplitPartArray[this.highSplitPartArray.length-1];
         Double randomA = RandomUtil.getRandomDouble(0.0, 1.0);
         Integer tempIndex;
-        Integer tempX = null, tempY = null, shiftIndex, orignialX, originalY;
-        orignialX = originalPoint.getXIndex();
+        Integer tempX = null, tempY = null, shiftIndex, originalX, originalY;
+        originalX = originalPoint.getXIndex();
         originalY = originalPoint.getYIndex();
         if (randomA < splitPointA) {
             // 高概率部分
@@ -479,7 +323,7 @@ public class DiscretizedDiskScheme extends AbstractDiscretizedScheme {
                 return originalPoint;
             }
             Integer randomInteger = RandomUtil.getRandomInteger(0, 3);
-            BasicPair<Integer,Integer> chosenPair = null;
+            IdentityPair<Integer> chosenPair = null;
             Integer judge45 = null;
             switch (tempIndex) {
 
@@ -552,16 +396,16 @@ public class DiscretizedDiskScheme extends AbstractDiscretizedScheme {
                     }
                     break;
             }
-            return new TwoDimensionalIntegerPoint(orignialX + tempX, originalY + tempY);
+            return new TwoDimensionalIntegerPoint(originalX + tempX, originalY + tempY);
         } else {
             // 低概率部分
             Integer randomIndex = null, judge45 = null;
-            BasicPair<Integer, Integer> chosenPair = null;
+            IdentityPair<Integer> chosenPair = null;
             tempIndex = RandomUtil.getRandomIndexGivenCumulativeCountPoint(this.lowSplitPartArray);
             switch (tempIndex) {
                 // 随机返回外部节点
                 case 0:
-                    TreeSet<TwoDimensionalIntegerPoint> pureLowCellsByPointSet = getResidualPureLowCellsByPoint(originalPoint);
+                    TreeSet<TwoDimensionalIntegerPoint> pureLowCellsByPointSet = DiscretizedDiskSchemeTool.getResidualPureLowCellsByPoint(originalPoint, this.noiseIntegerPointTypeList, this.innerCellIndexList, this.outerCellIndexList, this.sizeB, this.upperIndex45);
                     int pureLowCellSize = pureLowCellsByPointSet.size();
                     randomIndex = RandomUtil.getRandomInteger(0, pureLowCellSize - 1);
                     TwoDimensionalIntegerPoint chosenPoint = SetUtils.getElementByIndex(pureLowCellsByPointSet, randomIndex);
@@ -575,7 +419,7 @@ public class DiscretizedDiskScheme extends AbstractDiscretizedScheme {
                         case 2: tempY *= -1; break;
                         case 3: tempX *= -1; tempY *= -1; break;
                     }
-                    return new TwoDimensionalIntegerPoint(orignialX + tempX, originalY + tempY);
+                    return new TwoDimensionalIntegerPoint(originalX + tempX, originalY + tempY);
 //                    break;
 
                 // 随机返回外边界cell
@@ -591,7 +435,7 @@ public class DiscretizedDiskScheme extends AbstractDiscretizedScheme {
                         tempX = tempY;
                         tempY = shiftIndex;
                     }
-                    return new TwoDimensionalIntegerPoint(orignialX + tempX, originalY + tempY);
+                    return new TwoDimensionalIntegerPoint(originalX + tempX, originalY + tempY);
 //                    break;
             }
         }
