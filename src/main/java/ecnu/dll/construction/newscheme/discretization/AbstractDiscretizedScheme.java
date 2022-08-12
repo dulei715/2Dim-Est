@@ -123,6 +123,13 @@ public abstract class AbstractDiscretizedScheme implements DiscretizedPlaneInter
         return noiseIntegerPointList;
     }
 
+    public List<TwoDimensionalDoublePoint> getNoiseDoubleValue(List<TwoDimensionalDoublePoint> originalPointList, boolean isCenter) {
+        List<TwoDimensionalIntegerPoint> integerPointList = Grid.toIntegerPoint(originalPointList, this.leftBorderArray, this.gridLength);
+        List<TwoDimensionalIntegerPoint> noiseIntegerValue = this.getNoiseValue(integerPointList);
+        List<TwoDimensionalDoublePoint> resultPointList = Grid.toDoublePoint(noiseIntegerPointTypeList, this.leftBorderArray, this.gridLength, isCenter);
+        return resultPointList;
+    }
+
     public TreeMap<TwoDimensionalIntegerPoint, Double> rawDataStatistic(List<TwoDimensionalIntegerPoint> valueList) {
         return StatisticTool.countHistogramRatioMap(this.rawIntegerPointTypeList, valueList);
     }

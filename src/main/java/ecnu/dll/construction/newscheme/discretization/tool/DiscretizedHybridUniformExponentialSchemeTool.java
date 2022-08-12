@@ -52,7 +52,7 @@ public class DiscretizedHybridUniformExponentialSchemeTool {
             for (int j = tempLeftX + 1; j < tempRightX; j++) {
                 includedSet.add(new TwoDimensionalIntegerPoint(j, tempYIndex));
             }
-            // 只有当两个环形在当前你Y坐标上相交的不是同一个cell的时候，才记录后者的partArea
+            // 当两个环形在当前你Y坐标上相交的不是同一个cell的时候，记录后者的partArea, 否则不记录
             if (tempRightX > tempLeftX) {
                 tempRightShrankAreaSize = DiscretizedDiskSchemeTool.getShrinkAreaSize(rightB, tempRightX, tempYIndex);
                 partAreaMap.put(new TwoDimensionalIntegerPoint(tempRightX, tempYIndex), tempRightShrankAreaSize);
@@ -93,7 +93,7 @@ public class DiscretizedHybridUniformExponentialSchemeTool {
         for (int j = tempLeftX + 1; j < tempRightX; j++) {
             includedSet.add(new TwoDimensionalIntegerPoint(j, j));
         }
-        // 此处判断是为了考虑相邻两个环形边界是否会交在一个cell里。如果交在一个cell里，那后面的环形边界将不记录partArea
+        // 此处判断是为了考虑相邻两个环形边界是否会交在一个cell里。如果交在一个cell里，那后面的环形边界不记录
         if (tempRightX > tempLeftX) { // 两个相邻环形没交在同一个cell里
             tempRightShrankAreaSize = DiscretizedDiskSchemeTool.get45EdgeIndexSplitArea(rightB);
             partAreaMap.put(new TwoDimensionalIntegerPoint(tempRightX, tempRightX), tempRightShrankAreaSize);

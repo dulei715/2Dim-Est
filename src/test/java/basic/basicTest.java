@@ -1,13 +1,10 @@
 package basic;
 
 import cn.edu.ecnu.io.print.MyPrint;
-import cn.edu.ecnu.struct.BasicPair;
-import javafx.util.Pair;
+import cn.edu.ecnu.struct.pair.BasicPair;
 import org.junit.Test;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.TreeSet;
+import java.util.*;
 
 public class basicTest {
     @Test
@@ -39,6 +36,21 @@ public class basicTest {
         treeSet.add(new BasicPair<>(2,5));
         treeSet.add(new BasicPair<>(2,5));
         MyPrint.showSet(treeSet);
+    }
+
+    @Test
+    public void fun4() {
+        List<Integer> list = new ArrayList<>();
+        list.add(3);
+        list.add(0,4);
+        MyPrint.showList(list);
+    }
+
+    @Test
+    public void fun5() {
+        Double value = 9.45E-4;
+        System.out.println(value);
+        System.out.println(value*100000);
     }
 
 }

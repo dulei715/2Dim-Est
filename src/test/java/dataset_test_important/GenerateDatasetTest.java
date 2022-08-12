@@ -36,4 +36,28 @@ public class GenerateDatasetTest {
         pointWrite.endWriting();
 
     }
+
+    @Test
+    public void generateUniform() {
+        String outputPath = "F:\\dataset\\test\\synthetic_dataset\\two_uniform_dataset.txt";
+        int size = 100000;
+        double randomValueX, randomValueY;
+        TwoDimensionalDoublePoint point;
+        List<TwoDimensionalDoublePoint> pointList = new ArrayList<>();
+
+        for (int i = 0; i < size; i++) {
+            randomValueX = RandomUtil.getRandomDouble(0.0, 1.0);
+
+            randomValueY = RandomUtil.getRandomDouble(0.0, 1.0);
+
+            point = new TwoDimensionalDoublePoint(randomValueX, randomValueY);
+
+            pointList.add(point);
+        }
+        PointWrite pointWrite = new PointWrite();
+        pointWrite.startWriting(outputPath);
+        pointWrite.writePoint(pointList);
+        pointWrite.endWriting();
+    }
+
 }

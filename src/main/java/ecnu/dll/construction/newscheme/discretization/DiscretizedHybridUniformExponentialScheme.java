@@ -111,6 +111,7 @@ public class DiscretizedHybridUniformExponentialScheme extends AbstractDiscretiz
      * 初始化基本参数
      */
     public void initialize() {
+        this.setRawIntegerPointTypeList();
         // 1. 设置内部annular相关信息和非低概率最大边界信息(位置和shrank面积)
         this.setAnnularListAndOuterCell();
 
@@ -119,6 +120,11 @@ public class DiscretizedHybridUniformExponentialScheme extends AbstractDiscretiz
 
         // 3. 初始化内部cell列表
         this.innerCellIndexList = DiscretizedDiskSchemeTool.getInnerCell(this.outerCellIndexList);
+
+        this.setConstPQ();
+        this.setNoiseIntegerPointTypeList();
+        this.setTransformMatrix();
+
     }
 
     public AnnularIndex getAnnularIndex(TwoDimensionalIntegerPoint relativePoint) {
@@ -131,6 +137,9 @@ public class DiscretizedHybridUniformExponentialScheme extends AbstractDiscretiz
         }
         if (yIndex.equals(0)) {
             // 坐标轴情况
+            if (xIndex.equals(0)) {
+                xIndex = 1;
+            }
             return new AnnularIndex(xIndex, 1.0);
         }
         if (xIndex.equals(yIndex)) {
@@ -179,17 +188,19 @@ public class DiscretizedHybridUniformExponentialScheme extends AbstractDiscretiz
         IdentityPair<Integer> leftLineOuterPoint, rightLineOuterPoint;
         leftAreaOuterPointList = new ArrayList<>();
         leftLineOuterPoint = DiscretizedDiskSchemeTool.calculate45EdgeIndex(tempB);
-        this.setAnnularLineListElement(tempB, Annular.getDefaultLineAnnular());
+//        this.setAnnularLineListElement(tempB, Annular.getDefaultLineAnnular());
+        this.annularLineList.add(Annular.getDefaultLineAnnular());
         for (tempB = 2; tempB <= this.sizeB; tempB++) {
             rightAreaOuterPointList = DiscretizedDiskSchemeTool.calculateOuterCellIndexList(tempB);
             areaAnnular = DiscretizedHybridUniformExponentialSchemeTool.getInnerAreaAnnular(leftAreaOuterPointList, rightAreaOuterPointList, tempB - 1, tempB);
-//            this.annularAreaList.add(annular);
-            this.setAnnularAreaListElement(tempB, areaAnnular);
+//            this.setAnnularAreaListElement(tempB, areaAnnular);
+            this.annularAreaList.add(areaAnnular);
             leftAreaOuterPointList = rightAreaOuterPointList;
 
             rightLineOuterPoint = DiscretizedDiskSchemeTool.calculate45EdgeIndex(tempB);
             lineAnnular = DiscretizedHybridUniformExponentialSchemeTool.get45LinearAnnular(leftLineOuterPoint, rightLineOuterPoint, tempB - 1, tempB);
-            this.setAnnularLineListElement(tempB, lineAnnular);
+//            this.setAnnularLineListElement(tempB, lineAnnular);
+            this.annularLineList.add(lineAnnular);
             leftLineOuterPoint = rightLineOuterPoint;
         }
         this.outerCellIndexList = leftAreaOuterPointList;
@@ -197,7 +208,8 @@ public class DiscretizedHybridUniformExponentialScheme extends AbstractDiscretiz
             tempTreeMap = areaAnnular.getPartAreaMap();
             this.outerCellAreaSizeList = new ArrayList<>(this.outerCellIndexList.size());
             for (IdentityPair<Integer> pointPair : this.outerCellIndexList) {
-                this.outerCellAreaSizeList.add(tempTreeMap.get(pointPair));
+
+                this.outerCellAreaSizeList.add(tempTreeMap.get(new TwoDimensionalIntegerPoint(pointPair)));
             }
         }
     }
@@ -226,7 +238,7 @@ public class DiscretizedHybridUniformExponentialScheme extends AbstractDiscretiz
         double accumulatedWeightedAreaSize = 0, tempValue, tempWeight;
         Annular tempInnerAnnular, temp45Annular, tempAnnular;
         double originalLowAreaSize = this.sizeD * this.sizeD + 4 * this.sizeB * (this.sizeD - 1) - 1;
-        this.setAnnularListAndOuterCell();
+//        this.setAnnularListAndOuterCell();
         /*
             1. 统计整个加权面积
                 针对每个annular包含：(1) 4个坐标轴；(2)4个45边；(3) 8部分内部cell
@@ -279,7 +291,7 @@ public class DiscretizedHybridUniformExponentialScheme extends AbstractDiscretiz
         Double index45RemainAreaSize = 1 - DiscretizedDiskSchemeTool.get45EdgeIndexSplitArea(this.sizeB);
         tempAnnular = this.getAnnularAreaListElement(this.sizeB);
         Double outerRemainAreaSize = tempAnnular.getPartAreaMap().size() - tempAnnular.getTotalPartAreaSize();
-
+        this.lowSplitPartArray = new Double[3];
         this.lowSplitPartArray[0] = originalLowAreaSize;
         this.lowSplitPartArray[1] = this.lowSplitPartArray[0] + index45RemainAreaSize * 4;
         totalLowAreaSize = this.lowSplitPartArray[2] = this.lowSplitPartArray[1] + outerRemainAreaSize * 8;
@@ -300,7 +312,14 @@ public class DiscretizedHybridUniformExponentialScheme extends AbstractDiscretiz
     public void setNoiseIntegerPointTypeList() {
         Set<TwoDimensionalIntegerPoint> outerCellIndexSet = this.getLastAnnularAreaListElement().getPartAreaMap().keySet();
         Collection outerCellIndexCollection = TwoDimensionalIntegerPoint.toIdentityPair(outerCellIndexSet);
-        Integer upperIndex45 = this.getLastAnnularLineListElement().getPartAreaMap().lastKey().getXIndex();
+        Integer upperIndex45;
+//        Integer upperIndex45 = this.getLastAnnularLineListElement().getPartAreaMap().lastKey().getXIndex();
+        TreeMap<TwoDimensionalIntegerPoint, Double> tempMap = this.getLastAnnularLineListElement().getPartAreaMap();
+        if (tempMap.size() > 0) {
+            upperIndex45 = tempMap.lastKey().getXIndex();
+        } else {
+            upperIndex45 = this.getLastAnnularLineListElement().getRemainAreaMap().lastKey().getXIndex();
+        }
         this.noiseIntegerPointTypeList = DiscretizedDiskSchemeTool.getNoiseIntegerPointTypeList(outerCellIndexCollection, this.sizeD, this.sizeB, upperIndex45);
     }
 
@@ -337,9 +356,11 @@ public class DiscretizedHybridUniformExponentialScheme extends AbstractDiscretiz
                 tempSizeB = tempAnnularIndex.getPartSizeB();
                 if (tempSizeB < 0) {
                     // 纯低概率情况
+                    this.transformMatrix[j][i] = this.constQ;
+                } else {
+                    tempShrankArea = tempAnnularIndex.getPartAreaSize();
+                    this.transformMatrix[j][i] = this.constQ * (this.getAnnularWeight(tempSizeB) * tempShrankArea + this.getAnnularWeight(tempSizeB+1) * (1-tempShrankArea));
                 }
-                tempShrankArea = tempAnnularIndex.getPartAreaSize();
-                this.transformMatrix[j][i] = this.constQ * (this.getAnnularWeight(tempSizeB) * tempShrankArea + this.getAnnularWeight(tempSizeB+1) * (1-tempShrankArea));
             }
         }
     }
