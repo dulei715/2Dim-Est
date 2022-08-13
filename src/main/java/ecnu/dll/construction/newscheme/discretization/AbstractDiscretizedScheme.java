@@ -126,7 +126,7 @@ public abstract class AbstractDiscretizedScheme implements DiscretizedPlaneInter
     public List<TwoDimensionalDoublePoint> getNoiseDoubleValue(List<TwoDimensionalDoublePoint> originalPointList, boolean isCenter) {
         List<TwoDimensionalIntegerPoint> integerPointList = Grid.toIntegerPoint(originalPointList, this.leftBorderArray, this.gridLength);
         List<TwoDimensionalIntegerPoint> noiseIntegerValue = this.getNoiseValue(integerPointList);
-        List<TwoDimensionalDoublePoint> resultPointList = Grid.toDoublePoint(noiseIntegerPointTypeList, this.leftBorderArray, this.gridLength, isCenter);
+        List<TwoDimensionalDoublePoint> resultPointList = Grid.toDoublePoint(noiseIntegerValue, this.leftBorderArray, this.gridLength, isCenter);
         return resultPointList;
     }
 

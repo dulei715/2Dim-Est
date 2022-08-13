@@ -1,15 +1,14 @@
 package mechanism_test;
 
-import cn.edu.ecnu.constant_values.ConstantValues;
-import cn.edu.ecnu.io.print.MyPrint;
 import cn.edu.ecnu.io.read.TwoDimensionalPointRead;
 import cn.edu.ecnu.io.write.PointWrite;
+import cn.edu.ecnu.statistic.StatisticTool;
 import cn.edu.ecnu.struct.point.TwoDimensionalDoublePoint;
-import ecnu.dll.construction._config.Constant;
 import ecnu.dll.construction.newscheme.discretization.DiscretizedHybridUniformExponentialScheme;
 import org.junit.Test;
 
 import java.util.List;
+import java.util.Map;
 
 public class DiscretizedHybridUniformExponentialSchemeTest {
     @Test
@@ -32,8 +31,8 @@ public class DiscretizedHybridUniformExponentialSchemeTest {
     @Test
     public void fun2() {
         double epsilon = 0.5;
-        double gridLength = 0.1;
-        double constB = 0.4;
+        double gridLength = 0.2;
+        double constB = 1.6;
         Double inputLength = 1.0;
         Double kParameter = 0.2;
         Double xLeft = 0.0;
@@ -58,6 +57,19 @@ public class DiscretizedHybridUniformExponentialSchemeTest {
         pointWrite = new PointWrite();
         pointWrite.startWriting(outputRandomCenterPath);
         pointWrite.writePoint(noiseDoubleRandomCentralValue);
+        pointWrite.endWriting();
+
+    }
+
+    @Test
+    public void fun3() {
+        String inputCenterPath = "F:\\dataset\\test\\synthetic_dataset\\output_test\\two_uniform_dataset_center.txt";
+        String outputPath = "F:\\dataset\\test\\synthetic_dataset\\output_test\\two_uniform_dataset_center_count.txt";
+        List<TwoDimensionalDoublePoint> pointList = TwoDimensionalPointRead.readPointWithFirstLineCount(inputCenterPath);
+        Map<TwoDimensionalDoublePoint, Integer> countMap = StatisticTool.countHistogramNumber(pointList);
+        PointWrite pointWrite = new PointWrite();
+        pointWrite.startWriting(outputPath);
+        pointWrite.writeStatisticIntegerPoint(countMap);
         pointWrite.endWriting();
     }
 

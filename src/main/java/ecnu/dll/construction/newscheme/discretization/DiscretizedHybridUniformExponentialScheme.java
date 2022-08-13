@@ -297,7 +297,7 @@ public class DiscretizedHybridUniformExponentialScheme extends AbstractDiscretiz
         totalLowAreaSize = this.lowSplitPartArray[2] = this.lowSplitPartArray[1] + outerRemainAreaSize * 8;
 
         Double totalWeightedAreaSize = accumulatedWeightedAreaSize + totalLowAreaSize;
-        this.constQ = totalLowAreaSize / totalWeightedAreaSize;
+        this.constQ = 1 / totalWeightedAreaSize;
         this.constP = this.constQ * Math.exp(this.epsilon);
 
     }

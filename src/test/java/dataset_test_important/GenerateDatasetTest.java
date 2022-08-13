@@ -40,7 +40,7 @@ public class GenerateDatasetTest {
     @Test
     public void generateUniform() {
         String outputPath = "F:\\dataset\\test\\synthetic_dataset\\two_uniform_dataset.txt";
-        int size = 100000;
+        int size = 10000;
         double randomValueX, randomValueY;
         TwoDimensionalDoublePoint point;
         List<TwoDimensionalDoublePoint> pointList = new ArrayList<>();

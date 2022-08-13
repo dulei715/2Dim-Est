@@ -17,8 +17,8 @@ points = points(begineLine:end,:).*factorK+constA;
 %scatter(points(:,1), points(:,2));
 
 %Test
-disp(max(points(:,1)));
-disp(max(points(:,2)));
+%disp(max(points(:,1)));
+%disp(max(points(:,2)));
 
 plot(points(:,1),points(:,2),'.');
 % set(gca,'FontSize',20);
