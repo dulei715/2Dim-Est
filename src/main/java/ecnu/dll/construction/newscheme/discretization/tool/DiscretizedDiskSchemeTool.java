@@ -13,6 +13,12 @@ public class DiscretizedDiskSchemeTool {
     public static double getShrinkAreaSize(Integer sizeB, int xIndex, int yIndex) {
         double delta = sizeB * 1.0 / Math.sqrt(xIndex * xIndex + yIndex * yIndex) - 1;
         double tempShrinkAreaSize = 4 * (delta * xIndex + 0.5) * (delta * yIndex + 0.5);
+        if (tempShrinkAreaSize < 0) {
+            // 这里不可能两个坐标差都小于0，因此只要有一个小于0，即面积为负，就设置为0
+            tempShrinkAreaSize = 0;
+        } else if (tempShrinkAreaSize > 1) {
+            tempShrinkAreaSize = 1;
+        }
         return tempShrinkAreaSize;
     }
 

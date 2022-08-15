@@ -1,9 +1,12 @@
 package mechanism_test;
 
+import cn.edu.ecnu.collection.ListUtils;
+import cn.edu.ecnu.io.print.MyPrint;
 import cn.edu.ecnu.io.read.TwoDimensionalPointRead;
 import cn.edu.ecnu.io.write.PointWrite;
 import cn.edu.ecnu.statistic.StatisticTool;
 import cn.edu.ecnu.struct.point.TwoDimensionalDoublePoint;
+import cn.edu.ecnu.struct.point.TwoDimensionalIntegerPoint;
 import ecnu.dll.construction.newscheme.discretization.DiscretizedHybridUniformExponentialScheme;
 import org.junit.Test;
 
@@ -72,5 +75,114 @@ public class DiscretizedHybridUniformExponentialSchemeTest {
         pointWrite.writeStatisticIntegerPoint(countMap);
         pointWrite.endWriting();
     }
+
+    @Test
+    public void fun4() {
+        String outputPath = "F:\\dataset\\test\\synthetic_dataset\\test2\\single_point_test.txt";
+        double epsilon = 0.5;
+        double gridLength = 0.2;
+        double constB = 1.6;
+        Double inputLength = 1.0;
+        Double kParameter = 0.2;
+        Double xLeft = 0.0;
+        Double yLeft = 0.0;
+
+        DiscretizedHybridUniformExponentialScheme scheme = new DiscretizedHybridUniformExponentialScheme(epsilon, gridLength, constB, inputLength, kParameter, xLeft, yLeft);
+        scheme.initialize();
+
+        TwoDimensionalDoublePoint originalPoint = new TwoDimensionalDoublePoint(0, 0);
+        List<TwoDimensionalDoublePoint> pointList = ListUtils.copyToListGivenElement(originalPoint, 50000);
+//        MyPrint.showList(pointList, ConstantValues.LINE_SPLIT);
+
+
+        List<TwoDimensionalDoublePoint> noiseDoubleRandomCentralValue = scheme.getNoiseDoubleValue(pointList, false);
+        PointWrite pointWrite = new PointWrite();
+        pointWrite.startWriting(outputPath);
+        pointWrite.writePoint(noiseDoubleRandomCentralValue);
+        pointWrite.endWriting();
+    }
+
+    @Test
+    public void fun5() {
+        String outputPath = "F:\\dataset\\test\\synthetic_dataset\\test2\\single_point_center_test.txt";
+        double epsilon = 0.5;
+        double gridLength = 0.2;
+        double constB = 1.6;
+        Double inputLength = 1.0;
+        Double kParameter = 0.2;
+        Double xLeft = 0.0;
+        Double yLeft = 0.0;
+
+        DiscretizedHybridUniformExponentialScheme scheme = new DiscretizedHybridUniformExponentialScheme(epsilon, gridLength, constB, inputLength, kParameter, xLeft, yLeft);
+        scheme.initialize();
+
+        TwoDimensionalDoublePoint originalPoint = new TwoDimensionalDoublePoint(0, 0);
+        List<TwoDimensionalDoublePoint> pointList = ListUtils.copyToListGivenElement(originalPoint, 50000);
+//        MyPrint.showList(pointList, ConstantValues.LINE_SPLIT);
+
+
+        List<TwoDimensionalDoublePoint> noiseDoubleRandomCentralValue = scheme.getNoiseDoubleValue(pointList, true);
+        Map<TwoDimensionalDoublePoint, Integer> countMap = StatisticTool.countHistogramNumber(noiseDoubleRandomCentralValue);
+        MyPrint.showMap(countMap);
+//        PointWrite pointWrite = new PointWrite();
+//        pointWrite.startWriting(outputPath);
+//        pointWrite.writePoint(noiseDoubleRandomCentralValue);
+//        pointWrite.endWriting();
+    }
+
+    @Test
+    public void fun6() {
+        String outputPath = "F:\\dataset\\test\\synthetic_dataset\\test2\\single_point_test2.txt";
+        double epsilon = 1;
+        double gridLength = 0.2;
+        double constB = 1.6;
+        Double inputLength = 1.0;
+        Double kParameter = 0.2;
+        Double xLeft = 0.0;
+        Double yLeft = 0.0;
+
+        DiscretizedHybridUniformExponentialScheme scheme = new DiscretizedHybridUniformExponentialScheme(epsilon, gridLength, constB, inputLength, kParameter, xLeft, yLeft);
+        scheme.initialize();
+
+        TwoDimensionalIntegerPoint originalPoint = new TwoDimensionalIntegerPoint(0, 0);
+        List<TwoDimensionalIntegerPoint> pointList = ListUtils.copyToListGivenElement(originalPoint, 50000);
+//        MyPrint.showList(pointList, ConstantValues.LINE_SPLIT);
+
+
+        List<TwoDimensionalDoublePoint> noiseValue = scheme.getRandomizedNoiseValueInIntegerCell(pointList);
+        PointWrite pointWrite = new PointWrite();
+        pointWrite.startWriting(outputPath);
+        pointWrite.writePoint(noiseValue);
+        pointWrite.endWriting();
+    }
+
+    @Test
+    public void fun7() {
+        String outputPath = "F:\\dataset\\test\\synthetic_dataset\\test2\\single_point_center_test2.txt";
+        double epsilon = 1;
+        double gridLength = 0.2;
+        double constB = 1.6;
+        Double inputLength = 1.0;
+        Double kParameter = 0.2;
+        Double xLeft = 0.0;
+        Double yLeft = 0.0;
+
+        DiscretizedHybridUniformExponentialScheme scheme = new DiscretizedHybridUniformExponentialScheme(epsilon, gridLength, constB, inputLength, kParameter, xLeft, yLeft);
+        scheme.initialize();
+
+        TwoDimensionalIntegerPoint originalPoint = new TwoDimensionalIntegerPoint(0, 0);
+        List<TwoDimensionalIntegerPoint> pointList = ListUtils.copyToListGivenElement(originalPoint, 50000);
+//        MyPrint.showList(pointList, ConstantValues.LINE_SPLIT);
+
+
+        List<TwoDimensionalIntegerPoint> noiseValue = scheme.getNoiseValueList(pointList);
+        Map<TwoDimensionalIntegerPoint, Integer> countMap = StatisticTool.countHistogramNumber(noiseValue);
+        MyPrint.showMap(countMap);
+//        PointWrite pointWrite = new PointWrite();
+//        pointWrite.startWriting(outputPath);
+//        pointWrite.writePoint(noiseDoubleRandomCentralValue);
+//        pointWrite.endWriting();
+    }
+
 
 }

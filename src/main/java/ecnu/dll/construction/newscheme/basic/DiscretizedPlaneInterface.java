@@ -1,7 +1,6 @@
 package ecnu.dll.construction.newscheme.basic;
 
 import cn.edu.ecnu.struct.point.TwoDimensionalIntegerPoint;
-import javafx.util.Pair;
 
 import java.util.List;
 import java.util.TreeMap;

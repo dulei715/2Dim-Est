@@ -16,7 +16,7 @@ import java.util.TreeMap;
 public class DAMRun {
     public static void run(List<TwoDimensionalDoublePoint> pointList, double cellLength, double inputLength, double bLength, double epsilon, double kParameter, double xBound, double yBound) {
         DiscretizedDiskScheme damScheme = new DiscretizedDiskScheme(epsilon, cellLength, bLength, inputLength, kParameter, xBound, yBound);
-        List<IntegerPoint> integerPointList = Grid.toIntegerPoint(pointList, damScheme.getLeftBorderArray(), cellLength);
+        List<TwoDimensionalIntegerPoint> integerPointList = Grid.toIntegerPoint(pointList, damScheme.getLeftBorderArray(), cellLength);
         /**
          * 相对的原始数据
          */
@@ -26,7 +26,7 @@ public class DAMRun {
         /**
          * 生成噪声数据
          */
-        List<TwoDimensionalIntegerPoint> noiseIntegerPointList = damScheme.getNoiseValue(twoDimensionalIntegerPointList);
+        List<TwoDimensionalIntegerPoint> noiseIntegerPointList = damScheme.getNoiseValueList(twoDimensionalIntegerPointList);
         //todo: ...
         TreeMap<TwoDimensionalIntegerPoint, Double> estimationResult = damScheme.statistic(noiseIntegerPointList);
 

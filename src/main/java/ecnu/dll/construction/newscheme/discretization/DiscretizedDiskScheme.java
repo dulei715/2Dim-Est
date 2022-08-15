@@ -394,6 +394,11 @@ public class DiscretizedDiskScheme extends AbstractDiscretizedScheme {
                         tempX = tempY;
                         tempY = shiftIndex;
                     }
+                    switch (randomInteger) {
+                        case 1: tempX *= -1; break;
+                        case 2: tempY *= -1; break;
+                        case 3: tempX *= -1; tempY*= -1; break;
+                    }
                     break;
             }
             return new TwoDimensionalIntegerPoint(originalX + tempX, originalY + tempY);
@@ -402,6 +407,7 @@ public class DiscretizedDiskScheme extends AbstractDiscretizedScheme {
             Integer randomIndex = null, judge45 = null;
             IdentityPair<Integer> chosenPair = null;
             tempIndex = RandomUtil.getRandomIndexGivenCumulativeCountPoint(this.lowSplitPartArray);
+            Integer randomInteger = RandomUtil.getRandomInteger(0, 3);
             switch (tempIndex) {
                 // 随机返回外部节点
                 case 0:
@@ -413,7 +419,7 @@ public class DiscretizedDiskScheme extends AbstractDiscretizedScheme {
 //                    break;
                 case 1:
                     tempX = tempY = this.upperIndex45;
-                    Integer randomInteger = RandomUtil.getRandomInteger(0, 3);
+
                     switch (randomInteger) {
                         case 1: tempX *= -1; break;
                         case 2: tempY *= -1; break;
@@ -434,6 +440,11 @@ public class DiscretizedDiskScheme extends AbstractDiscretizedScheme {
                         shiftIndex = tempX;
                         tempX = tempY;
                         tempY = shiftIndex;
+                    }
+                    switch (randomInteger) {
+                        case 1: tempX *= -1; break;
+                        case 2: tempY *= -1; break;
+                        case 3: tempX *= -1; tempY*= -1; break;
                     }
                     return new TwoDimensionalIntegerPoint(originalX + tempX, originalY + tempY);
 //                    break;

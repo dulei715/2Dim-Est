@@ -76,7 +76,7 @@ public class DiscretizedHybridUniformExponentialScheme extends AbstractDiscretiz
         this.annularAreaWeight = new ArrayList<>(this.sizeB);
         // 这里优化了，直接从0开始计数
         for (int tempB = 0; tempB < this.sizeB; tempB++) {
-            tempWeight = Math.exp((1-tempB/this.sizeB));
+            tempWeight = Math.exp((1-tempB*1.0/this.sizeB));
             this.annularAreaWeight.add(tempWeight);
         }
     }
@@ -372,7 +372,7 @@ public class DiscretizedHybridUniformExponentialScheme extends AbstractDiscretiz
          */
         double splitPointA = this.constQ * this.lowSplitPartArray[this.lowSplitPartArray.length-1];
         Double randomA = RandomUtil.getRandomDouble(0.0, 1.0);
-        Integer tempIndex;
+        Integer tempIndex, randomInteger;
         Integer tempX = null, tempY = null, shiftIndex, originalX, originalY;
         originalX = originalPoint.getXIndex();
         originalY = originalPoint.getYIndex();
@@ -392,7 +392,7 @@ public class DiscretizedHybridUniformExponentialScheme extends AbstractDiscretiz
 //                    break;
                 case 1:
                     tempX = tempY = this.upperIndex45;
-                    Integer randomInteger = RandomUtil.getRandomInteger(0, 3);
+                    randomInteger = RandomUtil.getRandomInteger(0, 3);
                     switch (randomInteger) {
                         case 1: tempX *= -1; break;
                         case 2: tempY *= -1; break;
@@ -414,6 +414,12 @@ public class DiscretizedHybridUniformExponentialScheme extends AbstractDiscretiz
                         tempX = tempY;
                         tempY = shiftIndex;
                     }
+                    randomInteger = RandomUtil.getRandomInteger(0, 3);
+                    switch (randomInteger) {
+                        case 1: tempX *= -1; break;
+                        case 2: tempY *= -1; break;
+                        case 3: tempX *= -1; tempY *= -1; break;
+                    }
                     return new TwoDimensionalIntegerPoint(originalX + tempX, originalY + tempY);
 //                    break;
             }
@@ -433,7 +439,7 @@ public class DiscretizedHybridUniformExponentialScheme extends AbstractDiscretiz
             MultipleRelativeElement<Double> chosenAnnularElement = this.annularPart.getRelativeElementList().get(chosenAnnularIndex);
             Double[] accumulatedWeightedPartArray = chosenAnnularElement.getRelativeElementValueArray();
             Integer chosenPartIndex = RandomUtil.getRandomIndexGivenCumulativeCountPoint(accumulatedWeightedPartArray);
-            Integer randomInteger = RandomUtil.getRandomInteger(0, 3);
+            randomInteger = RandomUtil.getRandomInteger(0, 3);
             switch (chosenPartIndex) {
                 // 返回坐标轴的其中之一， 基本坐标轴cell坐标就是(chosenB, 0)
                 case 0:

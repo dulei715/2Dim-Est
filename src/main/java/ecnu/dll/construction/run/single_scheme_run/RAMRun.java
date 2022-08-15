@@ -23,7 +23,7 @@ public class RAMRun {
      */
     public static void run(List<TwoDimensionalDoublePoint> pointList, double cellLength, double inputLength, double bLength, double epsilon, double kParameter, double xBound, double yBound) {
         DiscretizedRhombusScheme ramScheme = new DiscretizedRhombusScheme(epsilon, cellLength, bLength, inputLength, kParameter, xBound, yBound);
-        List<IntegerPoint> integerPointList = Grid.toIntegerPoint(pointList, ramScheme.getLeftBorderArray(), cellLength);
+        List<TwoDimensionalIntegerPoint> integerPointList = Grid.toIntegerPoint(pointList, ramScheme.getLeftBorderArray(), cellLength);
         /**
          * 相对的原始数据
          */
@@ -33,7 +33,7 @@ public class RAMRun {
         /**
          * 生成噪声数据
          */
-        List<TwoDimensionalIntegerPoint> noiseIntegerPointList = ramScheme.getNoiseValue(twoDimensionalIntegerPointList);
+        List<TwoDimensionalIntegerPoint> noiseIntegerPointList = ramScheme.getNoiseValueList(twoDimensionalIntegerPointList);
         //todo: ...
         TreeMap<TwoDimensionalIntegerPoint, Double> estimationResult = ramScheme.statistic(noiseIntegerPointList);
 

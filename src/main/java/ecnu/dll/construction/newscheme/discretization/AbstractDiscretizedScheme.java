@@ -2,11 +2,8 @@ package ecnu.dll.construction.newscheme.discretization;
 
 
 import cn.edu.ecnu.basic.BasicArray;
-import cn.edu.ecnu.basic.RandomUtil;
-import cn.edu.ecnu.io.write.PointWrite;
 import cn.edu.ecnu.statistic.StatisticTool;
 import cn.edu.ecnu.struct.Grid;
-import cn.edu.ecnu.struct.point.IntegerPoint;
 import cn.edu.ecnu.struct.point.TwoDimensionalDoublePoint;
 import cn.edu.ecnu.struct.point.TwoDimensionalIntegerPoint;
 import ecnu.dll.construction._config.Constant;
@@ -14,7 +11,6 @@ import ecnu.dll.construction.newscheme.basic.DiscretizedPlaneInterface;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.TreeMap;
 
 public abstract class AbstractDiscretizedScheme implements DiscretizedPlaneInterface {
@@ -115,7 +111,7 @@ public abstract class AbstractDiscretizedScheme implements DiscretizedPlaneInter
 //        return new TwoDimensionalIntegerPoint(xIntIndex, yIntIndex);
 //    }
 
-    public List<TwoDimensionalIntegerPoint> getNoiseValue(List<TwoDimensionalIntegerPoint> originalPointList) {
+    public List<TwoDimensionalIntegerPoint> getNoiseValueList(List<TwoDimensionalIntegerPoint> originalPointList) {
         List<TwoDimensionalIntegerPoint> noiseIntegerPointList = new ArrayList<>(originalPointList.size());
         for (TwoDimensionalIntegerPoint integerPoint : originalPointList) {
             noiseIntegerPointList.add(this.getNoiseValue(integerPoint));
@@ -123,9 +119,20 @@ public abstract class AbstractDiscretizedScheme implements DiscretizedPlaneInter
         return noiseIntegerPointList;
     }
 
+    /**
+     * 给定原始Integer点，生成对应的noise Integer点，并将这些noise点打散到对应的cell中
+     * @param originalPointList
+     * @return
+     */
+    public List<TwoDimensionalDoublePoint> getRandomizedNoiseValueInIntegerCell(List<TwoDimensionalIntegerPoint> originalPointList) {
+        List<TwoDimensionalIntegerPoint> noiseIntegerValue = this.getNoiseValueList(originalPointList);
+        List<TwoDimensionalDoublePoint> resultPointList = Grid.randomizeInGrid(noiseIntegerValue);
+        return resultPointList;
+    }
+
     public List<TwoDimensionalDoublePoint> getNoiseDoubleValue(List<TwoDimensionalDoublePoint> originalPointList, boolean isCenter) {
         List<TwoDimensionalIntegerPoint> integerPointList = Grid.toIntegerPoint(originalPointList, this.leftBorderArray, this.gridLength);
-        List<TwoDimensionalIntegerPoint> noiseIntegerValue = this.getNoiseValue(integerPointList);
+        List<TwoDimensionalIntegerPoint> noiseIntegerValue = this.getNoiseValueList(integerPointList);
         List<TwoDimensionalDoublePoint> resultPointList = Grid.toDoublePoint(noiseIntegerValue, this.leftBorderArray, this.gridLength, isCenter);
         return resultPointList;
     }
