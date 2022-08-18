@@ -44,6 +44,7 @@ public class SubsetExponentialGeoI<X extends DistanceAble<X>> {
         this.massArray = new Double[this.inputElementList.size()];
         this.initializeTotalDistanceAndElementGivenDistance();
         this.setSetSizeKWithMeanEpsilon();
+        this.normalizer();
     }
 
     private void setSetSizeKWithMeanEpsilon() {
@@ -222,6 +223,7 @@ public class SubsetExponentialGeoI<X extends DistanceAble<X>> {
         return resultSet;
 
     }
+
 
     /**
      *

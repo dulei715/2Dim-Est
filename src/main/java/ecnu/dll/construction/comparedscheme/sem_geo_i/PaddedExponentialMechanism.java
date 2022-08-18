@@ -8,7 +8,7 @@ import cn.edu.ecnu.differential_privacy.cdp.exponential_mechanism.utility.Utilit
 
 import java.util.List;
 
-
+@Deprecated
 public class PaddedExponentialMechanism<X extends DistanceAble<X>, R> extends SimpleLDPExponentialMechanism<X, R> {
 
     protected Double omega = null;

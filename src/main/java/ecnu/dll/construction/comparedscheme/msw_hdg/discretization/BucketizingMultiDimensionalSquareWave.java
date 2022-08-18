@@ -1,7 +1,8 @@
-package ecnu.dll.construction.comparedscheme.msw_hdg;
+package ecnu.dll.construction.comparedscheme.msw_hdg.discretization;
 
 import cn.edu.ecnu.struct.point.TwoDimensionalIntegerPoint;
 import ecnu.dll.construction.basicscheme.square_wave.discretization.BucketizingOptimalSquareWave;
+import ecnu.dll.construction.comparedscheme.msw_hdg.IndexFlag;
 import javafx.util.Pair;
 
 import java.util.*;
@@ -61,7 +62,7 @@ public class BucketizingMultiDimensionalSquareWave {
 
     /**
      * 这里的二维整数点是元素坐标点的二元组合
-     * @param valueList
+     * @param valueList 里面的的每个元素是二元对，第一个元素是坐标类别，第二个元素是该坐标下对应的值
      * @return
      */
     public TreeMap<TwoDimensionalIntegerPoint, Double> statistic(List<Pair<Integer, Integer>> valueList) {
