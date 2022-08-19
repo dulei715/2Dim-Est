@@ -6,10 +6,12 @@ import cn.edu.ecnu.basic.BasicCalculation;
 import cn.edu.ecnu.basic.BasicSearch;
 import cn.edu.ecnu.basic.RandomUtil;
 import cn.edu.ecnu.basic.cumulate.CumulativeFunction;
+import cn.edu.ecnu.collection.ArraysUtils;
 import cn.edu.ecnu.collection.ListUtils;
 import cn.edu.ecnu.collection.SetUtils;
 import cn.edu.ecnu.differential_privacy.cdp.basic_struct.DistanceAble;
 import cn.edu.ecnu.differential_privacy.cdp.exponential_mechanism.utility.UtilityFunction;
+import cn.edu.ecnu.differential_privacy.ldp.consistent.Normalization;
 import cn.edu.ecnu.math.MathUtils;
 
 import java.util.*;
@@ -45,6 +47,14 @@ public class SubsetExponentialGeoI<X extends DistanceAble<X>> {
         this.initializeTotalDistanceAndElementGivenDistance();
         this.setSetSizeKWithMeanEpsilon();
         this.normalizer();
+    }
+
+    private int getDissetElementListLength(int xIndex, int yIndex) {
+        List<Integer> tempList = this.disset[xIndex][yIndex];
+        if (tempList == null) {
+            return 0;
+        }
+        return tempList.size();
     }
 
     private void setSetSizeKWithMeanEpsilon() {
@@ -145,7 +155,8 @@ public class SubsetExponentialGeoI<X extends DistanceAble<X>> {
             res = m;
             former = MathUtils.getBinomialResult(m, this.setSizeK);
             for (int j = 0; j < z; j++) {
-                res -= this.disset[i][j].size();
+//                res -= this.disset[i][j].size();
+                res -= this.getDissetElementListLength(i, j);
                 res_k = MathUtils.getBinomialResult(res, this.setSizeK);
                 this.discount[i][j] = former - res_k;
                 former = res_k;
@@ -197,7 +208,7 @@ public class SubsetExponentialGeoI<X extends DistanceAble<X>> {
         // 这三步是根据r获取选取到的距离id
         Double[] disprobs = this.getDisprobs(i);
         Double[] cumulativeDisprobs = CumulativeFunction.getCumulativeDistribution(disprobs);
-        int disid = BasicSearch.binarySearch(cumulativeDisprobs, r, BasicSearch.LATTER);
+        int disid = BasicSearch.binaryLatterSearchWithMinimalIndex(cumulativeDisprobs, r);
 
         List<Integer> smallestDistanceElementsIndexList = this.disset[i][disid];
         List<Integer> allLargerDistanceElementsIndexList = ListUtils.combine(this.disset[i], disid + 1, this.dis.length - 1);
@@ -208,9 +219,12 @@ public class SubsetExponentialGeoI<X extends DistanceAble<X>> {
         for (int j = 0; j < this.setSizeK; j++) {
             partCounts[j] = MathUtils.getBinomialResult(sizeeq, j + 1) * MathUtils.getBinomialResult(sizegt, this.setSizeK - j - 1);
         }
-        // eqnum-1代表选中的partCounts的随机元素，同时eqnum表示选择选择sizeeq集合中的元素的个数（多少个最小距离）
+        // eqnum-1代表选中的partCounts的随机元素，同时eqnum表示选择sizeeq集合中的元素的个数（多少个最小距离）
         Integer eqnum = RandomUtil.getRandomIndexGivenStatisticPoint(partCounts) + 1;
 
+//        if (eqnum > sizeeq) {
+//            System.out.println("some wrong!");
+//        }
 
         List<Integer> positionList = RandomUtil.getRandomIntegerArrayWithoutRepeat(0, sizeeq - 1, eqnum);
         resultPartList = BasicArray.getElementListInGivenIndexes(smallestDistanceElementsIndexList, positionList);
@@ -238,6 +252,7 @@ public class SubsetExponentialGeoI<X extends DistanceAble<X>> {
         int z = this.dis.length;
         int res, former, tempBinomialValue, tempElementIndex;
         double[][] h = new double[m][m];
+        BasicArray.setDoubleArrayToZero(h);
         Matrix noiseStatisticMatrix, matrixH, resultMatrix;
         double partmass;
         double[][] noiseStatistic = new double[1][m];
@@ -248,11 +263,13 @@ public class SubsetExponentialGeoI<X extends DistanceAble<X>> {
             h[i][i] = former / this.omega;
             partmass = 0.0;
             for (int a = 0; a < z - 1; a++) {
-                res -= disset[i][a].size();
+//                res -= disset[i][a].size();
+                res -= this.getDissetElementListLength(i, a);
                 tempBinomialValue = MathUtils.getBinomialResult(res, this.setSizeK - 1);
                 partmass += (former - tempBinomialValue) * Math.exp(-this.epsilon*this.dis[a]) / this.omega;
                 former = tempBinomialValue;
-                for (int j = 0; j < this.disset[i][a+1].size(); j++) {
+//                for (int j = 0; j < this.disset[i][a+1].size(); j++) {
+                for (int j = 0; j < this.getDissetElementListLength(i, a+1); j++) {
                     tempElementIndex = this.disset[i][a+1].get(j);
                     h[i][tempElementIndex] = partmass + former * Math.exp(-this.epsilon * this.dis[a+1]) / this.omega;
                 }
@@ -260,15 +277,19 @@ public class SubsetExponentialGeoI<X extends DistanceAble<X>> {
         }
         // 估计频率分布
         for (Set<Integer> subsetElement : reportedSubset) {
+            if (subsetElement == null) {
+                continue;
+            }
             for (Integer index : subsetElement) {
-                noiseStatistic[1][index] += unitValue;
+                noiseStatistic[0][index] += unitValue;
             }
         }
         noiseStatisticMatrix = new Matrix(noiseStatistic);
         matrixH = new Matrix(h);
 //        inverseMatrixH = matrixH.inverse();
-        resultMatrix = noiseStatisticMatrix.arrayRightDivide(matrixH);
-        return resultMatrix.getArray()[0];
+        resultMatrix = noiseStatisticMatrix.times(matrixH.inverse());
+        double[] originalResult = resultMatrix.getArray()[0];
+        return Normalization.normMul(originalResult);
     }
 
 

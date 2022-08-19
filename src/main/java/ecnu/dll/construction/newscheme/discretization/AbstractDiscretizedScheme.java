@@ -64,9 +64,9 @@ public abstract class AbstractDiscretizedScheme implements DiscretizedPlaneInter
         this.gridLength = gridLength;
         this.inputLength = inputLength;
         //假设向上取整
-        this.sizeB = this.getOptimalSizeB();
-        //假设向上取整
         this.sizeD = (int)Math.ceil(inputLength / gridLength);
+        //假设向上取整
+        this.sizeB = this.getOptimalSizeB();
         this.kParameter = kParameter;
 //        this.setConstPQ();
 //        this.setRawIntegerPointTypeList();

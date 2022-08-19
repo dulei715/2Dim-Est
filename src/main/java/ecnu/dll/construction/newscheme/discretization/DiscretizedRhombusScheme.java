@@ -57,7 +57,7 @@ public class DiscretizedRhombusScheme extends AbstractDiscretizedScheme {
     public Integer getOptimalSizeB() {
         double mA = Math.exp(this.epsilon) - 1 - this.epsilon;
         double mB = 1 - (1 - this.epsilon) * Math.exp(this.epsilon);
-        return (int)Math.ceil((2*mB+Math.sqrt(4*mB*mB+2*Math.exp(epsilon)*mA*mB))/(2*Math.exp(epsilon)*mA) * this.sizeD);
+        return (int)Math.ceil((2*mB+Math.sqrt(4*mB*mB+2*Math.exp(this.epsilon)*mA*mB))/(2*Math.exp(this.epsilon)*mA) * this.sizeD);
     }
 
     @Override

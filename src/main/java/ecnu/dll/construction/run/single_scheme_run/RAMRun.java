@@ -1,11 +1,12 @@
 package ecnu.dll.construction.run.single_scheme_run;
 
+import cn.edu.ecnu.basic.BasicCalculation;
 import cn.edu.ecnu.differential_privacy.accuracy.metrics.distance_quantities.TwoDimensionalWassersteinDistance;
 import cn.edu.ecnu.io.read.TwoDimensionalPointRead;
 import cn.edu.ecnu.struct.Grid;
-import cn.edu.ecnu.struct.point.IntegerPoint;
 import cn.edu.ecnu.struct.point.TwoDimensionalDoublePoint;
 import cn.edu.ecnu.struct.point.TwoDimensionalIntegerPoint;
+import ecnu.dll.construction._config.Constant;
 import ecnu.dll.construction.newscheme.discretization.DiscretizedRhombusScheme;
 import edu.ecnu.dll.cpl.expection.CPLException;
 
@@ -22,12 +23,17 @@ public class RAMRun {
      *
      */
     public static void run(List<TwoDimensionalDoublePoint> pointList, double cellLength, double inputLength, double bLength, double epsilon, double kParameter, double xBound, double yBound) {
-        DiscretizedRhombusScheme ramScheme = new DiscretizedRhombusScheme(epsilon, cellLength, bLength, inputLength, kParameter, xBound, yBound);
-        List<TwoDimensionalIntegerPoint> integerPointList = Grid.toIntegerPoint(pointList, ramScheme.getLeftBorderArray(), cellLength);
+        DiscretizedRhombusScheme ramScheme;
+        if (bLength > 0) {
+            ramScheme = new DiscretizedRhombusScheme(epsilon, cellLength, bLength, inputLength, kParameter, xBound, yBound);
+        } else {
+            ramScheme = new DiscretizedRhombusScheme(epsilon, cellLength, inputLength, kParameter, xBound, yBound);
+        }
+        List<TwoDimensionalIntegerPoint> twoDimensionalIntegerPointList = Grid.toIntegerPoint(pointList, ramScheme.getLeftBorderArray(), cellLength);
         /**
          * 相对的原始数据
          */
-        List<TwoDimensionalIntegerPoint> twoDimensionalIntegerPointList = TwoDimensionalIntegerPoint.valueOf(integerPointList);
+//        List<TwoDimensionalIntegerPoint> twoDimensionalIntegerPointList = TwoDimensionalIntegerPoint.valueOf(integerPointList);
         TreeMap<TwoDimensionalIntegerPoint, Double> realResult = ramScheme.rawDataStatistic(twoDimensionalIntegerPointList);
 
         /**
@@ -37,6 +43,10 @@ public class RAMRun {
         //todo: ...
         TreeMap<TwoDimensionalIntegerPoint, Double> estimationResult = ramScheme.statistic(noiseIntegerPointList);
 
+
+        // for test
+        System.out.println(BasicCalculation.getValueSum(realResult));
+        System.out.println(BasicCalculation.getValueSum(estimationResult));
 
 
         double wassersteinDistance = -1;
@@ -56,14 +66,13 @@ public class RAMRun {
 //        String inputPath = "F:\\dataset\\test\\real_dataset\\chicago_point_A.txt";
         String inputPath = "F:\\dataset\\test\\chicago_point_small.txt";
         List<TwoDimensionalDoublePoint> pointList = TwoDimensionalPointRead.readPointWithFirstLineCount(inputPath);
-        double cellLength = 0.005;
-//        double inputLength = 0.09;
-        double inputLength = 0.01;
-        double bLength = 0.005;
-        double epsilon = 0.5;
-        double kParameter = 0.01;
-        double xBound = 41.72;
-        double yBound = -87.68;
+        double cellLength = Constant.DEFAULT_CELL_LENGTH;
+        double inputLength = Constant.DEFAULT_INPUT_LENGTH;
+        double bLength = Constant.DEFAULT_B_LENGTH;
+        double epsilon = Constant.DEFAULT_PRIVACY_BUDGET;
+        double kParameter = Constant.DEFAULT_K_PARAMETER;
+        double xBound = Constant.DEFAULT_X_BOUND;
+        double yBound = Constant.DEFAULT_Y_BOUND;
 
 //        MyPrint.showList(pointList, ConstantValues.LINE_SPLIT);
         RAMRun.run(pointList, cellLength, inputLength, bLength, epsilon, kParameter, xBound, yBound);

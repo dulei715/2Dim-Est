@@ -1,6 +1,7 @@
 package ecnu.dll.construction.comparedscheme.sem_geo_i.discretization;
 
 import cn.edu.ecnu.comparator.TwoDimensionalIntegerPointComparator;
+import cn.edu.ecnu.statistic.StatisticTool;
 import cn.edu.ecnu.struct.Grid;
 import cn.edu.ecnu.struct.point.TwoDimensionalIntegerPoint;
 import ecnu.dll.construction.comparedscheme.sem_geo_i.SubsetExponentialGeoI;
@@ -12,8 +13,7 @@ public class DiscretizedSubsetExponentialGeoI {
     private Double epsilon = null;
     private Double gridLength = null;
     private Double inputLength = null;
-    private Double xLeft = null;
-    private Double yLeft = null;
+    private Double[] leftBorderArray = null;
 
     private Integer sizeD = null;
     private List<TwoDimensionalIntegerPoint> sortedInputPointList = null;
@@ -24,8 +24,9 @@ public class DiscretizedSubsetExponentialGeoI {
         this.epsilon = epsilon;
         this.gridLength = gridLength;
         this.inputLength = inputLength;
-        this.xLeft = xLeft;
-        this.yLeft = yLeft;
+        this.leftBorderArray = new Double[2];
+        this.leftBorderArray[0] = xLeft;
+        this.leftBorderArray[1] = yLeft;
         this.sizeD = (int)Math.ceil(inputLength / gridLength);
         this.sortedInputPointList = Grid.generateTwoDimensionalIntegerPoint(this.sizeD, 0, 0);    //这里的后两个参数是整数(0,0),不是传入的xLeft和yLeft
         this.sortedInputPointList.sort(new TwoDimensionalIntegerPointComparator());
@@ -76,6 +77,14 @@ public class DiscretizedSubsetExponentialGeoI {
             resultMap.put(this.sortedInputPointList.get(i), estimateRatio[i]);
         }
         return resultMap;
+    }
+
+    public Double[] getLeftBorderArray() {
+        return leftBorderArray;
+    }
+
+    public TreeMap<TwoDimensionalIntegerPoint, Double> rawDataStatistic(List<TwoDimensionalIntegerPoint> valueList) {
+        return StatisticTool.countHistogramRatioMap(this.sortedInputPointList, valueList);
     }
 
 }

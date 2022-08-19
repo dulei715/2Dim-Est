@@ -1,5 +1,6 @@
 package basic;
 
+import Jama.Matrix;
 import cn.edu.ecnu.io.print.MyPrint;
 import cn.edu.ecnu.struct.pair.BasicPair;
 import org.junit.Test;
@@ -51,6 +52,67 @@ public class basicTest {
         Double value = 9.45E-4;
         System.out.println(value);
         System.out.println(value*100000);
+    }
+
+    @Test
+    public void fun6() {
+        double[][] vectorA = new double[][]{{2,3}};
+        double[][] factor = new double[][]{
+                {4, 5},
+                {6, 7}
+        };
+        Matrix matrixA = new Matrix(vectorA);
+        Matrix matrixB = new Matrix(factor);
+        Matrix resultMatrix = matrixA.times(matrixB);
+        double[][] result = resultMatrix.getArray();
+        MyPrint.show2DimensionDoubleArray(result);
+    }
+
+    @Test
+    public void fun7() {
+        double[][] vectorA = new double[][]{{26, 31}};
+        double[][] factor = new double[][]{
+                {4, 5},
+                {6, 7}
+        };
+        Matrix matrixA = new Matrix(vectorA);
+        Matrix matrixB = new Matrix(factor).inverse();
+        Matrix resultMatrix = matrixA.times(matrixB);
+        double[][] result = resultMatrix.getArray();
+        MyPrint.show2DimensionDoubleArray(result);
+    }
+
+    @Test
+    public void fun8() {
+        double[][] vectorA = new double[][]{{1, 2}, {3, 4}};
+        double[][] factor = new double[][]{{5, 6}, {7, 8}};
+        Matrix matrixA = new Matrix(vectorA);
+        Matrix matrixB = new Matrix(factor);
+        Matrix resultMatrix = matrixA.times(matrixB);
+        double[][] result = resultMatrix.getArray();
+        MyPrint.show2DimensionDoubleArray(result);
+    }
+
+    @Test
+    public void fun9() {
+        double[][] vectorA = new double[][]{{19, 22}, {43, 50}};
+        double[][] factor = new double[][]{{5, 6}, {7, 8}};
+        Matrix matrixA = new Matrix(vectorA);
+        Matrix matrixB = new Matrix(factor);
+        Matrix resultMatrix = matrixA.arrayRightDivide(matrixB);
+        double[][] result = resultMatrix.getArray();
+        MyPrint.show2DimensionDoubleArray(result);
+    }
+
+    @Test
+    public void fun10() {
+        double[][] vectorA = new double[][]{{19, 22}, {43, 50}};
+        double[][] factor = new double[][]{{5, 6}, {7, 8}};
+        Matrix matrixA = new Matrix(vectorA);
+        Matrix matrixB = new Matrix(factor).inverse();
+        Matrix resultMatrix = matrixA.times(matrixB);
+        double[][] result = resultMatrix.getArray();
+        MyPrint.show2DimensionDoubleArray(result);
     }
 
 }
