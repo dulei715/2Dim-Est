@@ -60,4 +60,13 @@ public class GenerateDatasetTest {
         pointWrite.endWriting();
     }
 
+    @Test
+    public void generateNorm() {
+        String outputPath = "F:\\dataset\\test\\synthetic_dataset\\two_norm_dataset.txt";
+        int size = 10000;
+        double randomValueX, randomValueY;
+        TwoDimensionalDoublePoint point;
+        List<TwoDimensionalDoublePoint> pointList = new ArrayList<>();
+    }
+
 }

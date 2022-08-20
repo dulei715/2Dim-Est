@@ -1,7 +1,7 @@
-function writePoint(mu, sigma, pointSize, pathStr)
-%mu = zeros(1,2);     % 均值
-%sigma = [1  , 0.9;
-%         0.9  , 1];  % 协方差
+function generateWriteTwoDimNormPoint(pointSize, pathStr)
+mu = zeros(1,2);     % 均值
+sigma = [1  , 0.5;
+         0.5  , 1];  % 协方差
 rng('default')  % For reproducibility
 pointMatrix = mvnrnd(mu,sigma,pointSize);
 [xLen yLen] = size(pointMatrix);

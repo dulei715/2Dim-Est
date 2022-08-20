@@ -12,6 +12,7 @@ public class Constant {
 
 
     // for test
+    public static final String DEFAULT_INPUT_PATH = "F:\\dataset\\test\\chicago_point_small.txt";
     public static final double DEFAULT_PRIVACY_BUDGET = 0.5;
     public static final double DEFAULT_CELL_LENGTH = 0.0025;
     public static final double DEFAULT_INPUT_LENGTH = 0.01;

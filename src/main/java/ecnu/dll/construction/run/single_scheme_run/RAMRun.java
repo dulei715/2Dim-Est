@@ -64,7 +64,7 @@ public class RAMRun {
 
     public static void main(String[] args) {
 //        String inputPath = "F:\\dataset\\test\\real_dataset\\chicago_point_A.txt";
-        String inputPath = "F:\\dataset\\test\\chicago_point_small.txt";
+        String inputPath = Constant.DEFAULT_INPUT_PATH;
         List<TwoDimensionalDoublePoint> pointList = TwoDimensionalPointRead.readPointWithFirstLineCount(inputPath);
         double cellLength = Constant.DEFAULT_CELL_LENGTH;
         double inputLength = Constant.DEFAULT_INPUT_LENGTH;
