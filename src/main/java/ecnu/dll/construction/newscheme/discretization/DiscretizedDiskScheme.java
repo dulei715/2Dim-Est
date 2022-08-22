@@ -91,14 +91,9 @@ public class DiscretizedDiskScheme extends AbstractDiscretizedScheme {
     }
 
 
-
-
-
     @Override
     public Integer getOptimalSizeB() {
-        double mA = Math.exp(this.epsilon) - 1 - this.epsilon;
-        double mB = 1 - (1 - this.epsilon) * Math.exp(this.epsilon);
-        return (int)Math.ceil((2*mB+Math.sqrt(4*mB*mB+Math.PI*Math.exp(epsilon)*mA*mB))/(Math.PI*Math.exp(epsilon)*mA) * this.sizeD);
+        return DiscretizedDiskSchemeTool.getOptimalSizeBOfDiskScheme(this.epsilon, this.sizeD);
     }
 
     private void setOuterCellIndex() {

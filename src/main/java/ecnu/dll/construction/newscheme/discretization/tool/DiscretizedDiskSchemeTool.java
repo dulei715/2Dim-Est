@@ -384,4 +384,11 @@ public class DiscretizedDiskSchemeTool {
     }
 
 
+
+    public static Integer getOptimalSizeBOfDiskScheme(double epsilon, int sizeD) {
+        double mA = Math.exp(epsilon) - 1 - epsilon;
+        double mB = 1 - (1 - epsilon) * Math.exp(epsilon);
+        return (int)Math.ceil((2*mB+Math.sqrt(4*mB*mB+Math.PI*Math.exp(epsilon)*mA*mB))/(Math.PI*Math.exp(epsilon)*mA) * sizeD);
+    }
+
 }

@@ -1,4 +1,4 @@
-package ecnu.dll.construction.run.single_scheme_run;
+package ecnu.dll.construction.run.main_process.a_single_scheme_run;
 
 import cn.edu.ecnu.basic.BasicCalculation;
 import cn.edu.ecnu.differential_privacy.accuracy.metrics.distance_quantities.TwoDimensionalWassersteinDistance;
@@ -17,7 +17,42 @@ import java.util.TreeMap;
 
 @SuppressWarnings("Duplicates")
 public class SEMGeoIRun {
-    public static void run(List<TwoDimensionalDoublePoint> pointList, double cellLength, double inputLength, double epsilon, double xBound, double yBound) {
+    public static void run(final List<TwoDimensionalIntegerPoint> integerPointList, final TreeMap<TwoDimensionalIntegerPoint, Double> rawDataStatistic, double cellLength, double inputLength, double epsilon, double xBound, double yBound) {
+        DiscretizedSubsetExponentialGeoI segiScheme = null;
+        try {
+            segiScheme = new DiscretizedSubsetExponentialGeoI(epsilon, cellLength, inputLength, xBound, yBound);
+
+            /**
+             * 生成噪声数据
+             */
+            List<Set<Integer>> noiseSubsetIndexList = segiScheme.getNoiseSubsetIndexList(integerPointList);
+            //todo: ...
+            TreeMap<TwoDimensionalIntegerPoint, Double> estimationResult = segiScheme.statistic(noiseSubsetIndexList);
+
+
+            // for test
+            System.out.println(BasicCalculation.getValueSum(rawDataStatistic));
+            System.out.println(BasicCalculation.getValueSum(estimationResult));
+
+
+            double wassersteinDistance = -1;
+
+            try {
+                wassersteinDistance = TwoDimensionalWassersteinDistance.getWassersteinDistance(rawDataStatistic, estimationResult, 2);
+
+            } catch (CPLException e) {
+                e.printStackTrace();
+            }
+
+            System.out.println(wassersteinDistance);
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+
+    }
+    public static void run0(List<TwoDimensionalDoublePoint> pointList, double cellLength, double inputLength, double epsilon, double xBound, double yBound) {
         DiscretizedSubsetExponentialGeoI segiScheme = null;
         try {
             segiScheme = new DiscretizedSubsetExponentialGeoI(epsilon, cellLength, inputLength, xBound, yBound);
@@ -63,7 +98,7 @@ public class SEMGeoIRun {
 //        String inputPath = "F:\\dataset\\test\\real_dataset\\chicago_point_A.txt";
         String inputPath = Constant.DEFAULT_INPUT_PATH;
         List<TwoDimensionalDoublePoint> pointList = TwoDimensionalPointRead.readPointWithFirstLineCount(inputPath);
-        double cellLength = Constant.DEFAULT_CELL_LENGTH;
+        double cellLength = Constant.DEFAULT_INPUT_LENGTH / Constant.DEFAULT_SIDE_LENGTH_NUMBER_SIZE;
         double inputLength = Constant.DEFAULT_INPUT_LENGTH;
 //        double bLength = Constant.DEFAULT_B_LENGTH;
         double epsilon = Constant.DEFAULT_PRIVACY_BUDGET;
@@ -72,7 +107,7 @@ public class SEMGeoIRun {
         double yBound = Constant.DEFAULT_Y_BOUND;
 
 //        MyPrint.showList(pointList, ConstantValues.LINE_SPLIT);
-        SEMGeoIRun.run(pointList, cellLength, inputLength, epsilon, xBound, yBound);
+        SEMGeoIRun.run0(pointList, cellLength, inputLength, epsilon, xBound, yBound);
 
 
     }

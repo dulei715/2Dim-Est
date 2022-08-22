@@ -7,6 +7,7 @@ import cn.edu.ecnu.statistic.StatisticTool;
 import cn.edu.ecnu.struct.Grid;
 import cn.edu.ecnu.struct.point.TwoDimensionalDoublePoint;
 import cn.edu.ecnu.struct.point.TwoDimensionalIntegerPoint;
+import ecnu.dll.construction.newscheme.discretization.tool.DiscretizedRhombusSchemeTool;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,9 +56,7 @@ public class DiscretizedRhombusScheme extends AbstractDiscretizedScheme {
 
     @Override
     public Integer getOptimalSizeB() {
-        double mA = Math.exp(this.epsilon) - 1 - this.epsilon;
-        double mB = 1 - (1 - this.epsilon) * Math.exp(this.epsilon);
-        return (int)Math.ceil((2*mB+Math.sqrt(4*mB*mB+2*Math.exp(this.epsilon)*mA*mB))/(2*Math.exp(this.epsilon)*mA) * this.sizeD);
+        return DiscretizedRhombusSchemeTool.getOptimalSizeBOfRhombusScheme(this.epsilon, this.sizeD);
     }
 
     @Override
