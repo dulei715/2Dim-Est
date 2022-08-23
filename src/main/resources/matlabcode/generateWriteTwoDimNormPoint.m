@@ -8,9 +8,7 @@ pointMatrix = mvnrnd(mu,sigma,pointSize);
 fid = fopen(pathStr, 'w');
 fprintf(fid,'%d\n', xLen);
 for i=1:xLen
-    for j=1:2
-        fprintf(fid,'%f %f\n', pointMatrix(i,1), pointMatrix(i,2));
-    end
+    fprintf(fid,'%f %f\n', pointMatrix(i,1), pointMatrix(i,2));
 end
 fclose(fid);
 

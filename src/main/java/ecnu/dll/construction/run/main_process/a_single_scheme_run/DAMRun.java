@@ -15,7 +15,7 @@ import java.util.TreeMap;
 
 @SuppressWarnings("ALL")
 public class DAMRun extends BasicGridSplitRun {
-    public static double run(final List<TwoDimensionalIntegerPoint> integerPointList, final TreeMap<TwoDimensionalIntegerPoint, Double> rawDataStatistic, double cellLength, double inputLength, double bLength, double epsilon, double kParameter, double xBound, double yBound) {
+    public static Double run(final List<TwoDimensionalIntegerPoint> integerPointList, final TreeMap<TwoDimensionalIntegerPoint, Double> rawDataStatistic, double cellLength, double inputLength, double bLength, double epsilon, double kParameter, double xBound, double yBound) {
         DiscretizedDiskScheme damScheme;
         if (bLength > 0) {
             damScheme = new DiscretizedDiskScheme(epsilon, cellLength, bLength, inputLength, kParameter, xBound, yBound);
@@ -31,16 +31,15 @@ public class DAMRun extends BasicGridSplitRun {
         TreeMap<TwoDimensionalIntegerPoint, Double> estimationResult = damScheme.statistic(noiseIntegerPointList);
 
         // for test
-        System.out.println(BasicCalculation.getValueSum(rawDataStatistic));
-        System.out.println(BasicCalculation.getValueSum(estimationResult));
+//        System.out.println(BasicCalculation.getValueSum(rawDataStatistic));
+//        System.out.println(BasicCalculation.getValueSum(estimationResult));
 
 
 
-        double wassersteinDistance = -1;
+        Double wassersteinDistance = null;
 
         try {
             wassersteinDistance = TwoDimensionalWassersteinDistance.getWassersteinDistance(rawDataStatistic, estimationResult, 2);
-
         } catch (CPLException e) {
             e.printStackTrace();
         }

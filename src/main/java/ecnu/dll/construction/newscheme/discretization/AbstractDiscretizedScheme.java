@@ -8,6 +8,7 @@ import cn.edu.ecnu.struct.point.TwoDimensionalDoublePoint;
 import cn.edu.ecnu.struct.point.TwoDimensionalIntegerPoint;
 import ecnu.dll.construction._config.Constant;
 import ecnu.dll.construction.newscheme.basic.DiscretizedPlaneInterface;
+import ecnu.dll.construction.newscheme.discretization.tool.DiscretizedSchemeTool;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -79,14 +80,10 @@ public abstract class AbstractDiscretizedScheme implements DiscretizedPlaneInter
     public abstract Integer getOptimalSizeB();
 
     public void setRawIntegerPointTypeList() {
-        int  totalSize = this.sizeD * this.sizeD;
-        this.rawIntegerPointTypeList = new ArrayList<>(totalSize);
-        for (int i = 0; i < sizeD; i++) {
-            for (int j = 0; j < sizeD; j++) {
-                this.rawIntegerPointTypeList.add(new TwoDimensionalIntegerPoint(i, j));
-            }
-        }
+        this.rawIntegerPointTypeList = DiscretizedSchemeTool.getRawIntegerPointTypeList(this.sizeD);
     }
+
+
 
     /**
      * 记录所有可能返回的cell的坐标

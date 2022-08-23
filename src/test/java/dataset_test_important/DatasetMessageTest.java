@@ -15,7 +15,7 @@ public class DatasetMessageTest {
 
     public List<TwoDimensionalDoublePoint>[] pointList;
 
-    public String path = "F:\\dataset\\crime\\Chicago_Crimes_2008_to_2011.csv";
+    public String path = "F:\\dataset\\crime\\Chicago_Crimes_2022_01_06.csv";
     public String keyLatitude = "Latitude";
     public String keyLongitude = "Longitude";
     public String[] outputPathArray = new String[]{

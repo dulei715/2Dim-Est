@@ -22,7 +22,7 @@ public class RAMRun {
      * 根据参数执行响应的 RAM 方案
      *
      */
-    public static double run(final List<TwoDimensionalIntegerPoint> integerPointList, final TreeMap<TwoDimensionalIntegerPoint, Double> rawDataStatistic, double cellLength, double inputLength, double bLength, double epsilon, double kParameter, double xBound, double yBound) {
+    public static Double run(final List<TwoDimensionalIntegerPoint> integerPointList, final TreeMap<TwoDimensionalIntegerPoint, Double> rawDataStatistic, double cellLength, double inputLength, double bLength, double epsilon, double kParameter, double xBound, double yBound) {
         DiscretizedRhombusScheme ramScheme;
         if (bLength > 0) {
             ramScheme = new DiscretizedRhombusScheme(epsilon, cellLength, bLength, inputLength, kParameter, xBound, yBound);
@@ -43,7 +43,7 @@ public class RAMRun {
         System.out.println(BasicCalculation.getValueSum(estimationResult));
 
 
-        double wassersteinDistance = -1;
+        Double wassersteinDistance = null;
 
         try {
             wassersteinDistance = TwoDimensionalWassersteinDistance.getWassersteinDistance(rawDataStatistic, estimationResult, 2);

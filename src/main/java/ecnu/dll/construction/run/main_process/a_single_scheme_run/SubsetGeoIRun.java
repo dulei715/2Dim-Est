@@ -16,26 +16,24 @@ import java.util.TreeMap;
 
 
 @SuppressWarnings("Duplicates")
-public class SEMGeoIRun {
-    public static void run(final List<TwoDimensionalIntegerPoint> integerPointList, final TreeMap<TwoDimensionalIntegerPoint, Double> rawDataStatistic, double cellLength, double inputLength, double epsilon, double xBound, double yBound) {
-        DiscretizedSubsetExponentialGeoI segiScheme = null;
+public class SubsetGeoIRun {
+    public static Double run(final List<TwoDimensionalIntegerPoint> integerPointList, final TreeMap<TwoDimensionalIntegerPoint, Double> rawDataStatistic, double cellLength, double inputLength, double epsilon, double xBound, double yBound) {
+        DiscretizedSubsetExponentialGeoI subsetGeoIScheme = null;
+        Double wassersteinDistance = null;
         try {
-            segiScheme = new DiscretizedSubsetExponentialGeoI(epsilon, cellLength, inputLength, xBound, yBound);
+            subsetGeoIScheme = new DiscretizedSubsetExponentialGeoI(epsilon, cellLength, inputLength, xBound, yBound);
 
             /**
              * 生成噪声数据
              */
-            List<Set<Integer>> noiseSubsetIndexList = segiScheme.getNoiseSubsetIndexList(integerPointList);
+            List<Set<Integer>> noiseSubsetIndexList = subsetGeoIScheme.getNoiseSubsetIndexList(integerPointList);
             //todo: ...
-            TreeMap<TwoDimensionalIntegerPoint, Double> estimationResult = segiScheme.statistic(noiseSubsetIndexList);
+            TreeMap<TwoDimensionalIntegerPoint, Double> estimationResult = subsetGeoIScheme.statistic(noiseSubsetIndexList);
 
 
             // for test
-            System.out.println(BasicCalculation.getValueSum(rawDataStatistic));
-            System.out.println(BasicCalculation.getValueSum(estimationResult));
-
-
-            double wassersteinDistance = -1;
+//            System.out.println(BasicCalculation.getValueSum(rawDataStatistic));
+//            System.out.println(BasicCalculation.getValueSum(estimationResult));
 
             try {
                 wassersteinDistance = TwoDimensionalWassersteinDistance.getWassersteinDistance(rawDataStatistic, estimationResult, 2);
@@ -44,12 +42,12 @@ public class SEMGeoIRun {
                 e.printStackTrace();
             }
 
-            System.out.println(wassersteinDistance);
         } catch (InstantiationException e) {
             e.printStackTrace();
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         }
+        return wassersteinDistance;
 
     }
     public static void run0(List<TwoDimensionalDoublePoint> pointList, double cellLength, double inputLength, double epsilon, double xBound, double yBound) {
@@ -107,7 +105,7 @@ public class SEMGeoIRun {
         double yBound = Constant.DEFAULT_Y_BOUND;
 
 //        MyPrint.showList(pointList, ConstantValues.LINE_SPLIT);
-        SEMGeoIRun.run0(pointList, cellLength, inputLength, epsilon, xBound, yBound);
+        SubsetGeoIRun.run0(pointList, cellLength, inputLength, epsilon, xBound, yBound);
 
 
     }

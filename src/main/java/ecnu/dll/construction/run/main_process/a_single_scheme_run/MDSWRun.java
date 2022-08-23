@@ -15,8 +15,8 @@ import java.util.List;
 import java.util.TreeMap;
 
 @SuppressWarnings("ALL")
-public class MSWHDGRun {
-    public static double run(final List<TwoDimensionalIntegerPoint> integerPointList, final TreeMap<TwoDimensionalIntegerPoint, Double> rawDataStatistic, double cellLength, double inputLength, double epsilon, double xBound, double yBound) {
+public class MDSWRun {
+    public static Double run(final List<TwoDimensionalIntegerPoint> integerPointList, final TreeMap<TwoDimensionalIntegerPoint, Double> rawDataStatistic, double cellLength, double inputLength, double epsilon, double xBound, double yBound) {
         BucketizingMultiDimensionalSquareWave mswsdg = new BucketizingMultiDimensionalSquareWave(epsilon, cellLength, inputLength, xBound, yBound);
 
         /**
@@ -32,7 +32,7 @@ public class MSWHDGRun {
 
 
 
-        double wassersteinDistance = -1;
+        Double wassersteinDistance = null;
 
         try {
             wassersteinDistance = TwoDimensionalWassersteinDistance.getWassersteinDistance(rawDataStatistic, estimationResult, 2);
@@ -92,7 +92,7 @@ public class MSWHDGRun {
         double yBound = Constant.DEFAULT_Y_BOUND;
 
 //        MyPrint.showList(pointList, ConstantValues.LINE_SPLIT);
-        MSWHDGRun.run0(pointList, cellLength, inputLength, epsilon, xBound, yBound);
+        MDSWRun.run0(pointList, cellLength, inputLength, epsilon, xBound, yBound);
 
 
     }

@@ -1,6 +1,7 @@
 package ecnu.dll.construction._config;
 
 import cn.edu.ecnu.basic.StringUtil;
+import ecnu.dll.construction.dataset.struct.DataSetAreaInfo;
 
 public class Constant {
     public static final double DEFAULT_PRECISION = Math.pow(10,-6);
@@ -20,6 +21,22 @@ public class Constant {
     public static final double DEFAULT_INPUT_LENGTH = 0.09;
     public static final double DEFAULT_X_BOUND = 41.72;
     public static final double DEFAULT_Y_BOUND = -87.68;
+
+
+
+    public static final DataSetAreaInfo[] crimeDataSetArray = new DataSetAreaInfo[]{
+            new DataSetAreaInfo("F:\\dataset\\test\\real_dataset\\chicago_point_A.txt", 41.72, -87.68, 0.09),
+            new DataSetAreaInfo("F:\\dataset\\test\\real_dataset\\chicago_point_B.txt", 41.82, -87.73, 0.09),
+            new DataSetAreaInfo("F:\\dataset\\test\\real_dataset\\chicago_point_C.txt", 41.92, -87.77,0.07)
+    };
+    public static final DataSetAreaInfo[] nycDataSetArray = new DataSetAreaInfo[]{
+            new DataSetAreaInfo("F:\\dataset\\test\\real_dataset\\nyc_point_A.txt", 40.65, -73.84, 0.10),
+            new DataSetAreaInfo("F:\\dataset\\test\\real_dataset\\nyc_point_B.txt", 40.65, -73.95, 0.09),
+            new DataSetAreaInfo("F:\\dataset\\test\\real_dataset\\nyc_point_C.txt", 40.82, -73.90,0.07)
+    };
+
+    public static final DataSetAreaInfo twoDimNormalDataSet = new DataSetAreaInfo("F:\\dataset\\test\\synthetic_dataset\\two_normal_point_extract.txt", -1.5, -1.5, 3.0);
+    public static final DataSetAreaInfo twoDimZipfDataSet = new DataSetAreaInfo("F:\\dataset\\test\\synthetic_dataset\\two_zipf_point.txt", 0.0, 0.0, 1.0);
 
 //    public static final double DEFAULT_CELL_LENGTH = 0.0225; // d/4
     // 记录转成整数cell后，输入数据的长度
@@ -46,7 +63,7 @@ public class Constant {
 //    public static final double DEFAULT_POSITIVE_B_LENGTH = 1;
 
     public static final double DEFAULT_K_PARAMETER = 0.25;
-    public static final double[] ALTER_K_PARAMETER = new double[] {
+    public static final double[] ALTER_K_PARAMETER_ARRAY = new double[] {
             0.0, 0.25, 0.5, 0.75, 1.0
     };
 
@@ -63,6 +80,20 @@ public class Constant {
 //    public static final double DEFAULT_K_PARAMETER = 0.25;
 //    public static final double DEFAULT_X_BOUND = -1;
 //    public static final double DEFAULT_Y_BOUND = -1;
+
+
+    // 记录scheme的Key
+    public static final String rhombusSchemeKey = "rhombus";
+    public static final String diskSchemeKey = "disk";
+    public static final String hybridUniformExponentialSchemeKey = "hue";
+    public static final String multiDimensionalSquareWaveSchemeKey = "mdsw";
+    public static final String subsetGeoISchemeKey = "subsetGeoI";
+
+    // 记录结果的Key
+    public static final String alterBKey = "alteringB";
+    public static final String alterBudgetKey = "alteringBudget";
+    public static final String alterGKey = "alteringG";
+    public static final String alterKKey = "alteringK";
 
 
 }
