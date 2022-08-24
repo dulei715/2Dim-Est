@@ -93,4 +93,9 @@ public class AlterParameterGRun {
         return alterParameterMap;
 
     }
+
+    public static void main(String[] args) {
+
+    }
+
 }

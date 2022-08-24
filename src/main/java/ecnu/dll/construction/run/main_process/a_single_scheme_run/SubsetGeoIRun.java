@@ -104,7 +104,7 @@ public class SubsetGeoIRun {
 
     }
 
-    public static void main(String[] args) {
+    public static void main0(String[] args) {
 //        String inputPath = "F:\\dataset\\test\\real_dataset\\chicago_point_A.txt";
         String inputPath = Constant.DEFAULT_INPUT_PATH;
         List<TwoDimensionalDoublePoint> pointList = TwoDimensionalPointRead.readPointWithFirstLineCount(inputPath);
@@ -121,4 +121,10 @@ public class SubsetGeoIRun {
 
 
     }
+
+    public static void main(String[] args) {
+
+
+    }
+
 }

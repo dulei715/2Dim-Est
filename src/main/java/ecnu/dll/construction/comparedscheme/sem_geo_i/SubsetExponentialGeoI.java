@@ -230,6 +230,12 @@ public class SubsetExponentialGeoI<X extends DistanceAble<X>> {
         resultPartList = BasicArray.getElementListInGivenIndexes(smallestDistanceElementsIndexList, positionList);
         resultSet.addAll(resultPartList);
 
+//        if (sizegt < this.setSizeK - eqnum) {
+//            System.out.println("some wrong!");
+//        }
+//        if (sizegt  == 0) {
+//            System.out.println("sizegt=0");
+//        }
         positionList = RandomUtil.getRandomIntegerArrayWithoutRepeat(0, sizegt - 1, this.setSizeK - eqnum);
         resultPartList = BasicArray.getElementListInGivenIndexes(allLargerDistanceElementsIndexList, positionList);
         resultSet.addAll(resultPartList);
@@ -292,6 +298,9 @@ public class SubsetExponentialGeoI<X extends DistanceAble<X>> {
         return Normalization.normMul(originalResult);
     }
 
+    public static void main(String[] args) {
+
+    }
 
 
 
