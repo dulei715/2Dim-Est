@@ -1,5 +1,6 @@
 package ecnu.dll.construction.run.main_process.b_comparision_run;
 
+import cn.edu.ecnu.result.ExperimentResult;
 import cn.edu.ecnu.struct.point.TwoDimensionalIntegerPoint;
 import ecnu.dll.construction._config.Constant;
 import ecnu.dll.construction.newscheme.discretization.tool.DiscretizedDiskSchemeTool;
@@ -10,7 +11,7 @@ import java.util.*;
 
 @SuppressWarnings("Duplicates")
 public class AlterParameterKRun {
-    public static Map<String, List<Double>> run(final List<TwoDimensionalIntegerPoint> integerPointList, double inputSideLength, final TreeMap<TwoDimensionalIntegerPoint, Double> rawDataStatistic, double xBound, double yBound) {
+    public static Map<String, List<ExperimentResult>> run(final List<TwoDimensionalIntegerPoint> integerPointList, double inputSideLength, final TreeMap<TwoDimensionalIntegerPoint, Double> rawDataStatistic, double xBound, double yBound) {
 //        String inputDataPath = Constant.DEFAULT_INPUT_PATH;
 
         int arraySize = Constant.ALTER_SIDE_LENGTH_NUMBER_SIZE.length;
@@ -43,22 +44,22 @@ public class AlterParameterKRun {
         /*
             针对Rhombus, Disk, HUEM 分别计算对应grid下的估计并返回相应的wasserstein距离
          */
-        Map<String, List<Double>> wassersteinDistanceMap = new HashMap<>();
+        Map<String, List<ExperimentResult>> alterParameterMap = new HashMap<>();
         String rhombusKey = Constant.rhombusSchemeKey, diskKey = Constant.diskSchemeKey, hue = Constant.hybridUniformExponentialSchemeKey;
-        Double tempRhombusValue, tempDiskValue, tempHUEM;
-        List<Double> rhombusList = new ArrayList<>(), diskList = new ArrayList<>(), huemList = new ArrayList<>();
+        ExperimentResult tempRhombusExperimentResult, tempDiskExperimentResult, tempHUEMExperimentResult;
+        List<ExperimentResult> rhombusExperimentResultList = new ArrayList<>(), diskExperimentResultList = new ArrayList<>(), huemExperimentResultList = new ArrayList<>();
         for (int i = 0; i < arraySize; i++) {
-            tempRhombusValue = RAMRun.run(integerPointList, rawDataStatistic, gridLength, inputSideLength, rhombusOptimalSizeB, epsilon, kParameterArray[i], xBound, yBound);
-            rhombusList.add(tempRhombusValue);
-            tempDiskValue = DAMRun.run(integerPointList, rawDataStatistic, gridLength, inputSideLength, diskOptimalSizeB, epsilon, kParameterArray[i], xBound, yBound);
-            diskList.add(tempDiskValue);
-            tempHUEM = HUEMSRun.run(integerPointList, rawDataStatistic, gridLength, inputSideLength, diskOptimalSizeB, epsilon, kParameterArray[i], xBound, yBound);
-            huemList.add(tempHUEM);
+            tempRhombusExperimentResult = RAMRun.run(integerPointList, rawDataStatistic, gridLength, inputSideLength, rhombusOptimalSizeB, epsilon, kParameterArray[i], xBound, yBound);
+            rhombusExperimentResultList.add(tempRhombusExperimentResult);
+            tempDiskExperimentResult = DAMRun.run(integerPointList, rawDataStatistic, gridLength, inputSideLength, diskOptimalSizeB, epsilon, kParameterArray[i], xBound, yBound);
+            diskExperimentResultList.add(tempDiskExperimentResult);
+            tempHUEMExperimentResult = HUEMSRun.run(integerPointList, rawDataStatistic, gridLength, inputSideLength, diskOptimalSizeB, epsilon, kParameterArray[i], xBound, yBound);
+            huemExperimentResultList.add(tempHUEMExperimentResult);
         }
-        wassersteinDistanceMap.put(rhombusKey, rhombusList);
-        wassersteinDistanceMap.put(diskKey, diskList);
-        wassersteinDistanceMap.put(hue, huemList);
-        return wassersteinDistanceMap;
+        alterParameterMap.put(rhombusKey, rhombusExperimentResultList);
+        alterParameterMap.put(diskKey, diskExperimentResultList);
+        alterParameterMap.put(hue, huemExperimentResultList);
+        return alterParameterMap;
 
     }
 }

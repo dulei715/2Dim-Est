@@ -29,6 +29,18 @@ public abstract class GeneralWave {
         return getWaveValue(realValue - sanitizedValue);
     }
 
+    public Integer getB() {
+        return b;
+    }
+
+    public Double getConstQ() {
+        return constQ;
+    }
+
+    public Double getEpsilon() {
+        return epsilon;
+    }
+
     public abstract Double getNoiseValue(Double realValue);
 
 }

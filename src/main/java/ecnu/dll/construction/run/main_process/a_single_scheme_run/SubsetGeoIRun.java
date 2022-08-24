@@ -3,6 +3,7 @@ package ecnu.dll.construction.run.main_process.a_single_scheme_run;
 import cn.edu.ecnu.basic.BasicCalculation;
 import cn.edu.ecnu.differential_privacy.accuracy.metrics.distance_quantities.TwoDimensionalWassersteinDistance;
 import cn.edu.ecnu.io.read.TwoDimensionalPointRead;
+import cn.edu.ecnu.result.ExperimentResult;
 import cn.edu.ecnu.struct.Grid;
 import cn.edu.ecnu.struct.point.TwoDimensionalDoublePoint;
 import cn.edu.ecnu.struct.point.TwoDimensionalIntegerPoint;
@@ -17,27 +18,38 @@ import java.util.TreeMap;
 
 @SuppressWarnings("Duplicates")
 public class SubsetGeoIRun {
-    public static Double run(final List<TwoDimensionalIntegerPoint> integerPointList, final TreeMap<TwoDimensionalIntegerPoint, Double> rawDataStatistic, double cellLength, double inputLength, double epsilon, double xBound, double yBound) {
-        DiscretizedSubsetExponentialGeoI subsetGeoIScheme = null;
-        Double wassersteinDistance = null;
+    public static ExperimentResult run(final List<TwoDimensionalIntegerPoint> integerPointList, final TreeMap<TwoDimensionalIntegerPoint, Double> rawDataStatistic, double cellLength, double inputLength, double epsilon, double xBound, double yBound) {
+        DiscretizedSubsetExponentialGeoI scheme = null;
+        ExperimentResult experimentResult = null;
         try {
-            subsetGeoIScheme = new DiscretizedSubsetExponentialGeoI(epsilon, cellLength, inputLength, xBound, yBound);
+            scheme = new DiscretizedSubsetExponentialGeoI(epsilon, cellLength, inputLength, xBound, yBound);
 
             /**
              * 生成噪声数据
              */
-            List<Set<Integer>> noiseSubsetIndexList = subsetGeoIScheme.getNoiseSubsetIndexList(integerPointList);
+            List<Set<Integer>> noiseSubsetIndexList = scheme.getNoiseSubsetIndexList(integerPointList);
             //todo: ...
-            TreeMap<TwoDimensionalIntegerPoint, Double> estimationResult = subsetGeoIScheme.statistic(noiseSubsetIndexList);
-
+            long startTime = System.currentTimeMillis();
+            TreeMap<TwoDimensionalIntegerPoint, Double> estimationResult = scheme.statistic(noiseSubsetIndexList);
+            long endTime = System.currentTimeMillis();
+            long postProcessTime = endTime - startTime;
 
             // for test
 //            System.out.println(BasicCalculation.getValueSum(rawDataStatistic));
 //            System.out.println(BasicCalculation.getValueSum(estimationResult));
 
             try {
-                wassersteinDistance = TwoDimensionalWassersteinDistance.getWassersteinDistance(rawDataStatistic, estimationResult, 2);
-
+                Double wassersteinDistance = TwoDimensionalWassersteinDistance.getWassersteinDistance(rawDataStatistic, estimationResult, 2);
+                experimentResult = new ExperimentResult();
+                experimentResult.addPair(Constant.dataPointSizeKey, String.valueOf(integerPointList.size()));
+                experimentResult.addPair(Constant.postProcessTimeKey, String.valueOf(postProcessTime));
+                experimentResult.addPair(Constant.gridUnitSizeKey, String.valueOf(cellLength));
+                experimentResult.addPair(Constant.dataTypeSizeKey, String.valueOf(scheme.getSortedInputPointList().size()));
+                experimentResult.addPair(Constant.sizeDKey, String.valueOf(scheme.getSizeD()));
+                experimentResult.addPair(Constant.sizeBKey, null);
+                experimentResult.addPair(Constant.privacyBudgetKey, String.valueOf(epsilon));
+                experimentResult.addPair(Constant.contributionKKey, null);
+                experimentResult.addPair(Constant.wassersteinDistanceKey, String.valueOf(wassersteinDistance));
             } catch (CPLException e) {
                 e.printStackTrace();
             }
@@ -47,7 +59,7 @@ public class SubsetGeoIRun {
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         }
-        return wassersteinDistance;
+        return experimentResult;
 
     }
     public static void run0(List<TwoDimensionalDoublePoint> pointList, double cellLength, double inputLength, double epsilon, double xBound, double yBound) {

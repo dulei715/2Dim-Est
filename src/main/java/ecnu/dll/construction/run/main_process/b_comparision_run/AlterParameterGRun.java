@@ -1,5 +1,6 @@
 package ecnu.dll.construction.run.main_process.b_comparision_run;
 
+import cn.edu.ecnu.result.ExperimentResult;
 import cn.edu.ecnu.statistic.StatisticTool;
 import cn.edu.ecnu.struct.Grid;
 import cn.edu.ecnu.struct.point.TwoDimensionalDoublePoint;
@@ -14,7 +15,7 @@ import java.util.*;
 
 @SuppressWarnings("Duplicates")
 public class AlterParameterGRun {
-    public static Map<String, List<Double>> run(final List<TwoDimensionalDoublePoint> doublePointList, double inputSideLength, double xBound, double yBound) {
+    public static Map<String, List<ExperimentResult>> run(final List<TwoDimensionalDoublePoint> doublePointList, double inputSideLength, double xBound, double yBound) {
 //        String inputDataPath = Constant.DEFAULT_INPUT_PATH;
 
         int arraySize = Constant.ALTER_SIDE_LENGTH_NUMBER_SIZE.length;
@@ -53,10 +54,10 @@ public class AlterParameterGRun {
         /*
             针对SubsetGeoI, MSW, Rhombus, Disk, HUEM 分别计算对应grid下的估计并返回相应的wasserstein距离
          */
-        Map<String, List<Double>> wassersteinDistanceMap = new HashMap<>();
+        Map<String, List<ExperimentResult>> alterParameterMap = new HashMap<>();
         String rhombusKey = Constant.rhombusSchemeKey, diskKey = Constant.diskSchemeKey, subsetGeoI = Constant.subsetGeoISchemeKey, mdsw = Constant.multiDimensionalSquareWaveSchemeKey, hue = Constant.hybridUniformExponentialSchemeKey;
-        Double tempRhombusValue, tempDiskValue, tempSubsetGeoIValue, tempMdswValue, tempHUEM;
-        List<Double> rhombusList = new ArrayList<>(), diskList = new ArrayList<>(), subsetGeoIList = new ArrayList<>(), mdswList = new ArrayList<>(), huemList = new ArrayList<>();
+        ExperimentResult tempRhombusExperimentResult, tempDiskExperimentResult, tempSubsetGeoIExperimentResult, tempMdswExperimentResult, tempHUEMExperimentResult;
+        List<ExperimentResult> rhombusExperimentResultList = new ArrayList<>(), diskExperimentResultList = new ArrayList<>(), subsetGeoIExperimentResultList = new ArrayList<>(), mdswExperimentResultList = new ArrayList<>(), huemExperimentResultList = new ArrayList<>();
         List<TwoDimensionalIntegerPoint> integerPointList, integerPointTypeList;
         TreeMap<TwoDimensionalIntegerPoint, Double> rawDataStatistic;
         for (int i = 0; i < arraySize; i++) {
@@ -68,23 +69,28 @@ public class AlterParameterGRun {
             integerPointTypeList = DiscretizedSchemeTool.getRawIntegerPointTypeList(sizeDArray[i]);
             rawDataStatistic = StatisticTool.countHistogramRatioMap(integerPointTypeList, integerPointList);
 
-            tempSubsetGeoIValue = SubsetGeoIRun.run(integerPointList, rawDataStatistic, gridLengthArray[i], inputSideLength, epsilon, xBound, yBound);
-            subsetGeoIList.add(tempSubsetGeoIValue);
-            tempMdswValue = MDSWRun.run(integerPointList, rawDataStatistic, gridLengthArray[i], inputSideLength, epsilon, xBound, yBound);
-            mdswList.add(tempMdswValue);
-            tempRhombusValue = RAMRun.run(integerPointList, rawDataStatistic, gridLengthArray[i], inputSideLength, alterRhombusOptimalSizeB[i], epsilon, kParameter, xBound, yBound);
-            rhombusList.add(tempRhombusValue);
-            tempDiskValue = DAMRun.run(integerPointList, rawDataStatistic, gridLengthArray[i], inputSideLength, alterDiskOptimalSizeB[i], epsilon, kParameter, xBound, yBound);
-            diskList.add(tempDiskValue);
-            tempHUEM = HUEMSRun.run(integerPointList, rawDataStatistic, gridLengthArray[i], inputSideLength, alterDiskOptimalSizeB[i], epsilon, kParameter, xBound, yBound);
-            huemList.add(tempHUEM);
+            tempSubsetGeoIExperimentResult = SubsetGeoIRun.run(integerPointList, rawDataStatistic, gridLengthArray[i], inputSideLength, epsilon, xBound, yBound);
+            tempSubsetGeoIExperimentResult.addPair(1, Constant.areaLengthKey, String.valueOf(inputSideLength));
+            subsetGeoIExperimentResultList.add(tempSubsetGeoIExperimentResult);
+            tempMdswExperimentResult = MDSWRun.run(integerPointList, rawDataStatistic, gridLengthArray[i], inputSideLength, epsilon, xBound, yBound);
+            tempMdswExperimentResult.addPair(1, Constant.areaLengthKey, String.valueOf(inputSideLength));
+            mdswExperimentResultList.add(tempMdswExperimentResult);
+            tempRhombusExperimentResult = RAMRun.run(integerPointList, rawDataStatistic, gridLengthArray[i], inputSideLength, alterRhombusOptimalSizeB[i], epsilon, kParameter, xBound, yBound);
+            tempRhombusExperimentResult.addPair(1, Constant.areaLengthKey, String.valueOf(inputSideLength));
+            rhombusExperimentResultList.add(tempRhombusExperimentResult);
+            tempDiskExperimentResult = DAMRun.run(integerPointList, rawDataStatistic, gridLengthArray[i], inputSideLength, alterDiskOptimalSizeB[i], epsilon, kParameter, xBound, yBound);
+            tempDiskExperimentResult.addPair(1, Constant.areaLengthKey, String.valueOf(inputSideLength));
+            diskExperimentResultList.add(tempDiskExperimentResult);
+            tempHUEMExperimentResult = HUEMSRun.run(integerPointList, rawDataStatistic, gridLengthArray[i], inputSideLength, alterDiskOptimalSizeB[i], epsilon, kParameter, xBound, yBound);
+            tempHUEMExperimentResult.addPair(1, Constant.areaLengthKey, String.valueOf(inputSideLength));
+            huemExperimentResultList.add(tempHUEMExperimentResult);
         }
-        wassersteinDistanceMap.put(subsetGeoI, subsetGeoIList);
-        wassersteinDistanceMap.put(mdsw, mdswList);
-        wassersteinDistanceMap.put(rhombusKey, rhombusList);
-        wassersteinDistanceMap.put(diskKey, diskList);
-        wassersteinDistanceMap.put(hue, huemList);
-        return wassersteinDistanceMap;
+        alterParameterMap.put(subsetGeoI, subsetGeoIExperimentResultList);
+        alterParameterMap.put(mdsw, mdswExperimentResultList);
+        alterParameterMap.put(rhombusKey, rhombusExperimentResultList);
+        alterParameterMap.put(diskKey, diskExperimentResultList);
+        alterParameterMap.put(hue, huemExperimentResultList);
+        return alterParameterMap;
 
     }
 }

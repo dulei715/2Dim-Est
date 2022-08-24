@@ -87,4 +87,11 @@ public class DiscretizedSubsetExponentialGeoI {
         return StatisticTool.countHistogramRatioMap(this.sortedInputPointList, valueList);
     }
 
+    public List<TwoDimensionalIntegerPoint> getSortedInputPointList() {
+        return sortedInputPointList;
+    }
+
+    public Integer getSizeD() {
+        return sizeD;
+    }
 }

@@ -24,19 +24,6 @@ public class Constant {
 
 
 
-    public static final DataSetAreaInfo[] crimeDataSetArray = new DataSetAreaInfo[]{
-            new DataSetAreaInfo("F:\\dataset\\test\\real_dataset\\chicago_point_A.txt", 41.72, -87.68, 0.09),
-            new DataSetAreaInfo("F:\\dataset\\test\\real_dataset\\chicago_point_B.txt", 41.82, -87.73, 0.09),
-            new DataSetAreaInfo("F:\\dataset\\test\\real_dataset\\chicago_point_C.txt", 41.92, -87.77,0.07)
-    };
-    public static final DataSetAreaInfo[] nycDataSetArray = new DataSetAreaInfo[]{
-            new DataSetAreaInfo("F:\\dataset\\test\\real_dataset\\nyc_point_A.txt", 40.65, -73.84, 0.10),
-            new DataSetAreaInfo("F:\\dataset\\test\\real_dataset\\nyc_point_B.txt", 40.65, -73.95, 0.09),
-            new DataSetAreaInfo("F:\\dataset\\test\\real_dataset\\nyc_point_C.txt", 40.82, -73.90,0.07)
-    };
-
-    public static final DataSetAreaInfo twoDimNormalDataSet = new DataSetAreaInfo("F:\\dataset\\test\\synthetic_dataset\\two_normal_point_extract.txt", -1.5, -1.5, 3.0);
-    public static final DataSetAreaInfo twoDimZipfDataSet = new DataSetAreaInfo("F:\\dataset\\test\\synthetic_dataset\\two_zipf_point.txt", 0.0, 0.0, 1.0);
 
 //    public static final double DEFAULT_CELL_LENGTH = 0.0225; // d/4
     // 记录转成整数cell后，输入数据的长度
@@ -94,6 +81,91 @@ public class Constant {
     public static final String alterBudgetKey = "alteringBudget";
     public static final String alterGKey = "alteringG";
     public static final String alterKKey = "alteringK";
+
+    // 记录数据集名称
+    public static final String chicagoAKey = "ChicagoA";
+    public static final String chicagoBKey = "ChicagoB";
+    public static final String chicagoCKey = "ChicagoC";
+    public static final String nycAKey = "NYCA";
+    public static final String nycBKey = "NYCB";
+    public static final String nycCKey = "NYCC";
+    public static final String normalKey = "TwoDimNormal";
+    public static final String zipfKey = "TwoDimZipf";
+
+    // 记录数据集路径
+    public static final String chicagoAPath = "F:\\dataset\\test\\real_dataset\\chicago_point_A.txt";
+    public static final String chicagoBPath = "F:\\dataset\\test\\real_dataset\\chicago_point_B.txt";
+    public static final String chicagoCPath = "F:\\dataset\\test\\real_dataset\\chicago_point_C.txt";
+    public static final String nycAPath = "F:\\dataset\\test\\real_dataset\\nyc_point_A.txt";
+    public static final String nycBPath = "F:\\dataset\\test\\real_dataset\\nyc_point_B.txt";
+    public static final String nycCPath = "F:\\dataset\\test\\real_dataset\\nyc_point_C.txt";
+    public static final String normalPath = "F:\\dataset\\test\\synthetic_dataset\\two_normal_point_extract.txt";
+    public static final String zipfPath = "F:\\dataset\\test\\synthetic_dataset\\two_zipf_point.txt";
+
+
+
+    // 记录result
+    public static final String dataSetNameKey = "DataSetName";
+    public static final String dataPointSizeKey = "DataPointSize";
+    public static final String areaLengthKey = "AreaLength";
+    public static final String postProcessTimeKey = "PostProcessTime";
+    public static final String gridUnitSizeKey = "GridUnitSize";
+    public static final String dataTypeSizeKey = "DataTypeSize";
+    public static final String sizeDKey = "SizeD";
+    public static final String sizeBKey = "SizeB";
+    public static final String privacyBudgetKey = "PrivacyBudget";
+    public static final String contributionKKey = "ContributionK";
+    public static final String wassersteinDistanceKey = "WassersteinDistance";
+
+    public static final String[] attributeArray = new String[]{
+            dataSetNameKey,
+            dataPointSizeKey,
+            areaLengthKey,
+            postProcessTimeKey,
+            gridUnitSizeKey,
+            dataTypeSizeKey,
+            sizeDKey,
+            sizeBKey,
+            privacyBudgetKey,
+            contributionKKey,
+            wassersteinDistanceKey
+    };
+
+    public static final DataSetAreaInfo[] crimeDataSetArray = new DataSetAreaInfo[]{
+            new DataSetAreaInfo(chicagoAPath, chicagoAKey, 41.72, -87.68, 0.09),
+            new DataSetAreaInfo(chicagoBPath, chicagoBKey, 41.82, -87.73, 0.09),
+            new DataSetAreaInfo(chicagoCPath, chicagoCKey, 41.92, -87.77,0.07)
+    };
+    public static final DataSetAreaInfo[] nycDataSetArray = new DataSetAreaInfo[]{
+            new DataSetAreaInfo(nycAPath, nycAKey, 40.65, -73.84, 0.10),
+            new DataSetAreaInfo(nycBPath, nycBKey, 40.65, -73.95, 0.09),
+            new DataSetAreaInfo(nycCPath, nycCKey, 40.82, -73.90,0.07)
+    };
+
+    public static final DataSetAreaInfo twoDimNormalDataSet = new DataSetAreaInfo(normalPath, normalKey, -1.5, -1.5, 3.0);
+    public static final DataSetAreaInfo twoDimZipfDataSet = new DataSetAreaInfo(zipfPath, zipfKey, 0.0, 0.0, 1.0);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 }

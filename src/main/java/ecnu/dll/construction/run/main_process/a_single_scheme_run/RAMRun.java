@@ -3,6 +3,7 @@ package ecnu.dll.construction.run.main_process.a_single_scheme_run;
 import cn.edu.ecnu.basic.BasicCalculation;
 import cn.edu.ecnu.differential_privacy.accuracy.metrics.distance_quantities.TwoDimensionalWassersteinDistance;
 import cn.edu.ecnu.io.read.TwoDimensionalPointRead;
+import cn.edu.ecnu.result.ExperimentResult;
 import cn.edu.ecnu.struct.Grid;
 import cn.edu.ecnu.struct.point.TwoDimensionalDoublePoint;
 import cn.edu.ecnu.struct.point.TwoDimensionalIntegerPoint;
@@ -22,37 +23,47 @@ public class RAMRun {
      * 根据参数执行响应的 RAM 方案
      *
      */
-    public static Double run(final List<TwoDimensionalIntegerPoint> integerPointList, final TreeMap<TwoDimensionalIntegerPoint, Double> rawDataStatistic, double cellLength, double inputLength, double bLength, double epsilon, double kParameter, double xBound, double yBound) {
-        DiscretizedRhombusScheme ramScheme;
+    public static ExperimentResult run(final List<TwoDimensionalIntegerPoint> integerPointList, final TreeMap<TwoDimensionalIntegerPoint, Double> rawDataStatistic, double cellLength, double inputLength, double bLength, double epsilon, double kParameter, double xBound, double yBound) {
+        DiscretizedRhombusScheme scheme;
         if (bLength > 0) {
-            ramScheme = new DiscretizedRhombusScheme(epsilon, cellLength, bLength, inputLength, kParameter, xBound, yBound);
+            scheme = new DiscretizedRhombusScheme(epsilon, cellLength, bLength, inputLength, kParameter, xBound, yBound);
         } else {
-            ramScheme = new DiscretizedRhombusScheme(epsilon, cellLength, inputLength, kParameter, xBound, yBound);
+            scheme = new DiscretizedRhombusScheme(epsilon, cellLength, inputLength, kParameter, xBound, yBound);
         }
 
         /**
          * 生成噪声数据
          */
-        List<TwoDimensionalIntegerPoint> noiseIntegerPointList = ramScheme.getNoiseValueList(integerPointList);
+        List<TwoDimensionalIntegerPoint> noiseIntegerPointList = scheme.getNoiseValueList(integerPointList);
         //todo: ...
-        TreeMap<TwoDimensionalIntegerPoint, Double> estimationResult = ramScheme.statistic(noiseIntegerPointList);
-
+        long startTime = System.currentTimeMillis();
+        TreeMap<TwoDimensionalIntegerPoint, Double> estimationResult = scheme.statistic(noiseIntegerPointList);
+        long endTime = System.currentTimeMillis();
+        long postProcessTime = endTime - startTime;
 
         // for test
-        System.out.println(BasicCalculation.getValueSum(rawDataStatistic));
-        System.out.println(BasicCalculation.getValueSum(estimationResult));
+//        System.out.println(BasicCalculation.getValueSum(rawDataStatistic));
+//        System.out.println(BasicCalculation.getValueSum(estimationResult));
 
 
-        Double wassersteinDistance = null;
-
+        ExperimentResult experimentResult = null;
         try {
-            wassersteinDistance = TwoDimensionalWassersteinDistance.getWassersteinDistance(rawDataStatistic, estimationResult, 2);
-
+            Double wassersteinDistance = TwoDimensionalWassersteinDistance.getWassersteinDistance(rawDataStatistic, estimationResult, 2);
+            experimentResult = new ExperimentResult();
+            experimentResult.addPair(Constant.dataPointSizeKey, String.valueOf(integerPointList.size()));
+            experimentResult.addPair(Constant.postProcessTimeKey, String.valueOf(postProcessTime));
+            experimentResult.addPair(Constant.gridUnitSizeKey, String.valueOf(cellLength));
+            experimentResult.addPair(Constant.dataTypeSizeKey, String.valueOf(scheme.getRawIntegerPointTypeList().size()));
+            experimentResult.addPair(Constant.sizeDKey, String.valueOf(scheme.getSizeD()));
+            experimentResult.addPair(Constant.sizeBKey, String.valueOf(scheme.getSizeB()));
+            experimentResult.addPair(Constant.privacyBudgetKey, String.valueOf(epsilon));
+            experimentResult.addPair(Constant.contributionKKey, String.valueOf(kParameter));
+            experimentResult.addPair(Constant.wassersteinDistanceKey, String.valueOf(wassersteinDistance));
         } catch (CPLException e) {
             e.printStackTrace();
         }
 
-        return wassersteinDistance;
+        return experimentResult;
 
     }
     public static void run0(List<TwoDimensionalDoublePoint> pointList, double cellLength, double inputLength, double bLength, double epsilon, double kParameter, double xBound, double yBound) {

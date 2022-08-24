@@ -32,6 +32,8 @@ public abstract class SquareWave<T extends Comparable> extends GeneralWave {
         return this.constQ;
     }
 
+
+
     @Override
     public Double getNoiseValue(Double realValue) {
         if (realValue < 0 || realValue > 1) {

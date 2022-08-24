@@ -19,6 +19,8 @@ public class BucketizingMultiDimensionalSquareWave {
     // 记录输入区域边长值
     private Double inputLength = null;
 
+    private Integer sizeD = null;
+
     private List<TwoDimensionalIntegerPoint> rawIntegerPointTypeList = null;
 
     private BucketizingOptimalSquareWave xSquareWave = null;
@@ -36,11 +38,11 @@ public class BucketizingMultiDimensionalSquareWave {
         this.leftBorderArray = new Double[2];
         this.leftBorderArray[0] = xLeft;
         this.leftBorderArray[1] = yLeft;
-        Integer xInputSize, yInputSize;
-        xInputSize = yInputSize = (int)Math.ceil(inputLength / gridLength);
-        this.xSquareWave = new BucketizingOptimalSquareWave(epsilon, xInputSize);
-        this.ySquareWave = new BucketizingOptimalSquareWave(epsilon, yInputSize);
-        this.rawIntegerPointTypeList = Grid.generateTwoDimensionalIntegerPoint(xInputSize, 0, 0);
+//        Integer xInputSize, yInputSize;
+        this.sizeD = (int)Math.ceil(inputLength / gridLength);
+        this.xSquareWave = new BucketizingOptimalSquareWave(epsilon, this.sizeD);
+        this.ySquareWave = new BucketizingOptimalSquareWave(epsilon, this.sizeD);
+        this.rawIntegerPointTypeList = Grid.generateTwoDimensionalIntegerPoint(this.sizeD, 0, 0);
     }
 
     private Integer getRandomIndexFlag() {
@@ -120,4 +122,18 @@ public class BucketizingMultiDimensionalSquareWave {
     public TreeMap<TwoDimensionalIntegerPoint, Double> rawDataStatistic(List<TwoDimensionalIntegerPoint> valueList) {
         return StatisticTool.countHistogramRatioMap(this.rawIntegerPointTypeList, valueList);
     }
+
+    public List<TwoDimensionalIntegerPoint> getRawIntegerPointTypeList() {
+        return rawIntegerPointTypeList;
+    }
+
+    public Integer getSizeD() {
+        return sizeD;
+    }
+
+    public Integer getSizeB() {
+        // 这里默认xSquareWave和ySquareWave的结构一样
+        return this.xSquareWave.getB();
+    }
+
 }

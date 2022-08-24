@@ -83,7 +83,9 @@ public abstract class AbstractDiscretizedScheme implements DiscretizedPlaneInter
         this.rawIntegerPointTypeList = DiscretizedSchemeTool.getRawIntegerPointTypeList(this.sizeD);
     }
 
-
+    public List<TwoDimensionalIntegerPoint> getRawIntegerPointTypeList() {
+        return rawIntegerPointTypeList;
+    }
 
     /**
      * 记录所有可能返回的cell的坐标
@@ -155,5 +157,29 @@ public abstract class AbstractDiscretizedScheme implements DiscretizedPlaneInter
 
     public Double[] getLeftBorderArray() {
         return leftBorderArray;
+    }
+
+    public Double getEpsilon() {
+        return epsilon;
+    }
+
+    public Double getkParameter() {
+        return kParameter;
+    }
+
+    public Integer getSizeB() {
+        return sizeB;
+    }
+
+    public Integer getSizeD() {
+        return sizeD;
+    }
+
+    public Double getConstP() {
+        return constP;
+    }
+
+    public Double getConstQ() {
+        return constQ;
     }
 }
