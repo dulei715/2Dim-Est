@@ -51,6 +51,7 @@ public class RAMRun {
             Double wassersteinDistance = TwoDimensionalWassersteinDistance.getWassersteinDistance(rawDataStatistic, estimationResult, 2);
             experimentResult = new ExperimentResult();
             experimentResult.addPair(Constant.dataPointSizeKey, String.valueOf(integerPointList.size()));
+            experimentResult.addPair(Constant.schemeNameKey, Constant.rhombusSchemeKey);
             experimentResult.addPair(Constant.postProcessTimeKey, String.valueOf(postProcessTime));
             experimentResult.addPair(Constant.gridUnitSizeKey, String.valueOf(cellLength));
             experimentResult.addPair(Constant.dataTypeSizeKey, String.valueOf(scheme.getRawIntegerPointTypeList().size()));

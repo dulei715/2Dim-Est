@@ -39,6 +39,7 @@ public class HUEMSRun {
             Double wassersteinDistance = TwoDimensionalWassersteinDistance.getWassersteinDistance(rawDataStatistic, estimationResult, 2);
             experimentResult = new ExperimentResult();
             experimentResult.addPair(Constant.dataPointSizeKey, String.valueOf(integerPointList.size()));
+            experimentResult.addPair(Constant.schemeNameKey, Constant.hybridUniformExponentialSchemeKey);
             experimentResult.addPair(Constant.postProcessTimeKey, String.valueOf(postProcessTime));
             experimentResult.addPair(Constant.gridUnitSizeKey, String.valueOf(cellLength));
             experimentResult.addPair(Constant.dataTypeSizeKey, String.valueOf(scheme.getRawIntegerPointTypeList().size()));
@@ -96,7 +97,8 @@ public class HUEMSRun {
         double inputLength = Constant.DEFAULT_INPUT_LENGTH;
         double bLength = 1;
         double epsilon = Constant.DEFAULT_PRIVACY_BUDGET;
-        double kParameter = Constant.DEFAULT_K_PARAMETER;
+//        double kParameter = Constant.DEFAULT_K_PARAMETER;
+        double kParameter = 1;
         double xBound = Constant.DEFAULT_X_BOUND;
         double yBound = Constant.DEFAULT_Y_BOUND;
 

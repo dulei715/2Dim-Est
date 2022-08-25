@@ -102,12 +102,27 @@ public class Constant {
     public static final String normalPath = "F:\\dataset\\test\\synthetic_dataset\\two_normal_point_extract.txt";
     public static final String zipfPath = "F:\\dataset\\test\\synthetic_dataset\\two_zipf_point.txt";
 
+    // 记录dataset输出父路径
+    public static final String[] outputCrimeDirArray = new String[] {
+            "F:\\dataset\\test\\result\\crime\\crimeA",
+            "F:\\dataset\\test\\result\\crime\\crimeB",
+            "F:\\dataset\\test\\result\\crime\\crimeC"
+    };
+    public static final String[] outputSynDirArray = new String[] {
+            "F:\\dataset\\test\\result\\syn\\synA",
+            "F:\\dataset\\test\\result\\syn\\synB",
+            "F:\\dataset\\test\\result\\syn\\synC"
+    };
+    public static final String outputNormalDir = "F:\\dataset\\test\\result\\normal";
+    public static final String outputZipfDir = "F:\\dataset\\test\\result\\zipf";
+
 
 
     // 记录result
     public static final String dataSetNameKey = "DataSetName";
     public static final String dataPointSizeKey = "DataPointSize";
     public static final String areaLengthKey = "AreaLength";
+    public static final String schemeNameKey = "SchemeName";
     public static final String postProcessTimeKey = "PostProcessTime";
     public static final String gridUnitSizeKey = "GridUnitSize";
     public static final String dataTypeSizeKey = "DataTypeSize";
@@ -121,6 +136,7 @@ public class Constant {
             dataSetNameKey,
             dataPointSizeKey,
             areaLengthKey,
+            schemeNameKey,
             postProcessTimeKey,
             gridUnitSizeKey,
             dataTypeSizeKey,

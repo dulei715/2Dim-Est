@@ -47,6 +47,7 @@ public class DAMRun extends BasicGridSplitRun {
             Double wassersteinDistance = TwoDimensionalWassersteinDistance.getWassersteinDistance(rawDataStatistic, estimationResult, 2);
             experimentResult = new ExperimentResult();
             experimentResult.addPair(Constant.dataPointSizeKey, String.valueOf(integerPointList.size()));
+            experimentResult.addPair(Constant.schemeNameKey, Constant.diskSchemeKey);
             experimentResult.addPair(Constant.postProcessTimeKey, String.valueOf(postProcessTime));
             experimentResult.addPair(Constant.gridUnitSizeKey, String.valueOf(cellLength));
             experimentResult.addPair(Constant.dataTypeSizeKey, String.valueOf(scheme.getRawIntegerPointTypeList().size()));
@@ -112,6 +113,7 @@ public class DAMRun extends BasicGridSplitRun {
         double bLength = Constant.DEFAULT_B_LENGTH;
         double epsilon = Constant.DEFAULT_PRIVACY_BUDGET;
         double kParameter = Constant.DEFAULT_K_PARAMETER;
+//        double kParameter = 0;
         double xBound = Constant.DEFAULT_X_BOUND;
         double yBound = Constant.DEFAULT_Y_BOUND;
 

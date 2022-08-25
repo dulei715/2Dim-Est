@@ -61,6 +61,68 @@ public class TotalRun {
 
         return resultMap;
     }
+    public static Map<String, Map<String, Map<String, List<ExperimentResult>>>> runAndWrite(DataSetAreaInfo[] crimeDataSetArray, String[] crimeOutputDirArray, DataSetAreaInfo[] nycDataSetArray, String[] nycOutputDirArray, DataSetAreaInfo twoDimNormalDataSet, String normalOutputDir, DataSetAreaInfo twoDimZipfDataSet, String zipfOutputDir) {
+
+        String dataSetPath, dataSetName;
+        Double xBound, yBound, length;
+
+        Map<String, Map<String, Map<String, List<ExperimentResult>>>> resultMap = new HashMap<>();
+
+        Map<String, Map<String, List<ExperimentResult>>> tempDataSetResult = null;
+
+        int k;
+        if (crimeDataSetArray != null) {
+            // Crime
+            k = 0;
+            for (DataSetAreaInfo dataSetInfo : crimeDataSetArray) {
+                dataSetPath = dataSetInfo.getDataSetPath();
+                dataSetName = dataSetInfo.getDataSetName();
+                xBound = dataSetInfo.getxBound();
+                yBound = dataSetInfo.getyBound();
+                length = dataSetInfo.getLength();
+                tempDataSetResult = DataSetRun.runAndWrite(dataSetPath, dataSetName, crimeOutputDirArray[k++], xBound, yBound, length);
+                resultMap.put(dataSetName, tempDataSetResult);
+            }
+        }
+
+        // NYC
+        if (nycDataSetArray != null) {
+            k=0;
+            for (DataSetAreaInfo dataSetInfo : nycDataSetArray) {
+                dataSetPath = dataSetInfo.getDataSetPath();
+                dataSetName = dataSetInfo.getDataSetName();
+                xBound = dataSetInfo.getxBound();
+                yBound = dataSetInfo.getyBound();
+                length = dataSetInfo.getLength();
+                tempDataSetResult = DataSetRun.runAndWrite(dataSetPath, dataSetName, nycOutputDirArray[k++], xBound, yBound, length);
+                resultMap.put(dataSetName, tempDataSetResult);
+            }
+        }
+
+        // 2-Dim Normal
+        if (twoDimNormalDataSet != null) {
+            dataSetPath = twoDimNormalDataSet.getDataSetPath();
+            dataSetName = twoDimNormalDataSet.getDataSetName();
+            xBound = twoDimNormalDataSet.getxBound();
+            yBound = twoDimNormalDataSet.getyBound();
+            length = twoDimNormalDataSet.getLength();
+            tempDataSetResult = DataSetRun.runAndWrite(dataSetPath, dataSetName, normalOutputDir, xBound, yBound, length);
+            resultMap.put(dataSetName, tempDataSetResult);
+        }
+
+        // 2-Dim Zipf
+        if (twoDimZipfDataSet != null) {
+            dataSetPath = twoDimZipfDataSet.getDataSetPath();
+            dataSetName = twoDimZipfDataSet.getDataSetName();
+            xBound = twoDimZipfDataSet.getxBound();
+            yBound = twoDimZipfDataSet.getyBound();
+            length = twoDimZipfDataSet.getLength();
+            tempDataSetResult = DataSetRun.runAndWrite(dataSetPath, dataSetName, zipfOutputDir, xBound, yBound, length);
+            resultMap.put(dataSetName, tempDataSetResult);
+        }
+
+        return resultMap;
+    }
 
 
 }
