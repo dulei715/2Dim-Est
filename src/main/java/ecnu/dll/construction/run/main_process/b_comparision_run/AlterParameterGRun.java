@@ -75,13 +75,13 @@ public class AlterParameterGRun {
             tempMdswExperimentResult = MDSWRun.run(integerPointList, rawDataStatistic, gridLengthArray[i], inputSideLength, epsilon, xBound, yBound);
             tempMdswExperimentResult.addPair(1, Constant.areaLengthKey, String.valueOf(inputSideLength));
             mdswExperimentResultList.add(tempMdswExperimentResult);
-            tempRhombusExperimentResult = RAMRun.run(integerPointList, rawDataStatistic, gridLengthArray[i], inputSideLength, alterRhombusOptimalSizeB[i], epsilon, kParameter, xBound, yBound);
+            tempRhombusExperimentResult = RAMRun.run(integerPointList, rawDataStatistic, gridLengthArray[i], inputSideLength, alterRhombusOptimalSizeB[i]*gridLengthArray[i], epsilon, kParameter, xBound, yBound);
             tempRhombusExperimentResult.addPair(1, Constant.areaLengthKey, String.valueOf(inputSideLength));
             rhombusExperimentResultList.add(tempRhombusExperimentResult);
-            tempDiskExperimentResult = DAMRun.run(integerPointList, rawDataStatistic, gridLengthArray[i], inputSideLength, alterDiskOptimalSizeB[i], epsilon, kParameter, xBound, yBound);
+            tempDiskExperimentResult = DAMRun.run(integerPointList, rawDataStatistic, gridLengthArray[i], inputSideLength, alterDiskOptimalSizeB[i]*gridLengthArray[i], epsilon, kParameter, xBound, yBound);
             tempDiskExperimentResult.addPair(1, Constant.areaLengthKey, String.valueOf(inputSideLength));
             diskExperimentResultList.add(tempDiskExperimentResult);
-            tempHUEMExperimentResult = HUEMSRun.run(integerPointList, rawDataStatistic, gridLengthArray[i], inputSideLength, alterDiskOptimalSizeB[i], epsilon, kParameter, xBound, yBound);
+            tempHUEMExperimentResult = HUEMSRun.run(integerPointList, rawDataStatistic, gridLengthArray[i], inputSideLength, alterDiskOptimalSizeB[i]*gridLengthArray[i], epsilon, kParameter, xBound, yBound);
             tempHUEMExperimentResult.addPair(1, Constant.areaLengthKey, String.valueOf(inputSideLength));
             huemExperimentResultList.add(tempHUEMExperimentResult);
         }

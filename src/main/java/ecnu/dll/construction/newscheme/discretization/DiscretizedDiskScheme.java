@@ -97,6 +97,9 @@ public class DiscretizedDiskScheme extends AbstractDiscretizedScheme {
     }
 
     private void setOuterCellIndex() {
+//        if (this.sizeB <= 0) {
+//            System.out.println("sizeB error!");
+//        }
         this.outerCellIndexList = DiscretizedDiskSchemeTool.calculateOuterCellIndexList(this.sizeB);
     }
 

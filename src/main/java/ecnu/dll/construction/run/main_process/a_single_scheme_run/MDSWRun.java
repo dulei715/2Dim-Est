@@ -47,7 +47,7 @@ public class MDSWRun {
             experimentResult.addPair(Constant.sizeDKey, String.valueOf(scheme.getSizeD()));
             experimentResult.addPair(Constant.sizeBKey, String.valueOf(scheme.getSizeB()));
             experimentResult.addPair(Constant.privacyBudgetKey, String.valueOf(epsilon));
-            experimentResult.addPair(Constant.contributionKKey, null);
+            experimentResult.addPair(Constant.contributionKKey, String.valueOf(Constant.invalidValue));
             experimentResult.addPair(Constant.wassersteinDistanceKey, String.valueOf(wassersteinDistance));
         } catch (CPLException e) {
             e.printStackTrace();

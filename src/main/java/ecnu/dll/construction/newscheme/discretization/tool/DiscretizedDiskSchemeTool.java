@@ -86,6 +86,9 @@ public class DiscretizedDiskSchemeTool {
         double r_1 = Math.floor(tempDiff) * sqrt2 + 1/sqrt2;
         double r = Math.sqrt(r_1 * (r_1  + sqrt2) + 1);
         int outerCellSize = (int)Math.ceil(tempDiff) - (int)Math.floor(r / sizeB);
+//        if (outerCellSize < 0) {
+//            System.out.println("error outerCellSize!");
+//        }
         outerCellIndexList = new ArrayList<>(outerCellSize);
         int xIndexTemp;
         for (int i = 1; i <= outerCellSize; i++) {
@@ -388,7 +391,8 @@ public class DiscretizedDiskSchemeTool {
     public static Integer getOptimalSizeBOfDiskScheme(double epsilon, int sizeD) {
         double mA = Math.exp(epsilon) - 1 - epsilon;
         double mB = 1 - (1 - epsilon) * Math.exp(epsilon);
-        return (int)Math.ceil((2*mB+Math.sqrt(4*mB*mB+Math.PI*Math.exp(epsilon)*mA*mB))/(Math.PI*Math.exp(epsilon)*mA) * sizeD);
+//        return (int)Math.ceil((2*mB+Math.sqrt(4*mB*mB+Math.PI*Math.exp(epsilon)*mA*mB))/(Math.PI*Math.exp(epsilon)*mA) * sizeD);
+        return (int)Math.floor((2*mB+Math.sqrt(4*mB*mB+Math.PI*Math.exp(epsilon)*mA*mB))/(Math.PI*Math.exp(epsilon)*mA) * sizeD);
     }
 
 }

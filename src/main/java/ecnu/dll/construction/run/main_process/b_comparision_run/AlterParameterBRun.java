@@ -55,9 +55,9 @@ public class AlterParameterBRun {
         ExperimentResult tempRhombusExperimentResult, tempDiskExperimentResult;
         List<ExperimentResult> rhombusExperimentResultList = new ArrayList<>(), diskExperimentResultList = new ArrayList<>();
         for (int i = 0; i < arraySize; i++) {
-            tempRhombusExperimentResult = RAMRun.run(integerPointList, rawDataStatistic, gridLength, inputSideLength, alterRhombusSizeB[i], epsilon, kParameter, xBound, yBound);
+            tempRhombusExperimentResult = RAMRun.run(integerPointList, rawDataStatistic, gridLength, inputSideLength, alterRhombusSizeB[i]*gridLength, epsilon, kParameter, xBound, yBound);
             rhombusExperimentResultList.add(tempRhombusExperimentResult);
-            tempDiskExperimentResult = DAMRun.run(integerPointList, rawDataStatistic, gridLength, inputSideLength, alterDiskSizeB[i], epsilon, kParameter, xBound, yBound);
+            tempDiskExperimentResult = DAMRun.run(integerPointList, rawDataStatistic, gridLength, inputSideLength, alterDiskSizeB[i]*gridLength, epsilon, kParameter, xBound, yBound);
             diskExperimentResultList.add(tempDiskExperimentResult);
         }
         alterParameterMap.put(rhombusKey, rhombusExperimentResultList);

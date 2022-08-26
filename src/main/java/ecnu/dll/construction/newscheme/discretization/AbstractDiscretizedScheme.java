@@ -1,6 +1,7 @@
 package ecnu.dll.construction.newscheme.discretization;
 
 
+import cn.edu.ecnu.DecimalTool;
 import cn.edu.ecnu.basic.BasicArray;
 import cn.edu.ecnu.statistic.StatisticTool;
 import cn.edu.ecnu.struct.Grid;
@@ -47,9 +48,12 @@ public abstract class AbstractDiscretizedScheme implements DiscretizedPlaneInter
         this.gridLength = gridLength;
         this.inputLength = inputLength;
         //假设向下取整 (为了提高精度，尽量让高概率部分小)
-        this.sizeB = (int)Math.floor(constB / gridLength);
+        this.sizeB = (int)Math.floor(DecimalTool.round(constB / gridLength, Constant.eliminateDobleErrorIndexSize));
+//        if (constB < gridLength) {
+//            System.out.println("constB < gridLength");
+//        }
         //假设向上取整 (为了包含所有可能的点)
-        this.sizeD = (int)Math.ceil(inputLength / gridLength);
+        this.sizeD = (int)Math.ceil(DecimalTool.round(inputLength / gridLength, Constant.eliminateDobleErrorIndexSize));
         this.kParameter = kParameter;
 //        this.setConstPQ();
 //        this.setRawIntegerPointTypeList();

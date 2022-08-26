@@ -54,11 +54,11 @@ public class AlterParameterBudgetRun {
             subsetGeoIExperimentResultList.add(tempSubsetGeoIExperimentResult);
             tempMdswExperimentResult = MDSWRun.run(integerPointList, rawDataStatistic, gridLength, inputSideLength, epsilonArray[i], xBound, yBound);
             mdswExperimentResultList.add(tempMdswExperimentResult);
-            tempRhombusExperimentResult = RAMRun.run(integerPointList, rawDataStatistic, gridLength, inputSideLength, alterRhombusOptimalSizeB[i], epsilonArray[i], kParameter, xBound, yBound);
+            tempRhombusExperimentResult = RAMRun.run(integerPointList, rawDataStatistic, gridLength, inputSideLength, alterRhombusOptimalSizeB[i]*gridLength, epsilonArray[i], kParameter, xBound, yBound);
             rhombusExperimentResultList.add(tempRhombusExperimentResult);
-            tempDiskExperimentResult = DAMRun.run(integerPointList, rawDataStatistic, gridLength, inputSideLength, alterDiskOptimalSizeB[i], epsilonArray[i], kParameter, xBound, yBound);
+            tempDiskExperimentResult = DAMRun.run(integerPointList, rawDataStatistic, gridLength, inputSideLength, alterDiskOptimalSizeB[i]*gridLength, epsilonArray[i], kParameter, xBound, yBound);
             diskExperimentResultList.add(tempDiskExperimentResult);
-            tempHUEMExperimentResult = HUEMSRun.run(integerPointList, rawDataStatistic, gridLength, inputSideLength, alterDiskOptimalSizeB[i], epsilonArray[i], kParameter, xBound, yBound);
+            tempHUEMExperimentResult = HUEMSRun.run(integerPointList, rawDataStatistic, gridLength, inputSideLength, alterDiskOptimalSizeB[i]*gridLength, epsilonArray[i], kParameter, xBound, yBound);
             huemExperimentResultList.add(tempHUEMExperimentResult);
         }
         alterParameterMap.put(subsetGeoI, subsetGeoIExperimentResultList);

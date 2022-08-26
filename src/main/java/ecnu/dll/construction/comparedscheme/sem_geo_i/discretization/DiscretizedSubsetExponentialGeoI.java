@@ -1,9 +1,11 @@
 package ecnu.dll.construction.comparedscheme.sem_geo_i.discretization;
 
+import cn.edu.ecnu.DecimalTool;
 import cn.edu.ecnu.comparator.TwoDimensionalIntegerPointComparator;
 import cn.edu.ecnu.statistic.StatisticTool;
 import cn.edu.ecnu.struct.Grid;
 import cn.edu.ecnu.struct.point.TwoDimensionalIntegerPoint;
+import ecnu.dll.construction._config.Constant;
 import ecnu.dll.construction.comparedscheme.sem_geo_i.SubsetExponentialGeoI;
 
 import java.util.*;
@@ -27,7 +29,7 @@ public class DiscretizedSubsetExponentialGeoI {
         this.leftBorderArray = new Double[2];
         this.leftBorderArray[0] = xLeft;
         this.leftBorderArray[1] = yLeft;
-        this.sizeD = (int)Math.ceil(inputLength / gridLength);
+        this.sizeD = (int)Math.ceil(DecimalTool.round(inputLength / gridLength, Constant.eliminateDobleErrorIndexSize));
         this.sortedInputPointList = Grid.generateTwoDimensionalIntegerPoint(this.sizeD, 0, 0);    //这里的后两个参数是整数(0,0),不是传入的xLeft和yLeft
         this.sortedInputPointList.sort(new TwoDimensionalIntegerPointComparator());
         this.subsetExponentialGeoI = new SubsetExponentialGeoI<>(this.epsilon, this.sortedInputPointList);

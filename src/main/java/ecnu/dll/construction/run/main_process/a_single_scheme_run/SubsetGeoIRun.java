@@ -47,9 +47,9 @@ public class SubsetGeoIRun {
                 experimentResult.addPair(Constant.gridUnitSizeKey, String.valueOf(cellLength));
                 experimentResult.addPair(Constant.dataTypeSizeKey, String.valueOf(scheme.getSortedInputPointList().size()));
                 experimentResult.addPair(Constant.sizeDKey, String.valueOf(scheme.getSizeD()));
-                experimentResult.addPair(Constant.sizeBKey, null);
+                experimentResult.addPair(Constant.sizeBKey, String.valueOf(Constant.invalidValue));
                 experimentResult.addPair(Constant.privacyBudgetKey, String.valueOf(epsilon));
-                experimentResult.addPair(Constant.contributionKKey, null);
+                experimentResult.addPair(Constant.contributionKKey, String.valueOf(Constant.invalidValue));
                 experimentResult.addPair(Constant.wassersteinDistanceKey, String.valueOf(wassersteinDistance));
             } catch (CPLException e) {
                 e.printStackTrace();

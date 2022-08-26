@@ -71,30 +71,31 @@ public class TotalRun {
         Map<String, Map<String, List<ExperimentResult>>> tempDataSetResult = null;
 
         int k;
+        DataSetAreaInfo dataSetInfo;
         if (crimeDataSetArray != null) {
             // Crime
-            k = 0;
-            for (DataSetAreaInfo dataSetInfo : crimeDataSetArray) {
+            for (k = 0; k < crimeDataSetArray.length; k++) {
+                dataSetInfo = crimeDataSetArray[k];
                 dataSetPath = dataSetInfo.getDataSetPath();
                 dataSetName = dataSetInfo.getDataSetName();
                 xBound = dataSetInfo.getxBound();
                 yBound = dataSetInfo.getyBound();
                 length = dataSetInfo.getLength();
-                tempDataSetResult = DataSetRun.runAndWrite(dataSetPath, dataSetName, crimeOutputDirArray[k++], xBound, yBound, length);
+                tempDataSetResult = DataSetRun.runAndWrite(dataSetPath, dataSetName, crimeOutputDirArray[k], xBound, yBound, length);
                 resultMap.put(dataSetName, tempDataSetResult);
             }
         }
 
         // NYC
         if (nycDataSetArray != null) {
-            k=0;
-            for (DataSetAreaInfo dataSetInfo : nycDataSetArray) {
+            for (k = 0; k < nycDataSetArray.length; k++) {
+                dataSetInfo = nycDataSetArray[k];
                 dataSetPath = dataSetInfo.getDataSetPath();
                 dataSetName = dataSetInfo.getDataSetName();
                 xBound = dataSetInfo.getxBound();
                 yBound = dataSetInfo.getyBound();
                 length = dataSetInfo.getLength();
-                tempDataSetResult = DataSetRun.runAndWrite(dataSetPath, dataSetName, nycOutputDirArray[k++], xBound, yBound, length);
+                tempDataSetResult = DataSetRun.runAndWrite(dataSetPath, dataSetName, nycOutputDirArray[k], xBound, yBound, length);
                 resultMap.put(dataSetName, tempDataSetResult);
             }
         }

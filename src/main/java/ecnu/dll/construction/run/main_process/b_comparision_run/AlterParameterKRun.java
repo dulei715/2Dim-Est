@@ -49,11 +49,11 @@ public class AlterParameterKRun {
         ExperimentResult tempRhombusExperimentResult, tempDiskExperimentResult, tempHUEMExperimentResult;
         List<ExperimentResult> rhombusExperimentResultList = new ArrayList<>(), diskExperimentResultList = new ArrayList<>(), huemExperimentResultList = new ArrayList<>();
         for (int i = 0; i < arraySize; i++) {
-            tempRhombusExperimentResult = RAMRun.run(integerPointList, rawDataStatistic, gridLength, inputSideLength, rhombusOptimalSizeB, epsilon, kParameterArray[i], xBound, yBound);
+            tempRhombusExperimentResult = RAMRun.run(integerPointList, rawDataStatistic, gridLength, inputSideLength, rhombusOptimalSizeB*gridLength, epsilon, kParameterArray[i], xBound, yBound);
             rhombusExperimentResultList.add(tempRhombusExperimentResult);
-            tempDiskExperimentResult = DAMRun.run(integerPointList, rawDataStatistic, gridLength, inputSideLength, diskOptimalSizeB, epsilon, kParameterArray[i], xBound, yBound);
+            tempDiskExperimentResult = DAMRun.run(integerPointList, rawDataStatistic, gridLength, inputSideLength, diskOptimalSizeB*gridLength, epsilon, kParameterArray[i], xBound, yBound);
             diskExperimentResultList.add(tempDiskExperimentResult);
-            tempHUEMExperimentResult = HUEMSRun.run(integerPointList, rawDataStatistic, gridLength, inputSideLength, diskOptimalSizeB, epsilon, kParameterArray[i], xBound, yBound);
+            tempHUEMExperimentResult = HUEMSRun.run(integerPointList, rawDataStatistic, gridLength, inputSideLength, diskOptimalSizeB*gridLength, epsilon, kParameterArray[i], xBound, yBound);
             huemExperimentResultList.add(tempHUEMExperimentResult);
         }
         alterParameterMap.put(rhombusKey, rhombusExperimentResultList);
