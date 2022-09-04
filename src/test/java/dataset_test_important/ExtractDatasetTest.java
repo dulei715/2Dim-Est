@@ -4,6 +4,7 @@ import cn.edu.ecnu.dataset.DatasetHandler;
 import cn.edu.ecnu.io.read.TwoDimensionalPointRead;
 import cn.edu.ecnu.io.write.PointWrite;
 import cn.edu.ecnu.struct.point.TwoDimensionalDoublePoint;
+import ecnu.dll.construction._config.Constant;
 import org.junit.Test;
 
 import java.util.List;
@@ -12,8 +13,8 @@ public class ExtractDatasetTest {
 
     @Test
     public void extractCrimeDataset() {
-        String inputPath = "F:\\dataset\\crime\\Chicago_Crimes_2022_01_06.csv";
-        String outPath = "F:\\dataset\\test\\chicago_crimes_dataset.txt";
+        String inputPath = Constant.basicDatasetPath + "\\crime\\Chicago_Crimes_2022_01_06.csv";
+        String outPath = Constant.basicDatasetPath + "\\test\\chicago_crimes_dataset.txt";
         TwoDimensionalPointRead pointRead = new TwoDimensionalPointRead(inputPath);
         pointRead.readPointWithFirstLineCount();
         List<TwoDimensionalDoublePoint> pointList = pointRead.getPointList();
@@ -29,8 +30,8 @@ public class ExtractDatasetTest {
 
     @Test
     public void extractNormDataset() {
-        String inputPath = "F:\\dataset\\test\\synthetic_dataset\\two_normal_point.txt";
-        String outPath = "F:\\dataset\\test\\synthetic_dataset\\two_normal_point_extract.txt";
+        String inputPath = Constant.basicDatasetPath + "\\test\\synthetic_dataset\\two_normal_point.txt";
+        String outPath = Constant.basicDatasetPath + "\\test\\synthetic_dataset\\two_normal_point_extract.txt";
         TwoDimensionalPointRead pointRead = new TwoDimensionalPointRead(inputPath);
         pointRead.readPointWithFirstLineCount();
         List<TwoDimensionalDoublePoint> pointList = pointRead.getPointList();

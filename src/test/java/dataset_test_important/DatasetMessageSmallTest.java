@@ -3,6 +3,7 @@ package dataset_test_important;
 import cn.edu.ecnu.io.write.PointWrite;
 import cn.edu.ecnu.struct.point.TwoDimensionalDoublePoint;
 import com.csvreader.CsvReader;
+import ecnu.dll.construction._config.Constant;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -15,10 +16,10 @@ public class DatasetMessageSmallTest {
 
     public List<TwoDimensionalDoublePoint> pointList;
 
-    public String path = "F:\\dataset\\crime\\Chicago_Crimes_2008_to_2011.csv";
+    public String path = Constant.basicDatasetPath + "\\crime\\Chicago_Crimes_2008_to_2011.csv";
     public String keyLatitude = "Latitude";
     public String keyLongitude = "Longitude";
-    public String outputPath = "F:\\dataset\\test\\chicago_point_small.txt";
+    public String outputPath = Constant.basicDatasetPath + "\\test\\before\\chicago_point_small.txt";
 
 
     @Before

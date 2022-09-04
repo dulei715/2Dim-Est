@@ -7,6 +7,7 @@ import cn.edu.ecnu.statistic.StatisticTool;
 import cn.edu.ecnu.struct.pair.IdentityPair;
 import cn.edu.ecnu.struct.point.TwoDimensionalDoublePoint;
 import cn.edu.ecnu.struct.point.TwoDimensionalIntegerPoint;
+import ecnu.dll.construction._config.Constant;
 import ecnu.dll.construction.newscheme.discretization.DiscretizedDiskScheme;
 import ecnu.dll.construction.newscheme.discretization.DiscretizedHybridUniformExponentialScheme;
 import ecnu.dll.construction.newscheme.discretization.tool.DiscretizedDiskSchemeTool;
@@ -41,7 +42,7 @@ public class DiscretizedDiskSchemeTest {
 
     @Test
     public void fun2() {
-        String outputPath = "F:\\dataset\\test\\synthetic_dataset\\test2\\single_point_test3.txt";
+        String outputPath = Constant.basicDatasetPath + "\\test\\synthetic_dataset\\test2\\single_point_test3.txt";
         double epsilon = 1;
         double gridLength = 0.2;
         double constB = 1.6;
@@ -66,7 +67,7 @@ public class DiscretizedDiskSchemeTest {
 
     @Test
     public void fun3() {
-        String outputPath = "F:\\dataset\\test\\synthetic_dataset\\test2\\single_point_center_test3.txt";
+        String outputPath = Constant.basicDatasetPath + "\\test\\synthetic_dataset\\test2\\single_point_center_test3.txt";
         double epsilon = 1;
         double gridLength = 0.2;
         double constB = 1.6;

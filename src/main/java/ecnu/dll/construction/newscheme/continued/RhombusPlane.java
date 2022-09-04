@@ -4,6 +4,7 @@ package ecnu.dll.construction.newscheme.continued;
 import cn.edu.ecnu.basic.BasicCalculation;
 import cn.edu.ecnu.basic.RandomUtil;
 import cn.edu.ecnu.io.write.PointWrite;
+import cn.edu.ecnu.struct.point.DoublePoint;
 import cn.edu.ecnu.struct.point.Point;
 import cn.edu.ecnu.struct.point.TwoDimensionalDoublePoint;
 
@@ -109,7 +110,7 @@ public class RhombusPlane {
         double epsilon = 0.5;
         TwoDimensionalDoublePoint outputPoint;
         RhombusPlane rhombusPlane = new RhombusPlane(epsilon);
-        List<Point> pointList = new ArrayList<>();
+        List<DoublePoint> pointList = new ArrayList<>();
         String outputPath = "D:\\test\\output.txt";
         PointWrite pointWrite = new PointWrite();
         pointWrite.startWriting(outputPath);

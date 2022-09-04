@@ -10,7 +10,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="2Dim-Est" target="8" />
+      <module name="2Dim-Est" target="1.8" />
       <module name="2Dim-Estimation" target="8" />
     </bytecodeTargetLevel>
   </component>

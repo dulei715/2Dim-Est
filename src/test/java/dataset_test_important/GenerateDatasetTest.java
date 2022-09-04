@@ -4,6 +4,7 @@ import cn.edu.ecnu.basic.RandomUtil;
 import cn.edu.ecnu.io.write.PointWrite;
 import cn.edu.ecnu.statistic.DistributionUtil;
 import cn.edu.ecnu.struct.point.TwoDimensionalDoublePoint;
+import ecnu.dll.construction._config.Constant;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -13,7 +14,7 @@ public class GenerateDatasetTest {
     @Test
     public void generateZipf() {
 //        String outputPath = "F:\\dataset\\test\\synthetic_dataset\\two_zipf_dataset.txt";
-        String outputPath = "F:\\dataset\\test\\synthetic_dataset\\two_zipf_point.txt";
+        String outputPath = Constant.basicDatasetPath + "\\test\\synthetic_dataset\\two_zipf_point.txt";
         int size = 300000;
         double randomValueX, randomValueY;
         double[] doubleArrX, doubleArrY;
@@ -40,7 +41,7 @@ public class GenerateDatasetTest {
 
     @Test
     public void generateUniform() {
-        String outputPath = "F:\\dataset\\test\\synthetic_dataset\\two_uniform_dataset.txt";
+        String outputPath = Constant.basicDatasetPath + "\\test\\synthetic_dataset\\two_uniform_dataset.txt";
         int size = 10000;
         double randomValueX, randomValueY;
         TwoDimensionalDoublePoint point;
@@ -63,7 +64,7 @@ public class GenerateDatasetTest {
 
     @Test
     public void generateNorm() {
-        String outputPath = "F:\\dataset\\test\\synthetic_dataset\\two_norm_dataset.txt";
+        String outputPath = Constant.basicDatasetPath + "\\test\\synthetic_dataset\\two_norm_dataset.txt";
         int size = 10000;
         double randomValueX, randomValueY;
         TwoDimensionalDoublePoint point;

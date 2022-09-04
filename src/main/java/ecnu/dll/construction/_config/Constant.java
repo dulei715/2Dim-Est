@@ -5,6 +5,8 @@ import ecnu.dll.construction.dataset.struct.DataSetAreaInfo;
 
 public class Constant {
 
+    public static final String basicDatasetPath = "E:\\1.学习\\4.数据集\\2.dataset_for_spatial_estimation";
+
     public static final int eliminateDobleErrorIndexSize = 2;
     public static final int invalidValue = -1;
 
@@ -20,7 +22,7 @@ public class Constant {
 
     // for test
 //    public static final String DEFAULT_INPUT_PATH = "F:\\dataset\\test\\chicago_point_small.txt";
-    public static final String DEFAULT_INPUT_PATH = "F:\\dataset\\test\\real_dataset\\chicago_point_A.txt";
+    public static final String DEFAULT_INPUT_PATH = basicDatasetPath + "\\test\\real_dataset\\chicago_point_A.txt";
     // 记录原始输入数据的长度以及左下方点坐标
     public static final double DEFAULT_INPUT_LENGTH = 0.09;
     public static final double DEFAULT_X_BOUND = 41.72;
@@ -105,28 +107,28 @@ public class Constant {
     public static final String zipfKey = "TwoDimZipf";
 
     // 记录数据集路径
-    public static final String chicagoAPath = "F:\\dataset\\test\\real_dataset\\chicago_point_A.txt";
-    public static final String chicagoBPath = "F:\\dataset\\test\\real_dataset\\chicago_point_B.txt";
-    public static final String chicagoCPath = "F:\\dataset\\test\\real_dataset\\chicago_point_C.txt";
-    public static final String nycAPath = "F:\\dataset\\test\\real_dataset\\nyc_point_A.txt";
-    public static final String nycBPath = "F:\\dataset\\test\\real_dataset\\nyc_point_B.txt";
-    public static final String nycCPath = "F:\\dataset\\test\\real_dataset\\nyc_point_C.txt";
-    public static final String normalPath = "F:\\dataset\\test\\synthetic_dataset\\two_normal_point_extract.txt";
-    public static final String zipfPath = "F:\\dataset\\test\\synthetic_dataset\\two_zipf_point.txt";
+    public static final String chicagoAPath = basicDatasetPath + "\\test\\real_dataset\\chicago_point_A.txt";
+    public static final String chicagoBPath = basicDatasetPath + "\\test\\real_dataset\\chicago_point_B.txt";
+    public static final String chicagoCPath = basicDatasetPath + "\\test\\real_dataset\\chicago_point_C.txt";
+    public static final String nycAPath = basicDatasetPath + "\\test\\real_dataset\\nyc_point_A.txt";
+    public static final String nycBPath = basicDatasetPath + "\\test\\real_dataset\\nyc_point_B.txt";
+    public static final String nycCPath = basicDatasetPath + "\\test\\real_dataset\\nyc_point_C.txt";
+    public static final String normalPath = basicDatasetPath + "\\test\\synthetic_dataset\\two_normal_point_extract.txt";
+    public static final String zipfPath = basicDatasetPath + "\\test\\synthetic_dataset\\two_zipf_point.txt";
 
     // 记录dataset输出父路径
     public static final String[] outputCrimeDirArray = new String[] {
-            "F:\\dataset\\test\\result\\crime\\crimeA",
-            "F:\\dataset\\test\\result\\crime\\crimeB",
-            "F:\\dataset\\test\\result\\crime\\crimeC"
+            basicDatasetPath + "\\test\\result\\crime\\crimeA",
+            basicDatasetPath + "\\test\\result\\crime\\crimeB",
+            basicDatasetPath + "\\test\\result\\crime\\crimeC"
     };
     public static final String[] outputNYCDirArray = new String[] {
-            "F:\\dataset\\test\\result\\nyc\\nycA",
-            "F:\\dataset\\test\\result\\nyc\\nycB",
-            "F:\\dataset\\test\\result\\nyc\\nycC"
+            basicDatasetPath + "\\test\\result\\nyc\\nycA",
+            basicDatasetPath + "\\test\\result\\nyc\\nycB",
+            basicDatasetPath + "\\test\\result\\nyc\\nycC"
     };
-    public static final String outputNormalDir = "F:\\dataset\\test\\result\\normal";
-    public static final String outputZipfDir = "F:\\dataset\\test\\result\\zipf";
+    public static final String outputNormalDir = basicDatasetPath + "\\test\\result\\normal";
+    public static final String outputZipfDir = basicDatasetPath + "\\test\\result\\zipf";
 
 
 
