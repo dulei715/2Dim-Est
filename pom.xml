@@ -49,6 +49,15 @@
             <version>2.0</version>
         </dependency>
 
+<!--        <dependency>-->
+<!--            <groupId>javafx</groupId>-->
+<!--            <artifactId>jfxrt</artifactId>-->
+<!--            <version>2.0</version>-->
+<!--            <scope>system</scope>-->
+<!--            <systemPath>D:/software/Java/jdk1.8.0_131/jre/lib/ext/jfxrt.jar</systemPath>-->
+<!--        </dependency>-->
+
+
     </dependencies>
 
     <properties>
@@ -56,5 +65,39 @@
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
     </properties>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <version>2.4.1</version>
+                <configuration>
+                    <!-- get all project dependencies -->
+                    <descriptorRefs>
+                        <descriptorRef>jar-with-dependencies</descriptorRef>
+                    </descriptorRefs>
+                    <!-- MainClass in mainfest make a executable jar -->
+                    <archive>
+                        <manifest>
+                            <mainClass>ecnu.dll.construction.run.main_repeat_process.RepeatMainRun.Main</mainClass>
+                        </manifest>
+                    </archive>
+                </configuration>
+                <executions>
+                    <!-- 配置执行器 -->
+                    <execution>
+                        <id>make-assembly</id>
+                        <!-- 绑定到package命令的生命周期上 -->
+                        <phase>package</phase>
+                        <goals>
+                            <!-- 只运行一次 -->
+                            <goal>single</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
     
 </project>

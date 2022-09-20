@@ -3,6 +3,7 @@ package ecnu.dll.construction.comparedscheme.msw_hdg.discretization;
 import cn.edu.ecnu.DecimalTool;
 import cn.edu.ecnu.statistic.StatisticTool;
 import cn.edu.ecnu.struct.Grid;
+import cn.edu.ecnu.struct.pair.BasicPair;
 import cn.edu.ecnu.struct.point.TwoDimensionalIntegerPoint;
 import ecnu.dll.construction._config.Constant;
 import ecnu.dll.construction.basicscheme.square_wave.discretization.BucketizingOptimalSquareWave;
@@ -60,17 +61,17 @@ public class BucketizingMultiDimensionalSquareWave {
      * @param point
      * @return
      */
-    public Pair<Integer, Integer> getNoiseIndex(TwoDimensionalIntegerPoint point) {
+    public BasicPair<Integer, Integer> getNoiseIndex(TwoDimensionalIntegerPoint point) {
         Integer indexFlagValue = this.getRandomIndexFlag();
         if (IndexFlag.X.equals(indexFlagValue)) {
-            return new Pair<>(indexFlagValue, this.xSquareWave.getNoiseIndex(point.getXIndex()));
+            return new BasicPair<>(indexFlagValue, this.xSquareWave.getNoiseIndex(point.getXIndex()));
         }
-        return new Pair<>(indexFlagValue, this.ySquareWave.getNoiseIndex(point.getYIndex()));
+        return new BasicPair<>(indexFlagValue, this.ySquareWave.getNoiseIndex(point.getYIndex()));
     }
 
-    public List<Pair<Integer, Integer>> getNoiseIndexList(List<TwoDimensionalIntegerPoint> pointList) {
-        List<Pair<Integer, Integer>> resultList = new ArrayList<>(pointList.size());
-        Pair<Integer, Integer> tempPair;
+    public List<BasicPair<Integer, Integer>> getNoiseIndexList(List<TwoDimensionalIntegerPoint> pointList) {
+        List<BasicPair<Integer, Integer>> resultList = new ArrayList<>(pointList.size());
+        BasicPair<Integer, Integer> tempPair;
         for (TwoDimensionalIntegerPoint point : pointList) {
             tempPair = getNoiseIndex(point);
             resultList.add(tempPair);
@@ -78,12 +79,12 @@ public class BucketizingMultiDimensionalSquareWave {
         return resultList;
     }
 
-    private static Map<Integer, List<Integer>> splitCountByIndexFlag(List<Pair<Integer, Integer>> valueList) {
+    private static Map<Integer, List<Integer>> splitCountByIndexFlag(List<BasicPair<Integer, Integer>> valueList) {
         List<Integer> xIndexList = new ArrayList<>();
         List<Integer> yIndexList = new ArrayList<>();
         Integer indexFlagValue;
         Map<Integer, List<Integer>> result = new HashMap<>();
-        for (Pair<Integer, Integer> pair : valueList) {
+        for (BasicPair<Integer, Integer> pair : valueList) {
             indexFlagValue = pair.getKey();
             if (IndexFlag.X.equals(indexFlagValue)) {
                 xIndexList.add(pair.getValue());
@@ -101,7 +102,7 @@ public class BucketizingMultiDimensionalSquareWave {
      * @param valueList 里面的的每个元素是二元对，第一个元素是坐标类别，第二个元素是该坐标下对应的值
      * @return
      */
-    public TreeMap<TwoDimensionalIntegerPoint, Double> statistic(List<Pair<Integer, Integer>> valueList) {
+    public TreeMap<TwoDimensionalIntegerPoint, Double> statistic(List<BasicPair<Integer, Integer>> valueList) {
         Map<Integer, List<Integer>> valueListMap = splitCountByIndexFlag(valueList);
         TreeMap<Integer, Double> xStatistic = this.xSquareWave.statistic(valueListMap.get(IndexFlag.X));
         TreeMap<Integer, Double> yStatistic = this.ySquareWave.statistic(valueListMap.get(IndexFlag.Y));

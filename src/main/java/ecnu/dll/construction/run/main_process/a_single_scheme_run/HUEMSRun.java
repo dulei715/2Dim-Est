@@ -91,18 +91,18 @@ public class HUEMSRun {
     }
 
     public static void main(String[] args) {
-        String inputPath = Constant.DEFAULT_INPUT_PATH;
-        List<TwoDimensionalDoublePoint> pointList = TwoDimensionalPointRead.readPointWithFirstLineCount(inputPath);
-        double cellLength = Constant.DEFAULT_INPUT_LENGTH / Constant.DEFAULT_SIDE_LENGTH_NUMBER_SIZE;
-        double inputLength = Constant.DEFAULT_INPUT_LENGTH;
-        double bLength = 1;
-        double epsilon = Constant.DEFAULT_PRIVACY_BUDGET;
-//        double kParameter = Constant.DEFAULT_K_PARAMETER;
-        double kParameter = 1;
-        double xBound = Constant.DEFAULT_X_BOUND;
-        double yBound = Constant.DEFAULT_Y_BOUND;
-
-//        MyPrint.showList(pointList, ConstantValues.LINE_SPLIT);
-        HUEMSRun.run0(pointList, cellLength, inputLength, bLength, epsilon, kParameter, xBound, yBound);
+//        String inputPath = Constant.DEFAULT_INPUT_PATH;
+//        List<TwoDimensionalDoublePoint> pointList = TwoDimensionalPointRead.readPointWithFirstLineCount(inputPath);
+//        double cellLength = Constant.DEFAULT_INPUT_LENGTH / Constant.DEFAULT_SIDE_LENGTH_NUMBER_SIZE;
+//        double inputLength = Constant.DEFAULT_INPUT_LENGTH;
+//        double bLength = 1;
+//        double epsilon = Constant.DEFAULT_PRIVACY_BUDGET;
+////        double kParameter = Constant.DEFAULT_K_PARAMETER;
+//        double kParameter = 1;
+//        double xBound = Constant.DEFAULT_X_BOUND;
+//        double yBound = Constant.DEFAULT_Y_BOUND;
+//
+////        MyPrint.showList(pointList, ConstantValues.LINE_SPLIT);
+//        HUEMSRun.run0(pointList, cellLength, inputLength, bLength, epsilon, kParameter, xBound, yBound);
     }
 }

@@ -149,5 +149,14 @@
     <orderEntry type="library" name="Maven: dnsjava:dnsjava:2.1.7" level="project" />
     <orderEntry type="library" name="Maven: gov.nist.math:jama:1.0.3" level="project" />
     <orderEntry type="library" name="Maven: net.sourceforge.javacsv:javacsv:2.0" level="project" />
+    <orderEntry type="module-library">
+      <library name="Maven: javafx:jfxrt:2.0">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../../software/Java/jdk1.8.0_131/jre/lib/ext/jfxrt.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
   </component>
 </module>

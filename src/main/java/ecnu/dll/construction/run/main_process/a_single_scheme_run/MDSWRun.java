@@ -5,6 +5,7 @@ import cn.edu.ecnu.differential_privacy.accuracy.metrics.distance_quantities.Two
 import cn.edu.ecnu.io.read.TwoDimensionalPointRead;
 import cn.edu.ecnu.result.ExperimentResult;
 import cn.edu.ecnu.struct.Grid;
+import cn.edu.ecnu.struct.pair.BasicPair;
 import cn.edu.ecnu.struct.point.TwoDimensionalDoublePoint;
 import cn.edu.ecnu.struct.point.TwoDimensionalIntegerPoint;
 import ecnu.dll.construction._config.Constant;
@@ -23,7 +24,7 @@ public class MDSWRun {
         /**
          * 生成噪声数据
          */
-        List<Pair<Integer, Integer>> pairList = scheme.getNoiseIndexList(integerPointList);
+        List<BasicPair<Integer, Integer>> pairList = scheme.getNoiseIndexList(integerPointList);
         //todo: ...
         long startTime = System.currentTimeMillis();
         TreeMap<TwoDimensionalIntegerPoint, Double> estimationResult = scheme.statistic(pairList);
@@ -68,7 +69,7 @@ public class MDSWRun {
         /**
          * 生成噪声数据
          */
-        List<Pair<Integer, Integer>> pairList = mswsdg.getNoiseIndexList(twoDimensionalIntegerPointList);
+        List<BasicPair<Integer, Integer>> pairList = mswsdg.getNoiseIndexList(twoDimensionalIntegerPointList);
         //todo: ...
         TreeMap<TwoDimensionalIntegerPoint, Double> estimationResult = mswsdg.statistic(pairList);
 
@@ -92,19 +93,19 @@ public class MDSWRun {
     }
 
     public static void main(String[] args) {
-//        String inputPath = "F:\\dataset\\test\\real_dataset\\chicago_point_A.txt";
-        String inputPath = Constant.DEFAULT_INPUT_PATH;
-        List<TwoDimensionalDoublePoint> pointList = TwoDimensionalPointRead.readPointWithFirstLineCount(inputPath);
-        double cellLength = Constant.DEFAULT_INPUT_LENGTH / Constant.DEFAULT_SIDE_LENGTH_NUMBER_SIZE;
-        double inputLength = Constant.DEFAULT_INPUT_LENGTH;
-//        double bLength = Constant.DEFAULT_B_LENGTH;
-        double epsilon = Constant.DEFAULT_PRIVACY_BUDGET;
-//        double kParameter = Constant.DEFAULT_K_PARAMETER;
-        double xBound = Constant.DEFAULT_X_BOUND;
-        double yBound = Constant.DEFAULT_Y_BOUND;
-
-//        MyPrint.showList(pointList, ConstantValues.LINE_SPLIT);
-        MDSWRun.run0(pointList, cellLength, inputLength, epsilon, xBound, yBound);
+////        String inputPath = "F:\\dataset\\test\\real_dataset\\chicago_point_A.txt";
+//        String inputPath = Constant.DEFAULT_INPUT_PATH;
+//        List<TwoDimensionalDoublePoint> pointList = TwoDimensionalPointRead.readPointWithFirstLineCount(inputPath);
+//        double cellLength = Constant.DEFAULT_INPUT_LENGTH / Constant.DEFAULT_SIDE_LENGTH_NUMBER_SIZE;
+//        double inputLength = Constant.DEFAULT_INPUT_LENGTH;
+////        double bLength = Constant.DEFAULT_B_LENGTH;
+//        double epsilon = Constant.DEFAULT_PRIVACY_BUDGET;
+////        double kParameter = Constant.DEFAULT_K_PARAMETER;
+//        double xBound = Constant.DEFAULT_X_BOUND;
+//        double yBound = Constant.DEFAULT_Y_BOUND;
+//
+////        MyPrint.showList(pointList, ConstantValues.LINE_SPLIT);
+//        MDSWRun.run0(pointList, cellLength, inputLength, epsilon, xBound, yBound);
 
 
     }

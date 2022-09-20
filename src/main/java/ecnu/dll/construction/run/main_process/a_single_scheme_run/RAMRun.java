@@ -108,19 +108,19 @@ public class RAMRun {
     }
 
     public static void main(String[] args) {
-//        String inputPath = "F:\\dataset\\test\\real_dataset\\chicago_point_A.txt";
-        String inputPath = Constant.DEFAULT_INPUT_PATH;
-        List<TwoDimensionalDoublePoint> pointList = TwoDimensionalPointRead.readPointWithFirstLineCount(inputPath);
-        double cellLength = Constant.DEFAULT_INPUT_LENGTH / Constant.DEFAULT_SIDE_LENGTH_NUMBER_SIZE;
-        double inputLength = Constant.DEFAULT_INPUT_LENGTH;
-        double bLength = Constant.DEFAULT_B_LENGTH;
-        double epsilon = Constant.DEFAULT_PRIVACY_BUDGET;
-        double kParameter = Constant.DEFAULT_K_PARAMETER;
-        double xBound = Constant.DEFAULT_X_BOUND;
-        double yBound = Constant.DEFAULT_Y_BOUND;
-
-//        MyPrint.showList(pointList, ConstantValues.LINE_SPLIT);
-        RAMRun.run0(pointList, cellLength, inputLength, bLength, epsilon, kParameter, xBound, yBound);
+////        String inputPath = "F:\\dataset\\test\\real_dataset\\chicago_point_A.txt";
+//        String inputPath = Constant.DEFAULT_INPUT_PATH;
+//        List<TwoDimensionalDoublePoint> pointList = TwoDimensionalPointRead.readPointWithFirstLineCount(inputPath);
+//        double cellLength = Constant.DEFAULT_INPUT_LENGTH / Constant.DEFAULT_SIDE_LENGTH_NUMBER_SIZE;
+//        double inputLength = Constant.DEFAULT_INPUT_LENGTH;
+//        double bLength = Constant.DEFAULT_B_LENGTH;
+//        double epsilon = Constant.DEFAULT_PRIVACY_BUDGET;
+//        double kParameter = Constant.DEFAULT_K_PARAMETER;
+//        double xBound = Constant.DEFAULT_X_BOUND;
+//        double yBound = Constant.DEFAULT_Y_BOUND;
+//
+////        MyPrint.showList(pointList, ConstantValues.LINE_SPLIT);
+//        RAMRun.run0(pointList, cellLength, inputLength, bLength, epsilon, kParameter, xBound, yBound);
 
 
     }
