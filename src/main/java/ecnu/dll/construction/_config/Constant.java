@@ -2,18 +2,23 @@ package ecnu.dll.construction._config;
 
 import cn.edu.ecnu.basic.StringUtil;
 import cn.edu.ecnu.constant_values.ConstantValues;
+import cn.edu.ecnu.filter.file_filter.DirectoryFileFilter;
+import cn.edu.ecnu.result.ExperimentResult;
+import cn.edu.ecnu.struct.result.ResultColumnBean;
 import ecnu.dll.construction.dataset.struct.DataSetAreaInfo;
+
+import java.io.FileFilter;
+import java.util.List;
 
 public class Constant {
 
-//    public static final String basicDatasetPath = "E:\\1.学习\\4.数据集\\2.dataset_for_spatial_estimation";
 
     public static final String basicPath = "/root/code/2_2.ProgramForSpatialLDPEstimation/1.JavaCode";
 //    public static final String basicPath = "E:\\1.学习\\4.数据集\\2.dataset_for_spatial_estimation";
     public static final String basicDatasetPath = StringUtil.join(ConstantValues.FILE_SPLIT, basicPath, "0_dataset");
     public static final String basicResultPath = StringUtil.join(ConstantValues.FILE_SPLIT, basicPath, "result");
 
-    public static final int eliminateDobleErrorIndexSize = 2;
+    public static final int eliminateDoubleErrorIndexSize = 2;
     public static final int invalidValue = -1;
 
     public static final double DEFAULT_PRECISION = Math.pow(10,-6);
@@ -112,47 +117,27 @@ public class Constant {
     public static final String zipfKey = "TwoDimZipf";
 
     // 记录数据集路径
-//    public static final String chicagoAPath = basicDatasetPath + "\\test\\real_dataset\\chicago_point_A.txt";
     public static final String chicagoAPath = StringUtil.join(ConstantValues.FILE_SPLIT, basicDatasetPath, "1_real", "1_crime", "chicago_point_A.txt");
-//    public static final String chicagoBPath = basicDatasetPath + "\\test\\real_dataset\\chicago_point_B.txt";
     public static final String chicagoBPath = StringUtil.join(ConstantValues.FILE_SPLIT, basicDatasetPath, "1_real", "1_crime", "chicago_point_B.txt");
-//    public static final String chicagoCPath = basicDatasetPath + "\\test\\real_dataset\\chicago_point_C.txt";
     public static final String chicagoCPath = StringUtil.join(ConstantValues.FILE_SPLIT, basicDatasetPath, "1_real", "1_crime", "chicago_point_C.txt");
-//    public static final String nycAPath = basicDatasetPath + "\\test\\real_dataset\\nyc_point_A.txt";
     public static final String nycAPath = StringUtil.join(ConstantValues.FILE_SPLIT, basicDatasetPath, "1_real", "2_nyc", "nyc_point_A.txt");
-//    public static final String nycBPath = basicDatasetPath + "\\test\\real_dataset\\nyc_point_B.txt";
     public static final String nycBPath = StringUtil.join(ConstantValues.FILE_SPLIT, basicDatasetPath, "1_real", "2_nyc", "nyc_point_B.txt");
-//    public static final String nycCPath = basicDatasetPath + "\\test\\real_dataset\\nyc_point_C.txt";
     public static final String nycCPath = StringUtil.join(ConstantValues.FILE_SPLIT, basicDatasetPath, "1_real", "2_nyc", "nyc_point_C.txt");
-//    public static final String normalPath = basicDatasetPath + "\\test\\synthetic_dataset\\two_normal_point_extract.txt";
     public static final String normalPath = StringUtil.join(ConstantValues.FILE_SPLIT, basicDatasetPath, "2_synthetic", "1_two_normal", "two_normal_point_extract.txt");
-//    public static final String zipfPath = basicDatasetPath + "\\test\\synthetic_dataset\\two_zipf_point.txt";
     public static final String zipfPath = StringUtil.join(ConstantValues.FILE_SPLIT, basicDatasetPath, "2_synthetic", "2_two_zipf", "two_zipf_point.txt");
 
     // 记录dataset输出父路径
-//    public static final String[] outputCrimeDirArray = new String[] {
-//            basicDatasetPath + "\\test\\result\\crime\\crimeA",
-//            basicDatasetPath + "\\test\\result\\crime\\crimeB",
-//            basicDatasetPath + "\\test\\result\\crime\\crimeC"
-//    };
     public static final String[] outputCrimeDirArray = new String[] {
             StringUtil.join(ConstantValues.FILE_SPLIT, basicResultPath, "crime", "crimeA"),
             StringUtil.join(ConstantValues.FILE_SPLIT, basicResultPath, "crime", "crimeB"),
             StringUtil.join(ConstantValues.FILE_SPLIT, basicResultPath, "crime", "crimeC")
     };
-//    public static final String[] outputNYCDirArray = new String[] {
-//            basicDatasetPath + "\\test\\result\\nyc\\nycA",
-//            basicDatasetPath + "\\test\\result\\nyc\\nycB",
-//            basicDatasetPath + "\\test\\result\\nyc\\nycC"
-//    };
     public static final String[] outputNYCDirArray = new String[] {
             StringUtil.join(ConstantValues.FILE_SPLIT, basicResultPath, "nyc", "nycA"),
             StringUtil.join(ConstantValues.FILE_SPLIT, basicResultPath, "nyc", "nycB"),
             StringUtil.join(ConstantValues.FILE_SPLIT, basicResultPath, "nyc", "nycC")
     };
-//    public static final String outputNormalDir = basicDatasetPath + "\\test\\result\\normal";
     public static final String outputNormalDir = StringUtil.join(ConstantValues.FILE_SPLIT, basicResultPath, "normal");
-//    public static final String outputZipfDir = basicDatasetPath + "\\test\\result\\zipf";
     public static final String outputZipfDir = StringUtil.join(ConstantValues.FILE_SPLIT, basicResultPath, "zipf");
 
 
@@ -171,20 +156,24 @@ public class Constant {
     public static final String contributionKKey = "ContributionK";
     public static final String wassersteinDistanceKey = "WassersteinDistance";
 
-    public static final String[] attributeArray = new String[]{
-            dataSetNameKey,
-            dataPointSizeKey,
-            areaLengthKey,
-            schemeNameKey,
-            postProcessTimeKey,
-            gridUnitSizeKey,
-            dataTypeSizeKey,
-            sizeDKey,
-            sizeBKey,
-            privacyBudgetKey,
-            contributionKKey,
-            wassersteinDistanceKey
-    };
+//    public static final String[] attributeArray = new String[]{
+//            dataSetNameKey,
+//            dataPointSizeKey,
+//            areaLengthKey,
+//            schemeNameKey,
+//            postProcessTimeKey,
+//            gridUnitSizeKey,
+//            dataTypeSizeKey,
+//            sizeDKey,
+//            sizeBKey,
+//            privacyBudgetKey,
+//            contributionKKey,
+//            wassersteinDistanceKey
+//    };
+
+    public static final String configName = "default";
+    public static final List<ResultColumnBean> attributeList = ExperimentResult.getAttributeListFromConfigureFile(configName);
+    public static final FileFilter directoryFilter = new DirectoryFileFilter();
 
     public static final DataSetAreaInfo[] crimeDataSetArray = new DataSetAreaInfo[]{
             new DataSetAreaInfo(chicagoAPath, chicagoAKey, 41.72, -87.68, 0.09),

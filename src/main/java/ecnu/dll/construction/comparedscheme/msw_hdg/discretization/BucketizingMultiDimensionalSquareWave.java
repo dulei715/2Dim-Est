@@ -8,7 +8,6 @@ import cn.edu.ecnu.struct.point.TwoDimensionalIntegerPoint;
 import ecnu.dll.construction._config.Constant;
 import ecnu.dll.construction.basicscheme.square_wave.discretization.BucketizingOptimalSquareWave;
 import ecnu.dll.construction.comparedscheme.msw_hdg.IndexFlag;
-import javafx.util.Pair;
 
 import java.util.*;
 
@@ -42,7 +41,7 @@ public class BucketizingMultiDimensionalSquareWave {
         this.leftBorderArray[0] = xLeft;
         this.leftBorderArray[1] = yLeft;
 //        Integer xInputSize, yInputSize;
-        this.sizeD = (int)Math.ceil(DecimalTool.round(inputLength / gridLength, Constant.eliminateDobleErrorIndexSize));
+        this.sizeD = (int)Math.ceil(DecimalTool.round(inputLength / gridLength, Constant.eliminateDoubleErrorIndexSize));
         this.xSquareWave = new BucketizingOptimalSquareWave(epsilon, this.sizeD);
         this.ySquareWave = new BucketizingOptimalSquareWave(epsilon, this.sizeD);
         this.rawIntegerPointTypeList = Grid.generateTwoDimensionalIntegerPoint(this.sizeD, 0, 0);

@@ -29,7 +29,7 @@ public class DiscretizedSubsetExponentialGeoI {
         this.leftBorderArray = new Double[2];
         this.leftBorderArray[0] = xLeft;
         this.leftBorderArray[1] = yLeft;
-        this.sizeD = (int)Math.ceil(DecimalTool.round(inputLength / gridLength, Constant.eliminateDobleErrorIndexSize));
+        this.sizeD = (int)Math.ceil(DecimalTool.round(inputLength / gridLength, Constant.eliminateDoubleErrorIndexSize));
         this.sortedInputPointList = Grid.generateTwoDimensionalIntegerPoint(this.sizeD, 0, 0);    //这里的后两个参数是整数(0,0),不是传入的xLeft和yLeft
         this.sortedInputPointList.sort(new TwoDimensionalIntegerPointComparator());
         this.subsetExponentialGeoI = new SubsetExponentialGeoI<>(this.epsilon, this.sortedInputPointList);
