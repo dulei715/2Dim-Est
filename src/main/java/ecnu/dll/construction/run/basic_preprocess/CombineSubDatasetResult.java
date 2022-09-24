@@ -3,6 +3,7 @@ package ecnu.dll.construction.run.basic_preprocess;
 import cn.edu.ecnu.basic.StringUtil;
 import cn.edu.ecnu.constant_values.ConstantValues;
 import cn.edu.ecnu.result.FileTool;
+import cn.edu.ecnu.struct.result.ColumnBean;
 import ecnu.dll.construction._config.Constant;
 
 import java.io.File;
@@ -10,7 +11,7 @@ import java.util.List;
 
 public class CombineSubDatasetResult {
     /**
-     *
+     * 将给定的目录下的文件按照文件名进行简单合并
      * @param relativeBasicPath 给出的根目录。下面放着一系列文件夹 dirA, dirB, ...
      *                          每个文件夹里是待合并的文件 dirA:{fileA, fileB, fileC, ...}; dirB: {fileA, fileB, fileC, ...}; ...
      *                          需要合并每个文件夹中的fileA, fileB, fileC, ...，并将他们放在根目录下。
@@ -29,8 +30,8 @@ public class CombineSubDatasetResult {
         }
     }
 
-    public static void composeCSVResult(List<String> inputPathList, String outputDir, double divideFactor) {
-
+    public static void composeCSVResult(List<String> inputPathList, String outputDir, List<ColumnBean> columnBeanList, double divideFactor) {
+        
     }
     public static void main(String[] args) {
         String[] inputArrayParentPath = new String[]{

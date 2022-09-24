@@ -3,8 +3,8 @@ package ecnu.dll.construction._config;
 import cn.edu.ecnu.basic.StringUtil;
 import cn.edu.ecnu.constant_values.ConstantValues;
 import cn.edu.ecnu.filter.file_filter.DirectoryFileFilter;
-import cn.edu.ecnu.result.ExperimentResult;
-import cn.edu.ecnu.struct.result.ResultColumnBean;
+import cn.edu.ecnu.result.ResultTool;
+import cn.edu.ecnu.struct.result.ColumnBean;
 import ecnu.dll.construction.dataset.struct.DataSetAreaInfo;
 
 import java.io.FileFilter;
@@ -172,7 +172,7 @@ public class Constant {
 //    };
 
     public static final String configName = "default";
-    public static final List<ResultColumnBean> attributeList = ExperimentResult.getAttributeListFromConfigureFile(configName);
+    public static final List<ColumnBean> attributeList = ResultTool.getAttributeListFromConfigureFile(configName);
     public static final FileFilter directoryFilter = new DirectoryFileFilter();
 
     public static final DataSetAreaInfo[] crimeDataSetArray = new DataSetAreaInfo[]{
