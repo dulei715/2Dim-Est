@@ -30,8 +30,10 @@ public class GridLocalPrivacyTool {
                 result = (2*indexB - sizeB) * (sizeB + 1) / 2;
             }
         } else if (indexB <= sizeD) {
+            // todo: 少了一种情况
             result = (2*indexB + indexD - sizeD) * (sizeD - indexD + 1) / 2;
         } else {
+            // todo: 少了一种情况
             result = (indexB - sizeD) * sizeD + (indexD + indexB) * (2*sizeD - indexD - indexB +1) / 2;
         }
         return result;
@@ -88,8 +90,10 @@ public class GridLocalPrivacyTool {
                 result = (2*indexB - sizeB) * (sizeB + 1) / 2;
             }
         } else if (indexB <= sizeD) {
+            // todo: 少了一种情况
             result = (2*indexB - indexD + 1) * indexD / 2;
         } else {
+            // todo: 少了一种情况
             result = (indexB - sizeD) * sizeD + (sizeD + indexB - indexD + 1) * (sizeD + indexD - indexB) / 2;
         }
         return result;
