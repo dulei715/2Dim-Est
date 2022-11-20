@@ -1,7 +1,5 @@
 package ecnu.dll.construction.specialtools;
 
-import cn.edu.ecnu.struct.point.TwoDimensionalIntegerPoint;
-
 public class GridLocalPrivacyTool {
 
     public static Integer getGridSize(int sizeD) {
@@ -16,25 +14,35 @@ public class GridLocalPrivacyTool {
      * @param sizeD
      * @return
      */
-    private static Integer getOuterUpperCrossQuantity(int indexD, int indexB, int sizeD, int sizeB) {
+    private static Integer getRightUpperCrossQuantity(int indexD, int indexB, int sizeD, int sizeB) {
         if (indexD <= 0) {
             indexB = indexB + indexD - 1;
             indexD = 1;
         }
         Integer result = null;
-        if (indexD + indexB <= sizeD) {
-            // todo: 优化代码书写
-            if (indexB <= sizeB) {
+        if (indexB <= sizeB) {
+            if (indexD + indexB <= sizeD) {
                 result = indexB * (indexB + 1) / 2;
+            } else if (indexB <= sizeD) {
+                result = (2*indexB + indexD - sizeD) * (sizeD - indexD + 1) / 2;
+
             } else {
-                result = (2*indexB - sizeB) * (sizeB + 1) / 2;
+                result = (indexB - sizeD) * sizeD + (indexD + indexB) * (2*sizeD - indexD - indexB +1) / 2;
             }
-        } else if (indexB <= sizeD) {
-            // todo: 少了一种情况
-            result = (2*indexB + indexD - sizeD) * (sizeD - indexD + 1) / 2;
         } else {
-            // todo: 少了一种情况
-            result = (indexB - sizeD) * sizeD + (indexD + indexB) * (2*sizeD - indexD - indexB +1) / 2;
+            if (sizeB <= sizeD - indexD) {
+                if (indexB <= sizeD) {
+                    result = (2*indexB - sizeB) * (sizeB + 1) / 2;
+                } else {
+                    result = (indexB - sizeD) * sizeD + (sizeD + indexB - sizeB) * (sizeB + sizeD - indexB + 1) / 2;
+                }
+            } else {
+                if (indexB <= sizeD) {
+                    result = (2*indexB + indexD - sizeD) * (sizeD - indexD + 1) / 2;
+                } else {
+                    result = (indexB - sizeD) * sizeD + (indexD + indexB) * (2*sizeD - indexD - indexB +1) / 2;
+                }
+            }
         }
         return result;
     }
@@ -68,7 +76,7 @@ public class GridLocalPrivacyTool {
     }
 
     protected static Integer getUpperCrossCellQuantity(int indexD, int indexB, int sizeD, int sizeB) {
-        int f1 = getOuterUpperCrossQuantity(indexD, indexB, sizeD, sizeB);
+        int f1 = getRightUpperCrossQuantity(indexD, indexB, sizeD, sizeB);
         if (indexB <= sizeB) {
             return f1;
         }
@@ -76,25 +84,34 @@ public class GridLocalPrivacyTool {
         return f1 - dropValue;
     }
 
-    private static Integer getOuterBottomCrossQuantity(int indexD, int indexB, int sizeD, int sizeB) {
+    private static Integer getRightBottomCrossQuantity(int indexD, int indexB, int sizeD, int sizeB) {
         if (indexD <= 0) {
             indexB = indexB + indexD - 1;
             indexD = 1;
         }
         Integer result = null;
-        if (indexB <= indexD - 1) {
-            // todo: 优化代码书写
-            if (indexB <= sizeB) {
+        if (indexB <= sizeB) {
+            if (indexB <= indexD - 1) {
                 result = indexB * (indexB + 1) / 2;
+            } else if (indexB <= sizeD) {
+                result = (2*indexB - indexD + 1) * indexD / 2;
             } else {
-                result = (2*indexB - sizeB) * (sizeB + 1) / 2;
+                result = (indexB - sizeD) * sizeD + (sizeD + indexB - indexD + 1) * (sizeD + indexD - indexB) / 2;
             }
-        } else if (indexB <= sizeD) {
-            // todo: 少了一种情况
-            result = (2*indexB - indexD + 1) * indexD / 2;
         } else {
-            // todo: 少了一种情况
-            result = (indexB - sizeD) * sizeD + (sizeD + indexB - indexD + 1) * (sizeD + indexD - indexB) / 2;
+            if (sizeB + 1 <= indexD) {
+                if (indexB <= sizeD) {
+                    result = (2*indexB-sizeB) * (sizeB + 1) / 2;
+                } else {
+                    result = (indexB - sizeD) * sizeD + (sizeD + indexB - sizeB) * (sizeB + sizeD - indexB + 1) / 2;
+                }
+            } else {
+                if (indexB <= sizeD) {
+                    result = (2*indexB - indexD + 1) * indexD / 2;
+                } else {
+                    result = (indexB - sizeD) * sizeD + (sizeD + indexB - indexD + 1) * (sizeD - indexB + indexD) / 2;
+                }
+            }
         }
         return result;
     }
@@ -128,7 +145,7 @@ public class GridLocalPrivacyTool {
     }
 
     protected static Integer getBottomCrossCellQuantity(int indexD, int indexB, int sizeD, int sizeB) {
-        int f1 = getOuterBottomCrossQuantity(indexD, indexB, sizeD, sizeB);
+        int f1 = getRightBottomCrossQuantity(indexD, indexB, sizeD, sizeB);
         if (indexB <= sizeB) {
             return f1;
         }
@@ -151,7 +168,7 @@ public class GridLocalPrivacyTool {
         Integer outerUpperCrossQuantity = null, dropUpperCrossQuantity = null;
         for (indexB = 1; indexB <= sizeB; indexB++) {
             for (indexD = 1; indexD <= sizeD/2; indexD++) {
-                outerUpperCrossQuantity = getOuterUpperCrossQuantity(indexD, indexB, sizeD, sizeB);
+                outerUpperCrossQuantity = getRightUpperCrossQuantity(indexD, indexB, sizeD, sizeB);
                 System.out.println("indexD: " + indexD + ", indexB: " + indexB + "; crossNumber: " + outerUpperCrossQuantity);
             }
         }
@@ -182,11 +199,11 @@ public class GridLocalPrivacyTool {
                 indexD = 1;
             }
             for (; indexD <= sizeD/2; indexD++) {
-                if (indexB == 6 && indexD == 3) {
-                    System.out.println("6,3");
-                }
+//                if (indexB == 7 && indexD == 3) {
+//                    System.out.println("7,3");
+//                }
                 crossQuantity = getCrossCellQuantity(indexD, indexB, sizeD, sizeB);
-                System.out.println("indexB: " + indexB + ", indexD: " + indexD + "; dropNumber: " + crossQuantity);
+                System.out.println("indexB: " + indexB + ", indexD: " + indexD + "; crossNumber: " + crossQuantity);
             }
         }
     }
