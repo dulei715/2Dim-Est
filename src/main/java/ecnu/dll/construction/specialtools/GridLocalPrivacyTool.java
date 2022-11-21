@@ -26,21 +26,27 @@ public class GridLocalPrivacyTool {
             } else if (indexB <= sizeD) {
                 result = (2*indexB + indexD - sizeD) * (sizeD - indexD + 1) / 2;
 
-            } else {
+            } else if (indexB <= 2*sizeD - indexD + 1) {
                 result = (indexB - sizeD) * sizeD + (indexD + indexB) * (2*sizeD - indexD - indexB +1) / 2;
+            } else {
+                result = (sizeD - indexD + 1) * sizeD;
             }
         } else {
             if (sizeB <= sizeD - indexD) {
                 if (indexB <= sizeD) {
                     result = (2*indexB - sizeB) * (sizeB + 1) / 2;
-                } else {
+                } else if (indexB <= 2*sizeD - indexD + 1) {
                     result = (indexB - sizeD) * sizeD + (sizeD + indexB - sizeB) * (sizeB + sizeD - indexB + 1) / 2;
+                } else {
+                    result = (sizeD - indexD + 1) * sizeD;
                 }
             } else {
                 if (indexB <= sizeD) {
                     result = (2*indexB + indexD - sizeD) * (sizeD - indexD + 1) / 2;
-                } else {
+                } else if (indexB <= 2*sizeD - indexD + 1) {
                     result = (indexB - sizeD) * sizeD + (indexD + indexB) * (2*sizeD - indexD - indexB +1) / 2;
+                } else {
+                    result = (sizeD - indexD + 1) * sizeD;
                 }
             }
         }
@@ -95,21 +101,27 @@ public class GridLocalPrivacyTool {
                 result = indexB * (indexB + 1) / 2;
             } else if (indexB <= sizeD) {
                 result = (2*indexB - indexD + 1) * indexD / 2;
-            } else {
+            } else if (indexB <= sizeD + indexD) {
                 result = (indexB - sizeD) * sizeD + (sizeD + indexB - indexD + 1) * (sizeD + indexD - indexB) / 2;
+            } else {
+                result = indexD * sizeD;
             }
         } else {
             if (sizeB + 1 <= indexD) {
                 if (indexB <= sizeD) {
                     result = (2*indexB-sizeB) * (sizeB + 1) / 2;
-                } else {
+                } else if (indexB <= sizeD + indexD) {
                     result = (indexB - sizeD) * sizeD + (sizeD + indexB - sizeB) * (sizeB + sizeD - indexB + 1) / 2;
+                } else {
+                    result = indexD * sizeD;
                 }
             } else {
                 if (indexB <= sizeD) {
                     result = (2*indexB - indexD + 1) * indexD / 2;
-                } else {
+                } else if (indexB <= sizeD + indexD) {
                     result = (indexB - sizeD) * sizeD + (sizeD + indexB - indexD + 1) * (sizeD - indexB + indexD) / 2;
+                } else {
+                    result = indexD * sizeD;
                 }
             }
         }
@@ -187,21 +199,29 @@ public class GridLocalPrivacyTool {
         }
     }
     public static void main(String[] args) {
+//        int sizeD = 3;
+        int sizeD = 4;
 //        int sizeD = 6;
-        int sizeD = 8;
+//        int sizeD = 8;
+//        int sizeD = 7;
+
+//        int sizeB = 1;
+//        int sizeB = 2;
+//        int sizeB = 3;
         int sizeB = 4;
+//        int sizeB = 7;
         int indexD, indexB;
 
         Integer crossQuantity;
-        for (indexB = 1; indexB <= sizeB + sizeD / 2; indexB++) {
+        for (indexB = 1; indexB <= sizeB + Math.ceil(sizeD*1.0/2); indexB++) {
             indexD = indexB - sizeB;
             if (indexD < 1) {
                 indexD = 1;
             }
-            for (; indexD <= sizeD/2; indexD++) {
-//                if (indexB == 7 && indexD == 3) {
-//                    System.out.println("7,3");
-//                }
+            for (; indexD <= Math.ceil(sizeD*1.0/2); indexD++) {
+                if (indexB == 8 && indexD == 1) {
+                    System.out.println("8,1");
+                }
                 crossQuantity = getCrossCellQuantity(indexD, indexB, sizeD, sizeB);
                 System.out.println("indexB: " + indexB + ", indexD: " + indexD + "; crossNumber: " + crossQuantity);
             }
