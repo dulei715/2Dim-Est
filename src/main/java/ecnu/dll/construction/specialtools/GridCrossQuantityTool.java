@@ -1,6 +1,6 @@
 package ecnu.dll.construction.specialtools;
 
-public class GridLocalPrivacyTool {
+public class GridCrossQuantityTool {
 
     public static Integer getGridSize(int sizeD) {
         return sizeD * sizeD;
