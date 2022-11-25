@@ -1,6 +1,7 @@
 package ecnu.dll.construction.specialtools;
 
 import cn.edu.ecnu.struct.pair.BasicPair;
+import cn.edu.ecnu.struct.pair.IdentityPair;
 
 import java.util.TreeSet;
 
@@ -14,7 +15,9 @@ public class GridCrossDistanceTool {
 
     /********************************************************************************************************************/
     /*这里是一些基本功能函数，可能用不上*/
-
+    public static boolean isInHighProbabilityArea(IdentityPair<Integer> centerPoint, int sizeB) {
+        return Math.abs(centerPoint.getKey()) + Math.abs(centerPoint.getValue()) <= sizeB ? true : false;
+    }
 
 
 
@@ -29,7 +32,7 @@ public class GridCrossDistanceTool {
         return null;
     }
 
-    private static TreeSet<BasicPair<Integer, Integer>> getCrossCellSet() {
+    private static TreeSet<IdentityPair<Integer>> getCrossCellSet() {
         return null;
     }
 
