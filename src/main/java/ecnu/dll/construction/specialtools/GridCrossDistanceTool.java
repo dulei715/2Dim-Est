@@ -19,6 +19,7 @@ public class GridCrossDistanceTool {
         return Math.abs(centerPoint.getKey()) + Math.abs(centerPoint.getValue()) <= sizeB ? true : false;
     }
 
+    
 
 
 
