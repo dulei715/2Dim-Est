@@ -15,11 +15,8 @@ public class GridCrossDistanceTool {
 
     /********************************************************************************************************************/
     /*这里是一些基本功能函数，可能用不上*/
-    public static boolean isInHighProbabilityArea(IdentityPair<Integer> centerPoint, int sizeB) {
-        return Math.abs(centerPoint.getKey()) + Math.abs(centerPoint.getValue()) <= sizeB ? true : false;
-    }
 
-    
+
 
 
 
@@ -33,8 +30,6 @@ public class GridCrossDistanceTool {
         return null;
     }
 
-    private static TreeSet<IdentityPair<Integer>> getCrossCellSet() {
-        return null;
-    }
+
 
 }
