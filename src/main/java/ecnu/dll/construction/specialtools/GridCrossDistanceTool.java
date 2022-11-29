@@ -5,7 +5,7 @@ import cn.edu.ecnu.struct.pair.IdentityPair;
 
 import java.util.TreeSet;
 
-public class GridCrossDistanceTool {
+public class GridCrossDistanceTool extends GridCrossTool {
 
     /**
      *
@@ -26,7 +26,11 @@ public class GridCrossDistanceTool {
         return sizeD * (sizeD + 1) * (sizeD - 1) / 3 * 2 * sizeD * sizeD;
     }
 
-    public static Integer getTotalDistance() {
+    private Integer getInnerTotalDistance() {
+        return null;
+    }
+    public Integer getTotalDistance() {
+//        TreeSet<IdentityPair<Integer>> innerSet = super.getCrossCell()
         return null;
     }
 

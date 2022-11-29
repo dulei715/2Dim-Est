@@ -26,9 +26,11 @@ public class GridCrossToolTest extends GridCrossTool {
     public void fun2() {
         int sizeD = 6;
         int sizeB = 4;
-        IdentityPair<Integer> centerPoint = new IdentityPair<>(0, 0);
+//        IdentityPair<Integer> centerPoint = new IdentityPair<>(0, 0);
+        IdentityPair<Integer> centerPoint = new IdentityPair<>(-2, 1);
         TreeSet<IdentityPair<Integer>> crossCellSet = GridCrossTool.getCrossCell(centerPoint, sizeD, sizeB);
-        MyPrint.showSet(crossCellSet);
+        MyPrint.showCollection(crossCellSet, "; ");
+        System.out.println(crossCellSet.size());
     }
 
 }

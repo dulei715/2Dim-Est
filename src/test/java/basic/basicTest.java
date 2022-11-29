@@ -3,6 +3,8 @@ package basic;
 import Jama.Matrix;
 import cn.edu.ecnu.io.print.MyPrint;
 import cn.edu.ecnu.struct.pair.BasicPair;
+import cn.edu.ecnu.struct.pair.IdentityPair;
+import org.apache.commons.collections.CollectionUtils;
 import org.junit.Test;
 
 import java.util.*;
@@ -36,7 +38,7 @@ public class basicTest {
         treeSet.add(new BasicPair<>(4,6));
         treeSet.add(new BasicPair<>(2,5));
         treeSet.add(new BasicPair<>(2,5));
-        MyPrint.showSet(treeSet);
+        MyPrint.showCollection(treeSet);
     }
 
     @Test
@@ -113,6 +115,27 @@ public class basicTest {
         Matrix resultMatrix = matrixA.times(matrixB);
         double[][] result = resultMatrix.getArray();
         MyPrint.show2DimensionDoubleArray(result);
+    }
+
+    @Test
+    public void fun11() {
+        TreeSet<IdentityPair<Integer>> setA = new TreeSet<>();
+        TreeSet<IdentityPair<Integer>> setB = new TreeSet<>();
+
+
+        setA.add(new IdentityPair<>(1, 2));
+        setA.add(new IdentityPair<>(3, 4));
+        setA.add(new IdentityPair<>(5, 6));
+        setA.add(new IdentityPair<>(7, 8));
+
+        setB.add(new IdentityPair<>(3, 4));
+        setB.add(new IdentityPair<>(7, 8));
+        setB.add(new IdentityPair<>(9, 10));
+
+        Collection resultSet = CollectionUtils.disjunction(setA, setB);
+        MyPrint.showCollection(resultSet);
+
+//        CollectionUtils.m
     }
 
 }
