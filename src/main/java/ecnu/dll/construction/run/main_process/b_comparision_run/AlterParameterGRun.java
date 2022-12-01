@@ -55,9 +55,9 @@ public class AlterParameterGRun {
             针对SubsetGeoI, MSW, Rhombus, Disk, HUEM 分别计算对应grid下的估计并返回相应的wasserstein距离
          */
         Map<String, List<ExperimentResult>> alterParameterMap = new HashMap<>();
-        String rhombusKey = Constant.rhombusSchemeKey, diskKey = Constant.diskSchemeKey, subsetGeoI = Constant.subsetGeoISchemeKey, mdsw = Constant.multiDimensionalSquareWaveSchemeKey, hue = Constant.hybridUniformExponentialSchemeKey;
-        ExperimentResult tempRhombusExperimentResult, tempDiskExperimentResult, tempSubsetGeoIExperimentResult, tempMdswExperimentResult, tempHUEMExperimentResult;
-        List<ExperimentResult> rhombusExperimentResultList = new ArrayList<>(), diskExperimentResultList = new ArrayList<>(), subsetGeoIExperimentResultList = new ArrayList<>(), mdswExperimentResultList = new ArrayList<>(), huemExperimentResultList = new ArrayList<>();
+        String rhombusKey = Constant.rhombusSchemeKey, diskKey = Constant.diskSchemeKey, subsetGeoIOneNorm = Constant.subsetGeoIOneNormSchemeKey, subsetGeoITwoNorm = Constant.subsetGeoITwoNormSchemeKey, mdsw = Constant.multiDimensionalSquareWaveSchemeKey, hue = Constant.hybridUniformExponentialSchemeKey;
+        ExperimentResult tempRhombusExperimentResult, tempDiskExperimentResult, tempSubsetGeoIOneNormExperimentResult, tempSubsetGeoITwoNormExperimentResult, tempMdswExperimentResult, tempHUEMExperimentResult;
+        List<ExperimentResult> rhombusExperimentResultList = new ArrayList<>(), diskExperimentResultList = new ArrayList<>(), subsetGeoIOneNormExperimentResultList = new ArrayList<>(), subsetGeoITwoNormExperimentResultList = new ArrayList<>(), mdswExperimentResultList = new ArrayList<>(), huemExperimentResultList = new ArrayList<>();
         List<TwoDimensionalIntegerPoint> integerPointList, integerPointTypeList;
         TreeMap<TwoDimensionalIntegerPoint, Double> rawDataStatistic;
         for (int i = 0; i < arraySize; i++) {
@@ -69,9 +69,14 @@ public class AlterParameterGRun {
             integerPointTypeList = DiscretizedSchemeTool.getRawIntegerPointTypeList(sizeDArray[i]);
             rawDataStatistic = StatisticTool.countHistogramRatioMap(integerPointTypeList, integerPointList);
 
-            tempSubsetGeoIExperimentResult = SubsetGeoIRun.run(integerPointList, rawDataStatistic, gridLengthArray[i], inputSideLength, epsilon, xBound, yBound);
-            tempSubsetGeoIExperimentResult.addPair(1, Constant.areaLengthKey, String.valueOf(inputSideLength));
-            subsetGeoIExperimentResultList.add(tempSubsetGeoIExperimentResult);
+            tempSubsetGeoIOneNormExperimentResult = SubsetGeoIOneNormRun.run(integerPointList, rawDataStatistic, gridLengthArray[i], inputSideLength, epsilon, xBound, yBound);
+            tempSubsetGeoIOneNormExperimentResult.addPair(1, Constant.areaLengthKey, String.valueOf(inputSideLength));
+            subsetGeoIOneNormExperimentResultList.add(tempSubsetGeoIOneNormExperimentResult);
+
+            tempSubsetGeoITwoNormExperimentResult = SubsetGeoITwoNormRun.run(integerPointList, rawDataStatistic, gridLengthArray[i], inputSideLength, epsilon, xBound, yBound);
+            tempSubsetGeoITwoNormExperimentResult.addPair(1, Constant.areaLengthKey, String.valueOf(inputSideLength));
+            subsetGeoITwoNormExperimentResultList.add(tempSubsetGeoITwoNormExperimentResult);
+
             tempMdswExperimentResult = MDSWRun.run(integerPointList, rawDataStatistic, gridLengthArray[i], inputSideLength, epsilon, xBound, yBound);
             tempMdswExperimentResult.addPair(1, Constant.areaLengthKey, String.valueOf(inputSideLength));
             mdswExperimentResultList.add(tempMdswExperimentResult);
@@ -85,7 +90,8 @@ public class AlterParameterGRun {
             tempHUEMExperimentResult.addPair(1, Constant.areaLengthKey, String.valueOf(inputSideLength));
             huemExperimentResultList.add(tempHUEMExperimentResult);
         }
-        alterParameterMap.put(subsetGeoI, subsetGeoIExperimentResultList);
+        alterParameterMap.put(subsetGeoIOneNorm, subsetGeoIOneNormExperimentResultList);
+        alterParameterMap.put(subsetGeoITwoNorm, subsetGeoITwoNormExperimentResultList);
         alterParameterMap.put(mdsw, mdswExperimentResultList);
         alterParameterMap.put(rhombusKey, rhombusExperimentResultList);
         alterParameterMap.put(diskKey, diskExperimentResultList);

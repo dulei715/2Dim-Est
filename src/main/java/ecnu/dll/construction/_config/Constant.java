@@ -98,7 +98,9 @@ public class Constant {
     public static final String diskSchemeKey = "disk";
     public static final String hybridUniformExponentialSchemeKey = "hue";
     public static final String multiDimensionalSquareWaveSchemeKey = "mdsw";
-    public static final String subsetGeoISchemeKey = "subsetGeoI";
+
+    public static final String subsetGeoIOneNormSchemeKey = "subsetGeoIOneNorm";
+    public static final String subsetGeoITwoNormSchemeKey = "subsetGeoITwoNorm";
 
     // 记录结果的Key
     public static final String alterBKey = "alteringB";

@@ -10,13 +10,14 @@ import cn.edu.ecnu.collection.ArraysUtils;
 import cn.edu.ecnu.collection.ListUtils;
 import cn.edu.ecnu.collection.SetUtils;
 import cn.edu.ecnu.differential_privacy.cdp.basic_struct.DistanceAble;
+import cn.edu.ecnu.differential_privacy.cdp.basic_struct.DistanceTor;
 import cn.edu.ecnu.differential_privacy.cdp.exponential_mechanism.utility.UtilityFunction;
 import cn.edu.ecnu.differential_privacy.ldp.consistent.Normalization;
 import cn.edu.ecnu.math.MathUtils;
 
 import java.util.*;
 
-public class SubsetExponentialGeoI<X extends DistanceAble<X>> {
+public class SubsetExponentialGeoI<X> {
     private Double epsilon;
     private Integer setSizeK;
     private Double omega;
@@ -37,11 +38,14 @@ public class SubsetExponentialGeoI<X extends DistanceAble<X>> {
 
     private Integer[][] discount;
 
-    public SubsetExponentialGeoI(Double epsilon, List<X> inputElementList) throws IllegalAccessException, InstantiationException {
+    private DistanceTor<X> distanceTor;
+
+    public SubsetExponentialGeoI(Double epsilon, List<X> inputElementList, DistanceTor<X> distanceTor) throws IllegalAccessException, InstantiationException {
         this.epsilon = epsilon;
 //        this.setSizeK = setSizeK;
         this.inputElementList = inputElementList;
 //        this.outputElementList = outputElementList;
+        this.distanceTor = distanceTor;
 
         this.massArray = new Double[this.inputElementList.size()];
         this.initializeTotalDistanceAndElementGivenDistance();
@@ -96,7 +100,8 @@ public class SubsetExponentialGeoI<X extends DistanceAble<X>> {
             // 处理 j>i 情况
             for (int j = i + 1; j < inputListSize; j++) {
                 elementB = this.inputElementList.get(j);
-                tempDistance = elementA.getDistance(elementB);
+//                tempDistance = elementA.getDistance(elementB);
+                tempDistance = this.distanceTor.getDistance(elementA, elementB);
                 // 将每个distance添加到distanceSet里去重并排序
                 distanceSet.add(tempDistance);
                 // 构建treeMapArray
@@ -173,7 +178,8 @@ public class SubsetExponentialGeoI<X extends DistanceAble<X>> {
             elemA = this.inputElementList.get(i);
             for (int j = 0; j < m; j++) {
                 elemB = this.inputElementList.get(j);
-                tempValue = Math.exp(this.epsilon * elemA.getDistance(elemB));
+//                tempValue = Math.exp(this.epsilon * elemA.getDistance(elemB));
+                tempValue = Math.exp(this.epsilon * this.distanceTor.getDistance(elemA, elemB));
                 tempResult = (tempValue * this.massArray[i] - this.massArray[j]) / (tempValue - 1);
                 if (this.omega < tempResult){
                     this.omega = tempResult;

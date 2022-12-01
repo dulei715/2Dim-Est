@@ -135,7 +135,11 @@ public class basicTest {
         Collection resultSet = CollectionUtils.disjunction(setA, setB);
         MyPrint.showCollection(resultSet);
 
-//        CollectionUtils.m
+        MyPrint.showSplitLine("*", 150);
+
+        Collection subtract = CollectionUtils.subtract(setA, setB);
+        MyPrint.showCollection(subtract);
+
     }
 
 }

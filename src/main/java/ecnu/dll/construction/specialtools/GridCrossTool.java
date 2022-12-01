@@ -2,6 +2,8 @@ package ecnu.dll.construction.specialtools;
 
 import cn.edu.ecnu.struct.pair.IdentityPair;
 
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.TreeSet;
 
 public abstract class GridCrossTool {
@@ -67,22 +69,14 @@ public abstract class GridCrossTool {
         return Math.abs(centerPoint.getKey() - judgePoint.getKey()) + Math.abs(centerPoint.getValue() - judgePoint.getValue()) <= sizeB ? true : false;
     }
 
-    protected TreeSet<IdentityPair<Integer>> getCrossCell(IdentityPair<Integer> centerPoint) {
-        TreeSet<IdentityPair<Integer>> resultSet = new TreeSet<>();
-        IdentityPair<Integer> judgePoint;
-        for (int i = 0; i < this.sizeD; i++) {
-            for (int j = 0; j < this.sizeD; j++) {
-                judgePoint = new IdentityPair<>(i, j);
-                if (isInHighProbabilityArea(centerPoint, this.sizeB, judgePoint)){
-                    resultSet.add(judgePoint);
-                }
-            }
-        }
-        return resultSet;
+    protected Collection<IdentityPair<Integer>> getCrossCell(IdentityPair<Integer> centerPoint) {
+        return getCrossCell(centerPoint, this.sizeD, this.sizeB);
     }
 
-    protected static TreeSet<IdentityPair<Integer>> getCrossCell(IdentityPair<Integer> centerPoint, int sizeD, int sizeB) {
-        TreeSet<IdentityPair<Integer>> resultSet = new TreeSet<>();
+
+
+    protected static Collection<IdentityPair<Integer>> getCrossCell(IdentityPair<Integer> centerPoint, int sizeD, int sizeB) {
+        HashSet<IdentityPair<Integer>> resultSet = new HashSet<>();
         IdentityPair<Integer> judgePoint;
         for (int i = 0; i < sizeD; i++) {
             for (int j = 0; j < sizeD; j++) {

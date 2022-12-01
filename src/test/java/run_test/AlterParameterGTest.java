@@ -9,12 +9,8 @@ import cn.edu.ecnu.struct.point.TwoDimensionalDoublePoint;
 import cn.edu.ecnu.struct.point.TwoDimensionalIntegerPoint;
 import ecnu.dll.construction._config.Constant;
 import ecnu.dll.construction.dataset.struct.DataSetAreaInfo;
-import ecnu.dll.construction.newscheme.discretization.tool.DiscretizedDiskSchemeTool;
-import ecnu.dll.construction.newscheme.discretization.tool.DiscretizedRhombusSchemeTool;
 import ecnu.dll.construction.newscheme.discretization.tool.DiscretizedSchemeTool;
 import ecnu.dll.construction.run.main_process.a_single_scheme_run.*;
-import ecnu.dll.construction.run.main_process.b_comparision_run.AlterParameterGRun;
-import ecnu.dll.construction.run.main_process.c_data_set_run.DataSetRun;
 import org.junit.Test;
 
 import java.util.*;
@@ -57,7 +53,7 @@ public class AlterParameterGTest {
             针对SubsetGeoI计算对应grid下的估计并返回相应的wasserstein距离
          */
         Map<String, List<ExperimentResult>> alterParameterMap = new HashMap<>();
-        String subsetGeoI = Constant.subsetGeoISchemeKey;
+        String subsetGeoI = Constant.subsetGeoITwoNormSchemeKey;
         ExperimentResult tempSubsetGeoIExperimentResult;
         List<ExperimentResult> subsetGeoIExperimentResultList = new ArrayList<>();
         List<TwoDimensionalIntegerPoint> integerPointList, integerPointTypeList;
@@ -71,7 +67,7 @@ public class AlterParameterGTest {
             integerPointTypeList = DiscretizedSchemeTool.getRawIntegerPointTypeList(sizeDArray[i]);
             rawDataStatistic = StatisticTool.countHistogramRatioMap(integerPointTypeList, integerPointList);
 
-            tempSubsetGeoIExperimentResult = SubsetGeoIRun.run(integerPointList, rawDataStatistic, gridLengthArray[i], inputSideLength, epsilon, xBound, yBound);
+            tempSubsetGeoIExperimentResult = SubsetGeoITwoNormRun.run(integerPointList, rawDataStatistic, gridLengthArray[i], inputSideLength, epsilon, xBound, yBound);
             tempSubsetGeoIExperimentResult.addPair(1, Constant.areaLengthKey, String.valueOf(inputSideLength));
             subsetGeoIExperimentResultList.add(tempSubsetGeoIExperimentResult);
 

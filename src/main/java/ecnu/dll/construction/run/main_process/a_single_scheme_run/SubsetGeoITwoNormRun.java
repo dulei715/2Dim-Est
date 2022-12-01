@@ -2,7 +2,7 @@ package ecnu.dll.construction.run.main_process.a_single_scheme_run;
 
 import cn.edu.ecnu.basic.BasicCalculation;
 import cn.edu.ecnu.differential_privacy.accuracy.metrics.distance_quantities.TwoDimensionalWassersteinDistance;
-import cn.edu.ecnu.io.read.TwoDimensionalPointRead;
+import cn.edu.ecnu.differential_privacy.cdp.basic_struct.impl.TwoNormTwoDimensionalIntegerPointDistanceTor;
 import cn.edu.ecnu.result.ExperimentResult;
 import cn.edu.ecnu.struct.Grid;
 import cn.edu.ecnu.struct.point.TwoDimensionalDoublePoint;
@@ -17,12 +17,12 @@ import java.util.TreeMap;
 
 
 @SuppressWarnings("Duplicates")
-public class SubsetGeoIRun {
+public class SubsetGeoITwoNormRun {
     public static ExperimentResult run(final List<TwoDimensionalIntegerPoint> integerPointList, final TreeMap<TwoDimensionalIntegerPoint, Double> rawDataStatistic, double cellLength, double inputLength, double epsilon, double xBound, double yBound) {
         DiscretizedSubsetExponentialGeoI scheme = null;
         ExperimentResult experimentResult = null;
         try {
-            scheme = new DiscretizedSubsetExponentialGeoI(epsilon, cellLength, inputLength, xBound, yBound);
+            scheme = new DiscretizedSubsetExponentialGeoI(epsilon, cellLength, inputLength, xBound, yBound, new TwoNormTwoDimensionalIntegerPointDistanceTor());
 
             /**
              * 生成噪声数据
@@ -42,7 +42,7 @@ public class SubsetGeoIRun {
                 Double wassersteinDistance = TwoDimensionalWassersteinDistance.getWassersteinDistance(rawDataStatistic, estimationResult, 2);
                 experimentResult = new ExperimentResult();
                 experimentResult.addPair(Constant.dataPointSizeKey, String.valueOf(integerPointList.size()));
-                experimentResult.addPair(Constant.schemeNameKey, Constant.subsetGeoISchemeKey);
+                experimentResult.addPair(Constant.schemeNameKey, Constant.subsetGeoITwoNormSchemeKey);
                 experimentResult.addPair(Constant.postProcessTimeKey, String.valueOf(postProcessTime));
                 experimentResult.addPair(Constant.gridUnitSizeKey, String.valueOf(cellLength));
                 experimentResult.addPair(Constant.dataTypeSizeKey, String.valueOf(scheme.getSortedInputPointList().size()));
@@ -66,7 +66,7 @@ public class SubsetGeoIRun {
     public static void run0(List<TwoDimensionalDoublePoint> pointList, double cellLength, double inputLength, double epsilon, double xBound, double yBound) {
         DiscretizedSubsetExponentialGeoI segiScheme = null;
         try {
-            segiScheme = new DiscretizedSubsetExponentialGeoI(epsilon, cellLength, inputLength, xBound, yBound);
+            segiScheme = new DiscretizedSubsetExponentialGeoI(epsilon, cellLength, inputLength, xBound, yBound, new TwoNormTwoDimensionalIntegerPointDistanceTor());
             List<TwoDimensionalIntegerPoint> twoDimensionalIntegerPointList = Grid.toIntegerPoint(pointList, segiScheme.getLeftBorderArray(), cellLength);
             /**
              * 相对的原始数据

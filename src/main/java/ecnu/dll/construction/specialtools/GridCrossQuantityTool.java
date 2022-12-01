@@ -1,5 +1,5 @@
 package ecnu.dll.construction.specialtools;
-
+@Deprecated
 public class GridCrossQuantityTool {
 
     public static Integer getGridSize(int sizeD) {
