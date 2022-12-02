@@ -1,4 +1,4 @@
-package ecnu.dll.construction.specialtools;
+package ecnu.dll.construction.analysis;
 @Deprecated
 public class GridCrossQuantityTool {
 

@@ -1,25 +1,25 @@
-package ecnu.dll.construction.specialtools;
+package ecnu.dll.construction.analysis;
 
 import cn.edu.ecnu.struct.pair.IdentityPair;
 import org.apache.commons.collections.CollectionUtils;
 
 import java.util.*;
 
-public class GridCrossDistanceTool extends GridCrossTool {
+public class RAMGridCrossDistance extends GridCrossTool {
 
     public static final int ONE_NORM = 1;
     public static final int TWO_NORM = 2;
 
     private int normType;
 
-    public GridCrossDistanceTool(int normType) {
+    public RAMGridCrossDistance(int normType) {
         if (normType < 1 && normType > 2) {
             throw new RuntimeException("The norm type " + normType + "is not supported!");
         }
         this.normType = normType;
     }
 
-    public GridCrossDistanceTool(TreeSet<IdentityPair<Integer>> inputCellSet, Integer sizeB, int normType) {
+    public RAMGridCrossDistance(TreeSet<IdentityPair<Integer>> inputCellSet, Integer sizeB, int normType) {
         super(inputCellSet, sizeB);
         if (normType < 1 && normType > 2) {
             throw new RuntimeException("The norm type " + normType + "is not supported!");
@@ -27,7 +27,7 @@ public class GridCrossDistanceTool extends GridCrossTool {
         this.normType = normType;
     }
 
-    public GridCrossDistanceTool(Integer sizeD, Integer sizeB, int normType) {
+    public RAMGridCrossDistance(Integer sizeD, Integer sizeB, int normType) {
         super(sizeD, sizeB);
         if (normType < 1 && normType > 2) {
             throw new RuntimeException("The norm type " + normType + "is not supported!");

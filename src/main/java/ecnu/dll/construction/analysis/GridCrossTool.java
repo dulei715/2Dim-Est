@@ -1,4 +1,4 @@
-package ecnu.dll.construction.specialtools;
+package ecnu.dll.construction.analysis;
 
 import cn.edu.ecnu.struct.pair.IdentityPair;
 

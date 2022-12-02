@@ -2,12 +2,11 @@ package tool_test;
 
 import cn.edu.ecnu.io.print.MyPrint;
 import cn.edu.ecnu.struct.pair.IdentityPair;
-import ecnu.dll.construction.specialtools.GridCrossDistanceTool;
-import ecnu.dll.construction.specialtools.GridCrossTool;
+import ecnu.dll.construction.analysis.RAMGridCrossDistance;
+import ecnu.dll.construction.analysis.GridCrossTool;
 import org.junit.Test;
 
 import java.util.Collection;
-import java.util.TreeSet;
 
 public class GridCrossToolTest extends GridCrossTool {
     @Test
@@ -40,7 +39,7 @@ public class GridCrossToolTest extends GridCrossTool {
         int sizeD = 3;
         int sizeB = 2;
         IdentityPair<Integer> centerPoint = new IdentityPair<>(0, 0);
-        GridCrossDistanceTool gridCrossDistanceTool = new GridCrossDistanceTool(sizeD, sizeB, GridCrossDistanceTool.ONE_NORM);
+        RAMGridCrossDistance gridCrossDistanceTool = new RAMGridCrossDistance(sizeD, sizeB, RAMGridCrossDistance.ONE_NORM);
 //        GridCrossDistanceTool gridCrossDistanceTool = new GridCrossDistanceTool(sizeD, sizeB, GridCrossDistanceTool.TWO_NORM);
         double[] totalDistance = gridCrossDistanceTool.getTotalDistance(centerPoint);
         MyPrint.showDoubleArray(totalDistance);
