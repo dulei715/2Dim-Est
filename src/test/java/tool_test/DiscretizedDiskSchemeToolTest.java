@@ -25,13 +25,13 @@ public class DiscretizedDiskSchemeToolTest {
         MyPrint.showList(borderCellList);
         MyPrint.showSplitLine("*", 150);
         TreeSet<IdentityPair<Integer>> rightAddedSet = DiscretizedDiskSchemeTool.getMoveRightIncrementPureLowProbabilityCellSet(outerCellIndexList, sizeD, sizeB);
-        MyPrint.showSet(rightAddedSet);
+        MyPrint.showCollection(rightAddedSet);
         MyPrint.showSplitLine("*", 150);
         TreeSet<IdentityPair<Integer>> fistTotalAddedSet = DiscretizedDiskSchemeTool.getMoveRightUpperIncrementPureLowProbabilityCellSet(outerCellIndexList, sizeD, sizeB, rightAddedSet);
-        MyPrint.showSet(fistTotalAddedSet);
+        MyPrint.showCollection(fistTotalAddedSet);
         MyPrint.showSplitLine("*", 150);
         TreeSet<IdentityPair<Integer>> totalAddedSet = DiscretizedDiskSchemeTool.getResidualPureLowCells(outerCellIndexList, sizeD, sizeB);
-        MyPrint.showSet(totalAddedSet);
+        MyPrint.showCollection(totalAddedSet);
         MyPrint.showSplitLine("*", 150);
 
 

@@ -37,7 +37,7 @@ public class DiscretizedDiskSchemeTest {
         List<TwoDimensionalIntegerPoint> noiseIntegerPointTypeList = DiscretizedDiskSchemeTool.getNoiseIntegerPointTypeList(outerCellIndexList, sizeD, sizeB, index45);
         List<IdentityPair<Integer>> innerCellList = DiscretizedDiskSchemeTool.getInnerCell(outerCellIndexList);
         TreeSet<TwoDimensionalIntegerPoint> residualSet = DiscretizedDiskSchemeTool.getResidualPureLowCellsByPoint(new TwoDimensionalIntegerPoint(0, 0), noiseIntegerPointTypeList, innerCellList, outerCellIndexList, sizeB, index45);
-        MyPrint.showSet(residualSet);
+        MyPrint.showCollection(residualSet);
     }
 
     @Test
