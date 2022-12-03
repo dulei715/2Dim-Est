@@ -1,4 +1,4 @@
-package ecnu.dll.construction.analysis;
+package ecnu.dll.construction.analysis.basic;
 
 import cn.edu.ecnu.differential_privacy.cdp.basic_struct.DistanceTor;
 
@@ -10,10 +10,12 @@ import java.util.List;
  * 2. 输入i \in I 先映射到 i'\in I'上，再从 i' 映射到 \hat{i}\in\hat{I} 上
  */
 public abstract class TransformLocalPrivacy<T> {
-//    protected Integer originalSize = null;
+
     protected List<T> originalSetList = null;
     protected List<T> intermediateSetList = null;
 
+    public TransformLocalPrivacy() {
+    }
 
     public TransformLocalPrivacy(List<T> originalSetList, List<T> intermediateSetList) {
         this.originalSetList = originalSetList;
