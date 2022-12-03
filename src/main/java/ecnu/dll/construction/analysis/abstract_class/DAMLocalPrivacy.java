@@ -99,7 +99,7 @@ public abstract class DAMLocalPrivacy extends TransformLocalPrivacy<IdentityPair
         double totalProbability = 0;
 //        int[] partSizeArray = new int[3];
         Collection<IdentityPair<Integer>>[] partCollection = new Collection[3];
-        partCollection[0]
+        partCollection[0] =
         partSizeArray[0] = ;
 
         partSizeArray[1] = this.originalSetList.size() - partSizeArray[0];
