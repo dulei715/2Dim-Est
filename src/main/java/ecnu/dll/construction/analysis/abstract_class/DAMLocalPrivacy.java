@@ -4,11 +4,12 @@ import cn.edu.ecnu.differential_privacy.cdp.basic_struct.DistanceTor;
 import cn.edu.ecnu.struct.pair.IdentityPair;
 import ecnu.dll.construction.analysis.basic.TransformLocalPrivacy;
 import ecnu.dll.construction.analysis.tools.CellDistanceTool;
-import org.apache.commons.collections.CollectionUtils;
+import ecnu.dll.construction.newscheme.discretization.struct.ThreePartsStruct;
+import ecnu.dll.construction.newscheme.discretization.tool.DiscretizedDiskSchemeTool;
 
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 
 public abstract class DAMLocalPrivacy extends TransformLocalPrivacy<IdentityPair<Integer>> {
 
@@ -20,6 +21,12 @@ public abstract class DAMLocalPrivacy extends TransformLocalPrivacy<IdentityPair
 
     protected Double probabilityP;
     protected DistanceTor<IdentityPair<Integer>> distanceCalculator = null;
+
+    /**
+     * 用于降低 getTotalProbabilityGivenIntermediateElement 和 getPairWeightedDistance 两个函数的重复部分
+     */
+    private IdentityPair<Integer> tempIntermediateCell = null;
+    private ThreePartsStruct<IdentityPair<Integer>> tempSplitCellStruct = null;
 
 
 
@@ -55,39 +62,13 @@ public abstract class DAMLocalPrivacy extends TransformLocalPrivacy<IdentityPair
         this.sizeB = sizeB;
     }
 
-
-    /**
-     * 判断给定的 judgePoint 是否在以 centerPoint 为中心的高概率范围内
-     * @param centerPoint
-     * @param sizeB
-     * @param judgePoint
-     * @return
-     */
-    protected static boolean isInHighProbabilityArea(IdentityPair<Integer> centerPoint, int sizeB, IdentityPair<Integer> judgePoint) {
-        return Math.abs(centerPoint.getKey() - judgePoint.getKey()) + Math.abs(centerPoint.getValue() - judgePoint.getValue()) <= sizeB ? true : false;
-    }
-
-    protected Collection<IdentityPair<Integer>> getCrossCell(IdentityPair<Integer> centerPoint) {
-        return getCrossCell(centerPoint, this.sizeD, this.sizeB);
-    }
-
-
-    protected static Collection<IdentityPair<Integer>> getCrossCell(IdentityPair<Integer> centerPoint, int sizeD, int sizeB) {
-        HashSet<IdentityPair<Integer>> resultSet = new HashSet<>();
-        IdentityPair<Integer> judgePoint;
-        for (int i = 0; i < sizeD; i++) {
-            for (int j = 0; j < sizeD; j++) {
-                judgePoint = new IdentityPair<>(i, j);
-                if (isInHighProbabilityArea(centerPoint, sizeB, judgePoint)){
-                    resultSet.add(judgePoint);
-                }
-            }
+    public void setTempSplitCellStruct(IdentityPair<Integer> intermediateCell) {
+        if (intermediateCell == null || intermediateCell.equals(this.tempIntermediateCell)) {
+            return;
         }
-        return resultSet;
+        this.tempIntermediateCell = intermediateCell;
+        this.tempSplitCellStruct = DiscretizedDiskSchemeTool.getSplitCellsInInputArea(this.tempIntermediateCell, this.sizeD, this.sizeB);
     }
-
-
-
 
 
     /**
@@ -97,13 +78,13 @@ public abstract class DAMLocalPrivacy extends TransformLocalPrivacy<IdentityPair
     @Override
     protected double getTotalProbabilityGivenIntermediateElement(IdentityPair<Integer> intermediateElement) {
         double totalProbability = 0;
-//        int[] partSizeArray = new int[3];
-        Collection<IdentityPair<Integer>>[] partCollection = new Collection[3];
-        partCollection[0] =
-        partSizeArray[0] = ;
-
-        partSizeArray[1] = this.originalSetList.size() - partSizeArray[0];
-        totalProbability = partSizeArray[0] * this.probabilityP + partSizeArray[1] * this.probabilityQ;
+        setTempSplitCellStruct(intermediateElement);
+        totalProbability += this.probabilityP * this.tempSplitCellStruct.getHighProbabilityCellCollection().size();
+        totalProbability += this.probabilityQ * this.tempSplitCellStruct.getLowProbabilityCellCollection().size();
+        Map<IdentityPair<Integer>, Double> mixProbabilityMap = this.tempSplitCellStruct.getMixProbabilityCellCollection();
+        for (Double shrinkAreaSize : mixProbabilityMap.values()) {
+            totalProbability += this.probabilityP * shrinkAreaSize + this.probabilityQ * (1 - shrinkAreaSize);
+        }
         return totalProbability;
     }
 
@@ -114,19 +95,16 @@ public abstract class DAMLocalPrivacy extends TransformLocalPrivacy<IdentityPair
     @Override
     protected double getPairWeightedDistance(IdentityPair<Integer> intermediateElement) {
         double pairWeightedDistance = 0;
-        double totalDistance = this.getSquareDistance();
-        double[] partDistanceArray = new double[3];
-
-        this.setTempCrossCell(intermediateElement);
-
-        partDistanceArray[0] = CellDistanceTool.getTotalDistanceWithinGivenCollection(this.tempCrossCell, this.distanceCalculator);
-
-        pairWeightedDistance += partDistanceArray[0] * this.probabilityP * this.probabilityP;
-        Collection outerCell = CollectionUtils.subtract(super.originalSetList, this.tempCrossCell);
-        partDistanceArray[1] = CellDistanceTool.getTotalDistanceWithinGivenCollection(outerCell, this.distanceCalculator);
-        pairWeightedDistance += partDistanceArray[1] * this.probabilityQ * this.probabilityQ;
-        partDistanceArray[2] = totalDistance - partDistanceArray[0] - partDistanceArray[1];
-        pairWeightedDistance += partDistanceArray[2] * this.probabilityP * this.probabilityQ;
+        this.setTempSplitCellStruct(intermediateElement);
+        Collection<IdentityPair<Integer>> highProbabilityCollection = this.tempSplitCellStruct.getHighProbabilityCellCollection();
+        Collection<IdentityPair<Integer>> lowProbabilityCollection = this.tempSplitCellStruct.getLowProbabilityCellCollection();
+        Map<IdentityPair<Integer>, Double> mixProbabilityCollection = this.tempSplitCellStruct.getMixProbabilityCellCollection();
+        pairWeightedDistance += CellDistanceTool.getTotalDistanceWithinGivenCollection(highProbabilityCollection, this.distanceCalculator) * this.probabilityP * this.probabilityP;
+        pairWeightedDistance += CellDistanceTool.getTotalDistanceWithinGivenCollection(lowProbabilityCollection, this.distanceCalculator) * this.probabilityQ * this.probabilityQ;
+        pairWeightedDistance += CellDistanceTool.getWeightedDistanceWithinGivenMap(mixProbabilityCollection, this.distanceCalculator, this.probabilityP, this.probabilityQ);
+        pairWeightedDistance += CellDistanceTool.getTotalDistanceBetweenTwoGivenCollection(highProbabilityCollection, lowProbabilityCollection, this.distanceCalculator) * this.probabilityP * this.probabilityQ;
+        pairWeightedDistance += CellDistanceTool.getPartWeightedDistanceWithinGivenCollectionAndMap(mixProbabilityCollection, highProbabilityCollection, 1, this.distanceCalculator, this.probabilityP, this.probabilityQ);
+        pairWeightedDistance += CellDistanceTool.getPartWeightedDistanceWithinGivenCollectionAndMap(mixProbabilityCollection, lowProbabilityCollection, 0, this.distanceCalculator, this.probabilityP, this.probabilityQ);
         return pairWeightedDistance;
     }
 }

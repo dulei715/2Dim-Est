@@ -4,6 +4,7 @@ import cn.edu.ecnu.differential_privacy.cdp.basic_struct.DistanceTor;
 import cn.edu.ecnu.struct.pair.IdentityPair;
 import ecnu.dll.construction.analysis.basic.TransformLocalPrivacy;
 import ecnu.dll.construction.analysis.tools.CellDistanceTool;
+import ecnu.dll.construction.newscheme.discretization.tool.DiscretizedRhombusSchemeTool;
 import org.apache.commons.collections.CollectionUtils;
 
 import java.util.Collection;
@@ -25,7 +26,7 @@ public abstract class RAMLocalPrivacy extends TransformLocalPrivacy<IdentityPair
      * 用于降低 getTotalProbabilityGivenIntermediateElement 和 getPairWeightedDistance 两个函数的重复部分
      */
     private IdentityPair<Integer> tempIntermediateCell = null;
-    private Collection<IdentityPair<Integer>> tempCrossCell = null;
+    private Collection<IdentityPair<Integer>> tempCrossCellCollection = null;
 
     public RAMLocalPrivacy(List<IdentityPair<Integer>> originalSetList, List<IdentityPair<Integer>> intermediateSetList, Integer sizeB, DistanceTor<IdentityPair<Integer>> distanceCalculator, Double probabilityP, Double probabilityQ) {
         super(originalSetList, intermediateSetList);
@@ -59,44 +60,13 @@ public abstract class RAMLocalPrivacy extends TransformLocalPrivacy<IdentityPair
         this.sizeB = sizeB;
     }
 
-    public void setTempCrossCell(IdentityPair<Integer> intermediateCell) {
+    public void setTempCrossCellCollection(IdentityPair<Integer> intermediateCell) {
         if (intermediateCell == null || intermediateCell.equals(this.tempIntermediateCell)) {
             return;
         }
         this.tempIntermediateCell = intermediateCell;
-        this.tempCrossCell = this.getCrossCell(this.tempIntermediateCell);
+        this.tempCrossCellCollection = DiscretizedRhombusSchemeTool.getCrossCellCollectionWithinInputCells(this.tempIntermediateCell, this.sizeD, this.sizeB);
     }
-
-    /**
-     * 判断给定的 judgePoint 是否在以 centerPoint 为中心的高概率范围内
-     * @param centerPoint
-     * @param sizeB
-     * @param judgePoint
-     * @return
-     */
-    protected static boolean isInHighProbabilityArea(IdentityPair<Integer> centerPoint, int sizeB, IdentityPair<Integer> judgePoint) {
-        return Math.abs(centerPoint.getKey() - judgePoint.getKey()) + Math.abs(centerPoint.getValue() - judgePoint.getValue()) <= sizeB ? true : false;
-    }
-
-    protected Collection<IdentityPair<Integer>> getCrossCell(IdentityPair<Integer> centerPoint) {
-        return getCrossCell(centerPoint, this.sizeD, this.sizeB);
-    }
-
-
-    protected static Collection<IdentityPair<Integer>> getCrossCell(IdentityPair<Integer> centerPoint, int sizeD, int sizeB) {
-        HashSet<IdentityPair<Integer>> resultSet = new HashSet<>();
-        IdentityPair<Integer> judgePoint;
-        for (int i = 0; i < sizeD; i++) {
-            for (int j = 0; j < sizeD; j++) {
-                judgePoint = new IdentityPair<>(i, j);
-                if (isInHighProbabilityArea(centerPoint, sizeB, judgePoint)){
-                    resultSet.add(judgePoint);
-                }
-            }
-        }
-        return resultSet;
-    }
-
 
 
     protected abstract double getSquareDistance();
@@ -112,8 +82,8 @@ public abstract class RAMLocalPrivacy extends TransformLocalPrivacy<IdentityPair
         double totalProbability = 0;
         int[] partSizeArray = new int[2];
 
-        this.setTempCrossCell(intermediateElement);
-        partSizeArray[0] = this.tempCrossCell.size();
+        this.setTempCrossCellCollection(intermediateElement);
+        partSizeArray[0] = this.tempCrossCellCollection.size();
 
         partSizeArray[1] = this.originalSetList.size() - partSizeArray[0];
         totalProbability = partSizeArray[0] * this.probabilityP + partSizeArray[1] * this.probabilityQ;
@@ -130,12 +100,12 @@ public abstract class RAMLocalPrivacy extends TransformLocalPrivacy<IdentityPair
         double totalDistance = this.getSquareDistance();
         double[] partDistanceArray = new double[3];
 
-        this.setTempCrossCell(intermediateElement);
+        this.setTempCrossCellCollection(intermediateElement);
 
-        partDistanceArray[0] = CellDistanceTool.getTotalDistanceWithinGivenCollection(this.tempCrossCell, this.distanceCalculator);
+        partDistanceArray[0] = CellDistanceTool.getTotalDistanceWithinGivenCollection(this.tempCrossCellCollection, this.distanceCalculator);
 
         pairWeightedDistance += partDistanceArray[0] * this.probabilityP * this.probabilityP;
-        Collection outerCell = CollectionUtils.subtract(super.originalSetList, this.tempCrossCell);
+        Collection outerCell = CollectionUtils.subtract(super.originalSetList, this.tempCrossCellCollection);
         partDistanceArray[1] = CellDistanceTool.getTotalDistanceWithinGivenCollection(outerCell, this.distanceCalculator);
         pairWeightedDistance += partDistanceArray[1] * this.probabilityQ * this.probabilityQ;
         partDistanceArray[2] = totalDistance - partDistanceArray[0] - partDistanceArray[1];

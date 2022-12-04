@@ -1,25 +1,48 @@
 package ecnu.dll.construction.newscheme.discretization.tool;
 
+import cn.edu.ecnu.basic.BasicCalculation;
+import cn.edu.ecnu.collection.ArraysUtils;
 import cn.edu.ecnu.collection.SetUtils;
 import cn.edu.ecnu.struct.pair.BasicPair;
 import cn.edu.ecnu.struct.pair.IdentityPair;
 import cn.edu.ecnu.struct.pair.PairListUtils;
 import cn.edu.ecnu.struct.point.TwoDimensionalIntegerPoint;
+import ecnu.dll.construction.newscheme.discretization.struct.ThreePartsStruct;
 
 import java.util.*;
 
 @SuppressWarnings("ALL")
 public class DiscretizedDiskSchemeTool {
+    /**
+     * 这里只考虑 [0,π/4] 上的 shrink （如果有cross，则原点与cell中心点的连线必然与cell的左边界相交）
+     *
+     * @param sizeB
+     * @param xIndex
+     * @param yIndex
+     * @return
+     */
     public static double getShrinkAreaSize(Integer sizeB, int xIndex, int yIndex) {
-        double delta = sizeB * 1.0 / Math.sqrt(xIndex * xIndex + yIndex * yIndex) - 1;
-        double tempShrinkAreaSize = 4 * (delta * xIndex + 0.5) * (delta * yIndex + 0.5);
-        if (tempShrinkAreaSize < 0) {
-            // 这里不可能两个坐标差都小于0，因此只要有一个小于0，即面积为负，就设置为0
-            tempShrinkAreaSize = 0;
-        } else if (tempShrinkAreaSize > 1) {
-            tempShrinkAreaSize = 1;
+        double indexLength = Math.sqrt(xIndex * xIndex + yIndex * yIndex);
+        if (sizeB >= indexLength) {
+            return 1;
         }
+        double delta = sizeB * 1.0 / indexLength - 1;
+        double partX = delta * xIndex + 0.5;
+        if (partX <= 0) {
+            return 0;
+        }
+        double tempShrinkAreaSize = 4 * partX * (delta * yIndex + 0.5);
         return tempShrinkAreaSize;
+    }
+
+    public static IdentityPair<Integer> transformToWithin45(IdentityPair<Integer> centerCell, IdentityPair<Integer> judgeCell) {
+        Integer[] differenceArray = new Integer[2];
+        differenceArray[0] = Math.abs(centerCell.getKey() - judgeCell.getKey());
+        differenceArray[1] = Math.abs(centerCell.getValue() - judgeCell.getValue());
+        if (differenceArray[0] < differenceArray[1]) {
+            ArraysUtils.swap(differenceArray, 0, 1);
+        }
+        return new IdentityPair<>(differenceArray[0], differenceArray[1]);
     }
 
     /**
@@ -394,5 +417,43 @@ public class DiscretizedDiskSchemeTool {
 //        return (int)Math.ceil((2*mB+Math.sqrt(4*mB*mB+Math.PI*Math.exp(epsilon)*mA*mB))/(Math.PI*Math.exp(epsilon)*mA) * sizeD);
         return (int)Math.floor((2*mB+Math.sqrt(4*mB*mB+Math.PI*Math.exp(epsilon)*mA*mB))/(Math.PI*Math.exp(epsilon)*mA) * sizeD);
     }
+
+
+    public static ThreePartsStruct<IdentityPair<Integer>> getSplitCellsInInputArea(IdentityPair<Integer> centerCell, int sizeD, int sizeB) {
+        ThreePartsStruct<IdentityPair<Integer>> resultStruct = new ThreePartsStruct<>();
+        IdentityPair<Integer> tempInputCell, transformedCell;
+        double tempShrinkAreaSize;
+        for (int x = 0; x < sizeD; x++) {
+            for (int y = 0; y < sizeD; y++) {
+                tempInputCell = new IdentityPair<>(x, y);
+                transformedCell = DiscretizedDiskSchemeTool.transformToWithin45(centerCell, tempInputCell);
+                tempShrinkAreaSize = DiscretizedDiskSchemeTool.getShrinkAreaSize(sizeB, transformedCell.getKey(), transformedCell.getValue());
+                if (tempShrinkAreaSize >= 1.0) {
+                    resultStruct.addHighProbabilityElement(tempInputCell);
+                } else if (tempShrinkAreaSize <= 0.0) {
+                    resultStruct.addLowProbabilityElement(tempInputCell);
+                } else {
+                    resultStruct.addMixProbabilityElement(tempInputCell, tempShrinkAreaSize);
+                }
+            }
+        }
+        return resultStruct;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 }

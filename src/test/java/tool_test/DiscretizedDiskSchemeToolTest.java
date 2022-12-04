@@ -2,6 +2,7 @@ package tool_test;
 
 import cn.edu.ecnu.io.print.MyPrint;
 import cn.edu.ecnu.struct.pair.IdentityPair;
+import ecnu.dll.construction.newscheme.discretization.struct.ThreePartsStruct;
 import ecnu.dll.construction.newscheme.discretization.tool.DiscretizedDiskSchemeTool;
 import org.junit.Test;
 
@@ -34,6 +35,58 @@ public class DiscretizedDiskSchemeToolTest {
         MyPrint.showCollection(totalAddedSet);
         MyPrint.showSplitLine("*", 150);
 
-
     }
+
+    @Test
+    public void fun2() {
+        int sizeB = 7;
+
+        int xIndex = 6;
+        int yIndex = 5;
+        double shrinkAreaSize = DiscretizedDiskSchemeTool.getShrinkAreaSize(sizeB, xIndex, yIndex);
+        System.out.println(shrinkAreaSize);
+    }
+
+    @Test
+    public void fun3() {
+        IdentityPair<Integer> centerCell = new IdentityPair<>(2, 3);
+        IdentityPair<Integer> judgeCell = new IdentityPair<>(4, 7);
+        IdentityPair<Integer> relativeCell = DiscretizedDiskSchemeTool.transformToWithin45(centerCell, judgeCell);
+        System.out.println(relativeCell);
+    }
+
+
+    @Test
+    public void fun4() {
+        IdentityPair<Integer> centerCell = new IdentityPair<>(0, 0);
+        int sizeD = 6;
+        int sizeB = 3;
+        ThreePartsStruct<IdentityPair<Integer>> splitCellsInInputArea = DiscretizedDiskSchemeTool.getSplitCellsInInputArea(centerCell, sizeD, sizeB);
+        System.out.println(splitCellsInInputArea);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
