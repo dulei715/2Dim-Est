@@ -11,7 +11,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
-public abstract class DAMLocalPrivacy extends TransformLocalPrivacy<IdentityPair<Integer>> {
+public abstract class DAMLocalPrivacy extends TransformLocalPrivacy<IdentityPair<Integer>, IdentityPair<Integer>> {
 
     protected Integer sizeD = null;
 
@@ -107,4 +107,9 @@ public abstract class DAMLocalPrivacy extends TransformLocalPrivacy<IdentityPair
         pairWeightedDistance += CellDistanceTool.getPartWeightedDistanceWithinGivenCollectionAndMap(mixProbabilityCollection, lowProbabilityCollection, 0, this.distanceCalculator, this.probabilityP, this.probabilityQ);
         return pairWeightedDistance;
     }
+
+//    @Override
+//    protected List<IdentityPair<Integer>> generateIntermediateSetList() {
+//        return null;
+//    }
 }

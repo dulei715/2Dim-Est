@@ -11,7 +11,7 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 
-public abstract class RAMLocalPrivacy extends TransformLocalPrivacy<IdentityPair<Integer>> {
+public abstract class RAMLocalPrivacy extends TransformLocalPrivacy<IdentityPair<Integer>, IdentityPair<Integer>> {
 
     protected Integer sizeD = null;
 
@@ -112,4 +112,9 @@ public abstract class RAMLocalPrivacy extends TransformLocalPrivacy<IdentityPair
         pairWeightedDistance += partDistanceArray[2] * this.probabilityP * this.probabilityQ;
         return pairWeightedDistance;
     }
+
+//    @Override
+//    protected List<IdentityPair<Integer>> generateIntermediateSetList() {
+//        return null;
+//    }
 }

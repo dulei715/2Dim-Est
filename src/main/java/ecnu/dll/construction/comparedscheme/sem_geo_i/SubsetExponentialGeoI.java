@@ -53,6 +53,18 @@ public class SubsetExponentialGeoI<X> {
         this.normalizer();
     }
 
+    public Double getOmega() {
+        return omega;
+    }
+
+    public List<X> getInputElementList() {
+        return inputElementList;
+    }
+
+    public Double[] getMassArray() {
+        return massArray;
+    }
+
     private int getDissetElementListLength(int xIndex, int yIndex) {
         List<Integer> tempList = this.disset[xIndex][yIndex];
         if (tempList == null) {
