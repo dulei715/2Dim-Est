@@ -2,6 +2,7 @@ package ecnu.dll.construction.analysis.tools;
 
 import cn.edu.ecnu.differential_privacy.cdp.basic_struct.DistanceTor;
 import cn.edu.ecnu.struct.pair.IdentityPair;
+import cn.edu.ecnu.struct.point.TwoDimensionalIntegerPoint;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -12,19 +13,19 @@ public class CellDistanceTool {
 
     public static final int ONE_NORM = 1;
     public static final int TWO_NORM = 2;
-    public static double getTotalDistanceWithinGivenCollection(Collection<IdentityPair<Integer>> cellCollection, int normType) {
+    public static double getTotalDistanceWithinGivenCollection(Collection<TwoDimensionalIntegerPoint> cellCollection, int normType) {
         if (normType != ONE_NORM && normType != TWO_NORM) {
             throw new RuntimeException("Not support norm type: " + normType + " !");
         }
         double totalDistance = 0;
-        IdentityPair<Integer> tempCellA, tempCellB;
-        List<IdentityPair> cellList = new ArrayList<>(cellCollection);
+        TwoDimensionalIntegerPoint tempCellA, tempCellB;
+        List<TwoDimensionalIntegerPoint> cellList = new ArrayList<>(cellCollection);
         if (ONE_NORM == normType) {
             for (int i = 0; i < cellList.size(); i++) {
                 tempCellA = cellList.get(i);
                 for (int j = i + 1; j < cellList.size(); j++) {
                     tempCellB = cellList.get(j);
-                    totalDistance += Math.abs(tempCellA.getKey() - tempCellB.getKey()) + Math.abs(tempCellA.getValue() - tempCellB.getValue());
+                    totalDistance += Math.abs(tempCellA.getXIndex() - tempCellB.getXIndex()) + Math.abs(tempCellA.getYIndex() - tempCellB.getYIndex());
                 }
             }
         } else {
@@ -32,33 +33,33 @@ public class CellDistanceTool {
                 tempCellA = cellList.get(i);
                 for (int j = i + 1; j < cellList.size(); j++) {
                     tempCellB = cellList.get(j);
-                    totalDistance += Math.sqrt(Math.pow(tempCellA.getKey() - tempCellB.getKey(), 2) + Math.pow(tempCellA.getValue() - tempCellB.getValue(), 2));
+                    totalDistance += Math.sqrt(Math.pow(tempCellA.getXIndex() - tempCellB.getXIndex(), 2) + Math.pow(tempCellA.getYIndex() - tempCellB.getYIndex(), 2));
                 }
             }
         }
         return totalDistance * 2;
     }
 
-    public static double getTotalDistanceWithinGivenCollection(Collection<IdentityPair<Integer>> cellCollection, DistanceTor<IdentityPair<Integer>> distanceCalculator) {
+    public static double getTotalDistanceWithinGivenCollection(Collection<TwoDimensionalIntegerPoint> cellCollection, DistanceTor<TwoDimensionalIntegerPoint> distanceCalculator) {
         double totalDistance = 0;
-        IdentityPair<Integer> tempCellA, tempCellB;
-        List<IdentityPair> cellList = new ArrayList<>(cellCollection);
+        TwoDimensionalIntegerPoint tempCellA, tempCellB;
+        List<TwoDimensionalIntegerPoint> cellList = new ArrayList<>(cellCollection);
         for (int i = 0; i < cellList.size(); i++) {
             tempCellA = cellList.get(i);
             for (int j = i + 1; j < cellList.size(); j++) {
                 tempCellB = cellList.get(j);
-//                totalDistance += Math.abs(tempCellA.getKey() - tempCellB.getKey()) + Math.abs(tempCellA.getValue() - tempCellB.getValue());
+//                totalDistance += Math.abs(tempCellA.getXIndex() - tempCellB.getXIndex()) + Math.abs(tempCellA.getYIndex() - tempCellB.getYIndex());
                 totalDistance += distanceCalculator.getDistance(tempCellA, tempCellB);
             }
         }
         return totalDistance * 2;
     }
 
-    public static double getTotalDistanceBetweenTwoGivenCollection(Collection<IdentityPair<Integer>> cellCollectionA, Collection<IdentityPair<Integer>> cellCollectionB, DistanceTor<IdentityPair<Integer>> distanceCalculator) {
+    public static double getTotalDistanceBetweenTwoGivenCollection(Collection<TwoDimensionalIntegerPoint> cellCollectionA, Collection<TwoDimensionalIntegerPoint> cellCollectionB, DistanceTor<TwoDimensionalIntegerPoint> distanceCalculator) {
         double totalDistance = 0;
-        IdentityPair<Integer> tempCellA, tempCellB;
-        List<IdentityPair<Integer>> cellListA = new ArrayList<>(cellCollectionA);
-        List<IdentityPair<Integer>> cellListB = new ArrayList<>(cellCollectionB);
+        TwoDimensionalIntegerPoint tempCellA, tempCellB;
+        List<TwoDimensionalIntegerPoint> cellListA = new ArrayList<>(cellCollectionA);
+        List<TwoDimensionalIntegerPoint> cellListB = new ArrayList<>(cellCollectionB);
         for (int i = 0; i < cellListA.size(); i++) {
             tempCellA = cellListA.get(i);
             for (int j = 0; j < cellListB.size(); j++) {
@@ -75,11 +76,11 @@ public class CellDistanceTool {
         return realDistance * (shrinkAreaSizeA * probabilityP + remainAreaSizeA * probabilityQ) * (shrinkAreaSizeB * probabilityP + remainAreaSizeB * probabilityQ);
     }
 
-    public static double getWeightedDistanceWithinGivenMap(Map<IdentityPair<Integer>, Double> cellMap, DistanceTor<IdentityPair<Integer>> distanceCalculator, double probabilityP, double probabilityQ) {
+    public static double getWeightedDistanceWithinGivenMap(Map<TwoDimensionalIntegerPoint, Double> cellMap, DistanceTor<TwoDimensionalIntegerPoint> distanceCalculator, double probabilityP, double probabilityQ) {
         double totalDistance = 0;
-        IdentityPair<Integer> tempCellA, tempCellB;
+        TwoDimensionalIntegerPoint tempCellA, tempCellB;
         double tempRealDistance, tempShrinkAreaSizeA;
-        List<IdentityPair<Integer>> cellList = new ArrayList<>(cellMap.keySet());
+        List<TwoDimensionalIntegerPoint> cellList = new ArrayList<>(cellMap.keySet());
         for (int i = 0; i < cellList.size(); i++) {
             tempCellA = cellList.get(i);
             tempShrinkAreaSizeA = cellMap.get(tempCellA);
@@ -92,14 +93,14 @@ public class CellDistanceTool {
         return totalDistance * 2;
     }
 
-    public static double getPartWeightedDistanceWithinGivenCollectionAndMap(Map<IdentityPair<Integer>, Double> cellMap, Collection<IdentityPair<Integer>> cellCollection, double collectionShrinkValue, DistanceTor<IdentityPair<Integer>> distanceCalculator, double probabilityP, double probabilityQ) {
+    public static double getPartWeightedDistanceWithinGivenCollectionAndMap(Map<TwoDimensionalIntegerPoint, Double> cellMap, Collection<TwoDimensionalIntegerPoint> cellCollection, double collectionShrinkValue, DistanceTor<TwoDimensionalIntegerPoint> distanceCalculator, double probabilityP, double probabilityQ) {
         double totalDistance = 0;
-        IdentityPair<Integer> tempCellA;
+        TwoDimensionalIntegerPoint tempCellA;
         double tempRealDistance, tempShrinkAreasSizeA;
-        for (Map.Entry<IdentityPair<Integer>, Double> mapEntry : cellMap.entrySet()) {
+        for (Map.Entry<TwoDimensionalIntegerPoint, Double> mapEntry : cellMap.entrySet()) {
             tempCellA = mapEntry.getKey();
             tempShrinkAreasSizeA = mapEntry.getValue();
-            for (IdentityPair<Integer> tempCellB : cellCollection) {
+            for (TwoDimensionalIntegerPoint tempCellB : cellCollection) {
                 tempRealDistance = distanceCalculator.getDistance(tempCellA, tempCellB);
                 totalDistance += getWeightedDistance(tempRealDistance, tempShrinkAreasSizeA, collectionShrinkValue, probabilityP, probabilityQ);
             }

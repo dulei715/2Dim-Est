@@ -84,11 +84,15 @@ public abstract class AbstractDiscretizedScheme implements DiscretizedPlaneInter
     public abstract Integer getOptimalSizeB();
 
     public void setRawIntegerPointTypeList() {
-        this.rawIntegerPointTypeList = DiscretizedSchemeTool.getRawIntegerPointTypeList(this.sizeD);
+        this.rawIntegerPointTypeList = DiscretizedSchemeTool.getRawTwoDimensionalIntegerPointTypeList(this.sizeD);
     }
 
     public List<TwoDimensionalIntegerPoint> getRawIntegerPointTypeList() {
         return rawIntegerPointTypeList;
+    }
+
+    public List<TwoDimensionalIntegerPoint> getNoiseIntegerPointTypeList() {
+        return noiseIntegerPointTypeList;
     }
 
     /**
@@ -114,6 +118,11 @@ public abstract class AbstractDiscretizedScheme implements DiscretizedPlaneInter
 //        return new TwoDimensionalIntegerPoint(xIntIndex, yIntIndex);
 //    }
 
+    /**
+     * 根据给定的原始点集合，生成对应的噪声点集合
+     * @param originalPointList
+     * @return
+     */
     public List<TwoDimensionalIntegerPoint> getNoiseValueList(List<TwoDimensionalIntegerPoint> originalPointList) {
         List<TwoDimensionalIntegerPoint> noiseIntegerPointList = new ArrayList<>(originalPointList.size());
         for (TwoDimensionalIntegerPoint integerPoint : originalPointList) {

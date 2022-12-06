@@ -1,12 +1,11 @@
 package ecnu.dll.construction.newscheme.discretization.tool;
 
-import cn.edu.ecnu.basic.BasicCalculation;
 import cn.edu.ecnu.collection.ArraysUtils;
 import cn.edu.ecnu.collection.SetUtils;
 import cn.edu.ecnu.struct.pair.BasicPair;
-import cn.edu.ecnu.struct.pair.IdentityPair;
 import cn.edu.ecnu.struct.pair.PairListUtils;
 import cn.edu.ecnu.struct.point.TwoDimensionalIntegerPoint;
+import cn.edu.ecnu.struct.point.TwoDimensionalIntegerPointUtils;
 import ecnu.dll.construction.newscheme.discretization.struct.ThreePartsStruct;
 
 import java.util.*;
@@ -35,14 +34,14 @@ public class DiscretizedDiskSchemeTool {
         return tempShrinkAreaSize;
     }
 
-    public static IdentityPair<Integer> transformToWithin45(IdentityPair<Integer> centerCell, IdentityPair<Integer> judgeCell) {
+    public static TwoDimensionalIntegerPoint transformToWithin45(TwoDimensionalIntegerPoint centerCell, TwoDimensionalIntegerPoint judgeCell) {
         Integer[] differenceArray = new Integer[2];
-        differenceArray[0] = Math.abs(centerCell.getKey() - judgeCell.getKey());
-        differenceArray[1] = Math.abs(centerCell.getValue() - judgeCell.getValue());
+        differenceArray[0] = Math.abs(centerCell.getXIndex() - judgeCell.getXIndex());
+        differenceArray[1] = Math.abs(centerCell.getYIndex() - judgeCell.getYIndex());
         if (differenceArray[0] < differenceArray[1]) {
             ArraysUtils.swap(differenceArray, 0, 1);
         }
-        return new IdentityPair<>(differenceArray[0], differenceArray[1]);
+        return new TwoDimensionalIntegerPoint(differenceArray[0], differenceArray[1]);
     }
 
     /**
@@ -50,28 +49,28 @@ public class DiscretizedDiskSchemeTool {
      * @param sizeB
      * @return
      */
-    public static IdentityPair<Integer> calculate45EdgeIndex(Integer sizeB) {
+    public static TwoDimensionalIntegerPoint calculate45EdgeIndex(Integer sizeB) {
         double index45Prime = sizeB / Math.sqrt(2) - 0.5;
         Integer upperIndex45 = (int) Math.ceil(index45Prime);
-        return new IdentityPair<>(upperIndex45, upperIndex45);
+        return new TwoDimensionalIntegerPoint(upperIndex45, upperIndex45);
     }
 
     /**
      *  获取内部纯高概率cell坐标(不含0方向和45方向)
-     * @param outerCellIndexList 边缘cell按照y坐标从小到大排列的列表
+     * @param highProbabilityBorderCellIndexList 边缘cell按照y坐标从小到大排列的列表
      * @return
      */
-    public static List<IdentityPair<Integer>> getInnerCell(List<IdentityPair<Integer>> outerCellIndexList) {
-        IdentityPair<Integer> tempPair;
+    public static List<TwoDimensionalIntegerPoint> getInnerCell(List<TwoDimensionalIntegerPoint> highProbabilityBorderCellIndexList) {
+        TwoDimensionalIntegerPoint tempPair;
         Integer tempX, tempY;
-        List<IdentityPair<Integer>> innerCellIndexList;
-        TreeSet<IdentityPair<Integer>> treeSet = new TreeSet<>();
-        for (int k = 0; k < outerCellIndexList.size(); k++) {
-            tempPair = outerCellIndexList.get(k);
-            tempX = tempPair.getKey();
-            tempY = tempPair.getValue();
+        List<TwoDimensionalIntegerPoint> innerCellIndexList;
+        TreeSet<TwoDimensionalIntegerPoint> treeSet = new TreeSet<>();
+        for (int k = 0; k < highProbabilityBorderCellIndexList.size(); k++) {
+            tempPair = highProbabilityBorderCellIndexList.get(k);
+            tempX = tempPair.getXIndex();
+            tempY = tempPair.getYIndex();
             for (int i = k + 2; i < tempX; i++) {
-                treeSet.add(new IdentityPair<>(i, tempY));
+                treeSet.add(new TwoDimensionalIntegerPoint(i, tempY));
             }
         }
         innerCellIndexList = new ArrayList<>(treeSet);
@@ -102,8 +101,8 @@ public class DiscretizedDiskSchemeTool {
      * @param sizeB
      * @return
      */
-    public static List<IdentityPair<Integer>> calculateOuterCellIndexList(Integer sizeB) {
-        List<IdentityPair<Integer>> outerCellIndexList;
+    public static List<TwoDimensionalIntegerPoint> calculateHighProbabilityBorderCellIndexList(Integer sizeB) {
+        List<TwoDimensionalIntegerPoint> outerCellIndexList;
         double sqrt2 = Math.sqrt(2);
         double tempDiff = sizeB / sqrt2 - 0.5;
         double r_1 = Math.floor(tempDiff) * sqrt2 + 1/sqrt2;
@@ -116,7 +115,7 @@ public class DiscretizedDiskSchemeTool {
         int xIndexTemp;
         for (int i = 1; i <= outerCellSize; i++) {
             xIndexTemp = (int) Math.ceil(Math.sqrt(sizeB * sizeB - Math.pow(i-0.5,2))-0.5);
-            outerCellIndexList.add(new IdentityPair<>(xIndexTemp, i));
+            outerCellIndexList.add(new TwoDimensionalIntegerPoint(xIndexTemp, i));
         }
         return outerCellIndexList;
     }
@@ -124,28 +123,34 @@ public class DiscretizedDiskSchemeTool {
     /**
      * 角度区间(0,45)之间的输出边界cell列表
      */
-    public static List<IdentityPair<Integer>> getOutputBorderOuterCellList(List<IdentityPair<Integer>> outerCellIndexList, Integer sizeD, Integer sizeB) {
-        List<IdentityPair<Integer>> outputBorderOuterCellList = new ArrayList<>();
-        IdentityPair<Integer> tempPair;
+    public static List<TwoDimensionalIntegerPoint> getOutputBorderOuterCellList(List<TwoDimensionalIntegerPoint> highProbabilityBorderCellIndexList, Integer sizeD, Integer sizeB) {
+        List<TwoDimensionalIntegerPoint> outputBorderOuterCellList = new ArrayList<>();
+        TwoDimensionalIntegerPoint tempPair;
         for (int i = 1; i < sizeD; i++) {
-            outputBorderOuterCellList.add(new IdentityPair<>(sizeD + sizeB - 1, i));
+            outputBorderOuterCellList.add(new TwoDimensionalIntegerPoint(sizeD + sizeB - 1, i));
         }
-        for (int i = 0; i < outerCellIndexList.size(); i++) {
-            tempPair = outerCellIndexList.get(i);
-            outputBorderOuterCellList.add(new IdentityPair<>(tempPair.getKey() + sizeD - 1, tempPair.getValue() + sizeD - 1));
+        for (int i = 0; i < highProbabilityBorderCellIndexList.size(); i++) {
+            tempPair = highProbabilityBorderCellIndexList.get(i);
+            outputBorderOuterCellList.add(new TwoDimensionalIntegerPoint(tempPair.getXIndex() + sizeD - 1, tempPair.getYIndex() + sizeD - 1));
         }
         return outputBorderOuterCellList;
     }
 
 
+    public static Integer getUpperIndex45(Integer sizeB) {
+        Double index45Prime = sizeB / Math.sqrt(2) - 0.5;
+        return  (int) Math.ceil(index45Prime);
+    }
+
+
     /**
      *
-     * @param sortedOuterCellIndexList 按照Y坐标排序好的（0，45）度之间的边界
+     * @param sortedHighProbabilityBorderCellIndexList 按照Y坐标排序好的（0，45）度之间的边界
      * @param sizeD
      * @param sizeB
      * @return 右移后，[0,90]度之间的外部增量
      */
-    public static TreeSet<IdentityPair<Integer>> getMoveRightIncrementPureLowProbabilityCellSet(List<IdentityPair<Integer>> sortedOuterCellIndexList, Integer sizeD, Integer sizeB) {
+    public static TreeSet<TwoDimensionalIntegerPoint> getMoveRightIncrementPureLowProbabilityCellSet(List<TwoDimensionalIntegerPoint> sortedHighProbabilityBorderCellIndexList, Integer sizeD, Integer sizeB) {
         /**
          *    1. 构建[0,90]度的边界值
          *    2. 计算右移后的边界值
@@ -154,24 +159,24 @@ public class DiscretizedDiskSchemeTool {
          *          (2) [45,90] 部分要按照行进行分组，计算每组右移增加的值
          *    4. 将增加的值记录到TreeSet中按照点本身顺序进行排序输出
          */
-        TreeSet<IdentityPair<Integer>> resultSet = new TreeSet<>();
+        TreeSet<TwoDimensionalIntegerPoint> resultSet = new TreeSet<>();
         /*
             1. 构建[0,90]度的边界值
          */
         // [0]方向边界值（只记录横坐标）
         Integer border0 = sizeB;
         // [45]方向边界值
-        IdentityPair<Integer> border45 = DiscretizedDiskSchemeTool.calculate45EdgeIndex(sizeB);
+        TwoDimensionalIntegerPoint border45 = DiscretizedDiskSchemeTool.calculate45EdgeIndex(sizeB);
         // [45,90)度边界值
-        Collection<IdentityPair<Integer>> upperPartCollection = PairListUtils.getExchangeKeyValuePairList(sortedOuterCellIndexList);
-        IdentityPair<Integer> tempLastPair = sortedOuterCellIndexList.get(sortedOuterCellIndexList.size() - 1);
-        if (border45.getValue() > tempLastPair.getValue()) { // 此处是为了判断边界值是否已到border45同一水平
+        Collection<TwoDimensionalIntegerPoint> upperPartCollection = TwoDimensionalIntegerPointUtils.getExchangeXYIndexList(sortedHighProbabilityBorderCellIndexList);
+        TwoDimensionalIntegerPoint tempLastPair = sortedHighProbabilityBorderCellIndexList.get(sortedHighProbabilityBorderCellIndexList.size() - 1);
+        if (border45.getYIndex() > tempLastPair.getYIndex()) { // 此处是为了判断边界值是否已到border45同一水平
             upperPartCollection.add(border45);
         } else {
             upperPartCollection.add(tempLastPair);
         }
         //(45,90)度边界值按照纵坐标分组(行分组)(方便找到最右侧点)
-        TreeMap<Integer, TreeSet<BasicPair<Integer, Integer>>> yIndexMap = PairListUtils.groupByValue(upperPartCollection);
+        TreeMap<Integer, TreeSet<TwoDimensionalIntegerPoint>> yIndexMap = TwoDimensionalIntegerPointUtils.groupByYIndex(upperPartCollection);
 
 
         /*
@@ -181,24 +186,24 @@ public class DiscretizedDiskSchemeTool {
         Integer border0MoveRightXIndex = sizeB + sizeD - 1;
         Integer tempYIndex, tempXIndex, tempMovedXIndex;
         for (int i = sizeB + 1; i <= border0MoveRightXIndex; i++) {
-            resultSet.add(new IdentityPair<>(i, 0));
+            resultSet.add(new TwoDimensionalIntegerPoint(i, 0));
         }
         // (0,45) 方向右移 todo: 遍历sortedOuterCellIndexList纵坐标
-        for (IdentityPair<Integer> pair : sortedOuterCellIndexList) {
-            tempYIndex = pair.getValue();
-            tempXIndex = pair.getKey();
+        for (TwoDimensionalIntegerPoint pair : sortedHighProbabilityBorderCellIndexList) {
+            tempYIndex = pair.getYIndex();
+            tempXIndex = pair.getXIndex();
             tempMovedXIndex = tempXIndex + sizeD - 1;
             for (int x = tempXIndex + 1; x <= tempMovedXIndex; x++) {
-                resultSet.add(new IdentityPair<>(x, tempYIndex));
+                resultSet.add(new TwoDimensionalIntegerPoint(x, tempYIndex));
             }
         }
         // [45,90] 方向右移 todo: 遍历upperPartList每个列组
-        for (Map.Entry<Integer, TreeSet<BasicPair<Integer, Integer>>> entry : yIndexMap.entrySet()) {
+        for (Map.Entry<Integer, TreeSet<TwoDimensionalIntegerPoint>> entry : yIndexMap.entrySet()) {
             tempYIndex = entry.getKey();
-            tempXIndex = entry.getValue().last().getKey();
+            tempXIndex = entry.getValue().last().getXIndex();
             tempMovedXIndex = tempXIndex + sizeD;
             for (int x = tempXIndex + 1; x < tempMovedXIndex; x++) {
-                resultSet.add(new IdentityPair<>(x, tempYIndex));
+                resultSet.add(new TwoDimensionalIntegerPoint(x, tempYIndex));
             }
         }
         return resultSet;
@@ -206,13 +211,13 @@ public class DiscretizedDiskSchemeTool {
 
     /**
      *
-     * @param sortedOuterCellIndexList 按照Y坐标排序好的（0，45）度之间的边界
+     * @param sortedHighProbabilityBorderCellIndexList 按照Y坐标排序好的（0，45）度之间的边界
      * @param sizeD
      * @param sizeB
      * @param movedRightAddedCells 右移后增加的cell
      * @return 右移且上移后，[0,90]度之间的外部增量
      */
-    public static TreeSet<IdentityPair<Integer>> getMoveRightUpperIncrementPureLowProbabilityCellSet(List<IdentityPair<Integer>> sortedOuterCellIndexList, Integer sizeD, Integer sizeB, Collection<IdentityPair<Integer>> movedRightAddedCells) {
+    public static TreeSet<TwoDimensionalIntegerPoint> getMoveRightUpperIncrementPureLowProbabilityCellSet(List<TwoDimensionalIntegerPoint> sortedHighProbabilityBorderCellIndexList, Integer sizeD, Integer sizeB, Collection<TwoDimensionalIntegerPoint> movedRightAddedCells) {
         /**
          *    1. 将边界cell和右移增加的cell movedRightAddedCell合并产生新的cell集合 middleSet
          *    2. 将middleSet按照x坐标分组
@@ -220,21 +225,21 @@ public class DiscretizedDiskSchemeTool {
          *    4. 将moveUpAddedCell与movedRightAddedCell合并，即为输出结果
          */
         Integer tempXIndex, tempYIndex, tempAddedYIndex;
-        TreeSet<IdentityPair<Integer>> resultSet = new TreeSet<>();
+        TreeSet<TwoDimensionalIntegerPoint> resultSet = new TreeSet<>();
 
-        IdentityPair<Integer> border45 = DiscretizedDiskSchemeTool.calculate45EdgeIndex(sizeB);
-        TreeSet<IdentityPair<Integer>> middleSet = new TreeSet<>(sortedOuterCellIndexList);
-        middleSet.addAll(PairListUtils.getExchangeKeyValuePairList(sortedOuterCellIndexList));
+        TwoDimensionalIntegerPoint border45 = DiscretizedDiskSchemeTool.calculate45EdgeIndex(sizeB);
+        TreeSet<TwoDimensionalIntegerPoint> middleSet = new TreeSet<>(sortedHighProbabilityBorderCellIndexList);
+        middleSet.addAll(TwoDimensionalIntegerPointUtils.getExchangeXYIndexList(sortedHighProbabilityBorderCellIndexList));
         middleSet.add(border45);
-        middleSet.add(new IdentityPair<>(0, sizeB));
+        middleSet.add(new TwoDimensionalIntegerPoint(0, sizeB));
         middleSet.addAll(movedRightAddedCells);
-        TreeMap<Integer, TreeSet<BasicPair<Integer, Integer>>> middleMap = PairListUtils.groupByKey(middleSet);
-        for (Map.Entry<Integer, TreeSet<BasicPair<Integer, Integer>>> middleEntry : middleMap.entrySet()) {
+        TreeMap<Integer, TreeSet<TwoDimensionalIntegerPoint>> middleMap = TwoDimensionalIntegerPointUtils.groupByXIndex(middleSet);
+        for (Map.Entry<Integer, TreeSet<TwoDimensionalIntegerPoint>> middleEntry : middleMap.entrySet()) {
             tempXIndex = middleEntry.getKey();
-            tempYIndex = middleEntry.getValue().last().getValue();
+            tempYIndex = middleEntry.getValue().last().getYIndex();
             tempAddedYIndex = tempYIndex + sizeD - 1;
             for (int y = tempYIndex + 1; y <= tempAddedYIndex; y++) {
-                resultSet.add(new IdentityPair<>(tempXIndex, y));
+                resultSet.add(new TwoDimensionalIntegerPoint(tempXIndex, y));
             }
         }
         resultSet.addAll(movedRightAddedCells);
@@ -248,13 +253,13 @@ public class DiscretizedDiskSchemeTool {
      * @param yFactor
      * @return
      */
-    public static Collection<IdentityPair<Integer>> factorChangeIntegerPair(Collection<IdentityPair<Integer>> originalCollection, Integer xFactor, Integer yFactor) {
-        Collection<IdentityPair<Integer>> result = new ArrayList<>();
+    public static Collection<TwoDimensionalIntegerPoint> factorChangeIntegerPair(Collection<TwoDimensionalIntegerPoint> originalCollection, Integer xFactor, Integer yFactor) {
+        Collection<TwoDimensionalIntegerPoint> result = new ArrayList<>();
         Integer tempXIndex, tempYIndex;
-        for (IdentityPair<Integer> identityPair : originalCollection) {
-            tempXIndex = identityPair.getKey();
-            tempYIndex = identityPair.getValue();
-            result.add(new IdentityPair(tempXIndex * xFactor, tempYIndex * yFactor));
+        for (TwoDimensionalIntegerPoint twoDimensionalIntegerPoint : originalCollection) {
+            tempXIndex = twoDimensionalIntegerPoint.getXIndex();
+            tempYIndex = twoDimensionalIntegerPoint.getYIndex();
+            result.add(new TwoDimensionalIntegerPoint(tempXIndex * xFactor, tempYIndex * yFactor));
         }
         return result;
     }
@@ -263,18 +268,18 @@ public class DiscretizedDiskSchemeTool {
      * 以(0,0)为原始点，计算纯低概率部分的point集合
      * @return
      */
-    public static TreeSet<IdentityPair<Integer>> getResidualPureLowCells(List<IdentityPair<Integer>> sortedOuterCellIndexList, Integer sizeD, Integer sizeB){
+    public static TreeSet<TwoDimensionalIntegerPoint> getResidualPureLowCells(List<TwoDimensionalIntegerPoint> sortedHighProbabilityCellIndexList, Integer sizeD, Integer sizeB){
         /**
          *  1. 计算第二象限的
          *  2. 计算第四象限的
          *  3. 计算第一象限的
          */
-        TreeSet<IdentityPair<Integer>> resultSet = new TreeSet<>();
-        TreeSet<IdentityPair<Integer>> moveRightAddedCellSet = DiscretizedDiskSchemeTool.getMoveRightIncrementPureLowProbabilityCellSet(sortedOuterCellIndexList, sizeD, sizeB);
+        TreeSet<TwoDimensionalIntegerPoint> resultSet = new TreeSet<>();
+        TreeSet<TwoDimensionalIntegerPoint> moveRightAddedCellSet = DiscretizedDiskSchemeTool.getMoveRightIncrementPureLowProbabilityCellSet(sortedHighProbabilityCellIndexList, sizeD, sizeB);
 
-        Collection<IdentityPair<Integer>> fourthQuadrantAddedCells = DiscretizedDiskSchemeTool.factorChangeIntegerPair(moveRightAddedCellSet, 1, -1);
-        Collection<IdentityPair<Integer>> secondQuadrantAddedCells = DiscretizedDiskSchemeTool.factorChangeIntegerPair(PairListUtils.getExchangeKeyValuePairList(moveRightAddedCellSet), -1, 1);
-        TreeSet<IdentityPair<Integer>> firstQuadrantAddedCells = DiscretizedDiskSchemeTool.getMoveRightUpperIncrementPureLowProbabilityCellSet(sortedOuterCellIndexList, sizeD, sizeB, moveRightAddedCellSet);
+        Collection<TwoDimensionalIntegerPoint> fourthQuadrantAddedCells = DiscretizedDiskSchemeTool.factorChangeIntegerPair(moveRightAddedCellSet, 1, -1);
+        Collection<TwoDimensionalIntegerPoint> secondQuadrantAddedCells = DiscretizedDiskSchemeTool.factorChangeIntegerPair(TwoDimensionalIntegerPointUtils.getExchangeXYIndexList(moveRightAddedCellSet), -1, 1);
+        TreeSet<TwoDimensionalIntegerPoint> firstQuadrantAddedCells = DiscretizedDiskSchemeTool.getMoveRightUpperIncrementPureLowProbabilityCellSet(sortedHighProbabilityCellIndexList, sizeD, sizeB, moveRightAddedCellSet);
 
         resultSet.addAll(fourthQuadrantAddedCells);
         resultSet.addAll(secondQuadrantAddedCells);
@@ -286,13 +291,13 @@ public class DiscretizedDiskSchemeTool {
 
     /**
      * 返回所有可能的输出cell
-     * @param outerCellIndexCollection
+     * @param highProbabilityBorderCellIndexCollection
      * @param sizeD
      * @param sizeB
      * @param upperIndex45
      * @return
      */
-    public static List<TwoDimensionalIntegerPoint> getNoiseIntegerPointTypeList(Collection<IdentityPair<Integer>> outerCellIndexCollection, Integer sizeD, Integer sizeB, Integer upperIndex45) {
+    public static List<TwoDimensionalIntegerPoint> getNoiseIntegerPointTypeList(Collection<TwoDimensionalIntegerPoint> highProbabilityBorderCellIndexCollection, Integer sizeD, Integer sizeB, Integer upperIndex45) {
         TreeSet<TwoDimensionalIntegerPoint> treeSet = new TreeSet<>();
         /*
             添加原始cell的中心十字区域和其经过右移、上移sizeD个cell所覆盖的cell （含坐标方向）
@@ -326,9 +331,9 @@ public class DiscretizedDiskSchemeTool {
         }
         // 处理其他部分
         int tempX, j;
-        for (IdentityPair<Integer> tempPair : outerCellIndexCollection) {
-            j = tempPair.getValue();
-            tempX = tempPair.getKey();
+        for (TwoDimensionalIntegerPoint tempPair : highProbabilityBorderCellIndexCollection) {
+            j = tempPair.getYIndex();
+            tempX = tempPair.getXIndex();
             for (int i = j + 1; i <= tempX; i++) {
                 treeSet.add(new TwoDimensionalIntegerPoint(-i, -j));
                 treeSet.add(new TwoDimensionalIntegerPoint(-j, -i));
@@ -349,7 +354,7 @@ public class DiscretizedDiskSchemeTool {
      * @param realPoint
      * @return
      */
-    public static TreeSet<TwoDimensionalIntegerPoint> getResidualPureLowCellsByPoint(TwoDimensionalIntegerPoint realPoint, List<TwoDimensionalIntegerPoint> noiseIntegerPointTypeList, List<IdentityPair<Integer>> innerCellIndexList, List<IdentityPair<Integer>> outerCellIndexList, Integer sizeB, Integer upperIndex45) {
+    public static TreeSet<TwoDimensionalIntegerPoint> getResidualPureLowCellsByPoint(TwoDimensionalIntegerPoint realPoint, List<TwoDimensionalIntegerPoint> noiseIntegerPointTypeList, List<TwoDimensionalIntegerPoint> innerCellIndexList, List<TwoDimensionalIntegerPoint> outerCellIndexList, Integer sizeB, Integer upperIndex45) {
         Integer realPointX = realPoint.getXIndex();
         Integer realPointY = realPoint.getYIndex();
 
@@ -357,13 +362,13 @@ public class DiscretizedDiskSchemeTool {
             1. 构建集合包含：2π范围内部点，四段高概率坐标轴(含原始点)，四段高概率45轴，四部分外边界点
          */
         List<TwoDimensionalIntegerPoint> list = new ArrayList<>();
-        IdentityPair<Integer> tempPair;
+        TwoDimensionalIntegerPoint tempPair;
         Integer tempX, tempY;
         // (1) 2π范围内部点
         for (int i = 0; i < innerCellIndexList.size(); i++) {
             tempPair = innerCellIndexList.get(i);
-            tempX = tempPair.getKey();
-            tempY = tempPair.getValue();
+            tempX = tempPair.getXIndex();
+            tempY = tempPair.getYIndex();
             list.add(new TwoDimensionalIntegerPoint(realPointX+tempX, realPointY+tempY));
             list.add(new TwoDimensionalIntegerPoint(realPointX+tempY, realPointY+tempX));
             list.add(new TwoDimensionalIntegerPoint(realPointX-tempX, realPointY+tempY));
@@ -391,8 +396,8 @@ public class DiscretizedDiskSchemeTool {
         // 四部分外边界点
         for (int i = 0; i < outerCellIndexList.size(); i++) {
             tempPair = outerCellIndexList.get(i);
-            tempX = tempPair.getKey();
-            tempY = tempPair.getValue();
+            tempX = tempPair.getXIndex();
+            tempY = tempPair.getYIndex();
             list.add(new TwoDimensionalIntegerPoint(realPointX+tempX, realPointY+tempY));
             list.add(new TwoDimensionalIntegerPoint(realPointX+tempY, realPointY+tempX));
             list.add(new TwoDimensionalIntegerPoint(realPointX-tempX, realPointY+tempY));
@@ -419,15 +424,15 @@ public class DiscretizedDiskSchemeTool {
     }
 
 
-    public static ThreePartsStruct<IdentityPair<Integer>> getSplitCellsInInputArea(IdentityPair<Integer> centerCell, int sizeD, int sizeB) {
-        ThreePartsStruct<IdentityPair<Integer>> resultStruct = new ThreePartsStruct<>();
-        IdentityPair<Integer> tempInputCell, transformedCell;
+    public static ThreePartsStruct<TwoDimensionalIntegerPoint> getSplitCellsInInputArea(TwoDimensionalIntegerPoint centerCell, int sizeD, int sizeB) {
+        ThreePartsStruct<TwoDimensionalIntegerPoint> resultStruct = new ThreePartsStruct<>();
+        TwoDimensionalIntegerPoint tempInputCell, transformedCell;
         double tempShrinkAreaSize;
         for (int x = 0; x < sizeD; x++) {
             for (int y = 0; y < sizeD; y++) {
-                tempInputCell = new IdentityPair<>(x, y);
+                tempInputCell = new TwoDimensionalIntegerPoint(x, y);
                 transformedCell = DiscretizedDiskSchemeTool.transformToWithin45(centerCell, tempInputCell);
-                tempShrinkAreaSize = DiscretizedDiskSchemeTool.getShrinkAreaSize(sizeB, transformedCell.getKey(), transformedCell.getValue());
+                tempShrinkAreaSize = DiscretizedDiskSchemeTool.getShrinkAreaSize(sizeB, transformedCell.getXIndex(), transformedCell.getYIndex());
                 if (tempShrinkAreaSize >= 1.0) {
                     resultStruct.addHighProbabilityElement(tempInputCell);
                 } else if (tempShrinkAreaSize <= 0.0) {

@@ -12,7 +12,7 @@ import java.util.List;
 public class Norm1GeoILocalPrivacy extends GeoILocalPrivacy {
     private static final DistanceTor<TwoDimensionalIntegerPoint> distanceCalculator = new OneNormTwoDimensionalIntegerPointDistanceTor();
 
-    public Norm1GeoILocalPrivacy(List<TwoDimensionalIntegerPoint> originalSetList, Double[] massArray, Double epsilon, Double omega) {
-        super(originalSetList, massArray, epsilon, omega, distanceCalculator);
+    public Norm1GeoILocalPrivacy(List<TwoDimensionalIntegerPoint> originalSetList, Integer setSizeK, Double[] massArray, Double epsilon, Double omega) {
+        super(originalSetList, setSizeK, massArray, epsilon, omega, distanceCalculator);
     }
 }

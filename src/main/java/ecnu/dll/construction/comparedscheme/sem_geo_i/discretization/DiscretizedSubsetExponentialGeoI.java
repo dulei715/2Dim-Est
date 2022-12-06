@@ -102,4 +102,16 @@ public class DiscretizedSubsetExponentialGeoI {
     public Integer getSizeD() {
         return sizeD;
     }
+
+    public Double[] getMassArray() {
+        return this.subsetExponentialGeoI.getMassArray();
+    }
+
+    public Double getOmega() {
+        return this.subsetExponentialGeoI.getOmega();
+    }
+
+    public Integer getSetSizeK() {
+        return this.subsetExponentialGeoI.getSetSizeK();
+    }
 }

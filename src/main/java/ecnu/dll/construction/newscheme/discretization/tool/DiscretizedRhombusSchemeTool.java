@@ -1,9 +1,12 @@
 package ecnu.dll.construction.newscheme.discretization.tool;
 
 import cn.edu.ecnu.struct.pair.IdentityPair;
+import cn.edu.ecnu.struct.point.TwoDimensionalIntegerPoint;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 
 public class DiscretizedRhombusSchemeTool {
     /**
@@ -26,16 +29,16 @@ public class DiscretizedRhombusSchemeTool {
      * @param judgePoint
      * @return
      */
-    public static boolean isInHighProbabilityArea(IdentityPair<Integer> centerPoint, int sizeB, IdentityPair<Integer> judgePoint) {
-        return Math.abs(centerPoint.getKey() - judgePoint.getKey()) + Math.abs(centerPoint.getValue() - judgePoint.getValue()) <= sizeB ? true : false;
+    public static boolean isInHighProbabilityArea(TwoDimensionalIntegerPoint centerPoint, int sizeB, TwoDimensionalIntegerPoint judgePoint) {
+        return Math.abs(centerPoint.getXIndex() - judgePoint.getXIndex()) + Math.abs(centerPoint.getYIndex() - judgePoint.getYIndex()) <= sizeB ? true : false;
     }
 
-    public static Collection<IdentityPair<Integer>> getCrossCellCollectionWithinInputCells(IdentityPair<Integer> centerPoint, int sizeD, int sizeB) {
-        HashSet<IdentityPair<Integer>> resultSet = new HashSet<>();
-        IdentityPair<Integer> judgePoint;
+    public static Collection<TwoDimensionalIntegerPoint> getCrossCellCollectionWithinInputCells(TwoDimensionalIntegerPoint centerPoint, int sizeD, int sizeB) {
+        HashSet<TwoDimensionalIntegerPoint> resultSet = new HashSet<>();
+        TwoDimensionalIntegerPoint judgePoint;
         for (int i = 0; i < sizeD; i++) {
             for (int j = 0; j < sizeD; j++) {
-                judgePoint = new IdentityPair<>(i, j);
+                judgePoint = new TwoDimensionalIntegerPoint(i, j);
                 if (isInHighProbabilityArea(centerPoint, sizeB, judgePoint)){
                     resultSet.add(judgePoint);
                 }
@@ -43,4 +46,73 @@ public class DiscretizedRhombusSchemeTool {
         }
         return resultSet;
     }
+
+
+    public static List<TwoDimensionalIntegerPoint> getNoiseIntegerPointTypeList(Integer sizeD, Integer sizeB) {
+        Integer positiveBound = sizeD + sizeB;
+        // 记录右上边界线在x轴和y轴的截距
+        Integer positiveIntercept = sizeB + 2 * sizeD - 2;
+        // 记录左上和右下边界线分别在x轴和y轴上的截距(的绝对值)
+        Integer negativeIntercept = sizeB + sizeD - 1;
+
+        List<TwoDimensionalIntegerPoint> noiseIntegerPointTypeList = new ArrayList<>();
+        for (int i = -sizeB; i < positiveBound; i++) {
+            for (int j = -sizeB; j < positiveBound; j++) {
+                if (i + j + sizeB >= 0 && i + j - positiveIntercept <= 0 && i - j + negativeIntercept >= 0 && i - j - negativeIntercept <= 0) {
+                    noiseIntegerPointTypeList.add(new TwoDimensionalIntegerPoint(i, j));
+                }
+            }
+        }
+        return noiseIntegerPointTypeList;
+    }
+
+    public static Double[] getProbabilityPQ(Integer sizeD, Integer sizeB, Double epsilon) {
+        Integer[] constValues = new Integer[5];
+        constValues[0] = 2*sizeB*(sizeB+1)+1;
+        constValues[1] = sizeD * (sizeD + 4*sizeB) - 4*sizeB - 1;
+        constValues[2] = constValues[0] + constValues[1];
+        constValues[4] = sizeD * (1 + sizeB);
+        constValues[3] = constValues[2] - constValues[4];
+
+        Double[] result = new Double[2];
+        result[1] = 1 / (constValues[0] * Math.exp(epsilon) + constValues[1]);
+        result[0] = result[1] * Math.exp(epsilon);
+        return result;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

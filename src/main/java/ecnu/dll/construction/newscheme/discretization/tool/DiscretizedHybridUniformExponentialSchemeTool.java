@@ -20,15 +20,15 @@ public class DiscretizedHybridUniformExponentialSchemeTool {
      * @param rightB 右边界所在圆弧的半径
      */
     @Deprecated
-    public static void addCombinationProbability(TreeMap<TwoDimensionalIntegerPoint, AreaMessage> pointAreaMessageMap, List<IdentityPair<Integer>> leftOuterPointList, List<IdentityPair<Integer>
+    public static void addCombinationProbability(TreeMap<TwoDimensionalIntegerPoint, AreaMessage> pointAreaMessageMap, List<TwoDimensionalIntegerPoint> leftOuterPointList, List<TwoDimensionalIntegerPoint
             > rightOuterPointList, Integer rightB) {
         int i = 0, tempYIndex;
         int tempLeftX, tempRightX;
         double tempShrankAreaSize;
         for (; i < leftOuterPointList.size(); i++) {
             tempYIndex = i + 1;
-            tempLeftX = leftOuterPointList.get(i).getKey();
-            tempRightX = rightOuterPointList.get(i).getKey();
+            tempLeftX = leftOuterPointList.get(i).getXIndex();
+            tempRightX = rightOuterPointList.get(i).getXIndex();
             for (int j = tempLeftX + 1; j < tempRightX; j++) {
                 pointAreaMessageMap.put(new TwoDimensionalIntegerPoint(j, tempYIndex), new AreaMessage(rightB, 1.0));
             }
@@ -37,7 +37,7 @@ public class DiscretizedHybridUniformExponentialSchemeTool {
         }
     }
 
-    public static Annular getInnerAreaAnnular(List<IdentityPair<Integer>> leftOuterPointList, List<IdentityPair<Integer>> rightOuterPointList, Integer leftB, Integer rightB) {
+    public static Annular getInnerAreaAnnular(List<TwoDimensionalIntegerPoint> leftOuterPointList, List<TwoDimensionalIntegerPoint> rightOuterPointList, Integer leftB, Integer rightB) {
         int i = 0, tempYIndex;
         int tempLeftX, tempRightX;
         double tempLeftRemainAreaSize, tempRightShrankAreaSize;
@@ -45,8 +45,8 @@ public class DiscretizedHybridUniformExponentialSchemeTool {
         TreeSet<TwoDimensionalIntegerPoint> includedSet = new TreeSet<>();
         for (; i < leftOuterPointList.size(); i++) {
             tempYIndex = i + 1;
-            tempLeftX = leftOuterPointList.get(i).getKey();
-            tempRightX = rightOuterPointList.get(i).getKey();
+            tempLeftX = leftOuterPointList.get(i).getXIndex();
+            tempRightX = rightOuterPointList.get(i).getXIndex();
             tempLeftRemainAreaSize = 1 - DiscretizedDiskSchemeTool.getShrinkAreaSize(leftB,tempLeftX, tempYIndex);
             remainAreaMap.put(new TwoDimensionalIntegerPoint(tempLeftX, tempYIndex), tempLeftRemainAreaSize);
             for (int j = tempLeftX + 1; j < tempRightX; j++) {
@@ -61,7 +61,7 @@ public class DiscretizedHybridUniformExponentialSchemeTool {
         for (; i < rightOuterPointList.size(); i++) {
             tempYIndex = i + 1;
             tempLeftX = tempYIndex + 1;
-            tempRightX = rightOuterPointList.get(i).getKey();
+            tempRightX = rightOuterPointList.get(i).getXIndex();
             for (int j = tempLeftX; j < tempRightX; j++) {
                 includedSet.add(new TwoDimensionalIntegerPoint(j, tempYIndex));
             }
@@ -79,15 +79,15 @@ public class DiscretizedHybridUniformExponentialSchemeTool {
      * @param rightB
      * @return
      */
-    public static Annular get45LinearAnnular(IdentityPair<Integer> leftEdgePoint, IdentityPair<Integer> rightEdgePoint, Integer leftB, Integer rightB) {
+    public static Annular get45LinearAnnular(TwoDimensionalIntegerPoint leftEdgePoint, TwoDimensionalIntegerPoint rightEdgePoint, Integer leftB, Integer rightB) {
         int i = 0, tempYIndex;
         int tempLeftX, tempRightX;
         double tempLeftRemainAreaSize, tempRightShrankAreaSize;
         TreeMap<TwoDimensionalIntegerPoint, Double> remainAreaMap = new TreeMap<>(), partAreaMap = new TreeMap<>();
         TreeSet<TwoDimensionalIntegerPoint> includedSet = new TreeSet<>();
         // todo: 45方向的annular
-        tempLeftX = leftEdgePoint.getKey();
-        tempRightX = rightEdgePoint.getKey();
+        tempLeftX = leftEdgePoint.getXIndex();
+        tempRightX = rightEdgePoint.getXIndex();
         tempLeftRemainAreaSize = 1 - DiscretizedDiskSchemeTool.get45EdgeIndexSplitArea(leftB);
         remainAreaMap.put(new TwoDimensionalIntegerPoint(tempLeftX, tempLeftX), tempLeftRemainAreaSize);
         for (int j = tempLeftX + 1; j < tempRightX; j++) {

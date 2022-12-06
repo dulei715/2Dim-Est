@@ -59,22 +59,12 @@ public class DiscretizedRhombusScheme extends AbstractDiscretizedScheme {
         return DiscretizedRhombusSchemeTool.getOptimalSizeBOfRhombusScheme(this.epsilon, this.sizeD);
     }
 
+
+
+
     @Override
     public void setNoiseIntegerPointTypeList() {
-        Integer positiveBound = this.sizeD + this.sizeB;
-        // 记录右上边界线在x轴和y轴的截距
-        Integer positiveIntercept = this.sizeB + 2 * this.sizeD - 2;
-        // 记录左上和右下边界线分别在x轴和y轴上的截距(的绝对值)
-        Integer negativeIntercept = this.sizeB + this.sizeD - 1;
-
-        this.noiseIntegerPointTypeList = new ArrayList<>();
-        for (int i = -this.sizeB; i < positiveBound; i++) {
-            for (int j = -this.sizeB; j < positiveBound; j++) {
-                if (i + j + this.sizeB >= 0 && i + j - positiveIntercept <= 0 && i - j + negativeIntercept >= 0 && i - j - negativeIntercept <= 0) {
-                    this.noiseIntegerPointTypeList.add(new TwoDimensionalIntegerPoint(i, j));
-                }
-            }
-        }
+        this.noiseIntegerPointTypeList = DiscretizedRhombusSchemeTool.getNoiseIntegerPointTypeList(this.sizeD, this.sizeB);
     }
 
     @Override

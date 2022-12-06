@@ -2,6 +2,7 @@ package ecnu.dll.construction.analysis.abstract_class;
 
 import cn.edu.ecnu.differential_privacy.cdp.basic_struct.DistanceTor;
 import cn.edu.ecnu.struct.pair.IdentityPair;
+import cn.edu.ecnu.struct.point.TwoDimensionalIntegerPoint;
 import ecnu.dll.construction.analysis.basic.TransformLocalPrivacy;
 import ecnu.dll.construction.analysis.tools.CellDistanceTool;
 import ecnu.dll.construction.newscheme.discretization.tool.DiscretizedRhombusSchemeTool;
@@ -11,7 +12,7 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 
-public abstract class RAMLocalPrivacy extends TransformLocalPrivacy<IdentityPair<Integer>, IdentityPair<Integer>> {
+public abstract class RAMLocalPrivacy extends TransformLocalPrivacy<TwoDimensionalIntegerPoint, TwoDimensionalIntegerPoint> {
 
     protected Integer sizeD = null;
 
@@ -20,15 +21,15 @@ public abstract class RAMLocalPrivacy extends TransformLocalPrivacy<IdentityPair
     protected Double probabilityQ;
 
     protected Double probabilityP;
-    protected DistanceTor<IdentityPair<Integer>> distanceCalculator = null;
+    protected DistanceTor<TwoDimensionalIntegerPoint> distanceCalculator = null;
 
     /**
      * 用于降低 getTotalProbabilityGivenIntermediateElement 和 getPairWeightedDistance 两个函数的重复部分
      */
-    private IdentityPair<Integer> tempIntermediateCell = null;
-    private Collection<IdentityPair<Integer>> tempCrossCellCollection = null;
+    private TwoDimensionalIntegerPoint tempIntermediateCell = null;
+    private Collection<TwoDimensionalIntegerPoint> tempCrossCellCollection = null;
 
-    public RAMLocalPrivacy(List<IdentityPair<Integer>> originalSetList, List<IdentityPair<Integer>> intermediateSetList, Integer sizeB, DistanceTor<IdentityPair<Integer>> distanceCalculator, Double probabilityP, Double probabilityQ) {
+    public RAMLocalPrivacy(List<TwoDimensionalIntegerPoint> originalSetList, List<TwoDimensionalIntegerPoint> intermediateSetList, Integer sizeB, DistanceTor<TwoDimensionalIntegerPoint> distanceCalculator, Double probabilityP, Double probabilityQ) {
         super(originalSetList, intermediateSetList);
         this.sizeD = originalSetList.size();
         this.sizeB = sizeB;
@@ -45,22 +46,22 @@ public abstract class RAMLocalPrivacy extends TransformLocalPrivacy<IdentityPair
         return sizeB;
     }
 
-    public DistanceTor<IdentityPair<Integer>> getDistanceCalculator() {
+    public DistanceTor<TwoDimensionalIntegerPoint> getDistanceCalculator() {
         return distanceCalculator;
     }
 
-    public void setDistanceCalculator(DistanceTor<IdentityPair<Integer>> distanceCalculator) {
+    public void setDistanceCalculator(DistanceTor<TwoDimensionalIntegerPoint> distanceCalculator) {
         this.distanceCalculator = distanceCalculator;
     }
 
-    public void resetBasicInfo(List<IdentityPair<Integer>> originalSetList, List<IdentityPair<Integer>> intermediateSetList, Integer sizeB) {
+    public void resetBasicInfo(List<TwoDimensionalIntegerPoint> originalSetList, List<TwoDimensionalIntegerPoint> intermediateSetList, Integer sizeB) {
         super.originalSetList = originalSetList;
         super.intermediateSetList = intermediateSetList;
         this.sizeD = originalSetList.size();
         this.sizeB = sizeB;
     }
 
-    public void setTempCrossCellCollection(IdentityPair<Integer> intermediateCell) {
+    public void setTempCrossCellCollection(TwoDimensionalIntegerPoint intermediateCell) {
         if (intermediateCell == null || intermediateCell.equals(this.tempIntermediateCell)) {
             return;
         }
@@ -78,7 +79,7 @@ public abstract class RAMLocalPrivacy extends TransformLocalPrivacy<IdentityPair
      * @return
      */
     @Override
-    protected double getTotalProbabilityGivenIntermediateElement(IdentityPair<Integer> intermediateElement) {
+    protected double getTotalProbabilityGivenIntermediateElement(TwoDimensionalIntegerPoint intermediateElement) {
         double totalProbability = 0;
         int[] partSizeArray = new int[2];
 
@@ -95,7 +96,7 @@ public abstract class RAMLocalPrivacy extends TransformLocalPrivacy<IdentityPair
      * @return
      */
     @Override
-    protected double getPairWeightedDistance(IdentityPair<Integer> intermediateElement) {
+    protected double getPairWeightedDistance(TwoDimensionalIntegerPoint intermediateElement) {
         double pairWeightedDistance = 0;
         double totalDistance = this.getSquareDistance();
         double[] partDistanceArray = new double[3];
@@ -114,7 +115,7 @@ public abstract class RAMLocalPrivacy extends TransformLocalPrivacy<IdentityPair
     }
 
 //    @Override
-//    protected List<IdentityPair<Integer>> generateIntermediateSetList() {
+//    protected List<TwoDimensionalIntegerPoint> generateIntermediateSetList() {
 //        return null;
 //    }
 }

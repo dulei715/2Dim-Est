@@ -65,6 +65,10 @@ public class SubsetExponentialGeoI<X> {
         return massArray;
     }
 
+    public Integer getSetSizeK() {
+        return setSizeK;
+    }
+
     private int getDissetElementListLength(int xIndex, int yIndex) {
         List<Integer> tempList = this.disset[xIndex][yIndex];
         if (tempList == null) {

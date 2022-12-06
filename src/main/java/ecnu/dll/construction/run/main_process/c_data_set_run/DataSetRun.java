@@ -35,7 +35,7 @@ public class DataSetRun {
         List<TwoDimensionalDoublePoint> doublePointList = pointRead.getPointList();
 
         List<TwoDimensionalIntegerPoint> integerPointList = Grid.toIntegerPoint(doublePointList, new Double[]{xBound, yBound}, inputSideLength);
-        List<TwoDimensionalIntegerPoint> integerPointTypeList = DiscretizedSchemeTool.getRawIntegerPointTypeList((int) Math.ceil(Constant.DEFAULT_SIDE_LENGTH_NUMBER_SIZE));
+        List<TwoDimensionalIntegerPoint> integerPointTypeList = DiscretizedSchemeTool.getRawTwoDimensionalIntegerPointTypeList((int) Math.ceil(Constant.DEFAULT_SIDE_LENGTH_NUMBER_SIZE));
         TreeMap<TwoDimensionalIntegerPoint, Double> rawStatisticMap = StatisticTool.countHistogramRatioMap(integerPointTypeList, integerPointList);
 
         Map<String, List<ExperimentResult>> alteringBResult = AlterParameterBRun.run(integerPointList, inputSideLength, rawStatisticMap, xBound, yBound);
@@ -72,7 +72,7 @@ public class DataSetRun {
         List<TwoDimensionalDoublePoint> doublePointList = pointRead.getPointList();
 
         List<TwoDimensionalIntegerPoint> integerPointList = Grid.toIntegerPoint(doublePointList, new Double[]{xBound, yBound}, inputSideLength);
-        List<TwoDimensionalIntegerPoint> integerPointTypeList = DiscretizedSchemeTool.getRawIntegerPointTypeList((int) Math.ceil(Constant.DEFAULT_SIDE_LENGTH_NUMBER_SIZE));
+        List<TwoDimensionalIntegerPoint> integerPointTypeList = DiscretizedSchemeTool.getRawTwoDimensionalIntegerPointTypeList((int) Math.ceil(Constant.DEFAULT_SIDE_LENGTH_NUMBER_SIZE));
         TreeMap<TwoDimensionalIntegerPoint, Double> rawStatisticMap = StatisticTool.countHistogramRatioMap(integerPointTypeList, integerPointList);
 
         String outputFileName;

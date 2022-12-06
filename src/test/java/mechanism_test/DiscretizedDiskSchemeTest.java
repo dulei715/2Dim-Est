@@ -9,7 +9,6 @@ import cn.edu.ecnu.struct.point.TwoDimensionalDoublePoint;
 import cn.edu.ecnu.struct.point.TwoDimensionalIntegerPoint;
 import ecnu.dll.construction._config.Constant;
 import ecnu.dll.construction.newscheme.discretization.DiscretizedDiskScheme;
-import ecnu.dll.construction.newscheme.discretization.DiscretizedHybridUniformExponentialScheme;
 import ecnu.dll.construction.newscheme.discretization.tool.DiscretizedDiskSchemeTool;
 import org.junit.Test;
 
@@ -32,10 +31,10 @@ public class DiscretizedDiskSchemeTest {
 
 
 //        DiscretizedDiskScheme discretizedDiskScheme = new DiscretizedDiskScheme(epsilon, gridLength, constB, inputLength, kParameter, xLeft, yLeft);
-        Integer index45 = DiscretizedDiskSchemeTool.calculate45EdgeIndex(sizeB).getKey();
-        List<IdentityPair<Integer>> outerCellIndexList = DiscretizedDiskSchemeTool.calculateOuterCellIndexList(sizeB);
+        Integer index45 = DiscretizedDiskSchemeTool.calculate45EdgeIndex(sizeB).getXIndex();
+        List<TwoDimensionalIntegerPoint> outerCellIndexList = DiscretizedDiskSchemeTool.calculateHighProbabilityBorderCellIndexList(sizeB);
         List<TwoDimensionalIntegerPoint> noiseIntegerPointTypeList = DiscretizedDiskSchemeTool.getNoiseIntegerPointTypeList(outerCellIndexList, sizeD, sizeB, index45);
-        List<IdentityPair<Integer>> innerCellList = DiscretizedDiskSchemeTool.getInnerCell(outerCellIndexList);
+        List<TwoDimensionalIntegerPoint> innerCellList = DiscretizedDiskSchemeTool.getInnerCell(outerCellIndexList);
         TreeSet<TwoDimensionalIntegerPoint> residualSet = DiscretizedDiskSchemeTool.getResidualPureLowCellsByPoint(new TwoDimensionalIntegerPoint(0, 0), noiseIntegerPointTypeList, innerCellList, outerCellIndexList, sizeB, index45);
         MyPrint.showCollection(residualSet);
     }

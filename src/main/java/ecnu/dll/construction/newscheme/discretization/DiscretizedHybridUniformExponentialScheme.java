@@ -23,8 +23,8 @@ public class DiscretizedHybridUniformExponentialScheme extends AbstractDiscretiz
     private List<Double> index45PrimeList = null;
 
     private Integer upperIndex45;
-    private List<IdentityPair<Integer>> innerCellIndexList = null;
-    private List<IdentityPair<Integer>> outerCellIndexList = null;
+    private List<TwoDimensionalIntegerPoint> innerCellIndexList = null;
+    private List<TwoDimensionalIntegerPoint> outerCellIndexList = null;
     private List<Double> outerCellAreaSizeList = null;
     /**
      * 记录每个annular的面积权重，按照距离指数衰减
@@ -185,14 +185,14 @@ public class DiscretizedHybridUniformExponentialScheme extends AbstractDiscretiz
         Annular areaAnnular = null, lineAnnular;
         TreeMap<TwoDimensionalIntegerPoint, Double> tempTreeMap;
         int tempB = 1;
-        List<IdentityPair<Integer>> leftAreaOuterPointList, rightAreaOuterPointList;
-        IdentityPair<Integer> leftLineOuterPoint, rightLineOuterPoint;
+        List<TwoDimensionalIntegerPoint> leftAreaOuterPointList, rightAreaOuterPointList;
+        TwoDimensionalIntegerPoint leftLineOuterPoint, rightLineOuterPoint;
         leftAreaOuterPointList = new ArrayList<>();
         leftLineOuterPoint = DiscretizedDiskSchemeTool.calculate45EdgeIndex(tempB);
 //        this.setAnnularLineListElement(tempB, Annular.getDefaultLineAnnular());
         this.annularLineList.add(Annular.getDefaultLineAnnular());
         for (tempB = 2; tempB <= this.sizeB; tempB++) {
-            rightAreaOuterPointList = DiscretizedDiskSchemeTool.calculateOuterCellIndexList(tempB);
+            rightAreaOuterPointList = DiscretizedDiskSchemeTool.calculateHighProbabilityBorderCellIndexList(tempB);
             areaAnnular = DiscretizedHybridUniformExponentialSchemeTool.getInnerAreaAnnular(leftAreaOuterPointList, rightAreaOuterPointList, tempB - 1, tempB);
 //            this.setAnnularAreaListElement(tempB, areaAnnular);
             this.annularAreaList.add(areaAnnular);
@@ -208,9 +208,9 @@ public class DiscretizedHybridUniformExponentialScheme extends AbstractDiscretiz
         if (areaAnnular != null) {
             tempTreeMap = areaAnnular.getPartAreaMap();
             this.outerCellAreaSizeList = new ArrayList<>(this.outerCellIndexList.size());
-            for (IdentityPair<Integer> pointPair : this.outerCellIndexList) {
+            for (TwoDimensionalIntegerPoint pointPair : this.outerCellIndexList) {
 
-                this.outerCellAreaSizeList.add(tempTreeMap.get(new TwoDimensionalIntegerPoint(pointPair)));
+                this.outerCellAreaSizeList.add(tempTreeMap.get(pointPair));
             }
         }
     }
@@ -317,7 +317,7 @@ public class DiscretizedHybridUniformExponentialScheme extends AbstractDiscretiz
     @Override
     public void setNoiseIntegerPointTypeList() {
         Set<TwoDimensionalIntegerPoint> outerCellIndexSet;
-        Collection<IdentityPair<Integer>> outerCellIndexCollection;
+        Collection<TwoDimensionalIntegerPoint> outerCellIndexCollection;
         Integer upperIndex45;
 //        Integer upperIndex45 = this.getLastAnnularLineListElement().getPartAreaMap().lastKey().getXIndex();
         TreeMap<TwoDimensionalIntegerPoint, Double> tempMap = this.getLastAnnularLineListElement().getPartAreaMap();
@@ -332,8 +332,8 @@ public class DiscretizedHybridUniformExponentialScheme extends AbstractDiscretiz
             return;
         }
         outerCellIndexSet = this.getLastAnnularAreaListElement().getPartAreaMap().keySet();
-        outerCellIndexCollection = TwoDimensionalIntegerPoint.toIdentityPair(outerCellIndexSet);
-        this.noiseIntegerPointTypeList = DiscretizedDiskSchemeTool.getNoiseIntegerPointTypeList(outerCellIndexCollection, this.sizeD, this.sizeB, upperIndex45);
+//        outerCellIndexCollection = TwoDimensionalIntegerPoint.toIdentityPair(outerCellIndexSet);
+        this.noiseIntegerPointTypeList = DiscretizedDiskSchemeTool.getNoiseIntegerPointTypeList(outerCellIndexSet, this.sizeD, this.sizeB, upperIndex45);
     }
 
     @Override
@@ -392,7 +392,7 @@ public class DiscretizedHybridUniformExponentialScheme extends AbstractDiscretiz
         if (randomA < splitPointA) {
             // 纯低概率部分
             Integer randomIndex = null, judge45 = null;
-            IdentityPair<Integer> chosenPair = null;
+            TwoDimensionalIntegerPoint chosenPair = null;
             tempIndex = RandomUtil.getRandomIndexGivenCumulativeCountPoint(this.lowSplitPartArray);
             switch (tempIndex) {
                 // 随机返回外部节点
@@ -419,8 +419,8 @@ public class DiscretizedHybridUniformExponentialScheme extends AbstractDiscretiz
                     Double[] residualOuterAreaSizeArray = BasicArray.getLinearTransform(this.outerCellAreaSizeList, -1, 1);
                     randomIndex = RandomUtil.getRandomIndexGivenCountPoint(residualOuterAreaSizeArray);
                     chosenPair = this.outerCellIndexList.get(randomIndex);
-                    tempX = chosenPair.getKey();
-                    tempY = chosenPair.getValue();
+                    tempX = chosenPair.getXIndex();
+                    tempY = chosenPair.getYIndex();
                     judge45 = RandomUtil.getRandomInteger(0, 1);
                     if (judge45 == 1) {
                         shiftIndex = tempX;

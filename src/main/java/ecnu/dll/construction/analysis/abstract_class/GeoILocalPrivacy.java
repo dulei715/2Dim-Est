@@ -42,13 +42,14 @@ public abstract class GeoILocalPrivacy extends TransformLocalPrivacy<TwoDimensio
         }
     }
 
-    public GeoILocalPrivacy(List<TwoDimensionalIntegerPoint> originalSetList, Double[] massArray, Double epsilon, Double omega, DistanceTor<TwoDimensionalIntegerPoint> distanceTor) {
+    public GeoILocalPrivacy(List<TwoDimensionalIntegerPoint> originalSetList, Integer setSizeK, Double[] massArray, Double epsilon, Double omega, DistanceTor<TwoDimensionalIntegerPoint> distanceTor) {
         super(originalSetList, null);
+        this.setSizeK = setSizeK;
         this.massArray = massArray;
         this.radix = Math.exp(-epsilon);
         this.omega = omega;
         this.distanceCalculator = distanceTor;
-        this.intermediateIndexSetList = SetUtils.getSubsetList(this.originalSetList.size(), setSizeK, 0);
+        this.intermediateIndexSetList = SetUtils.getSubsetList(this.originalSetList.size(), this.setSizeK, 0);
         this.intermediateIndexSetList.add(new ArrayList<>());
         // 这里的intermediateSetList是中间元素的索引的索引，而非中间元素
         this.intermediateSetList = BasicArray.getIncreaseIntegerNumberList(0, 1, this.intermediateIndexSetList.size() - 1);
