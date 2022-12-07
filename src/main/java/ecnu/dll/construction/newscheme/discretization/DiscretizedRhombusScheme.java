@@ -41,6 +41,14 @@ public class DiscretizedRhombusScheme extends AbstractDiscretizedScheme {
         this.setTransformMatrix();
     }
 
+    public void resetEpsilon(Double epsilon) {
+        this.epsilon = epsilon;
+        this.setConstPQ();
+        this.setRawIntegerPointTypeList();
+        this.setNoiseIntegerPointTypeList();
+        this.setTransformMatrix();
+    }
+
     @Override
     protected void setConstPQ() {
         this.constValues = new Integer[5];

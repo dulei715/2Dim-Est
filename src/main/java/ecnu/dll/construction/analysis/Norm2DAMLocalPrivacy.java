@@ -14,10 +14,10 @@ import java.util.List;
 public class Norm2DAMLocalPrivacy extends DAMLocalPrivacy {
 
 
-    private static final DistanceTor<TwoDimensionalIntegerPoint> distanceCalculator = new TwoNormTwoDimensionalIntegerPointDistanceTor();
+    private static final DistanceTor<TwoDimensionalIntegerPoint> norm2DistanceCalculator = new TwoNormTwoDimensionalIntegerPointDistanceTor();
 
     public Norm2DAMLocalPrivacy(List<TwoDimensionalIntegerPoint> originalSetList, List<TwoDimensionalIntegerPoint> intermediateSetList, Integer sizeB, Double probabilityP, Double probabilityQ) {
-        super(originalSetList, intermediateSetList, sizeB, distanceCalculator, probabilityP, probabilityQ);
+        super(originalSetList, intermediateSetList, sizeB, norm2DistanceCalculator, probabilityP, probabilityQ);
     }
 
 }

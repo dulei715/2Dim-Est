@@ -12,10 +12,10 @@ import java.util.List;
 public class Norm1RAMLocalPrivacy extends RAMLocalPrivacy {
 
 
-    private static final DistanceTor<TwoDimensionalIntegerPoint> distanceCalculator = new OneNormTwoDimensionalIntegerPointDistanceTor();
+    private static final DistanceTor<TwoDimensionalIntegerPoint> norm1DistanceCalculator = new OneNormTwoDimensionalIntegerPointDistanceTor();
 
     public Norm1RAMLocalPrivacy(List<TwoDimensionalIntegerPoint> originalSetList, List<TwoDimensionalIntegerPoint> intermediateSetList, Integer sizeB, Double probabilityP, Double probabilityQ) {
-        super(originalSetList, intermediateSetList, sizeB, distanceCalculator, probabilityP, probabilityQ);
+        super(originalSetList, intermediateSetList, sizeB, norm1DistanceCalculator, probabilityP, probabilityQ);
     }
 
 

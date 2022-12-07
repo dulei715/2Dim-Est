@@ -69,6 +69,15 @@ public class DiscretizedDiskScheme extends AbstractDiscretizedScheme {
         this.setTransformMatrix();
     }
 
+    public void resetEpsilon(Double epsilon) {
+        this.epsilon = epsilon;
+        this.setConstPQ();
+        this.setRawIntegerPointTypeList();
+        this.setNoiseIntegerPointTypeList();
+        this.setTransformMatrix();
+    }
+
+
     public DiscretizedDiskScheme(Double epsilon, Double gridLength, Double inputLength, Double kParameter, Double xLeft, Double yLeft) {
         super(epsilon, gridLength, inputLength, kParameter, xLeft, yLeft);
 //        this.setIndex45();
