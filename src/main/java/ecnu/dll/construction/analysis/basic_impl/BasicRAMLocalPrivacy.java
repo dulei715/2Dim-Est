@@ -8,8 +8,8 @@ import ecnu.dll.construction.analysis.tools.CellDistanceTool;
 import java.util.List;
 
 public class BasicRAMLocalPrivacy extends RAMLocalPrivacy {
-    public BasicRAMLocalPrivacy(List<TwoDimensionalIntegerPoint> originalSetList, List<TwoDimensionalIntegerPoint> intermediateSetList, Integer sizeB, DistanceTor<TwoDimensionalIntegerPoint> distanceCalculator, Double probabilityP, Double probabilityQ) {
-        super(originalSetList, intermediateSetList, sizeB, distanceCalculator, probabilityP, probabilityQ);
+    public BasicRAMLocalPrivacy(List<TwoDimensionalIntegerPoint> originalSetList, Integer sizeD, List<TwoDimensionalIntegerPoint> intermediateSetList, Integer sizeB, DistanceTor<TwoDimensionalIntegerPoint> distanceCalculator, Double probabilityP, Double probabilityQ) {
+        super(originalSetList, sizeD, intermediateSetList, sizeB, distanceCalculator, probabilityP, probabilityQ);
     }
 
     @Override

@@ -9,8 +9,8 @@ import ecnu.dll.construction.analysis.tools.CellDistanceTool;
 import java.util.List;
 
 public class BasicDAMLocalPrivacy extends DAMLocalPrivacy {
-    public BasicDAMLocalPrivacy(List<TwoDimensionalIntegerPoint> originalSetList, List<TwoDimensionalIntegerPoint> intermediateSetList, Integer sizeB, DistanceTor<TwoDimensionalIntegerPoint> distanceCalculator, Double probabilityP, Double probabilityQ) {
-        super(originalSetList, intermediateSetList, sizeB, distanceCalculator, probabilityP, probabilityQ);
+    public BasicDAMLocalPrivacy(List<TwoDimensionalIntegerPoint> originalSetList, Integer sizeD, List<TwoDimensionalIntegerPoint> intermediateSetList, Integer sizeB, DistanceTor<TwoDimensionalIntegerPoint> distanceCalculator, Double probabilityP, Double probabilityQ) {
+        super(originalSetList, sizeD, intermediateSetList, sizeB, distanceCalculator, probabilityP, probabilityQ);
     }
 
 }

@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class GeoILocalPrivacy extends TransformLocalPrivacy<TwoDimensionalIntegerPoint, Integer> {
-    protected Integer sizeD = null;
+//    protected Integer sizeD = null;
 
     protected Integer setSizeK = null;
 

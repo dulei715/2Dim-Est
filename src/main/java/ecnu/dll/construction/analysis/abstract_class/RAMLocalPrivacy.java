@@ -29,9 +29,9 @@ public abstract class RAMLocalPrivacy extends TransformLocalPrivacy<TwoDimension
     private TwoDimensionalIntegerPoint tempIntermediateCell = null;
     private Collection<TwoDimensionalIntegerPoint> tempCrossCellCollection = null;
 
-    public RAMLocalPrivacy(List<TwoDimensionalIntegerPoint> originalSetList, List<TwoDimensionalIntegerPoint> intermediateSetList, Integer sizeB, DistanceTor<TwoDimensionalIntegerPoint> distanceCalculator, Double probabilityP, Double probabilityQ) {
+    public RAMLocalPrivacy(List<TwoDimensionalIntegerPoint> originalSetList, Integer sizeD, List<TwoDimensionalIntegerPoint> intermediateSetList, Integer sizeB, DistanceTor<TwoDimensionalIntegerPoint> distanceCalculator, Double probabilityP, Double probabilityQ) {
         super(originalSetList, intermediateSetList);
-        this.sizeD = originalSetList.size();
+        this.sizeD = sizeD;
         this.sizeB = sizeB;
         this.distanceCalculator = distanceCalculator;
         this.probabilityP = probabilityP;

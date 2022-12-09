@@ -31,9 +31,9 @@ public abstract class DAMLocalPrivacy extends TransformLocalPrivacy<TwoDimension
 
 
 
-    public DAMLocalPrivacy(List<TwoDimensionalIntegerPoint> originalSetList, List<TwoDimensionalIntegerPoint> intermediateSetList, Integer sizeB, DistanceTor<TwoDimensionalIntegerPoint> distanceCalculator, Double probabilityP, Double probabilityQ) {
+    public DAMLocalPrivacy(List<TwoDimensionalIntegerPoint> originalSetList, Integer sizeD, List<TwoDimensionalIntegerPoint> intermediateSetList, Integer sizeB, DistanceTor<TwoDimensionalIntegerPoint> distanceCalculator, Double probabilityP, Double probabilityQ) {
         super(originalSetList, intermediateSetList);
-        this.sizeD = originalSetList.size();
+        this.sizeD = sizeD;
         this.sizeB = sizeB;
         this.distanceCalculator = distanceCalculator;
         this.probabilityP = probabilityP;

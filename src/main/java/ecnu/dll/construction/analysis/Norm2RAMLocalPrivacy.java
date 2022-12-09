@@ -13,8 +13,8 @@ public class Norm2RAMLocalPrivacy extends RAMLocalPrivacy {
 
     private static final DistanceTor<TwoDimensionalIntegerPoint> norm2DistanceCalculator = new TwoNormTwoDimensionalIntegerPointDistanceTor();
 
-    public Norm2RAMLocalPrivacy(List<TwoDimensionalIntegerPoint> originalSetList, List<TwoDimensionalIntegerPoint> intermediateSetList, Integer sizeB, Double probabilityP, Double probabilityQ) {
-        super(originalSetList, intermediateSetList, sizeB, Norm2RAMLocalPrivacy.norm2DistanceCalculator, probabilityP, probabilityQ);
+    public Norm2RAMLocalPrivacy(List<TwoDimensionalIntegerPoint> originalSetList, Integer sizeD, List<TwoDimensionalIntegerPoint> intermediateSetList, Integer sizeB, Double probabilityP, Double probabilityQ) {
+        super(originalSetList, sizeD, intermediateSetList, sizeB, Norm2RAMLocalPrivacy.norm2DistanceCalculator, probabilityP, probabilityQ);
     }
 
 

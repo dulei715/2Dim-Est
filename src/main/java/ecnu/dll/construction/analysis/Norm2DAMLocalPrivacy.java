@@ -16,8 +16,8 @@ public class Norm2DAMLocalPrivacy extends DAMLocalPrivacy {
 
     private static final DistanceTor<TwoDimensionalIntegerPoint> norm2DistanceCalculator = new TwoNormTwoDimensionalIntegerPointDistanceTor();
 
-    public Norm2DAMLocalPrivacy(List<TwoDimensionalIntegerPoint> originalSetList, List<TwoDimensionalIntegerPoint> intermediateSetList, Integer sizeB, Double probabilityP, Double probabilityQ) {
-        super(originalSetList, intermediateSetList, sizeB, norm2DistanceCalculator, probabilityP, probabilityQ);
+    public Norm2DAMLocalPrivacy(List<TwoDimensionalIntegerPoint> originalSetList, Integer sizeD, List<TwoDimensionalIntegerPoint> intermediateSetList, Integer sizeB, Double probabilityP, Double probabilityQ) {
+        super(originalSetList, sizeD, intermediateSetList, sizeB, norm2DistanceCalculator, probabilityP, probabilityQ);
     }
 
 }
