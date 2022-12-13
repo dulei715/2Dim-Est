@@ -1,15 +1,13 @@
-package ecnu.dll.construction.analysis.abstract_class;
+package ecnu.dll.construction.analysis.e_to_lp.abstract_class;
 
 import cn.edu.ecnu.differential_privacy.cdp.basic_struct.DistanceTor;
-import cn.edu.ecnu.struct.pair.IdentityPair;
 import cn.edu.ecnu.struct.point.TwoDimensionalIntegerPoint;
-import ecnu.dll.construction.analysis.basic.TransformLocalPrivacy;
-import ecnu.dll.construction.analysis.tools.CellDistanceTool;
+import ecnu.dll.construction.analysis.e_to_lp.basic.TransformLocalPrivacy;
+import ecnu.dll.construction.analysis.e_to_lp.tools.CellDistanceTool;
 import ecnu.dll.construction.newscheme.discretization.tool.DiscretizedRhombusSchemeTool;
 import org.apache.commons.collections.CollectionUtils;
 
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.List;
 
 public abstract class RAMLocalPrivacy extends TransformLocalPrivacy<TwoDimensionalIntegerPoint, TwoDimensionalIntegerPoint> {

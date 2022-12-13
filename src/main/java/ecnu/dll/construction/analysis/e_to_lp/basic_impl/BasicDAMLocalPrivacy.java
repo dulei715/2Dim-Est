@@ -1,10 +1,8 @@
-package ecnu.dll.construction.analysis.basic_impl;
+package ecnu.dll.construction.analysis.e_to_lp.basic_impl;
 
 import cn.edu.ecnu.differential_privacy.cdp.basic_struct.DistanceTor;
 import cn.edu.ecnu.struct.point.TwoDimensionalIntegerPoint;
-import ecnu.dll.construction.analysis.abstract_class.DAMLocalPrivacy;
-import ecnu.dll.construction.analysis.abstract_class.RAMLocalPrivacy;
-import ecnu.dll.construction.analysis.tools.CellDistanceTool;
+import ecnu.dll.construction.analysis.e_to_lp.abstract_class.DAMLocalPrivacy;
 
 import java.util.List;
 

@@ -1,7 +1,6 @@
-package ecnu.dll.construction.analysis.tools;
+package ecnu.dll.construction.analysis.e_to_lp.tools;
 
 import cn.edu.ecnu.differential_privacy.cdp.basic_struct.DistanceTor;
-import cn.edu.ecnu.struct.pair.IdentityPair;
 import cn.edu.ecnu.struct.point.TwoDimensionalIntegerPoint;
 
 import java.util.ArrayList;

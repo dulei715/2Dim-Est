@@ -1,11 +1,11 @@
-package ecnu.dll.construction.analysis.abstract_class;
+package ecnu.dll.construction.analysis.e_to_lp.abstract_class;
 
 import cn.edu.ecnu.basic.BasicArray;
 import cn.edu.ecnu.collection.ListUtils;
 import cn.edu.ecnu.collection.SetUtils;
 import cn.edu.ecnu.differential_privacy.cdp.basic_struct.DistanceTor;
 import cn.edu.ecnu.struct.point.TwoDimensionalIntegerPoint;
-import ecnu.dll.construction.analysis.basic.TransformLocalPrivacy;
+import ecnu.dll.construction.analysis.e_to_lp.basic.TransformLocalPrivacy;
 
 import java.util.ArrayList;
 import java.util.List;

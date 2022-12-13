@@ -1,6 +1,4 @@
-package ecnu.dll.construction.analysis.basic;
-
-import cn.edu.ecnu.differential_privacy.cdp.basic_struct.DistanceTor;
+package ecnu.dll.construction.analysis.e_to_lp.basic;
 
 import java.util.List;
 
