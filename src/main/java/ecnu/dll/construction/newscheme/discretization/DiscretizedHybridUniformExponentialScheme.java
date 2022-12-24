@@ -82,6 +82,17 @@ public class DiscretizedHybridUniformExponentialScheme extends AbstractDiscretiz
         this.initialize();
     }
 
+    /**
+     *
+     * @param epsilon
+     * @param whetherResetSizeB 这个参数没用
+     */
+    @Override
+    protected void resetEpsilon(Double epsilon, boolean whetherResetSizeB) {
+        this.epsilon = epsilon;
+        this.initialize();
+    }
+
 
     public void setAnnularAreaListElement(Integer sizeB, Annular element) {
         this.annularAreaList.set(sizeB - 2, element);

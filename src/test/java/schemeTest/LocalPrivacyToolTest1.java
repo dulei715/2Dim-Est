@@ -13,7 +13,7 @@ import org.junit.Test;
 
 import java.util.List;
 
-public class LPTest {
+public class LocalPrivacyToolTest1 {
     @Test
     public void fun1() throws InstantiationException, IllegalAccessException {
 

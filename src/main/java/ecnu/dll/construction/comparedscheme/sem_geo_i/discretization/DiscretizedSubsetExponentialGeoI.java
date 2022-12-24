@@ -41,6 +41,11 @@ public class DiscretizedSubsetExponentialGeoI {
         this.subsetExponentialGeoI = new SubsetExponentialGeoI<>(this.epsilon, this.sortedInputPointList, this.distanceTor);
     }
 
+    public void resetEpsilon(Double epsilon) {
+        this.epsilon = epsilon;
+        this.subsetExponentialGeoI.resetEpsilon(epsilon);
+    }
+
     /**
      * 专门针对矩形区域的输入，排列根据x坐标大小结合y坐标大小
      * @param point
@@ -113,5 +118,9 @@ public class DiscretizedSubsetExponentialGeoI {
 
     public Integer getSetSizeK() {
         return this.subsetExponentialGeoI.getSetSizeK();
+    }
+
+    public Double getEpsilon() {
+        return epsilon;
     }
 }

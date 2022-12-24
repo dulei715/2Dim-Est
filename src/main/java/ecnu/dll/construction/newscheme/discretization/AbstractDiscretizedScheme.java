@@ -79,6 +79,8 @@ public abstract class AbstractDiscretizedScheme implements DiscretizedPlaneInter
 //        this.setTransformMatrix();
     }
 
+    protected abstract void resetEpsilon(Double epsilon, boolean whetherResetSizeB);
+
     protected abstract void setConstPQ();
 
     public abstract Integer getOptimalSizeB();

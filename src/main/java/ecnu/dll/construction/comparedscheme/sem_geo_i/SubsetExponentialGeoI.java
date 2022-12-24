@@ -53,6 +53,12 @@ public class SubsetExponentialGeoI<X> {
         this.normalizer();
     }
 
+    public void resetEpsilon(Double epsilon) {
+       this.epsilon = epsilon;
+       this.setSetSizeKWithMeanEpsilon();
+       this.normalizer();
+    }
+
     public Double getOmega() {
         return omega;
     }

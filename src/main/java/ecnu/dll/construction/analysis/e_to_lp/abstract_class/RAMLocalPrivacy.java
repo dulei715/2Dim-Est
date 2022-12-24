@@ -4,6 +4,7 @@ import cn.edu.ecnu.differential_privacy.cdp.basic_struct.DistanceTor;
 import cn.edu.ecnu.struct.point.TwoDimensionalIntegerPoint;
 import ecnu.dll.construction.analysis.e_to_lp.basic.TransformLocalPrivacy;
 import ecnu.dll.construction.analysis.e_to_lp.tools.CellDistanceTool;
+import ecnu.dll.construction.newscheme.discretization.DiscretizedRhombusScheme;
 import ecnu.dll.construction.newscheme.discretization.tool.DiscretizedRhombusSchemeTool;
 import org.apache.commons.collections.CollectionUtils;
 
@@ -11,6 +12,8 @@ import java.util.Collection;
 import java.util.List;
 
 public abstract class RAMLocalPrivacy extends TransformLocalPrivacy<TwoDimensionalIntegerPoint, TwoDimensionalIntegerPoint> {
+
+    protected DiscretizedRhombusScheme ramScheme = null;
 
     protected Integer sizeD = null;
 
@@ -27,6 +30,7 @@ public abstract class RAMLocalPrivacy extends TransformLocalPrivacy<TwoDimension
     private TwoDimensionalIntegerPoint tempIntermediateCell = null;
     private Collection<TwoDimensionalIntegerPoint> tempCrossCellCollection = null;
 
+    @Deprecated
     public RAMLocalPrivacy(List<TwoDimensionalIntegerPoint> originalSetList, Integer sizeD, List<TwoDimensionalIntegerPoint> intermediateSetList, Integer sizeB, DistanceTor<TwoDimensionalIntegerPoint> distanceCalculator, Double probabilityP, Double probabilityQ) {
         super(originalSetList, intermediateSetList);
         this.sizeD = sizeD;
@@ -34,6 +38,26 @@ public abstract class RAMLocalPrivacy extends TransformLocalPrivacy<TwoDimension
         this.distanceCalculator = distanceCalculator;
         this.probabilityP = probabilityP;
         this.probabilityQ = probabilityQ;
+    }
+
+    public RAMLocalPrivacy(DiscretizedRhombusScheme ramScheme, DistanceTor<TwoDimensionalIntegerPoint> distanceCalculator) {
+        super(null, null);
+        this.ramScheme = ramScheme;
+        super.originalSetList = this.ramScheme.getRawIntegerPointTypeList();
+        super.intermediateSetList = this.ramScheme.getNoiseIntegerPointTypeList();
+        this.sizeD = this.ramScheme.getSizeD();
+        this.sizeB = this.ramScheme.getSizeB();
+        this.distanceCalculator = distanceCalculator;
+        this.probabilityP = this.ramScheme.getConstP();
+        this.probabilityQ = this.ramScheme.getConstQ();
+    }
+
+    public void resetEpsilon(Double epsilon) {
+        this.ramScheme.resetEpsilon(epsilon, true);
+        super.intermediateSetList = this.ramScheme.getNoiseIntegerPointTypeList();
+        this.sizeB = this.ramScheme.getSizeB();
+        this.probabilityP = this.ramScheme.getConstP();
+        this.probabilityQ = this.ramScheme.getConstQ();
     }
 
     public Integer getSizeD() {
