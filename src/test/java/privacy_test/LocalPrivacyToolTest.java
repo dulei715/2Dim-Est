@@ -29,6 +29,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class LocalPrivacyToolTest {
+    private static double privacyBudget = 2.0;
     private static double gridLength = 1.0;
     private static double inputLength = 4.0;
     private static double kParameter = 0.5;
@@ -121,6 +122,36 @@ public class LocalPrivacyToolTest {
         }
         return resultLPArray;
     }
+    @Deprecated
+    public static Double[] getLocalPrivacyValueBySizeDForGeoI(Double[] sizeDArray, Class<? extends DiscretizedSubsetExponentialGeoI> discretizedSchemeClass, Class<BasicGeoILocalPrivacy> transLPClass, DistanceTor distanceTor) throws InstantiationException, IllegalAccessException, NoSuchMethodException, InvocationTargetException {
+
+        Integer setSizeK;
+        Double omega;
+        Double[] massArray;
+        List<TwoDimensionalIntegerPoint> rawTwoDimensionalIntegerPointTypeList, outputTypeList;
+
+//        DiscretizedRhombusScheme ram = new DiscretizedRhombusScheme(epsilon, gridLength, inputLength, kParameter, xLeft, yLeft);
+
+        TransformLocalPrivacy<TwoDimensionalIntegerPoint, Integer> transformLocalPrivacy;
+        Constructor<? extends DiscretizedSubsetExponentialGeoI> schemeConstructor;
+        Constructor<? extends TransformLocalPrivacy<TwoDimensionalIntegerPoint, Integer>> lPConstructor;
+        DiscretizedSubsetExponentialGeoI scheme;
+        Double[] resultLPArray = new Double[sizeDArray.length];
+
+        for (int i = 0; i < sizeDArray.length; i++) {
+            schemeConstructor = discretizedSchemeClass.getDeclaredConstructor(Double.class, Double.class, Double.class, Double.class, Double.class, DistanceTor.class);
+            scheme = schemeConstructor.newInstance(privacyBudget, gridLength, sizeDArray[i], xLeft, yLeft, distanceTor);
+            rawTwoDimensionalIntegerPointTypeList = scheme.getSortedInputPointList();
+//            outputTypeList = scheme.getNoiseIntegerPointTypeList();
+            setSizeK = scheme.getSetSizeK();
+            massArray = scheme.getMassArray();
+            omega = scheme.getOmega();
+            lPConstructor = transLPClass.getDeclaredConstructor(List.class, Integer.class, Double[].class, Double.class, Double.class, DistanceTor.class);
+            transformLocalPrivacy = lPConstructor.newInstance(rawTwoDimensionalIntegerPointTypeList, setSizeK, massArray, privacyBudget, omega, distanceTor);
+            resultLPArray[i] = transformLocalPrivacy.getTransformLocalPrivacyValue();
+        }
+        return resultLPArray;
+    }
     public static Double[] getLocalPrivacyValueByPrivacyBudgetForGeoI(Double[] privacyBudgetArray) throws InstantiationException, IllegalAccessException {
 
         Integer setSizeK;
@@ -186,7 +217,6 @@ public class LocalPrivacyToolTest {
         pointWrite.writePoint(doublePointList);
         pointWrite.endWriting();
     }
-
     @Test
     public void resetFun() {
 
@@ -215,6 +245,30 @@ public class LocalPrivacyToolTest {
 //        pointWrite.startWriting("D:\\temp\\swap_data\\ram_norm2_2.txt");
         pointWrite.startWriting("D:\\temp\\swap_data\\dam_norm2_2.txt");
 //        pointWrite.startWriting("D:\\temp\\swap_data\\subGeoI_norm2_2.txt");
+        pointWrite.writePoint(doublePointList);
+        pointWrite.endWriting();
+    }
+
+    @Test
+    public void reconstructForSizeDFun() throws InvocationTargetException, InstantiationException, IllegalAccessException, NoSuchMethodException {
+
+        Integer[] tempArray = BasicArray.getIncreaseIntegerNumberArray(1, 10, 4000);
+        Double[] inputLengthArray = BasicArray.getLinearTransformFromIntegerArray(tempArray, 0.001, 5);
+//        MyPrint.showArray(privacyBudgetArray);
+
+
+        // For Subset-Geo-I
+        DistanceTor<TwoDimensionalIntegerPoint> distanceTor = new TwoNormTwoDimensionalIntegerPointDistanceTor();
+        Double[] lpResultArray = getLocalPrivacyValueBySizeDForGeoI(inputLengthArray, DiscretizedSubsetExponentialGeoI.class, BasicGeoILocalPrivacy.class, distanceTor);
+
+//        MyPrint.showDoubleArray(lpResultArray);
+        int size = inputLengthArray.length;
+        List<DoublePoint> doublePointList = new ArrayList<>(size);
+        for (int i = 0; i < size; i++) {
+            doublePointList.add(new TwoDimensionalDoublePoint(inputLengthArray[i], lpResultArray[i]));
+        }
+        PointWrite pointWrite = new PointWrite();
+        pointWrite.startWriting("D:\\temp\\swap_data\\subGeoI_norm2_changeD.txt");
         pointWrite.writePoint(doublePointList);
         pointWrite.endWriting();
     }

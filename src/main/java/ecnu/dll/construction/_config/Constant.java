@@ -66,9 +66,14 @@ public class Constant {
 //            0.2, 0.4, 0.6, 0.8, 1.0
 //    };
     public static final double DEFAULT_PRIVACY_BUDGET = 2.0;
+
+
     public static final double[] ALTER_PRIVACY_BUDGET_ARRAY = new double[] {
-            1.0, 1.5, 2.0, 2.5, 3.0
+            0.5, 1.0, 1.5, 2.0, 2.5
     };
+//    public static final double[] ALTER_PRIVACY_BUDGET_ARRAY = new double[] {
+//            1.0, 1.5, 2.0, 2.5, 3.0
+//    };
 
 
 //    public static final double DEFAULT_POSITIVE_B_LENGTH = 1;

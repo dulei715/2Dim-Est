@@ -1,6 +1,7 @@
 package basic;
 
 import Jama.Matrix;
+import cn.edu.ecnu.collection.ArraysUtils;
 import cn.edu.ecnu.io.print.MyPrint;
 import cn.edu.ecnu.struct.pair.BasicPair;
 import cn.edu.ecnu.struct.pair.IdentityPair;
@@ -141,5 +142,44 @@ public class basicTest {
         MyPrint.showCollection(subtract);
 
     }
+
+
+    @Test
+    public void fun12() {
+        double[] arr = new double[] {
+                23.1, 22.2, 18.4, 16.5, 13.2
+        };
+        int index = ArraysUtils.binaryDescendSearch(arr, 18.3);
+        System.out.println(index);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 }
