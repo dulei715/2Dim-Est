@@ -1,5 +1,6 @@
 package ecnu.dll.construction._config;
 
+import cn.edu.ecnu.basic.BasicArray;
 import cn.edu.ecnu.basic.StringUtil;
 import cn.edu.ecnu.constant_values.ConstantValues;
 import cn.edu.ecnu.filter.file_filter.DirectoryFileFilter;
@@ -74,6 +75,8 @@ public class Constant {
 //    public static final double[] ALTER_PRIVACY_BUDGET_ARRAY = new double[] {
 //            1.0, 1.5, 2.0, 2.5, 3.0
 //    };
+
+    public static final double[] FINE_GRIT_PRIVACY_BUDGET_ARRAY = BasicArray.getIncreaseDoubleNumberArray(0.45, 0.01, 2.55);
 
 
 //    public static final double DEFAULT_POSITIVE_B_LENGTH = 1;

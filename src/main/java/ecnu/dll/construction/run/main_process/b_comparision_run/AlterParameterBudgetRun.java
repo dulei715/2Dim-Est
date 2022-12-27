@@ -1,17 +1,24 @@
 package ecnu.dll.construction.run.main_process.b_comparision_run;
 
+import cn.edu.ecnu.differential_privacy.cdp.basic_struct.impl.TwoNormTwoDimensionalIntegerPointDistanceTor;
 import cn.edu.ecnu.result.ExperimentResult;
 import cn.edu.ecnu.struct.point.TwoDimensionalIntegerPoint;
 import ecnu.dll.construction._config.Constant;
+import ecnu.dll.construction.analysis.e_to_lp.Norm2DAMLocalPrivacy;
+import ecnu.dll.construction.analysis.e_to_lp.abstract_class.DAMLocalPrivacy;
+import ecnu.dll.construction.analysis.lp_to_e.SubsetGeoITransformEpsilon;
+import ecnu.dll.construction.comparedscheme.sem_geo_i.discretization.DiscretizedSubsetExponentialGeoI;
+import ecnu.dll.construction.newscheme.discretization.DiscretizedDiskScheme;
 import ecnu.dll.construction.newscheme.discretization.tool.DiscretizedDiskSchemeTool;
 import ecnu.dll.construction.newscheme.discretization.tool.DiscretizedRhombusSchemeTool;
+import ecnu.dll.construction.run._struct.ExperimentResultAndScheme;
 import ecnu.dll.construction.run.main_process.a_single_scheme_run.*;
 
 import java.util.*;
 
 @SuppressWarnings("ALL")
 public class AlterParameterBudgetRun {
-    public static Map<String, List<ExperimentResult>> run(final List<TwoDimensionalIntegerPoint> integerPointList, double inputSideLength, final TreeMap<TwoDimensionalIntegerPoint, Double> rawDataStatistic, double xBound, double yBound) {
+    public static Map<String, List<ExperimentResult>> run(final List<TwoDimensionalIntegerPoint> integerPointList, double inputSideLength, final TreeMap<TwoDimensionalIntegerPoint, Double> rawDataStatistic, double xBound, double yBound) throws InstantiationException, IllegalAccessException, CloneNotSupportedException {
 //        String inputDataPath = Constant.DEFAULT_INPUT_PATH;
 
         int arraySize = Constant.ALTER_PRIVACY_BUDGET_ARRAY.length;
@@ -49,21 +56,45 @@ public class AlterParameterBudgetRun {
         String rhombusKey = Constant.rhombusSchemeKey, diskKey = Constant.diskSchemeKey, subsetGeoIOneNorm = Constant.subsetGeoIOneNormSchemeKey, subsetGeoITwoNorm = Constant.subsetGeoITwoNormSchemeKey, mdsw = Constant.multiDimensionalSquareWaveSchemeKey, hue = Constant.hybridUniformExponentialSchemeKey;
         ExperimentResult tempRhombusExperimentResult, tempDiskExperimentResult, tempSubsetGeoIOneNormExperimentResult, tempSubsetGeoITwoNormExperimentResult, tempMdswExperimentResult, tempHUEMExperimentResult;
         List<ExperimentResult> rhombusExperimentResultList = new ArrayList<>(), diskExperimentResultList = new ArrayList<>(), subsetGeoIOneNormExperimentResultList = new ArrayList<>(), subsetGeoITwoNormExperimentResultList = new ArrayList<>(), mdswExperimentResultList = new ArrayList<>(), huemExperimentResultList = new ArrayList<>();
+
+        ExperimentResultAndScheme tempDiskExperimentResultAndScheme;
+        DiscretizedDiskScheme tempDiskScheme;
+        DiscretizedSubsetExponentialGeoI tempGeoIScheme;
+        DAMLocalPrivacy damLocalPrivacy;
+        SubsetGeoITransformEpsilon geoITransformEpsilon;
+        double tempLocalPrivacy, transformedEpsilon;
+
+        tempDiskScheme = new DiscretizedDiskScheme(epsilonArray[0], gridLength, inputSideLength, kParameter, xBound, yBound);
+        damLocalPrivacy = new Norm2DAMLocalPrivacy(tempDiskScheme);
+        tempGeoIScheme = new DiscretizedSubsetExponentialGeoI(epsilonArray[0], gridLength, inputSideLength, xBound, yBound, new TwoNormTwoDimensionalIntegerPointDistanceTor());
+        geoITransformEpsilon = new SubsetGeoITransformEpsilon(Constant.FINE_GRIT_PRIVACY_BUDGET_ARRAY, tempGeoIScheme);
+
         for (int i = 0; i < arraySize; i++) {
-            tempSubsetGeoIOneNormExperimentResult = SubsetGeoIOneNormRun.run(integerPointList, rawDataStatistic, gridLength, inputSideLength, epsilonArray[i], xBound, yBound);
-            subsetGeoIOneNormExperimentResultList.add(tempSubsetGeoIOneNormExperimentResult);
-            tempSubsetGeoITwoNormExperimentResult = SubsetGeoITwoNormRun.run(integerPointList, rawDataStatistic, gridLength, inputSideLength, epsilonArray[i], xBound, yBound);
-            subsetGeoITwoNormExperimentResultList.add(tempSubsetGeoITwoNormExperimentResult);
+
             tempMdswExperimentResult = MDSWRun.run(integerPointList, rawDataStatistic, gridLength, inputSideLength, epsilonArray[i], xBound, yBound);
             mdswExperimentResultList.add(tempMdswExperimentResult);
+
             tempRhombusExperimentResult = RAMRun.run(integerPointList, rawDataStatistic, gridLength, inputSideLength, alterRhombusOptimalSizeB[i]*gridLength, epsilonArray[i], kParameter, xBound, yBound);
             rhombusExperimentResultList.add(tempRhombusExperimentResult);
+
             tempDiskExperimentResult = DAMRun.run(integerPointList, rawDataStatistic, gridLength, inputSideLength, alterDiskOptimalSizeB[i]*gridLength, epsilonArray[i], kParameter, xBound, yBound);
             diskExperimentResultList.add(tempDiskExperimentResult);
+            damLocalPrivacy.resetEpsilon(epsilonArray[i]);
+            //todo: 计算DAM对应的 localPrivacy
+            tempLocalPrivacy = damLocalPrivacy.getTransformLocalPrivacyValue();
+
+//            tempSubsetGeoIOneNormExperimentResult = SubsetGeoIOneNormRun.run(integerPointList, rawDataStatistic, gridLength, inputSideLength, epsilonArray[i], xBound, yBound);
+//            subsetGeoIOneNormExperimentResultList.add(tempSubsetGeoIOneNormExperimentResult);
+
+            // todo: 计算localPrivacy对应的新的epsilon
+            transformedEpsilon = geoITransformEpsilon.getEpsilonByLocalPrivacy(tempLocalPrivacy);
+            tempSubsetGeoITwoNormExperimentResult = SubsetGeoITwoNormRun.run(integerPointList, rawDataStatistic, gridLength, inputSideLength, transformedEpsilon, xBound, yBound);
+            subsetGeoITwoNormExperimentResultList.add(tempSubsetGeoITwoNormExperimentResult);
+
             tempHUEMExperimentResult = HUEMSRun.run(integerPointList, rawDataStatistic, gridLength, inputSideLength, alterDiskOptimalSizeB[i]*gridLength, epsilonArray[i], kParameter, xBound, yBound);
             huemExperimentResultList.add(tempHUEMExperimentResult);
         }
-        alterParameterMap.put(subsetGeoIOneNorm, subsetGeoIOneNormExperimentResultList);
+//        alterParameterMap.put(subsetGeoIOneNorm, subsetGeoIOneNormExperimentResultList);
         alterParameterMap.put(subsetGeoITwoNorm, subsetGeoITwoNormExperimentResultList);
         alterParameterMap.put(mdsw, mdswExperimentResultList);
         alterParameterMap.put(rhombusKey, rhombusExperimentResultList);

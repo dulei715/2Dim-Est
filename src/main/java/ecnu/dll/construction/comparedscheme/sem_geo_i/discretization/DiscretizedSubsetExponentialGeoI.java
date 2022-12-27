@@ -11,7 +11,7 @@ import ecnu.dll.construction.comparedscheme.sem_geo_i.SubsetExponentialGeoI;
 
 import java.util.*;
 
-public class DiscretizedSubsetExponentialGeoI {
+public class DiscretizedSubsetExponentialGeoI implements Cloneable {
 
     private Double epsilon = null;
     private Double gridLength = null;
@@ -39,6 +39,11 @@ public class DiscretizedSubsetExponentialGeoI {
         this.sortedInputPointList = Grid.generateTwoDimensionalIntegerPoint(this.sizeD, 0, 0);    //这里的后两个参数是整数(0,0),不是传入的xLeft和yLeft
         this.sortedInputPointList.sort(new TwoDimensionalIntegerPointComparator());
         this.subsetExponentialGeoI = new SubsetExponentialGeoI<>(this.epsilon, this.sortedInputPointList, this.distanceTor);
+    }
+
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        return super.clone();
     }
 
     public void resetEpsilon(Double epsilon) {

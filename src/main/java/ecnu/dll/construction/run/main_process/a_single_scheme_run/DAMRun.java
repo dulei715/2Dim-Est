@@ -9,6 +9,7 @@ import cn.edu.ecnu.struct.point.TwoDimensionalDoublePoint;
 import cn.edu.ecnu.struct.point.TwoDimensionalIntegerPoint;
 import ecnu.dll.construction._config.Constant;
 import ecnu.dll.construction.newscheme.discretization.DiscretizedDiskScheme;
+import ecnu.dll.construction.run._struct.ExperimentResultAndScheme;
 import edu.ecnu.dll.cpl.expection.CPLException;
 
 import java.util.ArrayList;
@@ -64,6 +65,52 @@ public class DAMRun extends BasicGridSplitRun {
         return experimentResult;
 
     }
+    public static ExperimentResultAndScheme runEnhanced(final List<TwoDimensionalIntegerPoint> integerPointList, final TreeMap<TwoDimensionalIntegerPoint, Double> rawDataStatistic, double cellLength, double inputLength, double bLength, double epsilon, double kParameter, double xBound, double yBound) {
+        DiscretizedDiskScheme scheme;
+        if (bLength > 0) {
+            scheme = new DiscretizedDiskScheme(epsilon, cellLength, bLength, inputLength, kParameter, xBound, yBound);
+        } else {
+            scheme = new DiscretizedDiskScheme(epsilon, cellLength, inputLength, kParameter, xBound, yBound);
+        }
+
+        /**
+         * 生成噪声数据
+         */
+        List<TwoDimensionalIntegerPoint> noiseIntegerPointList = scheme.getNoiseValueList(integerPointList);
+
+        long startTime = System.currentTimeMillis();
+        TreeMap<TwoDimensionalIntegerPoint, Double> estimationResult = scheme.statistic(noiseIntegerPointList);
+        long endTime = System.currentTimeMillis();
+        long postProcessTime = endTime - startTime;
+
+        // for test
+//        System.out.println(BasicCalculation.getValueSum(rawDataStatistic));
+//        System.out.println(BasicCalculation.getValueSum(estimationResult));
+
+
+
+        ExperimentResult experimentResult = null;
+        try {
+            Double wassersteinDistance = TwoDimensionalWassersteinDistance.getWassersteinDistance(rawDataStatistic, estimationResult, 2);
+            experimentResult = new ExperimentResult();
+            experimentResult.addPair(Constant.dataPointSizeKey, String.valueOf(integerPointList.size()));
+            experimentResult.addPair(Constant.schemeNameKey, Constant.diskSchemeKey);
+            experimentResult.addPair(Constant.postProcessTimeKey, String.valueOf(postProcessTime));
+            experimentResult.addPair(Constant.gridUnitSizeKey, String.valueOf(cellLength));
+            experimentResult.addPair(Constant.dataTypeSizeKey, String.valueOf(scheme.getRawIntegerPointTypeList().size()));
+            experimentResult.addPair(Constant.sizeDKey, String.valueOf(scheme.getSizeD()));
+            experimentResult.addPair(Constant.sizeBKey, String.valueOf(scheme.getSizeB()));
+            experimentResult.addPair(Constant.privacyBudgetKey, String.valueOf(epsilon));
+            experimentResult.addPair(Constant.contributionKKey, String.valueOf(kParameter));
+            experimentResult.addPair(Constant.wassersteinDistanceKey, String.valueOf(wassersteinDistance));
+        } catch (CPLException e) {
+            e.printStackTrace();
+        }
+
+
+        return new ExperimentResultAndScheme(experimentResult, scheme);
+
+    }
     public static void run0(List<TwoDimensionalDoublePoint> pointList, double cellLength, double inputLength, double bLength, double epsilon, double kParameter, double xBound, double yBound) {
         DiscretizedDiskScheme damScheme;
         if (bLength > 0) {
@@ -103,6 +150,8 @@ public class DAMRun extends BasicGridSplitRun {
         System.out.println(wassersteinDistance);
 
     }
+
+
 
     public static void main(String[] args) {
 ////        String inputPath = "F:\\dataset\\test\\real_dataset\\chicago_point_A.txt";
