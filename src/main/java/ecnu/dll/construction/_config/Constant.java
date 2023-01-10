@@ -7,6 +7,7 @@ import cn.edu.ecnu.filter.file_filter.DirectoryFileFilter;
 import cn.edu.ecnu.result.ResultTool;
 import cn.edu.ecnu.struct.result.ColumnBean;
 import ecnu.dll.construction.dataset.struct.DataSetAreaInfo;
+//import io.netty.util.internal.StringUtil;
 
 import java.io.FileFilter;
 import java.util.List;
@@ -48,7 +49,8 @@ public class Constant {
 //    public static final double[] ALTER_SIDE_LENGTH_NUMBER_SIZE = new double[] {
 //            2.0, 3.0, 4.0, 5.0, 6.0
 //    };
-    public static final double DEFAULT_SIDE_LENGTH_NUMBER_SIZE = 7.0;
+//    public static final double DEFAULT_SIDE_LENGTH_NUMBER_SIZE = 7.0;
+    public static final double DEFAULT_SIDE_LENGTH_NUMBER_SIZE = 6.0;
     public static final double[] ALTER_SIDE_LENGTH_NUMBER_SIZE = new double[] {
             5.0, 6.0, 7.0, 8.0, 9.0
     };
@@ -69,14 +71,16 @@ public class Constant {
     public static final double DEFAULT_PRIVACY_BUDGET = 2.0;
 
 
-    public static final double[] ALTER_PRIVACY_BUDGET_ARRAY = new double[] {
-            0.5, 1.0, 1.5, 2.0, 2.5
-    };
 //    public static final double[] ALTER_PRIVACY_BUDGET_ARRAY = new double[] {
-//            1.0, 1.5, 2.0, 2.5, 3.0
+//            0.5, 1.0, 1.5, 2.0, 2.5
 //    };
+    public static final double[] ALTER_PRIVACY_BUDGET_ARRAY = new double[] {
+            1.0, 1.5, 2.0, 2.5, 3.0
+    };
 
-    public static final double[] FINE_GRIT_PRIVACY_BUDGET_ARRAY = BasicArray.getIncreaseDoubleNumberArray(0.45, 0.01, 2.55);
+//    public static final double[] FINE_GRIT_PRIVACY_BUDGET_ARRAY = BasicArray.getIncreaseDoubleNumberArray(0.2, 0.01, 3.0);
+    public static final double[] FINE_GRIT_PRIVACY_BUDGET_ARRAY = BasicArray.getIncreaseDoubleNumberArray(0.45, 0.01, 3.05);
+//    public static final double[] FINE_GRIT_PRIVACY_BUDGET_ARRAY = BasicArray.getIncreaseDoubleNumberArray(0.9, 0.01, 3.1);
 
 
 //    public static final double DEFAULT_POSITIVE_B_LENGTH = 1;

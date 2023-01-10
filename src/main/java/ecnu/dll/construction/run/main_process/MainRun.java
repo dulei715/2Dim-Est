@@ -11,7 +11,7 @@ import java.util.Map;
 
 @SuppressWarnings("Duplicates")
 public class MainRun {
-    public static void main0(String[] args) {
+    public static void main0(String[] args) throws IllegalAccessException, CloneNotSupportedException, InstantiationException {
 
         DataSetAreaInfo[] crimeDataSetArray = Constant.crimeDataSetArray;
         DataSetAreaInfo[] nycDataSetArray = Constant.nycDataSetArray;
@@ -21,7 +21,7 @@ public class MainRun {
 //        MyPrint.showMap(resultMap);
 
     }
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IllegalAccessException, CloneNotSupportedException, InstantiationException {
 
         DataSetAreaInfo[] crimeDataSetArray = Constant.crimeDataSetArray;
         DataSetAreaInfo[] nycDataSetArray = Constant.nycDataSetArray;

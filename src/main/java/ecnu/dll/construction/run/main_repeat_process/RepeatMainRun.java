@@ -13,7 +13,7 @@ import java.util.Map;
 
 @SuppressWarnings("Duplicates")
 public class RepeatMainRun {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IllegalAccessException, CloneNotSupportedException, InstantiationException {
 
         DataSetAreaInfo[] crimeDataSetArray = Constant.crimeDataSetArray;
         DataSetAreaInfo[] nycDataSetArray = Constant.nycDataSetArray;

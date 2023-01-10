@@ -10,7 +10,7 @@ import java.util.Map;
 
 @SuppressWarnings("ALL")
 public class TotalRun {
-    public static Map<String, Map<String, Map<String, List<ExperimentResult>>>> run(DataSetAreaInfo[] crimeDataSetArray, DataSetAreaInfo[] nycDataSetArray, DataSetAreaInfo twoDimNormalDataSet, DataSetAreaInfo twoDimZipfDataSet) {
+    public static Map<String, Map<String, Map<String, List<ExperimentResult>>>> run(DataSetAreaInfo[] crimeDataSetArray, DataSetAreaInfo[] nycDataSetArray, DataSetAreaInfo twoDimNormalDataSet, DataSetAreaInfo twoDimZipfDataSet) throws IllegalAccessException, CloneNotSupportedException, InstantiationException {
 
         String dataSetPath, dataSetName;
         Double xBound, yBound, length;
@@ -61,7 +61,7 @@ public class TotalRun {
 
         return resultMap;
     }
-    public static Map<String, Map<String, Map<String, List<ExperimentResult>>>> runAndWrite(DataSetAreaInfo[] crimeDataSetArray, String[] crimeOutputDirArray, DataSetAreaInfo[] nycDataSetArray, String[] nycOutputDirArray, DataSetAreaInfo twoDimNormalDataSet, String normalOutputDir, DataSetAreaInfo twoDimZipfDataSet, String zipfOutputDir) {
+    public static Map<String, Map<String, Map<String, List<ExperimentResult>>>> runAndWrite(DataSetAreaInfo[] crimeDataSetArray, String[] crimeOutputDirArray, DataSetAreaInfo[] nycDataSetArray, String[] nycOutputDirArray, DataSetAreaInfo twoDimNormalDataSet, String normalOutputDir, DataSetAreaInfo twoDimZipfDataSet, String zipfOutputDir) throws IllegalAccessException, CloneNotSupportedException, InstantiationException {
 
         String dataSetPath, dataSetName;
         Double xBound, yBound, length;

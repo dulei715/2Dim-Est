@@ -198,11 +198,11 @@ public class LocalPrivacyToolTest {
 
         // For DAM parameters
 //        Double[] lpResultArray = getLocalPrivacyValueByPrivacyBudgetForLDP(privacyBudgetArray, DiscretizedDiskScheme.class, Norm1DAMLocalPrivacy.class);
-        Double[] lpResultArray = getLocalPrivacyValueByPrivacyBudgetForLDP(privacyBudgetArray, DiscretizedDiskScheme.class, Norm2DAMLocalPrivacy.class);
+//        Double[] lpResultArray = getLocalPrivacyValueByPrivacyBudgetForLDP(privacyBudgetArray, DiscretizedDiskScheme.class, Norm2DAMLocalPrivacy.class);
 
         // For Subset-Geo-I
-//        DistanceTor<TwoDimensionalIntegerPoint> distanceTor = new TwoNormTwoDimensionalIntegerPointDistanceTor();
-//        Double[] lpResultArray = getLocalPrivacyValueByPrivacyBudgetForGeoI(privacyBudgetArray, DiscretizedSubsetExponentialGeoI.class, BasicGeoILocalPrivacy.class, distanceTor);
+        DistanceTor<TwoDimensionalIntegerPoint> distanceTor = new TwoNormTwoDimensionalIntegerPointDistanceTor();
+        Double[] lpResultArray = getLocalPrivacyValueByPrivacyBudgetForGeoI(privacyBudgetArray, DiscretizedSubsetExponentialGeoI.class, BasicGeoILocalPrivacy.class, distanceTor);
 
 //        MyPrint.showDoubleArray(lpResultArray);
         int size = privacyBudgetArray.length;
@@ -212,8 +212,8 @@ public class LocalPrivacyToolTest {
         }
         PointWrite pointWrite = new PointWrite();
 //        pointWrite.startWriting("D:\\temp\\swap_data\\ram_norm2.txt");
-        pointWrite.startWriting("D:\\temp\\swap_data\\dam_norm2.txt");
-//        pointWrite.startWriting("D:\\temp\\swap_data\\subGeoI_norm2.txt");
+//        pointWrite.startWriting("D:\\temp\\swap_data\\dam_norm2.txt");
+        pointWrite.startWriting("D:\\temp\\swap_data\\subGeoI_norm2.txt");
         pointWrite.writePoint(doublePointList);
         pointWrite.endWriting();
     }
