@@ -218,7 +218,7 @@ public class LocalPrivacyToolTest {
         pointWrite.endWriting();
     }
     @Test
-    public void resetFun() {
+    public void resetFun() throws IllegalAccessException, InstantiationException {
 
         Integer[] tempArray = BasicArray.getIncreaseIntegerNumberArray(1, 10, 2000);
         Double[] privacyBudgetArray = BasicArray.getLinearTransformFromIntegerArray(tempArray, 0.001, 0);
@@ -229,11 +229,11 @@ public class LocalPrivacyToolTest {
 
 
         // For DAM parameters
-        Double[] lpResultArray = getLocalPrivacyValueByPrivacyBudgetForDAM(privacyBudgetArray);
+//        Double[] lpResultArray = getLocalPrivacyValueByPrivacyBudgetForDAM(privacyBudgetArray);
 
 
         // For Subset-Geo-I
-//        Double[] lpResultArray = getLocalPrivacyValueByPrivacyBudgetForGeoI(privacyBudgetArray);
+        Double[] lpResultArray = getLocalPrivacyValueByPrivacyBudgetForGeoI(privacyBudgetArray);
 
 //        MyPrint.showDoubleArray(lpResultArray);
         int size = privacyBudgetArray.length;
@@ -243,8 +243,8 @@ public class LocalPrivacyToolTest {
         }
         PointWrite pointWrite = new PointWrite();
 //        pointWrite.startWriting("D:\\temp\\swap_data\\ram_norm2_2.txt");
-        pointWrite.startWriting("D:\\temp\\swap_data\\dam_norm2_2.txt");
-//        pointWrite.startWriting("D:\\temp\\swap_data\\subGeoI_norm2_2.txt");
+//        pointWrite.startWriting("D:\\temp\\swap_data\\dam_norm2_2.txt");
+        pointWrite.startWriting("D:\\temp\\swap_data\\subGeoI_norm2_2.txt");
         pointWrite.writePoint(doublePointList);
         pointWrite.endWriting();
     }
