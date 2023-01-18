@@ -10,9 +10,11 @@ import org.junit.Test;
 public class SubsetGeoITransformEpsilonTest {
     @Test
     public void fun1() throws InstantiationException, IllegalAccessException, CloneNotSupportedException {
-        double privacyBudget = 2.0;
+//        double privacyBudget = 2.0;
+        double privacyBudget = 0.5;
         double gridLength = 1.0;
-        double inputLength = 4.0;
+//        double inputLength = 4.0;
+        double inputLength = 7.0;
 //        double kParameter = 0.5;
         double xLeft = 0.0;
         double yLeft = 0.0;

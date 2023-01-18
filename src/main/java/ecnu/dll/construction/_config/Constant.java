@@ -15,8 +15,8 @@ import java.util.List;
 public class Constant {
 
 
-    public static final String basicPath = "/root/code/2_2.ProgramForSpatialLDPEstimation/1.JavaCode";
-//    public static final String basicPath = "E:\\1.学习\\4.数据集\\2.dataset_for_spatial_estimation";
+//    public static final String basicPath = "/root/code/2_2.ProgramForSpatialLDPEstimation/1.JavaCode";
+    public static final String basicPath = "E:\\1.学习\\4.数据集\\2.dataset_for_spatial_estimation";
     public static final String basicDatasetPath = StringUtil.join(ConstantValues.FILE_SPLIT, basicPath, "0_dataset");
     public static final String basicResultPath = StringUtil.join(ConstantValues.FILE_SPLIT, basicPath, "result");
 
@@ -49,8 +49,8 @@ public class Constant {
 //    public static final double[] ALTER_SIDE_LENGTH_NUMBER_SIZE = new double[] {
 //            2.0, 3.0, 4.0, 5.0, 6.0
 //    };
-//    public static final double DEFAULT_SIDE_LENGTH_NUMBER_SIZE = 7.0;
-    public static final double DEFAULT_SIDE_LENGTH_NUMBER_SIZE = 6.0;
+    public static final double DEFAULT_SIDE_LENGTH_NUMBER_SIZE = 7.0;
+//    public static final double DEFAULT_SIDE_LENGTH_NUMBER_SIZE = 6.0;
     public static final double[] ALTER_SIDE_LENGTH_NUMBER_SIZE = new double[] {
             5.0, 6.0, 7.0, 8.0, 9.0
     };
