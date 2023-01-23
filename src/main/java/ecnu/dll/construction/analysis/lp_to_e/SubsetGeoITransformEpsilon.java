@@ -4,6 +4,7 @@ import cn.edu.ecnu.basic.BasicArray;
 import cn.edu.ecnu.collection.ArraysUtils;
 import ecnu.dll.construction.analysis.e_to_lp.Norm2GeoILocalPrivacy;
 import ecnu.dll.construction.analysis.e_to_lp.abstract_class.GeoILocalPrivacy;
+import ecnu.dll.construction.analysis.e_to_lp.abstract_class.GeoILocalPrivacy_TODO;
 import ecnu.dll.construction.comparedscheme.sem_geo_i.discretization.DiscretizedSubsetExponentialGeoI;
 
 public class SubsetGeoITransformEpsilon {
@@ -24,7 +25,7 @@ public class SubsetGeoITransformEpsilon {
 //        this.geoIScheme = geoIScheme;
         this.geoIScheme = (DiscretizedSubsetExponentialGeoI) geoIScheme.clone();
         this.geoILocalPrivacy = new Norm2GeoILocalPrivacy(this.geoIScheme);
-        this.epsilonArray = BasicArray.getIncreaseDoubleNumberArray(this.beginEpsilon, this.epsilonStep, this.endEpsilon);
+        this.epsilonArray = BasicArray.getIncreasedoubleNumberArray(this.beginEpsilon, this.epsilonStep, this.endEpsilon);
         initializeTransformEpsilon();
     }
 

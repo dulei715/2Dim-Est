@@ -10,18 +10,12 @@ import ecnu.dll.construction.comparedscheme.sem_geo_i.discretization.Discretized
 
 import java.util.ArrayList;
 import java.util.List;
-
-@SuppressWarnings("Duplicates")
-public abstract class GeoILocalPrivacy {
+public abstract class GeoILocalPrivacy extends TransformLocalPrivacy<TwoDimensionalIntegerPoint, Integer> {
 
     protected DiscretizedSubsetExponentialGeoI geoIScheme = null;
 //    protected Integer sizeD = null;
 
     protected Integer setSizeK = null;
-
-    protected Double[] distinctDistance = null;
-    protected Double[] distinctPairSumDistance = null;
-    protected Double[] distinctInputSumToOneSubsetDistance = null;
 
     protected Double[] massArray = null;
 
@@ -31,29 +25,23 @@ public abstract class GeoILocalPrivacy {
 
     protected DistanceTor<TwoDimensionalIntegerPoint> distanceCalculator = null;
 
-//    protected List<List<Integer>> intermediateIndexSetList = null;
+    protected List<List<Integer>> intermediateIndexSetList = null;
 
-//    protected double[][] probabilityMatrix = null;
-    protected Double[][] groupStatisticMatrix = null;
-
+    protected double[][] probabilityMatrix = null;
 
 
-//    private void initializeProbabilityMatrix() {
-//        this.probabilityMatrix = new double[this.originalSetList.size()][this.intermediateIndexSetList.size()];
-//        double tempDistance;
-//        for (int i = 0; i < this.originalSetList.size(); i++) {
-//            int j = 0;
-//            for (; j < this.intermediateIndexSetList.size() - 1; j++) {
-//                tempDistance = ListUtils.getMinimalDistanceFromElementToList(i, this.intermediateIndexSetList.get(j), this.originalSetList);
-//                this.probabilityMatrix[i][j] = Math.pow(this.radix, tempDistance) / this.omega;
-//            }
-//            this.probabilityMatrix[i][j] = 1 - this.massArray[i] / this.omega;
-//        }
-//    }
 
-    private void initializeGroupStatisticMatrix() {
-        this.groupStatisticMatrix = new Double[distinctPairSumDistance.length][distinctInputSumToOneSubsetDistance.length];
-
+    private void initializeProbabilityMatrix() {
+        this.probabilityMatrix = new double[this.originalSetList.size()][this.intermediateIndexSetList.size()];
+        double tempDistance;
+        for (int i = 0; i < this.originalSetList.size(); i++) {
+            int j = 0;
+            for (; j < this.intermediateIndexSetList.size() - 1; j++) {
+                tempDistance = ListUtils.getMinimalDistanceFromElementToList(i, this.intermediateIndexSetList.get(j), this.originalSetList);
+                this.probabilityMatrix[i][j] = Math.pow(this.radix, tempDistance) / this.omega;
+            }
+            this.probabilityMatrix[i][j] = 1 - this.massArray[i] / this.omega;
+        }
     }
 
     private void resetProbabilityMatrixByRadix() {
