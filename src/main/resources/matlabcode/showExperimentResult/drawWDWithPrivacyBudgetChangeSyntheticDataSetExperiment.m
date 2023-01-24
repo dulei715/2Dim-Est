@@ -42,7 +42,7 @@ xlabel(xLabelName);
 ylabel(yLabelName);
 h = legend('SubGeoI', 'MDSW','HUEM','RAM','DAM','Location','Best');
 set(h,'FontName','Times New Roman','FontSize',14,'FontWeight','normal');
-
+legend('off');
 saveas(fig,outputFileName,'fig');
 export_fig(fig , '-pdf' , '-r256' , '-transparent' , outputFileName);
 

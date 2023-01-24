@@ -61,7 +61,7 @@ xlabel(xLabelName);
 ylabel(yLabelName);
 h = legend('RAM-Crime', 'DAM-Crime','RAM-NYC','DAM-NYC','Location','Best');
 set(h,'FontName','Times New Roman','FontSize',14,'FontWeight','normal');
-
+legend('off');
 saveas(fig,outputFileName,'fig');
 export_fig(fig , '-pdf' , '-r256' , '-transparent' , outputFileName);
 

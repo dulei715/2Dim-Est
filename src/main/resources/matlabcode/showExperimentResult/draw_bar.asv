@@ -1,0 +1,10 @@
+function draw_bar()
+fig = figure;
+hold on;
+x = [1:0.1:10];
+
+plot(x_RAM_one,y_RAM_one, 'ro-','LineWidth',2);
+plot(x_DAM_one, y_DAM_one, 'g*-','LineWidth',2);
+
+plot(x_RAM_two, y_RAM_two, 'rs:','LineWidth',2);
+plot(x_DAM_two, y_DAM_two, 'gx:', 'LineWidth', 2);

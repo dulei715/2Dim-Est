@@ -49,7 +49,7 @@ xlabel(xLabelName);
 ylabel(yLabelName);
 h = legend('RAM-Normal', 'DAM-Normal','RAM-Zipf','DAM-Zipf','Location','Best');
 set(h,'FontName','Times New Roman','FontSize',14,'FontWeight','normal');
-
+legend('off');
 saveas(fig,outputFileName,'fig');
 export_fig(fig , '-pdf' , '-r256' , '-transparent' , outputFileName);
 
