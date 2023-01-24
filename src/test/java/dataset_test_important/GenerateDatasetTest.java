@@ -14,8 +14,8 @@ public class GenerateDatasetTest {
     @Test
     public void generateZipf() {
 //        String outputPath = "F:\\dataset\\test\\synthetic_dataset\\two_zipf_dataset.txt";
-        String outputPath = Constant.basicDatasetPath + "\\test\\synthetic_dataset\\two_zipf_point.txt";
-        int size = 300000;
+        String outputPath = Constant.basicDatasetPath + "\\0_dataset\\2_synthetic\\2_two_zipf\\two_zipf_point.txt";
+        int size = 100000;
         double randomValueX, randomValueY;
         double[] doubleArrX, doubleArrY;
         TwoDimensionalDoublePoint point;
@@ -39,6 +39,7 @@ public class GenerateDatasetTest {
 
     }
 
+    @Deprecated
     @Test
     public void generateUniform() {
         String outputPath = Constant.basicDatasetPath + "\\test\\synthetic_dataset\\two_uniform_dataset.txt";
@@ -64,11 +65,17 @@ public class GenerateDatasetTest {
 
     @Test
     public void generateNorm() {
-        String outputPath = Constant.basicDatasetPath + "\\test\\synthetic_dataset\\two_norm_dataset.txt";
-        int size = 10000;
-        double randomValueX, randomValueY;
-        TwoDimensionalDoublePoint point;
-        List<TwoDimensionalDoublePoint> pointList = new ArrayList<>();
+//        String outputPath = Constant.basicDatasetPath + "\\test\\synthetic_dataset\\two_norm_dataset.txt";
+//        int size = 10000;
+//        double randomValueX, randomValueY;
+//        TwoDimensionalDoublePoint point;
+//        List<TwoDimensionalDoublePoint> pointList = new ArrayList<>();
+        // todo: see MATLAB code in function "generateWriteTwoDimNormPoint(pointSize, pathStr)"
+    }
+
+    @Test
+    public void generateNormWithMultipleCenter() {
+        String outputPath = Constant.basicDatasetPath + "\\0_dataset\\2_synthetic\\3_two_normal_multiple\\two_normal_multiple_point.txt";
     }
 
 }
