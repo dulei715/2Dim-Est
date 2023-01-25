@@ -2,7 +2,7 @@ package ecnu.dll.construction.comparedscheme.msw_hdg.discretization;
 
 import cn.edu.ecnu.DecimalTool;
 import cn.edu.ecnu.statistic.StatisticTool;
-import cn.edu.ecnu.struct.Grid;
+import cn.edu.ecnu.struct.grid.Grid;
 import cn.edu.ecnu.struct.pair.BasicPair;
 import cn.edu.ecnu.struct.point.TwoDimensionalIntegerPoint;
 import ecnu.dll.construction._config.Constant;

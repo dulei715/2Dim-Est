@@ -12,6 +12,7 @@ import ecnu.dll.construction.analysis.e_to_lp.Norm2DAMLocalPrivacy;
 import ecnu.dll.construction.analysis.e_to_lp.Norm2GeoILocalPrivacy;
 import ecnu.dll.construction.analysis.e_to_lp.Norm2RAMLocalPrivacy;
 import ecnu.dll.construction.analysis.e_to_lp.abstract_class.DAMLocalPrivacy;
+import ecnu.dll.construction.analysis.e_to_lp.abstract_class.GeoILocalPrivacy;
 import ecnu.dll.construction.analysis.e_to_lp.abstract_class.GeoILocalPrivacy_TODO;
 import ecnu.dll.construction.analysis.e_to_lp.abstract_class.RAMLocalPrivacy;
 import ecnu.dll.construction.analysis.e_to_lp.basic.TransformLocalPrivacy;
@@ -162,7 +163,7 @@ public class LocalPrivacyToolTest {
 //        DiscretizedRhombusScheme ram = new DiscretizedRhombusScheme(epsilon, gridLength, inputLength, kParameter, xLeft, yLeft);
 
         DiscretizedSubsetExponentialGeoI scheme = new DiscretizedSubsetExponentialGeoI(1.0, gridLength, inputLength, xLeft, yLeft, new TwoNormTwoDimensionalIntegerPointDistanceTor());
-        GeoILocalPrivacy_TODO geoILocalPrivacy = new Norm2GeoILocalPrivacy(scheme);
+        GeoILocalPrivacy geoILocalPrivacy = new Norm2GeoILocalPrivacy(scheme);
         Double[] resultLPArray = new Double[privacyBudgetArray.length];
 
         for (int i = 0; i < privacyBudgetArray.length; i++) {

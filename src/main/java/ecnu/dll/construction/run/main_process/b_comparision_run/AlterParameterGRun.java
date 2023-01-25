@@ -3,7 +3,7 @@ package ecnu.dll.construction.run.main_process.b_comparision_run;
 import cn.edu.ecnu.differential_privacy.cdp.basic_struct.impl.TwoNormTwoDimensionalIntegerPointDistanceTor;
 import cn.edu.ecnu.result.ExperimentResult;
 import cn.edu.ecnu.statistic.StatisticTool;
-import cn.edu.ecnu.struct.Grid;
+import cn.edu.ecnu.struct.grid.Grid;
 import cn.edu.ecnu.struct.point.TwoDimensionalDoublePoint;
 import cn.edu.ecnu.struct.point.TwoDimensionalIntegerPoint;
 import ecnu.dll.construction._config.Constant;

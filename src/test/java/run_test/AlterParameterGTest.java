@@ -4,7 +4,7 @@ import cn.edu.ecnu.io.print.MyPrint;
 import cn.edu.ecnu.io.read.TwoDimensionalPointRead;
 import cn.edu.ecnu.result.ExperimentResult;
 import cn.edu.ecnu.statistic.StatisticTool;
-import cn.edu.ecnu.struct.Grid;
+import cn.edu.ecnu.struct.grid.Grid;
 import cn.edu.ecnu.struct.point.TwoDimensionalDoublePoint;
 import cn.edu.ecnu.struct.point.TwoDimensionalIntegerPoint;
 import ecnu.dll.construction._config.Constant;

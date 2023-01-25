@@ -4,7 +4,7 @@ package ecnu.dll.construction.newscheme.discretization;
 import cn.edu.ecnu.DecimalTool;
 import cn.edu.ecnu.basic.BasicArray;
 import cn.edu.ecnu.statistic.StatisticTool;
-import cn.edu.ecnu.struct.Grid;
+import cn.edu.ecnu.struct.grid.Grid;
 import cn.edu.ecnu.struct.point.TwoDimensionalDoublePoint;
 import cn.edu.ecnu.struct.point.TwoDimensionalIntegerPoint;
 import ecnu.dll.construction._config.Constant;
