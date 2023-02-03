@@ -1,4 +1,4 @@
-function y = drawPointDataset(path, factorK, constA)
+function y = drawPointDatasetWithRectangleFrame(path, factorK, constA)
 % taskPath = [fileParentPath, '\task_point.txt'];
 % workerPath = [fileParentPath, '\worker_point.txt'];
 % disp(taskPath);
