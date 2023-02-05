@@ -93,6 +93,8 @@ public abstract class GeoILocalPrivacy extends TransformLocalPrivacy<TwoDimensio
         this.massArray = this.geoIScheme.getMassArray();
         this.radix = Math.exp(-this.geoIScheme.getEpsilon());
         this.omega = this.geoIScheme.getOmega();
+        //todo: remove notations
+//        System.out.println("originalSetListSize is " + this.originalSetList.size() + "; setSizeK is " + this.setSizeK);
         this.intermediateIndexSetList = SetUtils.getSubsetList(this.originalSetList.size(), this.setSizeK, 0);
         this.intermediateIndexSetList.add(new ArrayList<>());
         // 这里的intermediateSetList是中间元素的索引的索引，而非中间元素
@@ -136,5 +138,20 @@ public abstract class GeoILocalPrivacy extends TransformLocalPrivacy<TwoDimensio
         return resultValue * 2;
     }
 
-
+    @Override
+    public double getTransformLocalPrivacyValue() {
+        double value = 0;
+        Integer element;
+        double tempProbability;
+        // 最后一个intermediateSet是关于返回NULL的扰动，此处不进行统计。因为没法定义一个cell到NULL的距离
+        for (int i = 0; i < this.intermediateSetList.size(); i++) {
+            element = this.intermediateSetList.get(i);
+            tempProbability = this.getTotalProbabilityGivenIntermediateElement(element);
+            if (tempProbability <= 0.0) {
+                continue;
+            }
+            value += this.getPairWeightedDistance(element) / tempProbability;
+        }
+        return value / this.originalSetList.size();
+    }
 }

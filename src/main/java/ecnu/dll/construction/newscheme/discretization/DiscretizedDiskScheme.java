@@ -160,7 +160,6 @@ public class DiscretizedDiskScheme extends AbstractDiscretizedScheme {
         double totalShrinkArea = 0;
         double originalLowAreaSize = this.sizeD * this.sizeD + 4 * this.sizeB * (this.sizeD - 1) - 1;
 
-
         //对outerCellIndex和outerCellAreaSizeList的设置
         setHighProbabilityBorderCellIndexList();
         setHighProbabilityBorderCellAreaSize();

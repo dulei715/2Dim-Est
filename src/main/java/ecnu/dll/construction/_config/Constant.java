@@ -45,15 +45,23 @@ public class Constant {
 
 //    public static final double DEFAULT_CELL_LENGTH = 0.0225; // d/4
     // 记录转成整数cell后，输入数据的长度
+    public static final double DEFAULT_SIDE_LENGTH_NUMBER_SIZE = 4.0;
+    public static final double[] ALTER_SIDE_LENGTH_NUMBER_SIZE = new double[] {
+            2.0, 3.0, 4.0, 5.0, 6.0
+    };
 //    public static final double DEFAULT_SIDE_LENGTH_NUMBER_SIZE = 4.0;
 //    public static final double[] ALTER_SIDE_LENGTH_NUMBER_SIZE = new double[] {
-//            2.0, 3.0, 4.0, 5.0, 6.0
+//            1.0, 2.0, 3.0, 4.0, 5.0
 //    };
-    public static final double DEFAULT_SIDE_LENGTH_NUMBER_SIZE = 7.0;
+//    public static final double DEFAULT_SIDE_LENGTH_NUMBER_SIZE = 4.0;
+//    public static final double[] ALTER_SIDE_LENGTH_NUMBER_SIZE = new double[] {
+//            3.0, 4.0, 5.0, 6.0, 7.0
+//    };
+//    public static final double DEFAULT_SIDE_LENGTH_NUMBER_SIZE = 7.0;
 //    public static final double DEFAULT_SIDE_LENGTH_NUMBER_SIZE = 6.0;
-    public static final double[] ALTER_SIDE_LENGTH_NUMBER_SIZE = new double[] {
-            5.0, 6.0, 7.0, 8.0, 9.0
-    };
+//    public static final double[] ALTER_SIDE_LENGTH_NUMBER_SIZE = new double[] {
+//            5.0, 6.0, 7.0, 8.0, 9.0
+//    };
 
 //    public static final double DEFAULT_CELL_LENGTH = DEFAULT_INPUT_LENGTH / DEFAULT_LENGTH_NUMBER_SIZE;
 
@@ -68,18 +76,25 @@ public class Constant {
 //    public static final double[] ALTER_PRIVACY_BUDGET_ARRAY = new double[] {
 //            0.2, 0.4, 0.6, 0.8, 1.0
 //    };
-    public static final double DEFAULT_PRIVACY_BUDGET = 2.0;
+    public static final double DEFAULT_PRIVACY_BUDGET = 3.3;
 
 
+    public static final double[] ALTER_PRIVACY_BUDGET_ARRAY = new double[] {
+            0.5, 1.2, 1.9, 2.6, 3.3
+    };
+//    public static final double DEFAULT_PRIVACY_BUDGET = 2.5;
+//
+//
 //    public static final double[] ALTER_PRIVACY_BUDGET_ARRAY = new double[] {
 //            0.5, 1.0, 1.5, 2.0, 2.5
 //    };
-    public static final double[] ALTER_PRIVACY_BUDGET_ARRAY = new double[] {
-            1.0, 1.5, 2.0, 2.5, 3.0
-    };
+//    public static final double[] ALTER_PRIVACY_BUDGET_ARRAY = new double[] {
+//            1.0, 1.5, 2.0, 2.5, 3.0
+//    };
 
 //    public static final double[] FINE_GRIT_PRIVACY_BUDGET_ARRAY = BasicArray.getIncreaseDoubleNumberArray(0.2, 0.01, 3.0);
-    public static final double[] FINE_GRIT_PRIVACY_BUDGET_ARRAY = BasicArray.getIncreasedoubleNumberArray(0.45, 0.01, 3.05);
+    public static final double[] FINE_GRIT_PRIVACY_BUDGET_ARRAY = BasicArray.getIncreasedoubleNumberArray(0.35, 0.01, 5.05);
+//    public static final double[] FINE_GRIT_PRIVACY_BUDGET_ARRAY = BasicArray.getIncreasedoubleNumberArray(0.35, 0.01, 3.05);
 //    public static final double[] FINE_GRIT_PRIVACY_BUDGET_ARRAY = BasicArray.getIncreaseDoubleNumberArray(0.9, 0.01, 3.1);
 
 

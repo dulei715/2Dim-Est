@@ -77,6 +77,8 @@ public class AlterParameterGRun {
 
         for (int i = 0; i < arraySize; i++) {
 
+            System.out.println("grid Length: " + gridLengthArray[i] + "; gridSize: " + inputLengthSizeNumberArray[i]);
+
             // 计算不同的gridLength对应的不同的integerPointList
             integerPointList = Grid.toIntegerPoint(doublePointList, new Double[]{xBound, yBound}, gridLengthArray[i]);
 
@@ -111,14 +113,22 @@ public class AlterParameterGRun {
 
             // todo: geoI - two norm: 根据相应的DAM，计算出对应的LP，根据LP，计算出Geo-I对应的epsilon
             tempGeoIScheme = new DiscretizedSubsetExponentialGeoI(epsilon, gridLengthArray[i], inputSideLength, xBound, yBound, new TwoNormTwoDimensionalIntegerPointDistanceTor());
+//            System.out.println("gridLength is " + gridLengthArray[i]);
             geoITransformEpsilon = new SubsetGeoITransformEpsilon(Constant.FINE_GRIT_PRIVACY_BUDGET_ARRAY, tempGeoIScheme);
             transformedEpsilon = geoITransformEpsilon.getEpsilonByLocalPrivacy(tempLocalPrivacy);
             tempSubsetGeoITwoNormExperimentResult = SubsetGeoITwoNormRun.run(integerPointList, rawDataStatistic, gridLengthArray[i], inputSideLength, transformedEpsilon, xBound, yBound);
             tempSubsetGeoITwoNormExperimentResult.addPair(1, Constant.areaLengthKey, String.valueOf(inputSideLength));
             subsetGeoITwoNormExperimentResultList.add(tempSubsetGeoITwoNormExperimentResult);
 
-            tempHUEMExperimentResult = HUEMSRun.run(integerPointList, rawDataStatistic, gridLengthArray[i], inputSideLength, alterDiskOptimalSizeB[i]*gridLengthArray[i], epsilon, kParameter, xBound, yBound);
-            tempHUEMExperimentResult.addPair(1, Constant.areaLengthKey, String.valueOf(inputSideLength));
+            //todo: remove notations
+            System.out.println("gridLength: " + gridLengthArray[i] + "; inputSideLength: " + inputSideLength + "; alterDiskOptimalSizeB: " + alterDiskOptimalSizeB[i]);
+            if (alterDiskOptimalSizeB[i] < 1) {
+                tempHUEMExperimentResult = (ExperimentResult) tempDiskExperimentResult.clone();
+                tempHUEMExperimentResult.setPair(Constant.schemeNameKey, Constant.hybridUniformExponentialSchemeKey);
+            } else {
+                tempHUEMExperimentResult = HUEMSRun.run(integerPointList, rawDataStatistic, gridLengthArray[i], inputSideLength, alterDiskOptimalSizeB[i]*gridLengthArray[i], epsilon, kParameter, xBound, yBound);
+                tempHUEMExperimentResult.addPair(1, Constant.areaLengthKey, String.valueOf(inputSideLength));
+            }
             huemExperimentResultList.add(tempHUEMExperimentResult);
         }
 //        alterParameterMap.put(subsetGeoIOneNorm, subsetGeoIOneNormExperimentResultList);

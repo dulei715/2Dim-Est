@@ -102,6 +102,9 @@ public class DiscretizedDiskSchemeTool {
      * @return
      */
     public static List<TwoDimensionalIntegerPoint> calculateHighProbabilityBorderCellIndexList(Integer sizeB) {
+        if (sizeB <= 0) {
+            return new ArrayList<>();
+        }
         List<TwoDimensionalIntegerPoint> outerCellIndexList;
         double sqrt2 = Math.sqrt(2);
         double tempDiff = sizeB / sqrt2 - 0.5;
@@ -111,6 +114,10 @@ public class DiscretizedDiskSchemeTool {
 //        if (outerCellSize < 0) {
 //            System.out.println("error outerCellSize!");
 //        }
+        //todo: remove notations
+        if (outerCellSize < 0) {
+            System.out.println("Illegal outer cell size!");
+        }
         outerCellIndexList = new ArrayList<>(outerCellSize);
         int xIndexTemp;
         for (int i = 1; i <= outerCellSize; i++) {

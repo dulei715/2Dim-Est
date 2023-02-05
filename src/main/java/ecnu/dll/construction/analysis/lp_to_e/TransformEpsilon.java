@@ -2,6 +2,7 @@ package ecnu.dll.construction.analysis.lp_to_e;
 
 import cn.edu.ecnu.basic.BasicArray;
 import cn.edu.ecnu.collection.ArraysUtils;
+import cn.edu.ecnu.constant_values.ConstantValues;
 
 import java.util.Arrays;
 
@@ -56,7 +57,8 @@ public class TransformEpsilon {
         }
         int rightIndex = -index - 1;
         if (rightIndex < 1 || rightIndex >= this.relativeLocalPrivacyArray.length) {
-            throw new RuntimeException("The local privacy is not in supported range!");
+            throw new RuntimeException("The local privacy is not in supported range! " + "the local privacy value should be in [" + this.relativeLocalPrivacyArray[0]
+                    + ", " + this.relativeLocalPrivacyArray[this.relativeLocalPrivacyArray.length-1] +  "] and the input local privacy value is " + localPrivacy);
         }
         int leftIndex = rightIndex - 1;
         double leftLP = this.relativeLocalPrivacyArray[leftIndex];
