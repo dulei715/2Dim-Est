@@ -33,7 +33,7 @@ public class SubsetGeoITransformEpsilon {
         this.epsilonArray = epsilonArray;
 //        this.geoIScheme = geoIScheme;
         this.geoIScheme = (DiscretizedSubsetExponentialGeoI) geoIScheme.clone();
-        this.geoILocalPrivacy = new Norm2GeoILocalPrivacy(this.geoIScheme);
+        this.geoILocalPrivacy = new Norm2GeoILocalPrivacy(this.geoIScheme); // todo: delete
         boolean isAscending = ArraysUtils.isAscending(epsilonArray);
         if (!isAscending) {
             throw new RuntimeException("The epsilonArray is not ascending!");

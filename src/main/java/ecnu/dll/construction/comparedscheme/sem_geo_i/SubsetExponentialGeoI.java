@@ -85,8 +85,12 @@ public class SubsetExponentialGeoI<X> {
 
     private void setSetSizeKWithMeanEpsilon() {
         int m = this.inputElementList.size();
-        double epsilonMean = this.differentElementsDistanceSum * this.epsilon / (m*(m-1));
-        this.setSizeK = (int) Math.ceil(m / (Math.exp(epsilonMean) + 1));
+        if (m < 2) {
+            this.setSizeK = 1;
+        } else {
+            double epsilonMean = this.differentElementsDistanceSum * this.epsilon / (m * (m - 1));
+            this.setSizeK = (int) Math.ceil(m / (Math.exp(epsilonMean) + 1));
+        }
     }
 
     private void addElement(TreeMap<Double, List<Integer>>[] treeMapArray, int mainElementIndex, int judgeElementIndex, Double distance) {
@@ -155,10 +159,8 @@ public class SubsetExponentialGeoI<X> {
                 this.disset[i][tempDistanceIndex] = tempList;
             }
         }
-
         // 初始化discount
         this.discount = new Integer[this.disset.length][this.dis.length];
-
     }
 
 

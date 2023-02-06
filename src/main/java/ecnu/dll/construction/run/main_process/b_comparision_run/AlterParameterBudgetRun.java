@@ -91,7 +91,12 @@ public class AlterParameterBudgetRun {
             tempSubsetGeoITwoNormExperimentResult = SubsetGeoITwoNormRun.run(integerPointList, rawDataStatistic, gridLength, inputSideLength, transformedEpsilon, xBound, yBound);
             subsetGeoITwoNormExperimentResultList.add(tempSubsetGeoITwoNormExperimentResult);
 
-            tempHUEMExperimentResult = HUEMSRun.run(integerPointList, rawDataStatistic, gridLength, inputSideLength, alterDiskOptimalSizeB[i]*gridLength, epsilonArray[i], kParameter, xBound, yBound);
+            if (alterDiskOptimalSizeB[i] < 1) {
+                tempHUEMExperimentResult = (ExperimentResult) tempDiskExperimentResult.clone();
+                tempHUEMExperimentResult.setPair(Constant.schemeNameKey, Constant.hybridUniformExponentialSchemeKey);
+            } else {
+                tempHUEMExperimentResult = HUEMSRun.run(integerPointList, rawDataStatistic, gridLength, inputSideLength, alterDiskOptimalSizeB[i]*gridLength, epsilonArray[i], kParameter, xBound, yBound);
+            }
             huemExperimentResultList.add(tempHUEMExperimentResult);
         }
 //        alterParameterMap.put(subsetGeoIOneNorm, subsetGeoIOneNormExperimentResultList);

@@ -11,7 +11,7 @@ import java.util.*;
 
 @SuppressWarnings("Duplicates")
 public class AlterParameterKRun {
-    public static Map<String, List<ExperimentResult>> run(final List<TwoDimensionalIntegerPoint> integerPointList, double inputSideLength, final TreeMap<TwoDimensionalIntegerPoint, Double> rawDataStatistic, double xBound, double yBound) {
+    public static Map<String, List<ExperimentResult>> run(final List<TwoDimensionalIntegerPoint> integerPointList, double inputSideLength, final TreeMap<TwoDimensionalIntegerPoint, Double> rawDataStatistic, double xBound, double yBound) throws CloneNotSupportedException {
 //        String inputDataPath = Constant.DEFAULT_INPUT_PATH;
 
         int arraySize = Constant.ALTER_SIDE_LENGTH_NUMBER_SIZE.length;
@@ -53,7 +53,12 @@ public class AlterParameterKRun {
             rhombusExperimentResultList.add(tempRhombusExperimentResult);
             tempDiskExperimentResult = DAMRun.run(integerPointList, rawDataStatistic, gridLength, inputSideLength, diskOptimalSizeB*gridLength, epsilon, kParameterArray[i], xBound, yBound);
             diskExperimentResultList.add(tempDiskExperimentResult);
-            tempHUEMExperimentResult = HUEMSRun.run(integerPointList, rawDataStatistic, gridLength, inputSideLength, diskOptimalSizeB*gridLength, epsilon, kParameterArray[i], xBound, yBound);
+            if (diskOptimalSizeB <= 0) {
+                tempHUEMExperimentResult = (ExperimentResult) tempDiskExperimentResult.clone();
+                tempHUEMExperimentResult.setPair(Constant.schemeNameKey, Constant.hybridUniformExponentialSchemeKey);
+            } else {
+                tempHUEMExperimentResult = HUEMSRun.run(integerPointList, rawDataStatistic, gridLength, inputSideLength, diskOptimalSizeB*gridLength, epsilon, kParameterArray[i], xBound, yBound);
+            }
             huemExperimentResultList.add(tempHUEMExperimentResult);
         }
         alterParameterMap.put(rhombusKey, rhombusExperimentResultList);

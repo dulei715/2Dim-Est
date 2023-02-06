@@ -121,8 +121,6 @@ public class RAMRun {
 //
 ////        MyPrint.showList(pointList, ConstantValues.LINE_SPLIT);
 //        RAMRun.run0(pointList, cellLength, inputLength, bLength, epsilon, kParameter, xBound, yBound);
-
-
     }
 
 }

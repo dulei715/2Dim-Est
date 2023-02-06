@@ -115,9 +115,6 @@ public class DiscretizedDiskSchemeTool {
 //            System.out.println("error outerCellSize!");
 //        }
         //todo: remove notations
-        if (outerCellSize < 0) {
-            System.out.println("Illegal outer cell size!");
-        }
         outerCellIndexList = new ArrayList<>(outerCellSize);
         int xIndexTemp;
         for (int i = 1; i <= outerCellSize; i++) {

@@ -4,7 +4,7 @@ import cn.edu.ecnu.DecimalTool;
 import cn.edu.ecnu.comparator.TwoDimensionalIntegerPointComparator;
 import cn.edu.ecnu.differential_privacy.cdp.basic_struct.DistanceTor;
 import cn.edu.ecnu.statistic.StatisticTool;
-import cn.edu.ecnu.struct.Grid;
+import cn.edu.ecnu.struct.grid.Grid;
 import cn.edu.ecnu.struct.point.TwoDimensionalIntegerPoint;
 import ecnu.dll.construction._config.Constant;
 import ecnu.dll.construction.comparedscheme.sem_geo_i.SubsetExponentialGeoI;

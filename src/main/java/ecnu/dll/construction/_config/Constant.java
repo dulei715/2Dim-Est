@@ -16,7 +16,8 @@ public class Constant {
 
 
 //    public static final String basicPath = "/root/code/2_2.ProgramForSpatialLDPEstimation/1.JavaCode";
-    public static final String basicPath = "E:\\1.学习\\4.数据集\\2.dataset_for_spatial_estimation";
+    public static final String basicPath = "/root/code/2_seldp/";
+//    public static final String basicPath = "E:\\1.学习\\4.数据集\\2.dataset_for_spatial_estimation";
     public static final String basicDatasetPath = StringUtil.join(ConstantValues.FILE_SPLIT, basicPath, "0_dataset");
     public static final String basicResultPath = StringUtil.join(ConstantValues.FILE_SPLIT, basicPath, "result");
 
@@ -45,11 +46,11 @@ public class Constant {
 
 //    public static final double DEFAULT_CELL_LENGTH = 0.0225; // d/4
     // 记录转成整数cell后，输入数据的长度
-    public static final double DEFAULT_SIDE_LENGTH_NUMBER_SIZE = 4.0;
+    public static final double DEFAULT_SIDE_LENGTH_NUMBER_SIZE = 5.0;
     public static final double[] ALTER_SIDE_LENGTH_NUMBER_SIZE = new double[] {
             2.0, 3.0, 4.0, 5.0, 6.0
     };
-//    public static final double DEFAULT_SIDE_LENGTH_NUMBER_SIZE = 4.0;
+//    public static final double DEFAULT_SIDE_LENGTH_NUMBER_SIZE = 5.0;
 //    public static final double[] ALTER_SIDE_LENGTH_NUMBER_SIZE = new double[] {
 //            1.0, 2.0, 3.0, 4.0, 5.0
 //    };
@@ -76,8 +77,12 @@ public class Constant {
 //    public static final double[] ALTER_PRIVACY_BUDGET_ARRAY = new double[] {
 //            0.2, 0.4, 0.6, 0.8, 1.0
 //    };
+//    public static final double DEFAULT_PRIVACY_BUDGET = 7.5;
+//
+//    public static final double[] ALTER_PRIVACY_BUDGET_ARRAY = new double[] {
+//            4.7, 5.4, 6.1, 6.8, 7.5
+//    };
     public static final double DEFAULT_PRIVACY_BUDGET = 3.3;
-
 
     public static final double[] ALTER_PRIVACY_BUDGET_ARRAY = new double[] {
             0.5, 1.2, 1.9, 2.6, 3.3
@@ -100,7 +105,8 @@ public class Constant {
 
 //    public static final double DEFAULT_POSITIVE_B_LENGTH = 1;
 
-    public static final double DEFAULT_K_PARAMETER = 0.25;
+//    public static final double DEFAULT_K_PARAMETER = 0.25;
+    public static final double DEFAULT_K_PARAMETER = 0.0;
     public static final double[] ALTER_K_PARAMETER_ARRAY = new double[] {
             0.0, 0.25, 0.5, 0.75, 1.0
     };
