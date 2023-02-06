@@ -46,14 +46,14 @@ public class Constant {
 
 //    public static final double DEFAULT_CELL_LENGTH = 0.0225; // d/4
     // 记录转成整数cell后，输入数据的长度
-    public static final double DEFAULT_SIDE_LENGTH_NUMBER_SIZE = 5.0;
-    public static final double[] ALTER_SIDE_LENGTH_NUMBER_SIZE = new double[] {
-            2.0, 3.0, 4.0, 5.0, 6.0
-    };
 //    public static final double DEFAULT_SIDE_LENGTH_NUMBER_SIZE = 5.0;
 //    public static final double[] ALTER_SIDE_LENGTH_NUMBER_SIZE = new double[] {
-//            1.0, 2.0, 3.0, 4.0, 5.0
+//            2.0, 3.0, 4.0, 5.0, 6.0
 //    };
+    public static final double DEFAULT_SIDE_LENGTH_NUMBER_SIZE = 5.0;
+    public static final double[] ALTER_SIDE_LENGTH_NUMBER_SIZE = new double[] {
+            1.0, 2.0, 3.0, 4.0, 5.0
+    };
 //    public static final double DEFAULT_SIDE_LENGTH_NUMBER_SIZE = 4.0;
 //    public static final double[] ALTER_SIDE_LENGTH_NUMBER_SIZE = new double[] {
 //            3.0, 4.0, 5.0, 6.0, 7.0

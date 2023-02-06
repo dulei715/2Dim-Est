@@ -121,7 +121,7 @@ public class AlterParameterGRun {
             subsetGeoITwoNormExperimentResultList.add(tempSubsetGeoITwoNormExperimentResult);
 
             //todo: remove notations
-            System.out.println("gridLength: " + gridLengthArray[i] + "; inputSideLength: " + inputSideLength + "; alterDiskOptimalSizeB: " + alterDiskOptimalSizeB[i]);
+//            System.out.println("gridLength: " + gridLengthArray[i] + "; inputSideLength: " + inputSideLength + "; alterDiskOptimalSizeB: " + alterDiskOptimalSizeB[i]);
             if (alterDiskOptimalSizeB[i] < 1) {
                 tempHUEMExperimentResult = (ExperimentResult) tempDiskExperimentResult.clone();
                 tempHUEMExperimentResult.setPair(Constant.schemeNameKey, Constant.hybridUniformExponentialSchemeKey);
