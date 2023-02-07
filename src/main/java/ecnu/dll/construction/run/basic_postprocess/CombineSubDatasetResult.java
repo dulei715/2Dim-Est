@@ -1,4 +1,4 @@
-package ecnu.dll.construction.run.basic_preprocess;
+package ecnu.dll.construction.run.basic_postprocess;
 
 import cn.edu.ecnu.basic.StringUtil;
 import cn.edu.ecnu.constant_values.ConstantValues;
@@ -30,10 +30,21 @@ public class CombineSubDatasetResult {
         }
     }
 
-    public static void composeCSVResult(List<String> inputPathList, String outputDir, List<ColumnBean> columnBeanList, double divideFactor) {
-        
+//    public static void composeCSVResult(List<String> inputPathList, String outputDir, List<ColumnBean> columnBeanList, double divideFactor) {
+//
+//    }
+    public static void composeCSVResult(String relativeBasicPath, List<ColumnBean> columnBeanList, double divideFactor) {
+        File relativeBasicFile = new File(relativeBasicPath);
+        String[] directoryPathArray = FileTool.toStringArray(relativeBasicFile.listFiles(Constant.directoryFilter));
+        String tempInputFilePathArray;
+        String tempOutputFilePath;
+
     }
+
     public static void main(String[] args) {
+
+    }
+    public static void main0(String[] args) {
         String[] inputArrayParentPath = new String[]{
                 "F:\\dataset\\test\\result\\crime\\crimeA",
                 "F:\\dataset\\test\\result\\crime\\crimeB",
