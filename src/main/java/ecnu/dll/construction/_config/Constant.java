@@ -16,7 +16,8 @@ public class Constant {
 
 
 //    public static final String basicPath = "/root/code/2_2.ProgramForSpatialLDPEstimation/1.JavaCode";
-    public static final String basicPath = "/root/code/2_seldp/";
+    public static final String basicPath = "E:\\dataset";
+//    public static final String basicPath = "/root/code/2_seldp/";
 //    public static final String basicPath = "E:\\1.学习\\4.数据集\\2.dataset_for_spatial_estimation";
     public static final String basicDatasetPath = StringUtil.join(ConstantValues.FILE_SPLIT, basicPath, "0_dataset");
     public static final String basicResultPath = StringUtil.join(ConstantValues.FILE_SPLIT, basicPath, "result");
@@ -32,6 +33,8 @@ public class Constant {
 
 
     public static final Integer[] DEFAULT_ONE_DIMENSIONAL_COEFFICIENTS = new Integer[]{1, 2, 1};
+
+
 
 
     // for test
@@ -141,6 +144,13 @@ public class Constant {
     public static final String alterGKey = "alteringG";
     public static final String alterKKey = "alteringK";
 
+    public static final String[] alterKeyArray = new String[] {
+            alterBKey,
+            alterBudgetKey,
+            alterGKey,
+            alterKKey
+    };
+
     // 记录数据集名称
     public static final String chicagoAKey = "ChicagoA";
     public static final String chicagoBKey = "ChicagoB";
@@ -190,6 +200,22 @@ public class Constant {
     public static final String privacyBudgetKey = "PrivacyBudget";
     public static final String contributionKKey = "ContributionK";
     public static final String wassersteinDistanceKey = "WassersteinDistance";
+
+    public static final ColumnBean[] columnBeanArray = new ColumnBean[] {
+            new ColumnBean(1, dataSetNameKey, "java.lang.String", false),
+            new ColumnBean(2, dataPointSizeKey, "java.lang.Integer", false),
+            new ColumnBean(3, areaLengthKey, "java.lang.Double", false),
+            new ColumnBean(4, schemeNameKey, "java.lang.String", false),
+            new ColumnBean(5, postProcessTimeKey, "java.lang.Long", true),
+            new ColumnBean(6, gridUnitSizeKey, "java.lang.Double", false),
+            new ColumnBean(7, dataTypeSizeKey, "java.lang.Integer", false),
+            new ColumnBean(8, sizeDKey, "java.lang.Integer", false),
+            new ColumnBean(9, sizeBKey, "java.lang.Integer", false),
+            new ColumnBean(10, privacyBudgetKey, "java.lang.Double", false),
+            new ColumnBean(11, contributionKKey, "java.lang.Double", false),
+            new ColumnBean(12, wassersteinDistanceKey, "java.lang.Double", true)
+
+    };
 
 //    public static final String[] attributeArray = new String[]{
 //            dataSetNameKey,

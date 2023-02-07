@@ -1,12 +1,17 @@
 package ecnu.dll.construction.run.basic_postprocess;
 
+import cn.edu.ecnu.basic.BasicArray;
 import cn.edu.ecnu.basic.StringUtil;
+import cn.edu.ecnu.collection.ArraysUtils;
+import cn.edu.ecnu.collection.ListUtils;
 import cn.edu.ecnu.constant_values.ConstantValues;
 import cn.edu.ecnu.result.FileTool;
 import cn.edu.ecnu.struct.result.ColumnBean;
 import ecnu.dll.construction._config.Constant;
 
 import java.io.File;
+import java.lang.reflect.InvocationTargetException;
+import java.util.Arrays;
 import java.util.List;
 
 public class CombineSubDatasetResult {
@@ -33,16 +38,25 @@ public class CombineSubDatasetResult {
 //    public static void composeCSVResult(List<String> inputPathList, String outputDir, List<ColumnBean> columnBeanList, double divideFactor) {
 //
 //    }
-    public static void composeCSVResult(String relativeBasicPath, List<ColumnBean> columnBeanList, double divideFactor) {
+    public static void composeCSVResult(String relativeBasicPath, String... fileNames) throws ClassNotFoundException, InvocationTargetException, NoSuchMethodException, IllegalAccessException, InstantiationException {
         File relativeBasicFile = new File(relativeBasicPath);
         String[] directoryPathArray = FileTool.toStringArray(relativeBasicFile.listFiles(Constant.directoryFilter));
-        String tempInputFilePathArray;
+        String[] tempInputFilePathArray;
         String tempOutputFilePath;
-
+        List<ColumnBean> columnBeanList = Arrays.asList(Constant.columnBeanArray);
+        for (String fileName : fileNames) {
+            tempInputFilePathArray = StringUtil.concatGiveString(directoryPathArray, ConstantValues.FILE_SPLIT, fileName);
+            tempOutputFilePath = relativeBasicPath.concat(ConstantValues.FILE_SPLIT).concat(fileName);
+            FileTool.composeCSVFileWithTheSameFirstLine(tempInputFilePathArray, tempOutputFilePath, columnBeanList, FileTool.AVERAGE_COMPOSE);
+        }
     }
 
-    public static void main(String[] args) {
-
+    public static void main(String[] args) throws ClassNotFoundException, InvocationTargetException, NoSuchMethodException, IllegalAccessException, InstantiationException {
+        String[] allRelativeBasicDir = ArraysUtils.combineArray(new String[][]{Constant.outputCrimeDirArray, Constant.outputNYCDirArray, new String[]{Constant.outputNormalDir}, new String[]{Constant.outputZipfDir}});
+        String[] fileNameArray = StringUtil.concatGiveString(Constant.alterKeyArray, ".csv");
+        for (String relativeBasicPath : allRelativeBasicDir) {
+            composeCSVResult(relativeBasicPath, fileNameArray);
+        }
     }
     public static void main0(String[] args) {
         String[] inputArrayParentPath = new String[]{

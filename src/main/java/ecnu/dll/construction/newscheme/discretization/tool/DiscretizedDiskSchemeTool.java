@@ -2,8 +2,6 @@ package ecnu.dll.construction.newscheme.discretization.tool;
 
 import cn.edu.ecnu.collection.ArraysUtils;
 import cn.edu.ecnu.collection.SetUtils;
-import cn.edu.ecnu.struct.pair.BasicPair;
-import cn.edu.ecnu.struct.pair.PairListUtils;
 import cn.edu.ecnu.struct.point.TwoDimensionalIntegerPoint;
 import cn.edu.ecnu.struct.point.TwoDimensionalIntegerPointUtils;
 import ecnu.dll.construction.newscheme.discretization.struct.ThreePartsStruct;
