@@ -281,6 +281,9 @@ public class SubsetExponentialGeoI<X> {
      * @return
      */
     public double[] estimator(List<Set<Integer>> reportedSubset) {
+        if (this.setSizeK == 1 && this.inputElementList.size() == 1) {
+            return new double[]{1.0};
+        }
         // 计算h矩阵
         int reportedSize = reportedSubset.size();
         double unitValue = 1.0 / reportedSize;

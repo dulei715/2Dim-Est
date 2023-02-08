@@ -19,7 +19,8 @@ public class AlterParameterBRun {
         /*
             1. 设置cell大小的参数（同时也是设置整数input的边长大小）
          */
-        double inputLengthSize = Constant.DEFAULT_SIDE_LENGTH_NUMBER_SIZE;
+//        double inputLengthSize = Constant.DEFAULT_SIDE_LENGTH_NUMBER_SIZE;
+        double inputLengthSize = Constant.DEFAULT_SIDE_LENGTH_NUMBER_SIZE_for_b_change;
         double gridLength = inputSideLength / inputLengthSize;
 
         /*

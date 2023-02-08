@@ -71,6 +71,7 @@ public class AlterParameterBudgetRun {
 
         for (int i = 0; i < arraySize; i++) {
 
+
             tempMdswExperimentResult = MDSWRun.run(integerPointList, rawDataStatistic, gridLength, inputSideLength, epsilonArray[i], xBound, yBound);
             mdswExperimentResultList.add(tempMdswExperimentResult);
 
@@ -80,13 +81,9 @@ public class AlterParameterBudgetRun {
             tempDiskExperimentResult = DAMRun.run(integerPointList, rawDataStatistic, gridLength, inputSideLength, alterDiskOptimalSizeB[i]*gridLength, epsilonArray[i], kParameter, xBound, yBound);
             diskExperimentResultList.add(tempDiskExperimentResult);
             damLocalPrivacy.resetEpsilon(epsilonArray[i]);
-            //todo: 计算DAM对应的 localPrivacy
+
             tempLocalPrivacy = damLocalPrivacy.getTransformLocalPrivacyValue();
 
-//            tempSubsetGeoIOneNormExperimentResult = SubsetGeoIOneNormRun.run(integerPointList, rawDataStatistic, gridLength, inputSideLength, epsilonArray[i], xBound, yBound);
-//            subsetGeoIOneNormExperimentResultList.add(tempSubsetGeoIOneNormExperimentResult);
-
-            // todo: 计算localPrivacy对应的新的epsilon
             transformedEpsilon = geoITransformEpsilon.getEpsilonByLocalPrivacy(tempLocalPrivacy);
             tempSubsetGeoITwoNormExperimentResult = SubsetGeoITwoNormRun.run(integerPointList, rawDataStatistic, gridLength, inputSideLength, transformedEpsilon, xBound, yBound);
             subsetGeoITwoNormExperimentResultList.add(tempSubsetGeoITwoNormExperimentResult);
@@ -99,12 +96,14 @@ public class AlterParameterBudgetRun {
             }
             huemExperimentResultList.add(tempHUEMExperimentResult);
         }
-//        alterParameterMap.put(subsetGeoIOneNorm, subsetGeoIOneNormExperimentResultList);
-        alterParameterMap.put(subsetGeoITwoNorm, subsetGeoITwoNormExperimentResultList);
+
+
         alterParameterMap.put(mdsw, mdswExperimentResultList);
+        alterParameterMap.put(subsetGeoITwoNorm, subsetGeoITwoNormExperimentResultList);
         alterParameterMap.put(rhombusKey, rhombusExperimentResultList);
         alterParameterMap.put(diskKey, diskExperimentResultList);
         alterParameterMap.put(hue, huemExperimentResultList);
+
         return alterParameterMap;
 
     }

@@ -16,8 +16,8 @@ public class Constant {
 
 
 //    public static final String basicPath = "/root/code/2_2.ProgramForSpatialLDPEstimation/1.JavaCode";
-    public static final String basicPath = "E:\\dataset";
-//    public static final String basicPath = "/root/code/2_seldp/";
+//    public static final String basicPath = "E:\\dataset";
+    public static final String basicPath = "/root/code/2_seldp/";
 //    public static final String basicPath = "E:\\1.学习\\4.数据集\\2.dataset_for_spatial_estimation";
     public static final String basicDatasetPath = StringUtil.join(ConstantValues.FILE_SPLIT, basicPath, "0_dataset");
     public static final String basicResultPath = StringUtil.join(ConstantValues.FILE_SPLIT, basicPath, "result");
@@ -54,6 +54,8 @@ public class Constant {
 //            2.0, 3.0, 4.0, 5.0, 6.0
 //    };
     public static final double DEFAULT_SIDE_LENGTH_NUMBER_SIZE = 5.0;
+    public static final double DEFAULT_SIDE_LENGTH_NUMBER_SIZE_for_b_change = DEFAULT_SIDE_LENGTH_NUMBER_SIZE;
+//    public static final double DEFAULT_SIDE_LENGTH_NUMBER_SIZE_for_b_change = 10.0;
     public static final double[] ALTER_SIDE_LENGTH_NUMBER_SIZE = new double[] {
             1.0, 2.0, 3.0, 4.0, 5.0
     };
@@ -85,7 +87,8 @@ public class Constant {
 //    public static final double[] ALTER_PRIVACY_BUDGET_ARRAY = new double[] {
 //            4.7, 5.4, 6.1, 6.8, 7.5
 //    };
-    public static final double DEFAULT_PRIVACY_BUDGET = 3.3;
+//    public static final double DEFAULT_PRIVACY_BUDGET = 3.3;
+    public static final double DEFAULT_PRIVACY_BUDGET = 1.9;
 
     public static final double[] ALTER_PRIVACY_BUDGET_ARRAY = new double[] {
             0.5, 1.2, 1.9, 2.6, 3.3
@@ -170,6 +173,10 @@ public class Constant {
     public static final String nycCPath = StringUtil.join(ConstantValues.FILE_SPLIT, basicDatasetPath, "1_real", "2_nyc", "nyc_point_C.txt");
     public static final String normalPath = StringUtil.join(ConstantValues.FILE_SPLIT, basicDatasetPath, "2_synthetic", "1_two_normal", "two_normal_point_extract.txt");
     public static final String zipfPath = StringUtil.join(ConstantValues.FILE_SPLIT, basicDatasetPath, "2_synthetic", "2_two_zipf", "two_zipf_point.txt");
+
+    // 记录被分割的dataset输出父路径的父路径
+    public static final String relativeParentCrimeDir = StringUtil.join(ConstantValues.FILE_SPLIT, basicResultPath, "crime");
+    public static final String relativeParentNYCDir = StringUtil.join(ConstantValues.FILE_SPLIT, basicResultPath, "nyc");
 
     // 记录dataset输出父路径
     public static final String[] outputCrimeDirArray = new String[] {

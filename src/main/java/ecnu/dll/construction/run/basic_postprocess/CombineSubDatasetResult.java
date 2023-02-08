@@ -51,12 +51,26 @@ public class CombineSubDatasetResult {
         }
     }
 
-    public static void main(String[] args) throws ClassNotFoundException, InvocationTargetException, NoSuchMethodException, IllegalAccessException, InstantiationException {
+    public static void composeAllRepeat() throws ClassNotFoundException, InvocationTargetException, NoSuchMethodException, IllegalAccessException, InstantiationException {
         String[] allRelativeBasicDir = ArraysUtils.combineArray(new String[][]{Constant.outputCrimeDirArray, Constant.outputNYCDirArray, new String[]{Constant.outputNormalDir}, new String[]{Constant.outputZipfDir}});
         String[] fileNameArray = StringUtil.concatGiveString(Constant.alterKeyArray, ".csv");
         for (String relativeBasicPath : allRelativeBasicDir) {
             composeCSVResult(relativeBasicPath, fileNameArray);
         }
+    }
+
+    public static void combineAllPart() {
+        String[] toBeCombinedBasicDir = ArraysUtils.combineArray(new String[][]{new String[]{Constant.relativeParentCrimeDir}, new String[]{Constant.relativeParentNYCDir}});
+        String[] fileNameArray = StringUtil.concatGiveString(Constant.alterKeyArray, ".csv");
+        for (String relativeBasicPath : toBeCombinedBasicDir) {
+            combineCSVResult(relativeBasicPath, fileNameArray);
+        }
+    }
+
+
+    public static void main(String[] args) throws ClassNotFoundException, InvocationTargetException, NoSuchMethodException, IllegalAccessException, InstantiationException {
+        composeAllRepeat();
+        combineAllPart();
     }
     public static void main0(String[] args) {
         String[] inputArrayParentPath = new String[]{
