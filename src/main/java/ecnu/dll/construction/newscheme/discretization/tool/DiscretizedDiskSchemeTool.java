@@ -32,6 +32,11 @@ public class DiscretizedDiskSchemeTool {
         return tempShrinkAreaSize;
     }
 
+    public static double getShrinkAreaSizeConstrainInTwoValue(Integer sizeB, int xIndex, int yIndex) {
+        //todo: calculate non shrink edition
+        return 0;
+    }
+
     public static TwoDimensionalIntegerPoint transformToWithin45(TwoDimensionalIntegerPoint centerCell, TwoDimensionalIntegerPoint judgeCell) {
         Integer[] differenceArray = new Integer[2];
         differenceArray[0] = Math.abs(centerCell.getXIndex() - judgeCell.getXIndex());

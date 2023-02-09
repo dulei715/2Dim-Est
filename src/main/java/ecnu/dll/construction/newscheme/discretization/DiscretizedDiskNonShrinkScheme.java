@@ -11,7 +11,7 @@ import java.util.*;
 
 @SuppressWarnings("ALL")
 /**
- * 过中心点认为占全部，不过中心点认为不占
+ * 过中心点认为占全部，不过中心点认为不占。
  */
 public class DiscretizedDiskNonShrinkScheme extends AbstractDiscretizedScheme {
 

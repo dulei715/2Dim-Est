@@ -26,7 +26,7 @@ public class AlterParameterBRun {
         /*
             2. 设置隐私预算budget
          */
-        double epsilon = Constant.DEFAULT_PRIVACY_BUDGET;
+        double epsilon = Constant.DEFAULT_PRIVACY_BUDGET_for_b_change;
 
         /*
             3. 分别针对Rhombus和Disk方案计算变化的整数b值
@@ -38,14 +38,18 @@ public class AlterParameterBRun {
         diskOptimalSizeB = DiscretizedDiskSchemeTool.getOptimalSizeBOfDiskScheme(epsilon, inputIntegerLengthSize);
         int[] alterRhombusSizeB = new int[arraySize], alterDiskSizeB = new int[arraySize];
         for (int i = 0; i < arraySize; i++) {
-            alterRhombusSizeB[i] = (int)Math.floor(rhombusOptimalSizeB * alterSizeBRatioArray[i]);
-            alterDiskSizeB[i] = (int)Math.floor(diskOptimalSizeB * alterSizeBRatioArray[i]);
+//            alterRhombusSizeB[i] = (int)Math.floor(rhombusOptimalSizeB * alterSizeBRatioArray[i]);
+//            alterDiskSizeB[i] = (int)Math.floor(diskOptimalSizeB * alterSizeBRatioArray[i]);
+            // todo: for b alter
+            alterRhombusSizeB[i] = i + 1;
+            alterDiskSizeB[i] = i + 1;
         }
-
+        System.out.println("R's best b is " + rhombusOptimalSizeB);
+        System.out.println("D's best b is " + diskOptimalSizeB);
         /*
             4. 设置邻居属性smooth的参与率
          */
-        double kParameter = Constant.DEFAULT_K_PARAMETER;
+        double kParameter = Constant.DEFAULT_K_PARAMETER_for_change_b;
 
 
         /*

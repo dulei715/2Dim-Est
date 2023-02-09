@@ -47,7 +47,7 @@ set(get(gca,'YLabel'),'FontSize',figure_FontSize_Y,'FontName','Times New Roman')
 
 h = legend('SubGeoI', 'MDSW','HUEM','RAM','DAM','Location','Best');
 set(h,'FontName','Times New Roman','FontSize',14,'FontWeight','normal');
-%legend('off');
+legend('off');
 saveas(fig,outputFileName,'fig');
 export_fig(fig , '-pdf' , '-r256' , '-transparent' , outputFileName);
 

@@ -1,7 +1,7 @@
 function zDrawAll()
 inputBasicPath = 'E:\1.学习\4.数据集\2.dataset_for_spatial_estimation\result';
-%outputBasicPath = 'E:\1.学习\4.论文\程鹏\讨论补充\github上传\TwoDimensionalLDPEstimation\tex\figures\result';
-outputBasicPath = 'E:\result';
+outputBasicPath = 'E:\1.学习\4.论文\程鹏\讨论补充\github上传\TwoDimensionalLDPEstimation\tex\figures\result';
+%outputBasicPath = 'E:\result';
 yLabelName = 'W_2^2';
 figure_MarkerSize = 15;
 figure_FontSize = 30;

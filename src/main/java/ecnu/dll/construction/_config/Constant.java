@@ -54,8 +54,8 @@ public class Constant {
 //            2.0, 3.0, 4.0, 5.0, 6.0
 //    };
     public static final double DEFAULT_SIDE_LENGTH_NUMBER_SIZE = 5.0;
-    public static final double DEFAULT_SIDE_LENGTH_NUMBER_SIZE_for_b_change = DEFAULT_SIDE_LENGTH_NUMBER_SIZE;
-//    public static final double DEFAULT_SIDE_LENGTH_NUMBER_SIZE_for_b_change = 10.0;
+//    public static final double DEFAULT_SIDE_LENGTH_NUMBER_SIZE_for_b_change = DEFAULT_SIDE_LENGTH_NUMBER_SIZE;
+    public static final double DEFAULT_SIDE_LENGTH_NUMBER_SIZE_for_b_change = 7.0;
     public static final double[] ALTER_SIDE_LENGTH_NUMBER_SIZE = new double[] {
             1.0, 2.0, 3.0, 4.0, 5.0
     };
@@ -89,6 +89,7 @@ public class Constant {
 //    };
 //    public static final double DEFAULT_PRIVACY_BUDGET = 3.3;
     public static final double DEFAULT_PRIVACY_BUDGET = 1.9;
+    public static final double DEFAULT_PRIVACY_BUDGET_for_b_change = 2.6;
 
     public static final double[] ALTER_PRIVACY_BUDGET_ARRAY = new double[] {
             0.5, 1.2, 1.9, 2.6, 3.3
@@ -113,6 +114,7 @@ public class Constant {
 
 //    public static final double DEFAULT_K_PARAMETER = 0.25;
     public static final double DEFAULT_K_PARAMETER = 0.0;
+    public static final double DEFAULT_K_PARAMETER_for_change_b = 0.25;
     public static final double[] ALTER_K_PARAMETER_ARRAY = new double[] {
             0.0, 0.25, 0.5, 0.75, 1.0
     };
