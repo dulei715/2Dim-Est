@@ -8,6 +8,7 @@ import ecnu.dll.construction.analysis.e_to_lp.Norm2DAMLocalPrivacy;
 import ecnu.dll.construction.analysis.e_to_lp.abstract_class.DAMLocalPrivacy;
 import ecnu.dll.construction.analysis.lp_to_e.SubsetGeoITransformEpsilon;
 import ecnu.dll.construction.comparedscheme.sem_geo_i.discretization.DiscretizedSubsetExponentialGeoI;
+import ecnu.dll.construction.newscheme.discretization.DiscretizedDiskNonShrinkScheme;
 import ecnu.dll.construction.newscheme.discretization.DiscretizedDiskScheme;
 import ecnu.dll.construction.newscheme.discretization.tool.DiscretizedDiskSchemeTool;
 import ecnu.dll.construction.newscheme.discretization.tool.DiscretizedRhombusSchemeTool;
@@ -53,18 +54,21 @@ public class AlterParameterBudgetRun {
             针对SubsetGeoI, MSW, Rhombus, Disk, HUEM 分别计算对应budget下的估计并返回相应的wasserstein距离
          */
         Map<String, List<ExperimentResult>> alterParameterMap = new HashMap<>();
-        String rhombusKey = Constant.rhombusSchemeKey, diskKey = Constant.diskSchemeKey, subsetGeoIOneNorm = Constant.subsetGeoIOneNormSchemeKey, subsetGeoITwoNorm = Constant.subsetGeoITwoNormSchemeKey, mdsw = Constant.multiDimensionalSquareWaveSchemeKey, hue = Constant.hybridUniformExponentialSchemeKey;
-        ExperimentResult tempRhombusExperimentResult, tempDiskExperimentResult, tempSubsetGeoIOneNormExperimentResult, tempSubsetGeoITwoNormExperimentResult, tempMdswExperimentResult, tempHUEMExperimentResult;
-        List<ExperimentResult> rhombusExperimentResultList = new ArrayList<>(), diskExperimentResultList = new ArrayList<>(), subsetGeoIOneNormExperimentResultList = new ArrayList<>(), subsetGeoITwoNormExperimentResultList = new ArrayList<>(), mdswExperimentResultList = new ArrayList<>(), huemExperimentResultList = new ArrayList<>();
+        String rhombusKey = Constant.rhombusSchemeKey, diskKey = Constant.diskSchemeKey, diskNonShrinkKey = Constant.diskNonShrinkSchemeKey, subsetGeoIOneNorm = Constant.subsetGeoIOneNormSchemeKey, subsetGeoITwoNorm = Constant.subsetGeoITwoNormSchemeKey, mdsw = Constant.multiDimensionalSquareWaveSchemeKey, hue = Constant.hybridUniformExponentialSchemeKey;
+        ExperimentResult tempRhombusExperimentResult, tempDiskExperimentResult, tempDiskNonShrinkExperimentResult, tempSubsetGeoIOneNormExperimentResult, tempSubsetGeoITwoNormExperimentResult, tempMdswExperimentResult, tempHUEMExperimentResult;
+        List<ExperimentResult> rhombusExperimentResultList = new ArrayList<>(), diskExperimentResultList = new ArrayList<>(), diskNonShrinkExperimentResultList = new ArrayList<>(), subsetGeoIOneNormExperimentResultList = new ArrayList<>(), subsetGeoITwoNormExperimentResultList = new ArrayList<>(), mdswExperimentResultList = new ArrayList<>(), huemExperimentResultList = new ArrayList<>();
 
         ExperimentResultAndScheme tempDiskExperimentResultAndScheme;
         DiscretizedDiskScheme tempDiskScheme;
+        DiscretizedDiskNonShrinkScheme tempDiskNonShrinkScheme;
         DiscretizedSubsetExponentialGeoI tempGeoIScheme;
         DAMLocalPrivacy damLocalPrivacy;
         SubsetGeoITransformEpsilon geoITransformEpsilon;
         double tempLocalPrivacy, transformedEpsilon;
 
         tempDiskScheme = new DiscretizedDiskScheme(epsilonArray[0], gridLength, inputSideLength, kParameter, xBound, yBound);
+        tempDiskNonShrinkScheme = new DiscretizedDiskNonShrinkScheme(epsilonArray[0], gridLength, inputSideLength, kParameter, xBound, yBound);
+        // todo: add for disk non shrink scheme: ... down
         damLocalPrivacy = new Norm2DAMLocalPrivacy(tempDiskScheme);
         tempGeoIScheme = new DiscretizedSubsetExponentialGeoI(epsilonArray[0], gridLength, inputSideLength, xBound, yBound, new TwoNormTwoDimensionalIntegerPointDistanceTor());
         geoITransformEpsilon = new SubsetGeoITransformEpsilon(Constant.FINE_GRIT_PRIVACY_BUDGET_ARRAY, tempGeoIScheme);

@@ -55,7 +55,7 @@ public class Constant {
 //    };
     public static final double DEFAULT_SIDE_LENGTH_NUMBER_SIZE = 5.0;
 //    public static final double DEFAULT_SIDE_LENGTH_NUMBER_SIZE_for_b_change = DEFAULT_SIDE_LENGTH_NUMBER_SIZE;
-    public static final double DEFAULT_SIDE_LENGTH_NUMBER_SIZE_for_b_change = 7.0;
+    public static final double DEFAULT_SIDE_LENGTH_NUMBER_SIZE_for_b_change = 9.0;
     public static final double[] ALTER_SIDE_LENGTH_NUMBER_SIZE = new double[] {
             1.0, 2.0, 3.0, 4.0, 5.0
     };
@@ -137,6 +137,7 @@ public class Constant {
     // 记录scheme的Key
     public static final String rhombusSchemeKey = "rhombus";
     public static final String diskSchemeKey = "disk";
+    public static final String diskNonShrinkSchemeKey = "diskNonShrink";
     public static final String hybridUniformExponentialSchemeKey = "hue";
     public static final String multiDimensionalSquareWaveSchemeKey = "mdsw";
 

@@ -38,11 +38,11 @@ public class AlterParameterBRun {
         diskOptimalSizeB = DiscretizedDiskSchemeTool.getOptimalSizeBOfDiskScheme(epsilon, inputIntegerLengthSize);
         int[] alterRhombusSizeB = new int[arraySize], alterDiskSizeB = new int[arraySize];
         for (int i = 0; i < arraySize; i++) {
-//            alterRhombusSizeB[i] = (int)Math.floor(rhombusOptimalSizeB * alterSizeBRatioArray[i]);
-//            alterDiskSizeB[i] = (int)Math.floor(diskOptimalSizeB * alterSizeBRatioArray[i]);
+            alterRhombusSizeB[i] = (int)Math.round(rhombusOptimalSizeB * alterSizeBRatioArray[i]);
+            alterDiskSizeB[i] = (int)Math.round(diskOptimalSizeB * alterSizeBRatioArray[i]);
             // todo: for b alter
-            alterRhombusSizeB[i] = i + 1;
-            alterDiskSizeB[i] = i + 1;
+//            alterRhombusSizeB[i] = i + 1;
+//            alterDiskSizeB[i] = i + 1;
         }
         System.out.println("R's best b is " + rhombusOptimalSizeB);
         System.out.println("D's best b is " + diskOptimalSizeB);

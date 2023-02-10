@@ -99,8 +99,10 @@ public class DiscretizedDiskNonShrinkScheme extends AbstractDiscretizedScheme {
         this.lowerIndex45 = (int) Math.floor(this.index45Prime);
         double differ = this.index45Prime - this.lowerIndex45;
         if (differ < 0.5) {
-            this.edge45Area = 4 * differ * differ;
+            //不过中心店，设置为0
+            this.edge45Area = 0.0;
         } else {
+            // 过中心点，设置为1
             this.edge45Area = 1.0;
         }
     }
@@ -124,7 +126,7 @@ public class DiscretizedDiskNonShrinkScheme extends AbstractDiscretizedScheme {
 
 
     /**
-     * 设置0到45之间（不含边界）的外边界经过shrink后的面积
+     * 设置0到45之间（不含边界）的外边界经过shrink后的面积(只可能是0或者1)
      */
     private void setHighProbabilityBorderCellAreaSize() {
         this.highProbabilityBorderCellAreaSizeList = new ArrayList<>(this.highProbabilityBorderCellIndexList.size());
@@ -135,7 +137,7 @@ public class DiscretizedDiskNonShrinkScheme extends AbstractDiscretizedScheme {
             tempPair = this.highProbabilityBorderCellIndexList.get(i);
             tempX = tempPair.getXIndex();
             tempY = tempPair.getYIndex();
-            tempShrinkAreaSize = DiscretizedDiskSchemeTool.getShrinkAreaSize(this.sizeB, tempX, tempY);
+            tempShrinkAreaSize = DiscretizedDiskSchemeTool.getShrinkAreaSizeConstrainInTwoValue(this.sizeB, tempX, tempY);
             this.highProbabilityBorderCellAreaSizeList.add(tempShrinkAreaSize);
         }
     }
