@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 @SuppressWarnings("Duplicates")
+@Deprecated
 public class MainRun {
     public static void main0(String[] args) throws IllegalAccessException, CloneNotSupportedException, InstantiationException {
 

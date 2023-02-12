@@ -51,7 +51,7 @@ public class AlterParameterBudgetRun {
 
 
         /*
-            针对SubsetGeoI, MSW, Rhombus, Disk, HUEM 分别计算对应budget下的估计并返回相应的wasserstein距离
+            针对SubsetGeoI, MSW, Rhombus, Disk, Disk-non-Shrink, HUEM 分别计算对应budget下的估计并返回相应的wasserstein距离
          */
         Map<String, List<ExperimentResult>> alterParameterMap = new HashMap<>();
         String rhombusKey = Constant.rhombusSchemeKey, diskKey = Constant.diskSchemeKey, diskNonShrinkKey = Constant.diskNonShrinkSchemeKey, subsetGeoIOneNorm = Constant.subsetGeoIOneNormSchemeKey, subsetGeoITwoNorm = Constant.subsetGeoITwoNormSchemeKey, mdsw = Constant.multiDimensionalSquareWaveSchemeKey, hue = Constant.hybridUniformExponentialSchemeKey;
@@ -68,30 +68,37 @@ public class AlterParameterBudgetRun {
 
         tempDiskScheme = new DiscretizedDiskScheme(epsilonArray[0], gridLength, inputSideLength, kParameter, xBound, yBound);
         tempDiskNonShrinkScheme = new DiscretizedDiskNonShrinkScheme(epsilonArray[0], gridLength, inputSideLength, kParameter, xBound, yBound);
-        // todo: add for disk non shrink scheme: ... down
+
         damLocalPrivacy = new Norm2DAMLocalPrivacy(tempDiskScheme);
         tempGeoIScheme = new DiscretizedSubsetExponentialGeoI(epsilonArray[0], gridLength, inputSideLength, xBound, yBound, new TwoNormTwoDimensionalIntegerPointDistanceTor());
         geoITransformEpsilon = new SubsetGeoITransformEpsilon(Constant.FINE_GRIT_PRIVACY_BUDGET_ARRAY, tempGeoIScheme);
 
         for (int i = 0; i < arraySize; i++) {
 
-
+            // for MDSW
             tempMdswExperimentResult = MDSWRun.run(integerPointList, rawDataStatistic, gridLength, inputSideLength, epsilonArray[i], xBound, yBound);
             mdswExperimentResultList.add(tempMdswExperimentResult);
 
+            // for RAM
             tempRhombusExperimentResult = RAMRun.run(integerPointList, rawDataStatistic, gridLength, inputSideLength, alterRhombusOptimalSizeB[i]*gridLength, epsilonArray[i], kParameter, xBound, yBound);
             rhombusExperimentResultList.add(tempRhombusExperimentResult);
 
+            // for DAM-non-shrink
+            tempDiskNonShrinkExperimentResult = DAMNonShrinkRun.run(integerPointList, rawDataStatistic, gridLength, inputSideLength, alterDiskOptimalSizeB[i]*gridLength, epsilonArray[i], kParameter, xBound, yBound);
+            diskNonShrinkExperimentResultList.add(tempDiskNonShrinkExperimentResult);
+
+            // for DAM
             tempDiskExperimentResult = DAMRun.run(integerPointList, rawDataStatistic, gridLength, inputSideLength, alterDiskOptimalSizeB[i]*gridLength, epsilonArray[i], kParameter, xBound, yBound);
             diskExperimentResultList.add(tempDiskExperimentResult);
+
+            // for Subset-Geo-I
             damLocalPrivacy.resetEpsilon(epsilonArray[i]);
-
             tempLocalPrivacy = damLocalPrivacy.getTransformLocalPrivacyValue();
-
             transformedEpsilon = geoITransformEpsilon.getEpsilonByLocalPrivacy(tempLocalPrivacy);
             tempSubsetGeoITwoNormExperimentResult = SubsetGeoITwoNormRun.run(integerPointList, rawDataStatistic, gridLength, inputSideLength, transformedEpsilon, xBound, yBound);
             subsetGeoITwoNormExperimentResultList.add(tempSubsetGeoITwoNormExperimentResult);
 
+            // for HUEM
             if (alterDiskOptimalSizeB[i] < 1) {
                 tempHUEMExperimentResult = (ExperimentResult) tempDiskExperimentResult.clone();
                 tempHUEMExperimentResult.setPair(Constant.schemeNameKey, Constant.hybridUniformExponentialSchemeKey);
@@ -105,6 +112,7 @@ public class AlterParameterBudgetRun {
         alterParameterMap.put(mdsw, mdswExperimentResultList);
         alterParameterMap.put(subsetGeoITwoNorm, subsetGeoITwoNormExperimentResultList);
         alterParameterMap.put(rhombusKey, rhombusExperimentResultList);
+        alterParameterMap.put(diskNonShrinkKey, diskNonShrinkExperimentResultList);
         alterParameterMap.put(diskKey, diskExperimentResultList);
         alterParameterMap.put(hue, huemExperimentResultList);
 

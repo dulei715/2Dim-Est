@@ -217,6 +217,8 @@ public class DiscretizedDiskScheme extends AbstractDiscretizedScheme {
         }
         if (this.edge45Area > 0) {
             this.relative45State.put(new TwoDimensionalIntegerPoint(this.upperIndex45, this.upperIndex45), DiscretizedDiskPlaneState.EDGE45_State);
+        } else {
+            this.relative45State.put(new TwoDimensionalIntegerPoint(this.upperIndex45, this.upperIndex45), DiscretizedDiskPlaneState.OUTER_STATE);
         }
         for (int i = this.upperIndex45 + 1; i <= index45OutputBorder; i++) {
             this.relative45State.put(new TwoDimensionalIntegerPoint(i, i), DiscretizedDiskPlaneState.OUTER_STATE);

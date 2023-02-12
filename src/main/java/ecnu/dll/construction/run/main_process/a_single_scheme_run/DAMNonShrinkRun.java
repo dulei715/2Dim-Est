@@ -17,53 +17,8 @@ import java.util.TreeMap;
 
 @SuppressWarnings("ALL")
 public class DAMNonShrinkRun {
+
     public static ExperimentResult run(final List<TwoDimensionalIntegerPoint> integerPointList, final TreeMap<TwoDimensionalIntegerPoint, Double> rawDataStatistic, double cellLength, double inputLength, double bLength, double epsilon, double kParameter, double xBound, double yBound) {
-        DiscretizedDiskNonShrinkScheme scheme;
-        if (bLength > 0) {
-            scheme = new DiscretizedDiskNonShrinkScheme(epsilon, cellLength, bLength, inputLength, kParameter, xBound, yBound);
-        } else {
-            scheme = new DiscretizedDiskNonShrinkScheme(epsilon, cellLength, inputLength, kParameter, xBound, yBound);
-        }
-
-        /**
-         * 生成噪声数据
-         */
-        List<TwoDimensionalIntegerPoint> noiseIntegerPointList = scheme.getNoiseValueList(integerPointList);
-
-        long startTime = System.currentTimeMillis();
-        TreeMap<TwoDimensionalIntegerPoint, Double> estimationResult = scheme.statistic(noiseIntegerPointList);
-        long endTime = System.currentTimeMillis();
-        long postProcessTime = endTime - startTime;
-
-        // for test
-//        System.out.println(BasicCalculation.getValueSum(rawDataStatistic));
-//        System.out.println(BasicCalculation.getValueSum(estimationResult));
-
-
-
-        ExperimentResult experimentResult = null;
-        try {
-            Double wassersteinDistance = TwoDimensionalWassersteinDistance.getWassersteinDistance(rawDataStatistic, estimationResult, 2);
-            experimentResult = new ExperimentResult();
-            experimentResult.addPair(Constant.dataPointSizeKey, String.valueOf(integerPointList.size()));
-            experimentResult.addPair(Constant.schemeNameKey, Constant.diskNonShrinkSchemeKey);
-            experimentResult.addPair(Constant.postProcessTimeKey, String.valueOf(postProcessTime));
-            experimentResult.addPair(Constant.gridUnitSizeKey, String.valueOf(cellLength));
-            experimentResult.addPair(Constant.dataTypeSizeKey, String.valueOf(scheme.getRawIntegerPointTypeList().size()));
-            experimentResult.addPair(Constant.sizeDKey, String.valueOf(scheme.getSizeD()));
-            experimentResult.addPair(Constant.sizeBKey, String.valueOf(scheme.getSizeB()));
-            experimentResult.addPair(Constant.privacyBudgetKey, String.valueOf(epsilon));
-            experimentResult.addPair(Constant.contributionKKey, String.valueOf(kParameter));
-            experimentResult.addPair(Constant.wassersteinDistanceKey, String.valueOf(wassersteinDistance));
-        } catch (CPLException e) {
-            e.printStackTrace();
-        }
-
-
-        return experimentResult;
-
-    }
-    public static ExperimentResult runEnhanced(final List<TwoDimensionalIntegerPoint> integerPointList, final TreeMap<TwoDimensionalIntegerPoint, Double> rawDataStatistic, double cellLength, double inputLength, double bLength, double epsilon, double kParameter, double xBound, double yBound) {
         DiscretizedDiskScheme scheme;
         if (bLength > 0) {
             scheme = new DiscretizedDiskScheme(epsilon, cellLength, bLength, inputLength, kParameter, xBound, yBound);
@@ -92,7 +47,7 @@ public class DAMNonShrinkRun {
             Double wassersteinDistance = TwoDimensionalWassersteinDistance.getWassersteinDistance(rawDataStatistic, estimationResult, 2);
             experimentResult = new ExperimentResult();
             experimentResult.addPair(Constant.dataPointSizeKey, String.valueOf(integerPointList.size()));
-            experimentResult.addPair(Constant.schemeNameKey, Constant.diskSchemeKey);
+            experimentResult.addPair(Constant.schemeNameKey, Constant.diskNonShrinkSchemeKey);
             experimentResult.addPair(Constant.postProcessTimeKey, String.valueOf(postProcessTime));
             experimentResult.addPair(Constant.gridUnitSizeKey, String.valueOf(cellLength));
             experimentResult.addPair(Constant.dataTypeSizeKey, String.valueOf(scheme.getRawIntegerPointTypeList().size()));

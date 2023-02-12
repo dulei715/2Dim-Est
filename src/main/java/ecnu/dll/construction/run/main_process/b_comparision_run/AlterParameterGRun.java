@@ -59,17 +59,17 @@ public class AlterParameterGRun {
 
 
         /*
-            针对SubsetGeoI, MSW, Rhombus, Disk, HUEM 分别计算对应grid下的估计并返回相应的wasserstein距离
+            针对SubsetGeoI, MSW, Rhombus, Disk, Disk-non-Shrink, HUEM 分别计算对应grid下的估计并返回相应的wasserstein距离
          */
         Map<String, List<ExperimentResult>> alterParameterMap = new HashMap<>();
-        String rhombusKey = Constant.rhombusSchemeKey, diskKey = Constant.diskSchemeKey, subsetGeoIOneNorm = Constant.subsetGeoIOneNormSchemeKey, subsetGeoITwoNorm = Constant.subsetGeoITwoNormSchemeKey, mdsw = Constant.multiDimensionalSquareWaveSchemeKey, hue = Constant.hybridUniformExponentialSchemeKey;
-        ExperimentResult tempRhombusExperimentResult, tempDiskExperimentResult, tempSubsetGeoIOneNormExperimentResult, tempSubsetGeoITwoNormExperimentResult, tempMdswExperimentResult, tempHUEMExperimentResult;
-        List<ExperimentResult> rhombusExperimentResultList = new ArrayList<>(), diskExperimentResultList = new ArrayList<>(), subsetGeoIOneNormExperimentResultList = new ArrayList<>(), subsetGeoITwoNormExperimentResultList = new ArrayList<>(), mdswExperimentResultList = new ArrayList<>(), huemExperimentResultList = new ArrayList<>();
+        String rhombusKey = Constant.rhombusSchemeKey, diskKey = Constant.diskSchemeKey, diskNonShrinkKey = Constant.diskNonShrinkSchemeKey, subsetGeoIOneNorm = Constant.subsetGeoIOneNormSchemeKey, subsetGeoITwoNorm = Constant.subsetGeoITwoNormSchemeKey, mdsw = Constant.multiDimensionalSquareWaveSchemeKey, hue = Constant.hybridUniformExponentialSchemeKey;
+        ExperimentResult tempRhombusExperimentResult, tempDiskExperimentResult, tempDiskNonShrinkExperimentResult, tempSubsetGeoIOneNormExperimentResult, tempSubsetGeoITwoNormExperimentResult, tempMdswExperimentResult, tempHUEMExperimentResult;
+        List<ExperimentResult> rhombusExperimentResultList = new ArrayList<>(), diskExperimentResultList = new ArrayList<>(), diskNonShrinkExperimentResultList = new ArrayList<>(), subsetGeoIOneNormExperimentResultList = new ArrayList<>(), subsetGeoITwoNormExperimentResultList = new ArrayList<>(), mdswExperimentResultList = new ArrayList<>(), huemExperimentResultList = new ArrayList<>();
         List<TwoDimensionalIntegerPoint> integerPointList, integerPointTypeList;
         TreeMap<TwoDimensionalIntegerPoint, Double> rawDataStatistic;
 
         ExperimentResultAndScheme tempDiskExperimentResultAndScheme;
-        DiscretizedDiskScheme tempDiskScheme;
+        DiscretizedDiskScheme tempDiskScheme, tempDiskNonShrinkScheme;
         DiscretizedSubsetExponentialGeoI tempGeoIScheme;
         DAMLocalPrivacy damLocalPrivacy;
         SubsetGeoITransformEpsilon geoITransformEpsilon;
@@ -88,27 +88,32 @@ public class AlterParameterGRun {
             rawDataStatistic = StatisticTool.countHistogramRatioMap(integerPointTypeList, integerPointList);
 
 
+            // for MDSW
             tempMdswExperimentResult = MDSWRun.run(integerPointList, rawDataStatistic, gridLengthArray[i], inputSideLength, epsilon, xBound, yBound);
             tempMdswExperimentResult.addPair(1, Constant.areaLengthKey, String.valueOf(inputSideLength));
             mdswExperimentResultList.add(tempMdswExperimentResult);
 
+            // for RAM
             tempRhombusExperimentResult = RAMRun.run(integerPointList, rawDataStatistic, gridLengthArray[i], inputSideLength, alterRhombusOptimalSizeB[i]*gridLengthArray[i], epsilon, kParameter, xBound, yBound);
             tempRhombusExperimentResult.addPair(1, Constant.areaLengthKey, String.valueOf(inputSideLength));
             rhombusExperimentResultList.add(tempRhombusExperimentResult);
 
+            // for DAM-non-Shrink
+            tempDiskNonShrinkExperimentResult = DAMNonShrinkRun.run(integerPointList, rawDataStatistic, gridLengthArray[i], inputSideLength, alterDiskOptimalSizeB[i]*gridLengthArray[i], epsilon, kParameter, xBound, yBound);
+            tempDiskNonShrinkExperimentResult.addPair(1, Constant.areaLengthKey, String.valueOf(inputSideLength));
+            diskNonShrinkExperimentResultList.add(tempDiskNonShrinkExperimentResult);
 
+            // for DMA
             tempDiskExperimentResultAndScheme = DAMRun.runEnhanced(integerPointList, rawDataStatistic, gridLengthArray[i], inputSideLength, alterDiskOptimalSizeB[i]*gridLengthArray[i], epsilon, kParameter, xBound, yBound);
             tempDiskExperimentResult = tempDiskExperimentResultAndScheme.getExperimentResult();
             tempDiskScheme = (DiscretizedDiskScheme) tempDiskExperimentResultAndScheme.getAbstractDiscretizedScheme();
             tempDiskExperimentResult.addPair(1, Constant.areaLengthKey, String.valueOf(inputSideLength));
             diskExperimentResultList.add(tempDiskExperimentResult);
+
+            // for Subset-Geo-I
             // 根据相应的DAM，计算出对应的LP
             damLocalPrivacy = new Norm2DAMLocalPrivacy(tempDiskScheme);
             tempLocalPrivacy = damLocalPrivacy.getTransformLocalPrivacyValue();
-
-
-
-
             // geoI - two norm: 根据相应的DAM，计算出对应的LP，根据LP，计算出Geo-I对应的epsilon
             tempGeoIScheme = new DiscretizedSubsetExponentialGeoI(epsilon, gridLengthArray[i], inputSideLength, xBound, yBound, new TwoNormTwoDimensionalIntegerPointDistanceTor());
             geoITransformEpsilon = new SubsetGeoITransformEpsilon(Constant.FINE_GRIT_PRIVACY_BUDGET_ARRAY, tempGeoIScheme);
@@ -117,6 +122,7 @@ public class AlterParameterGRun {
             tempSubsetGeoITwoNormExperimentResult.addPair(1, Constant.areaLengthKey, String.valueOf(inputSideLength));
             subsetGeoITwoNormExperimentResultList.add(tempSubsetGeoITwoNormExperimentResult);
 
+            // for HUEM
             if (alterDiskOptimalSizeB[i] < 1) {
                 tempHUEMExperimentResult = (ExperimentResult) tempDiskExperimentResult.clone();
                 tempHUEMExperimentResult.setPair(Constant.schemeNameKey, Constant.hybridUniformExponentialSchemeKey);
@@ -132,6 +138,7 @@ public class AlterParameterGRun {
         alterParameterMap.put(mdsw, mdswExperimentResultList);
         alterParameterMap.put(subsetGeoITwoNorm, subsetGeoITwoNormExperimentResultList);
         alterParameterMap.put(rhombusKey, rhombusExperimentResultList);
+        alterParameterMap.put(diskNonShrinkKey, diskNonShrinkExperimentResultList);
         alterParameterMap.put(diskKey, diskExperimentResultList);
         alterParameterMap.put(hue, huemExperimentResultList);
 

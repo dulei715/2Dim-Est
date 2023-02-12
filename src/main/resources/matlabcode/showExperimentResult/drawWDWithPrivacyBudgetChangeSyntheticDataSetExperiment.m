@@ -15,8 +15,8 @@ y_RAM = matrix.data(1:5,wassersteinDistanceIndexLine);
 y_DAM = matrix.data(6:10,wassersteinDistanceIndexLine);
 y_MDSW = matrix.data(11:15,wassersteinDistanceIndexLine);
 y_HUE = matrix.data(16:20,wassersteinDistanceIndexLine);
-y_SubGeoI = matrix.data(21:25,wassersteinDistanceIndexLine);
-
+y_DAMShrink = matrix.data(21:25,wassersteinDistanceIndexLine);
+y_SubGeoI = matrix.data(26:30,wassersteinDistanceIndexLine);
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -29,6 +29,7 @@ plot(x, y_MDSW, 'mx-', 'LineWidth', 2, 'MarkerSize',figure_MarkerSize);
 plot(x, y_HUE, 'b+-','LineWidth',2, 'MarkerSize',figure_MarkerSize);
 plot(x,y_RAM, 'ro-','LineWidth',2, 'MarkerSize',figure_MarkerSize);
 plot(x, y_DAM, 'g*-','LineWidth',2, 'MarkerSize',figure_MarkerSize);
+plot(x, y_DAMShrink, 'cd:','LineWidth',2, 'MarkerSize',figure_MarkerSize);
 %plot(x_C_DAM, y_C_DAM, 'gd:', 'LineWidth', 2);
 
 xlim([roundn(x(1),-1) x(length(x))]);
@@ -46,7 +47,7 @@ ylabel(yLabelName);
 set(get(gca,'XLabel'),'FontSize',figure_FontSize_X,'FontName','Times New Roman');
 set(get(gca,'YLabel'),'FontSize',figure_FontSize_Y,'FontName','Times New Roman');
 
-h = legend('SubGeoI', 'MDSW','HUEM','RAM','DAM','Location','Best');
+h = legend('SubGeoI', 'MDSW','HUEM','RAM','DAM','DAMShrink','Location','Best');
 set(h,'FontName','Times New Roman','FontSize',14,'FontWeight','normal');
 legend('off');
 saveas(fig,outputFileName,'fig');
