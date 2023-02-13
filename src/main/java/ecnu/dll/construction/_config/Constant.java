@@ -15,9 +15,9 @@ import java.util.List;
 public class Constant {
 
 
-//    public static final String basicPath = "/root/code/2_2.ProgramForSpatialLDPEstimation/1.JavaCode";
+    public static final String basicPath = "/root/code/2_2.ProgramForSpatialLDPEstimation/1.JavaCode";
 //    public static final String basicPath = "E:\\dataset";
-    public static final String basicPath = "/root/code/2_seldp/";
+//    public static final String basicPath = "/root/code/2_seldp/";
 //    public static final String basicPath = "E:\\1.学习\\4.数据集\\2.dataset_for_spatial_estimation";
     public static final String basicDatasetPath = StringUtil.join(ConstantValues.FILE_SPLIT, basicPath, "0_dataset");
     public static final String basicResultPath = StringUtil.join(ConstantValues.FILE_SPLIT, basicPath, "result");
@@ -87,8 +87,8 @@ public class Constant {
 //    public static final double[] ALTER_PRIVACY_BUDGET_ARRAY = new double[] {
 //            4.7, 5.4, 6.1, 6.8, 7.5
 //    };
-//    public static final double DEFAULT_PRIVACY_BUDGET = 3.3;
-    public static final double DEFAULT_PRIVACY_BUDGET = 1.9;
+    public static final double DEFAULT_PRIVACY_BUDGET = 3.3;
+//    public static final double DEFAULT_PRIVACY_BUDGET = 1.9;
     public static final double DEFAULT_PRIVACY_BUDGET_for_b_change = 2.6;
 
     public static final double[] ALTER_PRIVACY_BUDGET_ARRAY = new double[] {
@@ -166,6 +166,7 @@ public class Constant {
     public static final String nycCKey = "NYCC";
     public static final String normalKey = "TwoDimNormal";
     public static final String zipfKey = "TwoDimZipf";
+    public static final String multiNormalKey = "TwoDimMultiCenterNormal";
 
     // 记录数据集路径
     public static final String chicagoAPath = StringUtil.join(ConstantValues.FILE_SPLIT, basicDatasetPath, "1_real", "1_crime", "chicago_point_A.txt");
@@ -176,6 +177,8 @@ public class Constant {
     public static final String nycCPath = StringUtil.join(ConstantValues.FILE_SPLIT, basicDatasetPath, "1_real", "2_nyc", "nyc_point_C.txt");
     public static final String normalPath = StringUtil.join(ConstantValues.FILE_SPLIT, basicDatasetPath, "2_synthetic", "1_two_normal", "two_normal_point_extract.txt");
     public static final String zipfPath = StringUtil.join(ConstantValues.FILE_SPLIT, basicDatasetPath, "2_synthetic", "2_two_zipf", "two_zipf_point.txt");
+
+    public static final String multiNormalPath = StringUtil.join(ConstantValues.FILE_SPLIT, basicDatasetPath, "2_synthetic", "3_two_normal_multiple_center", "two_normal_point_multiple_centers_extract.txt");
 
     // 记录被分割的dataset输出父路径的父路径
     public static final String relativeParentCrimeDir = StringUtil.join(ConstantValues.FILE_SPLIT, basicResultPath, "crime");
@@ -194,6 +197,7 @@ public class Constant {
     };
     public static final String outputNormalDir = StringUtil.join(ConstantValues.FILE_SPLIT, basicResultPath, "normal");
     public static final String outputZipfDir = StringUtil.join(ConstantValues.FILE_SPLIT, basicResultPath, "zipf");
+    public static final String outputMultiNormalDir = StringUtil.join(ConstantValues.FILE_SPLIT, basicResultPath, "normal_multi_centers");
 
 
 
@@ -210,6 +214,9 @@ public class Constant {
     public static final String privacyBudgetKey = "PrivacyBudget";
     public static final String contributionKKey = "ContributionK";
     public static final String wassersteinDistanceKey = "WassersteinDistance";
+
+    public static final String meanDistanceKey = "MeanDistance";
+    public static final String varianceDistanceKey = "VarianceDistance";
 
     public static final ColumnBean[] columnBeanArray = new ColumnBean[] {
             new ColumnBean(1, dataSetNameKey, "java.lang.String", false),
@@ -259,6 +266,7 @@ public class Constant {
 
     public static final DataSetAreaInfo twoDimNormalDataSet = new DataSetAreaInfo(normalPath, normalKey, -1.5, -1.5, 3.0);
     public static final DataSetAreaInfo twoDimZipfDataSet = new DataSetAreaInfo(zipfPath, zipfKey, 0.0, 0.0, 1.0);
+    public static final DataSetAreaInfo twoDimMultipleCenterNormalDataSet = new DataSetAreaInfo(multiNormalPath, multiNormalKey, -1.5, -2.0, 5.0);
 
 
 

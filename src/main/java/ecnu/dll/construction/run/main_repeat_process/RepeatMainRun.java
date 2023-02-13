@@ -19,9 +19,10 @@ public class RepeatMainRun {
         DataSetAreaInfo[] nycDataSetArray = Constant.nycDataSetArray;
         DataSetAreaInfo twoDimNormalDataSet = Constant.twoDimNormalDataSet;
         DataSetAreaInfo twoDimZipfDataSet = Constant.twoDimZipfDataSet;
+        DataSetAreaInfo twoDimNormalMultiCentersDataSet = Constant.twoDimMultipleCenterNormalDataSet;
 
         String[] crimeOutputDirArray, nycOutputDirArray;
-        String normalOutputDir, zipfOutputDir;
+        String normalOutputDir, zipfOutputDir, normalMultiCentersOutputDir;
 
         int repeatTimes = 10;
         for (int i = 0; i < repeatTimes; i++) {
@@ -30,7 +31,8 @@ public class RepeatMainRun {
 //            normalOutputDir = Constant.outputNormalDir;
             normalOutputDir = Constant.outputNormalDir.concat(ConstantValues.FILE_SPLIT).concat(String.valueOf(i));
             zipfOutputDir = Constant.outputZipfDir.concat(ConstantValues.FILE_SPLIT).concat(String.valueOf(i));
-            Map<String, Map<String, Map<String, List<ExperimentResult>>>> resultMap = TotalRun.runAndWrite(crimeDataSetArray, crimeOutputDirArray, nycDataSetArray, nycOutputDirArray, twoDimNormalDataSet, normalOutputDir, twoDimZipfDataSet, zipfOutputDir);
+            normalMultiCentersOutputDir = Constant.outputMultiNormalDir.concat(ConstantValues.FILE_SPLIT).concat(String.valueOf(i));
+            Map<String, Map<String, Map<String, List<ExperimentResult>>>> resultMap = TotalRun.runAndWrite(crimeDataSetArray, crimeOutputDirArray, nycDataSetArray, nycOutputDirArray, twoDimNormalDataSet, normalOutputDir, twoDimZipfDataSet, zipfOutputDir, twoDimNormalMultiCentersDataSet, normalMultiCentersOutputDir);
             System.out.println("Finish round " + i);
         }
 

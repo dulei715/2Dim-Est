@@ -1,6 +1,7 @@
 package ecnu.dll.construction.run.main_process.a_single_scheme_run;
 
 import cn.edu.ecnu.basic.BasicCalculation;
+import cn.edu.ecnu.differential_privacy.accuracy.metrics.distance_quantities.Distance;
 import cn.edu.ecnu.differential_privacy.accuracy.metrics.distance_quantities.TwoDimensionalWassersteinDistance;
 import cn.edu.ecnu.io.read.TwoDimensionalPointRead;
 import cn.edu.ecnu.result.ExperimentResult;
@@ -39,6 +40,8 @@ public class MDSWRun {
         ExperimentResult experimentResult = null;
         try {
             Double wassersteinDistance = TwoDimensionalWassersteinDistance.getWassersteinDistance(rawDataStatistic, estimationResult, 2);
+            Double meanDistance = Distance.getAbsMeanDifference(rawDataStatistic, estimationResult);
+            Double varianceDistance = Distance.getAbsVarianceDifference(rawDataStatistic, estimationResult);
             experimentResult = new ExperimentResult();
             experimentResult.addPair(Constant.dataPointSizeKey, String.valueOf(integerPointList.size()));
             experimentResult.addPair(Constant.schemeNameKey, Constant.multiDimensionalSquareWaveSchemeKey);
@@ -50,6 +53,8 @@ public class MDSWRun {
             experimentResult.addPair(Constant.privacyBudgetKey, String.valueOf(epsilon));
             experimentResult.addPair(Constant.contributionKKey, String.valueOf(Constant.invalidValue));
             experimentResult.addPair(Constant.wassersteinDistanceKey, String.valueOf(wassersteinDistance));
+            experimentResult.addPair(Constant.meanDistanceKey, String.valueOf(meanDistance));
+            experimentResult.addPair(Constant.varianceDistanceKey, String.valueOf(varianceDistance));
         } catch (CPLException e) {
             e.printStackTrace();
         }

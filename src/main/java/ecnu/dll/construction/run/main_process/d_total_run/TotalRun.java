@@ -61,7 +61,7 @@ public class TotalRun {
 
         return resultMap;
     }
-    public static Map<String, Map<String, Map<String, List<ExperimentResult>>>> runAndWrite(DataSetAreaInfo[] crimeDataSetArray, String[] crimeOutputDirArray, DataSetAreaInfo[] nycDataSetArray, String[] nycOutputDirArray, DataSetAreaInfo twoDimNormalDataSet, String normalOutputDir, DataSetAreaInfo twoDimZipfDataSet, String zipfOutputDir) throws IllegalAccessException, CloneNotSupportedException, InstantiationException {
+    public static Map<String, Map<String, Map<String, List<ExperimentResult>>>> runAndWrite(DataSetAreaInfo[] crimeDataSetArray, String[] crimeOutputDirArray, DataSetAreaInfo[] nycDataSetArray, String[] nycOutputDirArray, DataSetAreaInfo twoDimNormalDataSet, String normalOutputDir, DataSetAreaInfo twoDimZipfDataSet, String zipfOutputDir, DataSetAreaInfo twoDimNormalMultiCentersDataSet, String normalMultiCentersOutputDir) throws IllegalAccessException, CloneNotSupportedException, InstantiationException {
 
         String dataSetPath, dataSetName;
         Double xBound, yBound, length;
@@ -121,6 +121,19 @@ public class TotalRun {
             tempDataSetResult = DataSetRun.runAndWrite(dataSetPath, dataSetName, zipfOutputDir, xBound, yBound, length);
             resultMap.put(dataSetName, tempDataSetResult);
         }
+
+        // 2-Dim multiple center Normal
+        if (twoDimNormalMultiCentersDataSet != null) {
+            dataSetPath = twoDimNormalMultiCentersDataSet.getDataSetPath();
+            dataSetName = twoDimNormalMultiCentersDataSet.getDataSetName();
+            xBound = twoDimNormalMultiCentersDataSet.getxBound();
+            yBound = twoDimNormalMultiCentersDataSet.getyBound();
+            length = twoDimNormalMultiCentersDataSet.getLength();
+            tempDataSetResult = DataSetRun.runAndWrite(dataSetPath, dataSetName, normalMultiCentersOutputDir, xBound, yBound, length);
+            resultMap.put(dataSetName, tempDataSetResult);
+        }
+
+
 
         return resultMap;
     }
