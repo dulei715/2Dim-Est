@@ -48,6 +48,7 @@ public class AlterParameterBudgetRun {
             4. 设置邻居属性smooth的参与率
          */
         double kParameter = Constant.DEFAULT_K_PARAMETER;
+        double kParameterForRAM = Constant.DEFAULT_K_PARAMETER_for_RAM;
 
 
         /*
@@ -80,7 +81,7 @@ public class AlterParameterBudgetRun {
             mdswExperimentResultList.add(tempMdswExperimentResult);
 
             // for RAM
-            tempRhombusExperimentResult = RAMRun.run(integerPointList, rawDataStatistic, gridLength, inputSideLength, alterRhombusOptimalSizeB[i]*gridLength, epsilonArray[i], kParameter, xBound, yBound);
+            tempRhombusExperimentResult = RAMRun.run(integerPointList, rawDataStatistic, gridLength, inputSideLength, alterRhombusOptimalSizeB[i]*gridLength, epsilonArray[i], kParameterForRAM, xBound, yBound);
             rhombusExperimentResultList.add(tempRhombusExperimentResult);
 
             // for DAM-non-shrink

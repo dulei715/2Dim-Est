@@ -15,9 +15,9 @@ import java.util.List;
 public class Constant {
 
 
-    public static final String basicPath = "/root/code/2_2.ProgramForSpatialLDPEstimation/1.JavaCode";
+//    public static final String basicPath = "/root/code/2_2.ProgramForSpatialLDPEstimation/1.JavaCode";
 //    public static final String basicPath = "E:\\dataset";
-//    public static final String basicPath = "/root/code/2_seldp/";
+    public static final String basicPath = "/root/code/2_seldp/";
 //    public static final String basicPath = "E:\\1.学习\\4.数据集\\2.dataset_for_spatial_estimation";
     public static final String basicDatasetPath = StringUtil.join(ConstantValues.FILE_SPLIT, basicPath, "0_dataset");
     public static final String basicResultPath = StringUtil.join(ConstantValues.FILE_SPLIT, basicPath, "result");
@@ -115,6 +115,7 @@ public class Constant {
 //    public static final double DEFAULT_K_PARAMETER = 0.25;
     public static final double DEFAULT_K_PARAMETER = 0.0;
     public static final double DEFAULT_K_PARAMETER_for_change_b = 0.25;
+    public static final double DEFAULT_K_PARAMETER_for_RAM = 1.0;
     public static final double[] ALTER_K_PARAMETER_ARRAY = new double[] {
             0.0, 0.25, 0.5, 0.75, 1.0
     };

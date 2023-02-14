@@ -56,6 +56,7 @@ public class AlterParameterGRun {
             4. 设置邻居属性smooth的参与率
          */
         double kParameter = Constant.DEFAULT_K_PARAMETER;
+        double kParameterForRAM = Constant.DEFAULT_K_PARAMETER_for_RAM;
 
 
         /*
@@ -94,7 +95,7 @@ public class AlterParameterGRun {
             mdswExperimentResultList.add(tempMdswExperimentResult);
 
             // for RAM
-            tempRhombusExperimentResult = RAMRun.run(integerPointList, rawDataStatistic, gridLengthArray[i], inputSideLength, alterRhombusOptimalSizeB[i]*gridLengthArray[i], epsilon, kParameter, xBound, yBound);
+            tempRhombusExperimentResult = RAMRun.run(integerPointList, rawDataStatistic, gridLengthArray[i], inputSideLength, alterRhombusOptimalSizeB[i]*gridLengthArray[i], epsilon, kParameterForRAM, xBound, yBound);
             tempRhombusExperimentResult.addPair(1, Constant.areaLengthKey, String.valueOf(inputSideLength));
             rhombusExperimentResultList.add(tempRhombusExperimentResult);
 
