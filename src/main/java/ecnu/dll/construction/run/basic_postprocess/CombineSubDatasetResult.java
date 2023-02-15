@@ -52,7 +52,7 @@ public class CombineSubDatasetResult {
     }
 
     public static void composeAllRepeat() throws ClassNotFoundException, InvocationTargetException, NoSuchMethodException, IllegalAccessException, InstantiationException {
-        String[] allRelativeBasicDir = ArraysUtils.combineArray(new String[][]{Constant.outputCrimeDirArray, Constant.outputNYCDirArray, new String[]{Constant.outputNormalDir}, new String[]{Constant.outputZipfDir}});
+        String[] allRelativeBasicDir = ArraysUtils.combineArray(new String[][]{Constant.outputCrimeDirArray, Constant.outputNYCDirArray, new String[]{Constant.outputNormalDir}, new String[]{Constant.outputZipfDir}, new String[]{Constant.outputMultiNormalDir}});
         String[] fileNameArray = StringUtil.concatGiveString(Constant.alterKeyArray, ".csv");
         for (String relativeBasicPath : allRelativeBasicDir) {
             composeCSVResult(relativeBasicPath, fileNameArray);
