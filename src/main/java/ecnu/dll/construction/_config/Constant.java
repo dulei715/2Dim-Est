@@ -17,8 +17,8 @@ public class Constant {
 
 //    public static final String basicPath = "/root/code/2_2.ProgramForSpatialLDPEstimation/1.JavaCode";
 //    public static final String basicPath = "E:\\dataset";
-//    public static final String basicPath = "/root/code/2_seldp/";
-    public static final String basicPath = "E:\\1.学习\\4.数据集\\2.dataset_for_spatial_estimation";
+    public static final String basicPath = "/root/code/2_seldp/";
+//    public static final String basicPath = "E:\\1.学习\\4.数据集\\2.dataset_for_spatial_estimation";
     public static final String basicDatasetPath = StringUtil.join(ConstantValues.FILE_SPLIT, basicPath, "0_dataset");
     public static final String basicResultPath = StringUtil.join(ConstantValues.FILE_SPLIT, basicPath, "result");
 
@@ -87,7 +87,7 @@ public class Constant {
 //    public static final double[] ALTER_PRIVACY_BUDGET_ARRAY = new double[] {
 //            4.7, 5.4, 6.1, 6.8, 7.5
 //    };
-    public static final double DEFAULT_PRIVACY_BUDGET = 3.3;
+    public static final double DEFAULT_PRIVACY_BUDGET = 2.6;
 //    public static final double DEFAULT_PRIVACY_BUDGET = 1.9;
     public static final double DEFAULT_PRIVACY_BUDGET_for_b_change = 2.6;
 

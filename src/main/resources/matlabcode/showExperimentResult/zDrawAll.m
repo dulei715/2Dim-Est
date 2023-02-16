@@ -17,11 +17,12 @@ inputFileNameB = [inputBasicPath, '\nyc', '\alteringB.csv'];
 outputFileName = [outputBasicPath, '\alter_b_real_datasets'];
 drawWDWithSizeBChangeRealDataSetExperiment(inputFileNameA, inputFileNameB, xLabelName, yLabelName, outputFileName, figure_MarkerSize, figure_FontSize, figure_FontSize_X, figure_FontSize_Y);
 
-% sythetic data sets (2-normal and 2-Zipf)
+% sythetic data sets (2-normal, 2-Zipf and 2-normal-multiple-centers)
 inputFileNameA = [inputBasicPath, '\normal', '\alteringB.csv'];
 inputFileNameB = [inputBasicPath, '\zipf', '\alteringB.csv'];
+inputFileNameC = [inputBasicPath, '\normal_multi_centers', '\alteringB.csv'];
 outputFileName = [outputBasicPath, '\alter_b_synthetic_datasets'];
-drawWDWithSizeBChangeSyntheticDataSetExperiment(inputFileNameA, inputFileNameB, xLabelName, yLabelName, outputFileName, figure_MarkerSize, figure_FontSize, figure_FontSize_X, figure_FontSize_Y);
+drawWDWithSizeBChangeSyntheticDataSetExperiment(inputFileNameA, inputFileNameB, inputFileNameC, xLabelName, yLabelName, outputFileName, figure_MarkerSize, figure_FontSize, figure_FontSize_X, figure_FontSize_Y);
 
 %% altering sizeD (gridG)
 xLabelName = 'd';
@@ -45,6 +46,10 @@ inputFileName = [inputBasicPath, '\zipf', '\alteringG.csv'];
 outputFileName = [outputBasicPath, '\alter_d_zipf'];
 drawWDWithGridGChangeSyntheticDataSetExperiment(inputFileName, xLabelName, yLabelName, outputFileName, figure_MarkerSize, figure_FontSize, figure_FontSize_X, figure_FontSize_Y);
 
+% 2-nomal-multiple-centers
+inputFileName = [inputBasicPath, '\normal_multi_centers', '\alteringG.csv'];
+outputFileName = [outputBasicPath, '\alter_d_normal_multiple_centers'];
+drawWDWithGridGChangeSyntheticDataSetExperiment(inputFileName, xLabelName, yLabelName, outputFileName, figure_MarkerSize, figure_FontSize, figure_FontSize_X, figure_FontSize_Y);
 
 %% altering privacy budget
 xLabelName = '\epsilon';
@@ -66,6 +71,11 @@ drawWDWithPrivacyBudgetChangeSyntheticDataSetExperiment(inputFileName, xLabelNam
 % 2-Zipf
 inputFileName = [inputBasicPath, '\zipf', '\alteringBudget.csv'];
 outputFileName = [outputBasicPath, '\alter_e_zipf'];
+drawWDWithPrivacyBudgetChangeSyntheticDataSetExperiment(inputFileName, xLabelName, yLabelName, outputFileName, figure_MarkerSize, figure_FontSize, figure_FontSize_X, figure_FontSize_Y);
+
+% 2-nomal-multiple-centers
+inputFileName = [inputBasicPath, '\normal_multi_centers', '\alteringBudget.csv'];
+outputFileName = [outputBasicPath, '\alter_e_normal_multiple_centers'];
 drawWDWithPrivacyBudgetChangeSyntheticDataSetExperiment(inputFileName, xLabelName, yLabelName, outputFileName, figure_MarkerSize, figure_FontSize, figure_FontSize_X, figure_FontSize_Y);
 
 
@@ -91,6 +101,11 @@ drawWDWithContributeKChangeSyntheticDataSetExperiment(inputFileName, xLabelName,
 % 2-Zipf
 inputFileName = [inputBasicPath, '\zipf', '\alteringK.csv'];
 outputFileName = [outputBasicPath, '\alter_k_zipf'];
+drawWDWithContributeKChangeSyntheticDataSetExperiment(inputFileName, xLabelName, yLabelName, outputFileName, figure_MarkerSize, figure_FontSize, figure_FontSize_X, figure_FontSize_Y);
+
+% 2-nomal-multiple-centers
+inputFileName = [inputBasicPath, '\normal_multi_centers', '\alteringK.csv'];
+outputFileName = [outputBasicPath, '\alter_k_normal_multiple_centers'];
 drawWDWithContributeKChangeSyntheticDataSetExperiment(inputFileName, xLabelName, yLabelName, outputFileName, figure_MarkerSize, figure_FontSize, figure_FontSize_X, figure_FontSize_Y);
 
 
