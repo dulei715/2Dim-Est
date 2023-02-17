@@ -17,8 +17,8 @@ public class Constant {
 
 //    public static final String basicPath = "/root/code/2_2.ProgramForSpatialLDPEstimation/1.JavaCode";
 //    public static final String basicPath = "E:\\dataset";
-    public static final String basicPath = "/root/code/2_seldp/";
-//    public static final String basicPath = "E:\\1.学习\\4.数据集\\2.dataset_for_spatial_estimation";
+//    public static final String basicPath = "/root/code/2_seldp/";
+    public static final String basicPath = "E:\\1.学习\\4.数据集\\2.dataset_for_spatial_estimation";
     public static final String basicDatasetPath = StringUtil.join(ConstantValues.FILE_SPLIT, basicPath, "0_dataset");
     public static final String basicResultPath = StringUtil.join(ConstantValues.FILE_SPLIT, basicPath, "result");
 
@@ -214,10 +214,11 @@ public class Constant {
     public static final String sizeBKey = "SizeB";
     public static final String privacyBudgetKey = "PrivacyBudget";
     public static final String contributionKKey = "ContributionK";
-    public static final String wassersteinDistanceKey = "WassersteinDistance";
+    public static final String wassersteinDistance1Key = "WassersteinDistance1";
+    public static final String wassersteinDistance2Key = "WassersteinDistance2";
 
-    public static final String meanDistanceKey = "MeanDistance";
-    public static final String varianceDistanceKey = "VarianceDistance";
+//    public static final String meanDistanceKey = "MeanDistance";
+//    public static final String varianceDistanceKey = "VarianceDistance";
 
     public static final ColumnBean[] columnBeanArray = new ColumnBean[] {
             new ColumnBean(1, dataSetNameKey, "java.lang.String", false),
@@ -231,7 +232,8 @@ public class Constant {
             new ColumnBean(9, sizeBKey, "java.lang.Integer", false),
             new ColumnBean(10, privacyBudgetKey, "java.lang.Double", false),
             new ColumnBean(11, contributionKKey, "java.lang.Double", false),
-            new ColumnBean(12, wassersteinDistanceKey, "java.lang.Double", true)
+            new ColumnBean(12, wassersteinDistance1Key, "java.lang.Double", true),
+            new ColumnBean(13, wassersteinDistance2Key, "java.lang.Double", true)
 
     };
 

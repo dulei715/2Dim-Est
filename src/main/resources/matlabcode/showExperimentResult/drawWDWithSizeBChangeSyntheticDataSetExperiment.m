@@ -70,9 +70,9 @@ ylabel(yLabelName);
 set(get(gca,'XLabel'),'FontSize',figure_FontSize_X,'FontName','Times New Roman');
 set(get(gca,'YLabel'),'FontSize',figure_FontSize_Y,'FontName','Times New Roman');
 
-h = legend('RAM-Normal', 'DAM-Normal','RAM-Zipf','DAM-Zipf','Location','Best');
+h = legend('RAM-Normal', 'DAM-Normal','RAM-Zipf','DAM-Zipf','RAM-MC-Normal','DAM-MC-Normal','Location','Best');
 set(h,'FontName','Times New Roman','FontSize',14,'FontWeight','normal');
-%legend('off');
+legend('off');
 saveas(fig,outputFileName,'fig');
 export_fig(fig , '-pdf' , '-r256' , '-transparent' , outputFileName);
 

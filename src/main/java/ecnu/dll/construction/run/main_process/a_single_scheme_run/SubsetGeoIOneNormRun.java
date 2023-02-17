@@ -40,9 +40,10 @@ public class SubsetGeoIOneNormRun {
 //            System.out.println(BasicCalculation.getValueSum(estimationResult));
 
             try {
-                Double wassersteinDistance = TwoDimensionalWassersteinDistance.getWassersteinDistance(rawDataStatistic, estimationResult, 2);
-                Double meanDistance = Distance.getAbsMeanDifference(rawDataStatistic, estimationResult);
-                Double varianceDistance = Distance.getAbsVarianceDifference(rawDataStatistic, estimationResult);
+                Double wassersteinDistance1 = TwoDimensionalWassersteinDistance.getWassersteinDistance(rawDataStatistic, estimationResult, 1);
+                Double wassersteinDistance2 = TwoDimensionalWassersteinDistance.getWassersteinDistance(rawDataStatistic, estimationResult, 2);
+//                Double meanDistance = Distance.getAbsMeanDifference(rawDataStatistic, estimationResult);
+//                Double varianceDistance = Distance.getAbsVarianceDifference(rawDataStatistic, estimationResult);
                 experimentResult = new ExperimentResult();
                 experimentResult.addPair(Constant.dataPointSizeKey, String.valueOf(integerPointList.size()));
                 experimentResult.addPair(Constant.schemeNameKey, Constant.subsetGeoIOneNormSchemeKey);
@@ -53,9 +54,10 @@ public class SubsetGeoIOneNormRun {
                 experimentResult.addPair(Constant.sizeBKey, String.valueOf(Constant.invalidValue));
                 experimentResult.addPair(Constant.privacyBudgetKey, String.valueOf(epsilon));
                 experimentResult.addPair(Constant.contributionKKey, String.valueOf(Constant.invalidValue));
-                experimentResult.addPair(Constant.wassersteinDistanceKey, String.valueOf(wassersteinDistance));
-                experimentResult.addPair(Constant.meanDistanceKey, String.valueOf(meanDistance));
-                experimentResult.addPair(Constant.varianceDistanceKey, String.valueOf(varianceDistance));
+                experimentResult.addPair(Constant.wassersteinDistance1Key, String.valueOf(wassersteinDistance1));
+                experimentResult.addPair(Constant.wassersteinDistance2Key, String.valueOf(wassersteinDistance2));
+//                experimentResult.addPair(Constant.meanDistanceKey, String.valueOf(meanDistance));
+//                experimentResult.addPair(Constant.varianceDistanceKey, String.valueOf(varianceDistance));
             } catch (CPLException e) {
                 e.printStackTrace();
             }
@@ -66,70 +68,6 @@ public class SubsetGeoIOneNormRun {
             e.printStackTrace();
         }
         return experimentResult;
-
-    }
-    public static void run0(List<TwoDimensionalDoublePoint> pointList, double cellLength, double inputLength, double epsilon, double xBound, double yBound) {
-        DiscretizedSubsetExponentialGeoI segiScheme = null;
-        try {
-            segiScheme = new DiscretizedSubsetExponentialGeoI(epsilon, cellLength, inputLength, xBound, yBound, new OneNormTwoDimensionalIntegerPointDistanceTor());
-            List<TwoDimensionalIntegerPoint> twoDimensionalIntegerPointList = Grid.toIntegerPoint(pointList, segiScheme.getLeftBorderArray(), cellLength);
-            /**
-             * 相对的原始数据
-             */
-//        List<TwoDimensionalIntegerPoint> twoDimensionalIntegerPointList = TwoDimensionalIntegerPoint.valueOf(integerPointList);
-            TreeMap<TwoDimensionalIntegerPoint, Double> realResult = segiScheme.rawDataStatistic(twoDimensionalIntegerPointList);
-
-            /**
-             * 生成噪声数据
-             */
-            List<Set<Integer>> noiseSubsetIndexList = segiScheme.getNoiseSubsetIndexList(twoDimensionalIntegerPointList);
-            //todo: ...
-            TreeMap<TwoDimensionalIntegerPoint, Double> estimationResult = segiScheme.statistic(noiseSubsetIndexList);
-
-
-            // for test
-            System.out.println(BasicCalculation.getValueSum(realResult));
-            System.out.println(BasicCalculation.getValueSum(estimationResult));
-
-
-            double wassersteinDistance = -1;
-
-            try {
-                wassersteinDistance = TwoDimensionalWassersteinDistance.getWassersteinDistance(realResult, estimationResult, 2);
-
-            } catch (CPLException e) {
-                e.printStackTrace();
-            }
-
-            System.out.println(wassersteinDistance);
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        }
-
-    }
-
-    public static void main0(String[] args) {
-////        String inputPath = "F:\\dataset\\test\\real_dataset\\chicago_point_A.txt";
-//        String inputPath = Constant.DEFAULT_INPUT_PATH;
-//        List<TwoDimensionalDoublePoint> pointList = TwoDimensionalPointRead.readPointWithFirstLineCount(inputPath);
-//        double cellLength = Constant.DEFAULT_INPUT_LENGTH / Constant.DEFAULT_SIDE_LENGTH_NUMBER_SIZE;
-//        double inputLength = Constant.DEFAULT_INPUT_LENGTH;
-////        double bLength = Constant.DEFAULT_B_LENGTH;
-//        double epsilon = Constant.DEFAULT_PRIVACY_BUDGET;
-////        double kParameter = Constant.DEFAULT_K_PARAMETER;
-//        double xBound = Constant.DEFAULT_X_BOUND;
-//        double yBound = Constant.DEFAULT_Y_BOUND;
-//
-////        MyPrint.showList(pointList, ConstantValues.LINE_SPLIT);
-//        SubsetGeoIRun.run0(pointList, cellLength, inputLength, epsilon, xBound, yBound);
-
-
-    }
-
-    public static void main(String[] args) {
-
 
     }
 

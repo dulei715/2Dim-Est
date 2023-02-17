@@ -3,7 +3,6 @@ package ecnu.dll.construction.run.main_process.a_single_scheme_run;
 import cn.edu.ecnu.basic.BasicCalculation;
 import cn.edu.ecnu.differential_privacy.accuracy.metrics.distance_quantities.Distance;
 import cn.edu.ecnu.differential_privacy.accuracy.metrics.distance_quantities.TwoDimensionalWassersteinDistance;
-import cn.edu.ecnu.io.read.TwoDimensionalPointRead;
 import cn.edu.ecnu.result.ExperimentResult;
 import cn.edu.ecnu.struct.grid.Grid;
 import cn.edu.ecnu.struct.point.TwoDimensionalDoublePoint;
@@ -37,9 +36,10 @@ public class HUEMSRun {
 
         ExperimentResult experimentResult = null;
         try {
-            Double wassersteinDistance = TwoDimensionalWassersteinDistance.getWassersteinDistance(rawDataStatistic, estimationResult, 2);
-            Double meanDistance = Distance.getAbsMeanDifference(rawDataStatistic, estimationResult);
-            Double varianceDistance = Distance.getAbsVarianceDifference(rawDataStatistic, estimationResult);
+            Double wassersteinDistance1 = TwoDimensionalWassersteinDistance.getWassersteinDistance(rawDataStatistic, estimationResult, 1);
+            Double wassersteinDistance2 = TwoDimensionalWassersteinDistance.getWassersteinDistance(rawDataStatistic, estimationResult, 2);
+//            Double meanDistance = Distance.getAbsMeanDifference(rawDataStatistic, estimationResult);
+//            Double varianceDistance = Distance.getAbsVarianceDifference(rawDataStatistic, estimationResult);
             experimentResult = new ExperimentResult();
             experimentResult.addPair(Constant.dataPointSizeKey, String.valueOf(integerPointList.size()));
             experimentResult.addPair(Constant.schemeNameKey, Constant.hybridUniformExponentialSchemeKey);
@@ -50,9 +50,10 @@ public class HUEMSRun {
             experimentResult.addPair(Constant.sizeBKey, String.valueOf(scheme.getSizeB()));
             experimentResult.addPair(Constant.privacyBudgetKey, String.valueOf(epsilon));
             experimentResult.addPair(Constant.contributionKKey, String.valueOf(kParameter));
-            experimentResult.addPair(Constant.wassersteinDistanceKey, String.valueOf(wassersteinDistance));
-            experimentResult.addPair(Constant.meanDistanceKey, String.valueOf(meanDistance));
-            experimentResult.addPair(Constant.varianceDistanceKey, String.valueOf(varianceDistance));
+            experimentResult.addPair(Constant.wassersteinDistance1Key, String.valueOf(wassersteinDistance1));
+            experimentResult.addPair(Constant.wassersteinDistance2Key, String.valueOf(wassersteinDistance2));
+//            experimentResult.addPair(Constant.meanDistanceKey, String.valueOf(meanDistance));
+//            experimentResult.addPair(Constant.varianceDistanceKey, String.valueOf(varianceDistance));
 
         } catch (CPLException e) {
             e.printStackTrace();
@@ -61,39 +62,7 @@ public class HUEMSRun {
         return experimentResult;
 
     }
-    public static void run0(List<TwoDimensionalDoublePoint> pointList, double cellLength, double inputLength, double bLength, double epsilon, double kParameter, double xBound, double yBound) {
-        DiscretizedHybridUniformExponentialScheme huemScheme = new DiscretizedHybridUniformExponentialScheme(epsilon, cellLength, bLength, inputLength, kParameter, xBound, yBound);
-        List<TwoDimensionalIntegerPoint> twoDimensionalIntegerPointList = Grid.toIntegerPoint(pointList, huemScheme.getLeftBorderArray(), cellLength);
-        /**
-         * 相对的原始数据
-         */
-//        List<TwoDimensionalIntegerPoint> twoDimensionalIntegerPointList = TwoDimensionalIntegerPoint.valueOf(integerPointList);
-        TreeMap<TwoDimensionalIntegerPoint, Double> realResult = huemScheme.rawDataStatistic(twoDimensionalIntegerPointList);
 
-        /**
-         * 生成噪声数据
-         */
-        List<TwoDimensionalIntegerPoint> noiseIntegerPointList = huemScheme.getNoiseValueList(twoDimensionalIntegerPointList);
-
-        TreeMap<TwoDimensionalIntegerPoint, Double> estimationResult = huemScheme.statistic(noiseIntegerPointList);
-
-
-        // for test
-        System.out.println(BasicCalculation.getValueSum(realResult));
-        System.out.println(BasicCalculation.getValueSum(estimationResult));
-
-        double wassersteinDistance = -1;
-
-        try {
-            wassersteinDistance = TwoDimensionalWassersteinDistance.getWassersteinDistance(realResult, estimationResult, 2);
-
-        } catch (CPLException e) {
-            e.printStackTrace();
-        }
-
-        System.out.println(wassersteinDistance);
-
-    }
 
     public static void main(String[] args) {
 //        String inputPath = Constant.DEFAULT_INPUT_PATH;

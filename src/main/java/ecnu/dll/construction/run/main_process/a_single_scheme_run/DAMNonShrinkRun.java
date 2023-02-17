@@ -8,9 +8,7 @@ import cn.edu.ecnu.struct.grid.Grid;
 import cn.edu.ecnu.struct.point.TwoDimensionalDoublePoint;
 import cn.edu.ecnu.struct.point.TwoDimensionalIntegerPoint;
 import ecnu.dll.construction._config.Constant;
-import ecnu.dll.construction.newscheme.discretization.DiscretizedDiskNonShrinkScheme;
 import ecnu.dll.construction.newscheme.discretization.DiscretizedDiskScheme;
-import ecnu.dll.construction.run._struct.ExperimentResultAndScheme;
 import edu.ecnu.dll.cpl.expection.CPLException;
 
 import java.util.List;
@@ -45,7 +43,8 @@ public class DAMNonShrinkRun {
 
         ExperimentResult experimentResult = null;
         try {
-            Double wassersteinDistance = TwoDimensionalWassersteinDistance.getWassersteinDistance(rawDataStatistic, estimationResult, 2);
+            Double wassersteinDistance1 = TwoDimensionalWassersteinDistance.getWassersteinDistance(rawDataStatistic, estimationResult, 1);
+            Double wassersteinDistance2 = TwoDimensionalWassersteinDistance.getWassersteinDistance(rawDataStatistic, estimationResult, 2);
             Double meanDistance = Distance.getAbsMeanDifference(rawDataStatistic, estimationResult);
             Double varianceDistance = Distance.getAbsVarianceDifference(rawDataStatistic, estimationResult);
             experimentResult = new ExperimentResult();
@@ -58,9 +57,10 @@ public class DAMNonShrinkRun {
             experimentResult.addPair(Constant.sizeBKey, String.valueOf(scheme.getSizeB()));
             experimentResult.addPair(Constant.privacyBudgetKey, String.valueOf(epsilon));
             experimentResult.addPair(Constant.contributionKKey, String.valueOf(kParameter));
-            experimentResult.addPair(Constant.wassersteinDistanceKey, String.valueOf(wassersteinDistance));
-            experimentResult.addPair(Constant.meanDistanceKey, String.valueOf(meanDistance));
-            experimentResult.addPair(Constant.varianceDistanceKey, String.valueOf(varianceDistance));
+            experimentResult.addPair(Constant.wassersteinDistance1Key, String.valueOf(wassersteinDistance1));
+            experimentResult.addPair(Constant.wassersteinDistance2Key, String.valueOf(wassersteinDistance2));
+//            experimentResult.addPair(Constant.meanDistanceKey, String.valueOf(meanDistance));
+//            experimentResult.addPair(Constant.varianceDistanceKey, String.valueOf(varianceDistance));
         } catch (CPLException e) {
             e.printStackTrace();
         }
@@ -69,46 +69,6 @@ public class DAMNonShrinkRun {
         return experimentResult;
 
     }
-    public static void run0(List<TwoDimensionalDoublePoint> pointList, double cellLength, double inputLength, double bLength, double epsilon, double kParameter, double xBound, double yBound) {
-        DiscretizedDiskScheme damScheme;
-        if (bLength > 0) {
-            damScheme = new DiscretizedDiskScheme(epsilon, cellLength, bLength, inputLength, kParameter, xBound, yBound);
-        } else {
-            damScheme = new DiscretizedDiskScheme(epsilon, cellLength, inputLength, kParameter, xBound, yBound);
-        }
-        List<TwoDimensionalIntegerPoint> twoDimensionalIntegerPointList = Grid.toIntegerPoint(pointList, damScheme.getLeftBorderArray(), cellLength);
-        /**
-         * 相对的原始数据
-         */
-//        List<TwoDimensionalIntegerPoint> twoDimensionalIntegerPointList = TwoDimensionalIntegerPoint.valueOf(integerPointList);
-        TreeMap<TwoDimensionalIntegerPoint, Double> realResult = damScheme.rawDataStatistic(twoDimensionalIntegerPointList);
-
-        /**
-         * 生成噪声数据
-         */
-        List<TwoDimensionalIntegerPoint> noiseIntegerPointList = damScheme.getNoiseValueList(twoDimensionalIntegerPointList);
-
-        TreeMap<TwoDimensionalIntegerPoint, Double> estimationResult = damScheme.statistic(noiseIntegerPointList);
-
-        // for test
-        System.out.println(BasicCalculation.getValueSum(realResult));
-        System.out.println(BasicCalculation.getValueSum(estimationResult));
-
-
-
-        double wassersteinDistance = -1;
-
-        try {
-            wassersteinDistance = TwoDimensionalWassersteinDistance.getWassersteinDistance(realResult, estimationResult, 2);
-
-        } catch (CPLException e) {
-            e.printStackTrace();
-        }
-
-        System.out.println(wassersteinDistance);
-
-    }
-
 
 
     public static void main(String[] args) {

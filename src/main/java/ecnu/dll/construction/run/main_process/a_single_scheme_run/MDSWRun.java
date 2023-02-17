@@ -3,7 +3,6 @@ package ecnu.dll.construction.run.main_process.a_single_scheme_run;
 import cn.edu.ecnu.basic.BasicCalculation;
 import cn.edu.ecnu.differential_privacy.accuracy.metrics.distance_quantities.Distance;
 import cn.edu.ecnu.differential_privacy.accuracy.metrics.distance_quantities.TwoDimensionalWassersteinDistance;
-import cn.edu.ecnu.io.read.TwoDimensionalPointRead;
 import cn.edu.ecnu.result.ExperimentResult;
 import cn.edu.ecnu.struct.grid.Grid;
 import cn.edu.ecnu.struct.pair.BasicPair;
@@ -12,7 +11,6 @@ import cn.edu.ecnu.struct.point.TwoDimensionalIntegerPoint;
 import ecnu.dll.construction._config.Constant;
 import ecnu.dll.construction.comparedscheme.msw_hdg.discretization.BucketizingMultiDimensionalSquareWave;
 import edu.ecnu.dll.cpl.expection.CPLException;
-import javafx.util.Pair;
 
 import java.util.List;
 import java.util.TreeMap;
@@ -35,13 +33,12 @@ public class MDSWRun {
 //        System.out.println(BasicCalculation.getValueSum(rawDataStatistic));
 //        System.out.println(BasicCalculation.getValueSum(estimationResult));
 
-
-
         ExperimentResult experimentResult = null;
         try {
-            Double wassersteinDistance = TwoDimensionalWassersteinDistance.getWassersteinDistance(rawDataStatistic, estimationResult, 2);
-            Double meanDistance = Distance.getAbsMeanDifference(rawDataStatistic, estimationResult);
-            Double varianceDistance = Distance.getAbsVarianceDifference(rawDataStatistic, estimationResult);
+            Double wassersteinDistance1 = TwoDimensionalWassersteinDistance.getWassersteinDistance(rawDataStatistic, estimationResult, 1);
+            Double wassersteinDistance2 = TwoDimensionalWassersteinDistance.getWassersteinDistance(rawDataStatistic, estimationResult, 2);
+//            Double meanDistance = Distance.getAbsMeanDifference(rawDataStatistic, estimationResult);
+//            Double varianceDistance = Distance.getAbsVarianceDifference(rawDataStatistic, estimationResult);
             experimentResult = new ExperimentResult();
             experimentResult.addPair(Constant.dataPointSizeKey, String.valueOf(integerPointList.size()));
             experimentResult.addPair(Constant.schemeNameKey, Constant.multiDimensionalSquareWaveSchemeKey);
@@ -52,48 +49,15 @@ public class MDSWRun {
             experimentResult.addPair(Constant.sizeBKey, String.valueOf(scheme.getSizeB()));
             experimentResult.addPair(Constant.privacyBudgetKey, String.valueOf(epsilon));
             experimentResult.addPair(Constant.contributionKKey, String.valueOf(Constant.invalidValue));
-            experimentResult.addPair(Constant.wassersteinDistanceKey, String.valueOf(wassersteinDistance));
-            experimentResult.addPair(Constant.meanDistanceKey, String.valueOf(meanDistance));
-            experimentResult.addPair(Constant.varianceDistanceKey, String.valueOf(varianceDistance));
+            experimentResult.addPair(Constant.wassersteinDistance1Key, String.valueOf(wassersteinDistance1));
+            experimentResult.addPair(Constant.wassersteinDistance2Key, String.valueOf(wassersteinDistance2));
+//            experimentResult.addPair(Constant.meanDistanceKey, String.valueOf(meanDistance));
+//            experimentResult.addPair(Constant.varianceDistanceKey, String.valueOf(varianceDistance));
         } catch (CPLException e) {
             e.printStackTrace();
         }
 
         return experimentResult;
-
-    }
-    public static void run0(List<TwoDimensionalDoublePoint> pointList, double cellLength, double inputLength, double epsilon, double xBound, double yBound) {
-        BucketizingMultiDimensionalSquareWave mswsdg = new BucketizingMultiDimensionalSquareWave(epsilon, cellLength, inputLength, xBound, yBound);
-        List<TwoDimensionalIntegerPoint> twoDimensionalIntegerPointList = Grid.toIntegerPoint(pointList, mswsdg.getLeftBorderArray(), cellLength);
-        /**
-         * 相对的原始数据
-         */
-//        List<TwoDimensionalIntegerPoint> twoDimensionalIntegerPointList = TwoDimensionalIntegerPoint.valueOf(integerPointList);
-        TreeMap<TwoDimensionalIntegerPoint, Double> realResult = mswsdg.rawDataStatistic(twoDimensionalIntegerPointList);
-
-        /**
-         * 生成噪声数据
-         */
-        List<BasicPair<Integer, Integer>> pairList = mswsdg.getNoiseIndexList(twoDimensionalIntegerPointList);
-        //todo: ...
-        TreeMap<TwoDimensionalIntegerPoint, Double> estimationResult = mswsdg.statistic(pairList);
-
-        // for test
-        System.out.println(BasicCalculation.getValueSum(realResult));
-        System.out.println(BasicCalculation.getValueSum(estimationResult));
-
-
-
-        double wassersteinDistance = -1;
-
-        try {
-            wassersteinDistance = TwoDimensionalWassersteinDistance.getWassersteinDistance(realResult, estimationResult, 2);
-
-        } catch (CPLException e) {
-            e.printStackTrace();
-        }
-
-        System.out.println(wassersteinDistance);
 
     }
 
