@@ -13,7 +13,6 @@ import ecnu.dll.construction.analysis.e_to_lp.Norm2GeoILocalPrivacy;
 import ecnu.dll.construction.analysis.e_to_lp.Norm2RAMLocalPrivacy;
 import ecnu.dll.construction.analysis.e_to_lp.abstract_class.DAMLocalPrivacy;
 import ecnu.dll.construction.analysis.e_to_lp.abstract_class.GeoILocalPrivacy;
-import ecnu.dll.construction.analysis.e_to_lp.abstract_class.GeoILocalPrivacy_TODO;
 import ecnu.dll.construction.analysis.e_to_lp.abstract_class.RAMLocalPrivacy;
 import ecnu.dll.construction.analysis.e_to_lp.basic.TransformLocalPrivacy;
 import ecnu.dll.construction.analysis.e_to_lp.basic_impl.BasicGeoILocalPrivacy;
@@ -29,7 +28,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LocalPrivacyToolTest {
+public class LocalPrivacyToolTestFor2Norm {
     private static double privacyBudget = 2.0;
     private static double gridLength = 1.0;
     private static double inputLength = 4.0;

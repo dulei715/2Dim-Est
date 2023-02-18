@@ -18,9 +18,9 @@ public class TransformEpsilon {
 
 
     // 升序排列
-    private double[] ascendingSortedPrivacyBudgetArray;
+    protected double[] ascendingSortedPrivacyBudgetArray;
     // 降序排列
-    private double[] relativeLocalPrivacyArray;
+    protected double[] relativeLocalPrivacyArray;
 
     public TransformEpsilon(double[] ascendingSortedPrivacyBudgetArray, double[] relativeLocalPrivacyArray) {
         if (!ArraysUtils.isAscending(ascendingSortedPrivacyBudgetArray)) {
@@ -32,6 +32,11 @@ public class TransformEpsilon {
         }
         this.relativeLocalPrivacyArray = relativeLocalPrivacyArray;
     }
+
+    public TransformEpsilon(Double[] ascendingSortedPrivacyBudgetArray, Double[] relativeLocalPrivacyArray) {
+        this(ArraysUtils.toDoubleArray(ascendingSortedPrivacyBudgetArray), ArraysUtils.toDoubleArray(relativeLocalPrivacyArray));
+    }
+
 
     public double getLocalPrivacyByPrivacyBudget(double privacyBudget) {
         int index = Arrays.binarySearch(this.ascendingSortedPrivacyBudgetArray, privacyBudget);
