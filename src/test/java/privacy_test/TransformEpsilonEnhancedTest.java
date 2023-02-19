@@ -23,6 +23,6 @@ public class TransformEpsilonEnhancedTest {
 //        MyPrint.showList(xIndexList, ConstantValues.LINE_SPLIT);
 //        MyPrint.showList(yIndexList, ConstantValues.LINE_SPLIT);
         double[] privacyBudgetArray = ArraysUtils.toBasicDoubleArray(xIndexList);
-        double[] 
+        double[]
     }
 }
