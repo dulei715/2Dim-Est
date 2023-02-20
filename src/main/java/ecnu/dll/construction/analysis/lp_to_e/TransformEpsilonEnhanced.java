@@ -1,5 +1,6 @@
 package ecnu.dll.construction.analysis.lp_to_e;
 
+import cn.edu.ecnu.struct.point.TwoDimensionalDoublePoint;
 import com.google.common.collect.Lists;
 
 import java.util.ArrayList;
@@ -19,7 +20,6 @@ public class TransformEpsilonEnhanced {
         double currentMaximalLocalPrivacy = -1;
         List<Double> trimmingRelativeLocalPrivacyList = new ArrayList<>();
         List<Double> trimmingPrivacyBudgetList = new ArrayList<>();
-        double tempLocalPrivacy, tempPrivacyBudget;
         for (int i = relativeLocalPrivacyArray.length - 1; i >= 0; i--) {
             if (relativeLocalPrivacyArray[i] > currentMaximalLocalPrivacy) {
                 trimmingPrivacyBudgetList.add(ascendingSortedPrivacyBudgetArray[i]);
@@ -42,6 +42,12 @@ public class TransformEpsilonEnhanced {
     public double getPrivacyBudgetByLocalPrivacy(double localPrivacy) {
         return this.transformEpsilon.getPrivacyBudgetByLocalPrivacy(localPrivacy);
     }
+
+    @Deprecated
+    public List<TwoDimensionalDoublePoint> getEffectivePoint() {
+        return this.transformEpsilon.getParameterPointList();
+    }
+
 
 
 }

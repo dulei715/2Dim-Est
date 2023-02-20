@@ -2,9 +2,9 @@ package ecnu.dll.construction.analysis.lp_to_e;
 
 import cn.edu.ecnu.basic.BasicArray;
 import cn.edu.ecnu.collection.ArraysUtils;
+import ecnu.dll.construction.analysis.e_to_lp.Norm1GeoILocalPrivacy;
 import ecnu.dll.construction.analysis.e_to_lp.Norm2GeoILocalPrivacy;
 import ecnu.dll.construction.analysis.e_to_lp.abstract_class.GeoILocalPrivacy;
-import ecnu.dll.construction.analysis.e_to_lp.abstract_class.GeoILocalPrivacy_TODO;
 import ecnu.dll.construction.comparedscheme.sem_geo_i.discretization.DiscretizedSubsetExponentialGeoI;
 
 public class SubsetGeoITransformEpsilon {
@@ -16,20 +16,22 @@ public class SubsetGeoITransformEpsilon {
 
     private DiscretizedSubsetExponentialGeoI geoIScheme = null;
     private GeoILocalPrivacy geoILocalPrivacy = null;
-    private TransformEpsilon transformation = null;
+    private TransformEpsilonEnhanced transformation = null;
 
-    public SubsetGeoITransformEpsilon(Double beginEpsilon, Double epsilonStep, Double endEpsilon, DiscretizedSubsetExponentialGeoI geoIScheme) throws CloneNotSupportedException {
+    public static final Integer Local_Privacy_Distance_Norm_One = 1;
+    public static final Integer Local_Privacy_Distance_Norm_Two = 2;
+
+    public SubsetGeoITransformEpsilon(Double beginEpsilon, Double epsilonStep, Double endEpsilon, DiscretizedSubsetExponentialGeoI geoIScheme, Integer localPrivacyDistanceType) throws CloneNotSupportedException {
         this.beginEpsilon = beginEpsilon;
         this.epsilonStep = epsilonStep;
         this.endEpsilon = endEpsilon;
 //        this.geoIScheme = geoIScheme;
         this.geoIScheme = (DiscretizedSubsetExponentialGeoI) geoIScheme.clone();
-        this.geoILocalPrivacy = new Norm2GeoILocalPrivacy(this.geoIScheme);
         this.epsilonArray = BasicArray.getIncreasedoubleNumberArray(this.beginEpsilon, this.epsilonStep, this.endEpsilon);
-        initializeTransformEpsilon();
+        initializeTransformEpsilon(localPrivacyDistanceType);
     }
 
-    public SubsetGeoITransformEpsilon(double[] epsilonArray, DiscretizedSubsetExponentialGeoI geoIScheme) throws CloneNotSupportedException {
+    public SubsetGeoITransformEpsilon(double[] epsilonArray, DiscretizedSubsetExponentialGeoI geoIScheme, Integer localPrivacyDistanceType) throws CloneNotSupportedException {
         this.epsilonArray = epsilonArray;
 //        this.geoIScheme = geoIScheme;
         this.geoIScheme = (DiscretizedSubsetExponentialGeoI) geoIScheme.clone();
@@ -38,18 +40,25 @@ public class SubsetGeoITransformEpsilon {
         if (!isAscending) {
             throw new RuntimeException("The epsilonArray is not ascending!");
         }
-        initializeTransformEpsilon();
+        initializeTransformEpsilon(localPrivacyDistanceType);
     }
 
-    private void initializeTransformEpsilon() {
-        this.geoILocalPrivacy = new Norm2GeoILocalPrivacy(this.geoIScheme);
+    private void initializeTransformEpsilon(Integer localPrivacyDistanceType) {
+//        this.geoILocalPrivacy = new Norm2GeoILocalPrivacy(this.geoIScheme);
+        if (Local_Privacy_Distance_Norm_One.equals(localPrivacyDistanceType)) {
+            this.geoILocalPrivacy = new Norm1GeoILocalPrivacy(this.geoIScheme);
+        } else if (Local_Privacy_Distance_Norm_Two.equals(localPrivacyDistanceType)) {
+            this.geoILocalPrivacy = new Norm2GeoILocalPrivacy(this.geoIScheme);
+        } else {
+            throw new RuntimeException("Not support for local privacy distance type: " + localPrivacyDistanceType + "!");
+        }
         int len = epsilonArray.length;
         this.localPrivacyArray = new double[len];
         for (int i = 0; i < this.epsilonArray.length; i++) {
             this.geoILocalPrivacy.resetEpsilon(this.epsilonArray[i]);
             this.localPrivacyArray[i] = this.geoILocalPrivacy.getTransformLocalPrivacyValue();
         }
-        this.transformation = new TransformEpsilon(this.epsilonArray, this.localPrivacyArray);
+        this.transformation = new TransformEpsilonEnhanced(this.epsilonArray, this.localPrivacyArray);
     }
 
     public double getEpsilonByLocalPrivacy(double localPrivacy) {

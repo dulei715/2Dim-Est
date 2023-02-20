@@ -26,7 +26,7 @@ public class SubsetGeoITransformEpsilonTest {
 
         DiscretizedSubsetExponentialGeoI geoIScheme = new DiscretizedSubsetExponentialGeoI(privacyBudget, gridLength, inputLength, xLeft, yLeft, distanceTor);
 
-        SubsetGeoITransformEpsilon geoITransformEpsilon = new SubsetGeoITransformEpsilon(beginEpsilon, epsilonStep, endEpsilon, geoIScheme);
+        SubsetGeoITransformEpsilon geoITransformEpsilon = new SubsetGeoITransformEpsilon(beginEpsilon, epsilonStep, endEpsilon, geoIScheme, SubsetGeoITransformEpsilon.Local_Privacy_Distance_Norm_Two);
         double epsilon = geoITransformEpsilon.getEpsilonByLocalPrivacy(1.7);
         System.out.println(epsilon);
         DiscretizedSubsetExponentialGeoI scheme = geoITransformEpsilon.getSubsetGeoISchemeByNewEpsilon(epsilon);

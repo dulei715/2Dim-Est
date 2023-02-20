@@ -3,8 +3,11 @@ package ecnu.dll.construction.analysis.lp_to_e;
 import cn.edu.ecnu.basic.BasicArray;
 import cn.edu.ecnu.collection.ArraysUtils;
 import cn.edu.ecnu.constant_values.ConstantValues;
+import cn.edu.ecnu.struct.point.TwoDimensionalDoublePoint;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class TransformEpsilon {
     /**
@@ -71,6 +74,14 @@ public class TransformEpsilon {
         double leftEpsilon = this.ascendingSortedPrivacyBudgetArray[leftIndex];
         double rightEpsilon = this.ascendingSortedPrivacyBudgetArray[rightIndex];
         return BasicArray.getLinearTransformValue(leftLP, rightLP, localPrivacy, leftEpsilon, rightEpsilon);
+    }
+
+    public List<TwoDimensionalDoublePoint> getParameterPointList() {
+        List<TwoDimensionalDoublePoint> list = new ArrayList<>();
+        for (int i = 0; i < this.ascendingSortedPrivacyBudgetArray.length; i++) {
+            list.add(new TwoDimensionalDoublePoint(this.ascendingSortedPrivacyBudgetArray[i], this.relativeLocalPrivacyArray[i]));
+        }
+        return list;
     }
 
     public static void main(String[] args) {

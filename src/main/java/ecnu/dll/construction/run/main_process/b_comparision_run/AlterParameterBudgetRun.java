@@ -1,15 +1,19 @@
 package ecnu.dll.construction.run.main_process.b_comparision_run;
 
+import cn.edu.ecnu.differential_privacy.cdp.basic_struct.impl.OneNormTwoDimensionalIntegerPointDistanceTor;
 import cn.edu.ecnu.differential_privacy.cdp.basic_struct.impl.TwoNormTwoDimensionalIntegerPointDistanceTor;
 import cn.edu.ecnu.result.ExperimentResult;
 import cn.edu.ecnu.struct.point.TwoDimensionalIntegerPoint;
 import ecnu.dll.construction._config.Constant;
+import ecnu.dll.construction.analysis.e_to_lp.Norm1RAMLocalPrivacy;
 import ecnu.dll.construction.analysis.e_to_lp.Norm2DAMLocalPrivacy;
 import ecnu.dll.construction.analysis.e_to_lp.abstract_class.DAMLocalPrivacy;
+import ecnu.dll.construction.analysis.e_to_lp.abstract_class.RAMLocalPrivacy;
 import ecnu.dll.construction.analysis.lp_to_e.SubsetGeoITransformEpsilon;
 import ecnu.dll.construction.comparedscheme.sem_geo_i.discretization.DiscretizedSubsetExponentialGeoI;
 import ecnu.dll.construction.newscheme.discretization.DiscretizedDiskNonShrinkScheme;
 import ecnu.dll.construction.newscheme.discretization.DiscretizedDiskScheme;
+import ecnu.dll.construction.newscheme.discretization.DiscretizedRhombusScheme;
 import ecnu.dll.construction.newscheme.discretization.tool.DiscretizedDiskSchemeTool;
 import ecnu.dll.construction.newscheme.discretization.tool.DiscretizedRhombusSchemeTool;
 import ecnu.dll.construction.run._struct.ExperimentResultAndScheme;
@@ -60,19 +64,26 @@ public class AlterParameterBudgetRun {
         List<ExperimentResult> rhombusExperimentResultList = new ArrayList<>(), diskExperimentResultList = new ArrayList<>(), diskNonShrinkExperimentResultList = new ArrayList<>(), subsetGeoIOneNormExperimentResultList = new ArrayList<>(), subsetGeoITwoNormExperimentResultList = new ArrayList<>(), mdswExperimentResultList = new ArrayList<>(), huemExperimentResultList = new ArrayList<>();
 
         ExperimentResultAndScheme tempDiskExperimentResultAndScheme;
+        DiscretizedRhombusScheme tempRhombusScheme;
         DiscretizedDiskScheme tempDiskScheme;
         DiscretizedDiskNonShrinkScheme tempDiskNonShrinkScheme;
-        DiscretizedSubsetExponentialGeoI tempGeoIScheme;
+        DiscretizedSubsetExponentialGeoI tempGeoISchemeNorm1, tempGeoISchemeNorm2;
+        RAMLocalPrivacy ramLocalPrivacy;
         DAMLocalPrivacy damLocalPrivacy;
-        SubsetGeoITransformEpsilon geoITransformEpsilon;
+        SubsetGeoITransformEpsilon geoITransformEpsilonNorm1, geoITransformEpsilonNorm2;
+
         double tempLocalPrivacy, transformedEpsilon;
 
+        tempRhombusScheme = new DiscretizedRhombusScheme(epsilonArray[0], gridLength, inputSideLength, kParameter, xBound, yBound);
         tempDiskScheme = new DiscretizedDiskScheme(epsilonArray[0], gridLength, inputSideLength, kParameter, xBound, yBound);
         tempDiskNonShrinkScheme = new DiscretizedDiskNonShrinkScheme(epsilonArray[0], gridLength, inputSideLength, kParameter, xBound, yBound);
 
+        ramLocalPrivacy = new Norm1RAMLocalPrivacy(tempRhombusScheme);
         damLocalPrivacy = new Norm2DAMLocalPrivacy(tempDiskScheme);
-        tempGeoIScheme = new DiscretizedSubsetExponentialGeoI(epsilonArray[0], gridLength, inputSideLength, xBound, yBound, new TwoNormTwoDimensionalIntegerPointDistanceTor());
-        geoITransformEpsilon = new SubsetGeoITransformEpsilon(Constant.FINE_GRIT_PRIVACY_BUDGET_ARRAY, tempGeoIScheme);
+        tempGeoISchemeNorm1 = new DiscretizedSubsetExponentialGeoI(epsilonArray[0], gridLength, inputSideLength, xBound, yBound, new OneNormTwoDimensionalIntegerPointDistanceTor());
+        tempGeoISchemeNorm2 = new DiscretizedSubsetExponentialGeoI(epsilonArray[0], gridLength, inputSideLength, xBound, yBound, new TwoNormTwoDimensionalIntegerPointDistanceTor());
+        geoITransformEpsilonNorm1 = new SubsetGeoITransformEpsilon(Constant.FINE_GRIT_PRIVACY_BUDGET_ARRAY, tempGeoISchemeNorm1, SubsetGeoITransformEpsilon.Local_Privacy_Distance_Norm_One);
+        geoITransformEpsilonNorm2 = new SubsetGeoITransformEpsilon(Constant.FINE_GRIT_PRIVACY_BUDGET_ARRAY, tempGeoISchemeNorm2, SubsetGeoITransformEpsilon.Local_Privacy_Distance_Norm_Two);
 
         for (int i = 0; i < arraySize; i++) {
 
@@ -92,10 +103,17 @@ public class AlterParameterBudgetRun {
             tempDiskExperimentResult = DAMRun.run(integerPointList, rawDataStatistic, gridLength, inputSideLength, alterDiskOptimalSizeB[i]*gridLength, epsilonArray[i], kParameter, xBound, yBound);
             diskExperimentResultList.add(tempDiskExperimentResult);
 
-            // for Subset-Geo-I
+            // for Subset-Geo-I-norm1 todo: alter
+            ramLocalPrivacy.resetEpsilon(epsilonArray[i]);
+            tempLocalPrivacy = ramLocalPrivacy.getTransformLocalPrivacyValue();
+            transformedEpsilon = geoITransformEpsilonNorm1.getEpsilonByLocalPrivacy(tempLocalPrivacy);
+            tempSubsetGeoIOneNormExperimentResult = SubsetGeoIOneNormRun.run(integerPointList, rawDataStatistic, gridLength, inputSideLength, transformedEpsilon, xBound, yBound);
+            subsetGeoIOneNormExperimentResultList.add(tempSubsetGeoIOneNormExperimentResult);
+
+            // for Subset-Geo-I-norm2
             damLocalPrivacy.resetEpsilon(epsilonArray[i]);
             tempLocalPrivacy = damLocalPrivacy.getTransformLocalPrivacyValue();
-            transformedEpsilon = geoITransformEpsilon.getEpsilonByLocalPrivacy(tempLocalPrivacy);
+            transformedEpsilon = geoITransformEpsilonNorm2.getEpsilonByLocalPrivacy(tempLocalPrivacy);
             tempSubsetGeoITwoNormExperimentResult = SubsetGeoITwoNormRun.run(integerPointList, rawDataStatistic, gridLength, inputSideLength, transformedEpsilon, xBound, yBound);
             subsetGeoITwoNormExperimentResultList.add(tempSubsetGeoITwoNormExperimentResult);
 
@@ -111,6 +129,7 @@ public class AlterParameterBudgetRun {
 
 
         alterParameterMap.put(mdsw, mdswExperimentResultList);
+        alterParameterMap.put(subsetGeoIOneNorm, subsetGeoIOneNormExperimentResultList);
         alterParameterMap.put(subsetGeoITwoNorm, subsetGeoITwoNormExperimentResultList);
         alterParameterMap.put(rhombusKey, rhombusExperimentResultList);
         alterParameterMap.put(diskNonShrinkKey, diskNonShrinkExperimentResultList);
