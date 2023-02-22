@@ -14,6 +14,7 @@ import cn.edu.ecnu.differential_privacy.cdp.basic_struct.DistanceTor;
 import cn.edu.ecnu.differential_privacy.cdp.exponential_mechanism.utility.UtilityFunction;
 import cn.edu.ecnu.differential_privacy.ldp.consistent.Normalization;
 import cn.edu.ecnu.math.MathUtils;
+import ecnu.dll.construction.comparedscheme.sem_geo_i.tool.SubsetExponentialGeoITool;
 
 import java.util.*;
 
@@ -84,13 +85,14 @@ public class SubsetExponentialGeoI<X> {
     }
 
     private void setSetSizeKWithMeanEpsilon() {
-        int m = this.inputElementList.size();
-        if (m < 2) {
-            this.setSizeK = 1;
-        } else {
-            double epsilonMean = this.differentElementsDistanceSum * this.epsilon / (m * (m - 1));
-            this.setSizeK = (int) Math.ceil(m / (Math.exp(epsilonMean) + 1));
-        }
+//        int m = this.inputElementList.size();
+//        if (m < 2) {
+//            this.setSizeK = 1;
+//        } else {
+//            double epsilonMean = this.differentElementsDistanceSum * this.epsilon / (m * (m - 1));
+//            this.setSizeK = (int) Math.ceil(m / (Math.exp(epsilonMean) + 1));
+//        }
+        this.setSizeK = SubsetExponentialGeoITool.getSetSizeKWithMeanEpsilon(this.inputElementList.size(), this.differentElementsDistanceSum, this.epsilon);
     }
 
     private void addElement(TreeMap<Double, List<Integer>>[] treeMapArray, int mainElementIndex, int judgeElementIndex, Double distance) {
