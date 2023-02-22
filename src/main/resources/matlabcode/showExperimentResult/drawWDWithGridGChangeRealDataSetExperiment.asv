@@ -49,16 +49,12 @@ y_HUE = (y_A_HUE + y_B_HUE + y_C_HUE)/3;
 fig = figure;
 hold on;
 
-xlabel(xLabelName);
-
 yyaxis left
 plot(x, y_SubGeoI_2, 'ks-','LineWidth',2, 'MarkerSize',figure_MarkerSize);
 plot(x, y_MDSW, 'mx-', 'LineWidth', 2, 'MarkerSize',figure_MarkerSize);
 plot(x, y_HUE, 'b+-','LineWidth',2, 'MarkerSize',figure_MarkerSize);
 plot(x, y_DAM, 'g*-','LineWidth',2, 'MarkerSize',figure_MarkerSize);
 plot(x, y_DAMShrink, 'cd:','LineWidth',2, 'MarkerSize',figure_MarkerSize);
-
-ylabel(yLabelName_left);
 
 yyaxis right
 plot(x, y_SubGeoI_1, 'ks-','LineWidth',2, 'MarkerSize',figure_MarkerSize);
@@ -75,12 +71,14 @@ set(get(gca,'YLabel'),'FontSize',figure_FontSize,'FontName','Times New Roman');
 set(gca,'FontName','Times New Roman' ,'FontSize',figure_FontSize);
 %set(findobj('FontSize',10),'FontSize',figure_FontSize);
 
+xlabel(xLabelName);
+
 ylabel(yLabelName_right);
 
 set(get(gca,'XLabel'),'FontSize',figure_FontSize_X,'FontName','Times New Roman');
 set(get(gca,'YLabel'),'FontSize',figure_FontSize_Y,'FontName','Times New Roman');
 
-h = legend('SubGeoI_2', 'MDSW','HUEM','DAM','DAMShrink','SubGeoI_1','RAM','Location','Best');
+h = legend('SubGeoI', 'MDSW','HUEM','RAM','DAM','DAMShrink','Location','Best');
 set(h,'FontName','Times New Roman','FontSize',14,'FontWeight','normal');
 legend('off');
 saveas(fig,outputFileName,'fig');
