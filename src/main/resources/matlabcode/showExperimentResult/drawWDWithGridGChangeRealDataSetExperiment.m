@@ -1,4 +1,4 @@
-function y = drawWDWithGridGChangeRealDataSetExperiment(filename, xLabelName, yLabelName_left, yLabelName_right,outputFileName, figure_MarkerSize, figure_FontSize, figure_FontSize_X, figure_FontSize_Y)
+function y = drawWDWithGridGChangeRealDataSetExperiment(filename, xLabelName, yLabelName_left, yLabelName_right, outputFileName, figure_MarkerSize, figure_FontSize, figure_FontSize_X, figure_FontSize_Y)
 
 %data = readmatrix(path,lineStart-1,colStart-1 ,[lineStart-1,lineEnd-1,colStart-1,colEnd-1]);
 %data(lineStart:end,colStart:end)
@@ -51,19 +51,18 @@ hold on;
 
 xlabel(xLabelName);
 
-yyaxis left
+%yyaxis left
 plot(x, y_SubGeoI_2, 'ks-','LineWidth',2, 'MarkerSize',figure_MarkerSize);
 plot(x, y_MDSW, 'mx-', 'LineWidth', 2, 'MarkerSize',figure_MarkerSize);
 plot(x, y_HUE, 'b+-','LineWidth',2, 'MarkerSize',figure_MarkerSize);
 plot(x, y_DAM, 'g*-','LineWidth',2, 'MarkerSize',figure_MarkerSize);
-plot(x, y_DAMShrink, 'cd:','LineWidth',2, 'MarkerSize',figure_MarkerSize);
-
+plot(x, y_DAMShrink, 'cd-','LineWidth',2, 'MarkerSize',figure_MarkerSize);
 ylabel(yLabelName_left);
 
-yyaxis right
-plot(x, y_SubGeoI_1, 'ks-','LineWidth',2, 'MarkerSize',figure_MarkerSize);
-plot(x, y_RAM, 'ro-','LineWidth',2, 'MarkerSize',figure_MarkerSize);
-%plot(x_C_DAM, y_C_DAM, 'gd:', 'LineWidth', 2);
+%yyaxis right
+%plot(x, y_SubGeoI_1, 'yx:','LineWidth',2, 'MarkerSize',figure_MarkerSize);
+%plot(x, y_RAM, 'ro:','LineWidth',2, 'MarkerSize',figure_MarkerSize);
+%ylabel(yLabelName_right);
 
 xlim([roundn(x(1),-1) x(length(x))]);
 set(gca,'XTick',roundn(x,-1));
@@ -75,7 +74,7 @@ set(get(gca,'YLabel'),'FontSize',figure_FontSize,'FontName','Times New Roman');
 set(gca,'FontName','Times New Roman' ,'FontSize',figure_FontSize);
 %set(findobj('FontSize',10),'FontSize',figure_FontSize);
 
-ylabel(yLabelName_right);
+
 
 set(get(gca,'XLabel'),'FontSize',figure_FontSize_X,'FontName','Times New Roman');
 set(get(gca,'YLabel'),'FontSize',figure_FontSize_Y,'FontName','Times New Roman');

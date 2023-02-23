@@ -84,9 +84,12 @@ public class GeoITest {
 
     @Test
     public void fun6() {
-        int maxSizeD = 20;
-//        double[] epsilonArray = Constant.ALTER_PRIVACY_BUDGET_ARRAY;
-        double[] epsilonArray = BasicArray.getIncreasedoubleNumberArray(0.1, 0.01, 1);
+        int maxSizeD = 40;
+        double[] epsilonArray = Constant.ALTER_PRIVACY_BUDGET_ARRAY;
+//        double[] epsilonArray = BasicArray.getIncreasedoubleNumberArray(0.5, 0.01, 2);
+//        double[] epsilonArray = BasicArray.getIncreasedoubleNumberArray(2.6, 0.01, 2.6);
+//        double[] epsilonArray = BasicArray.getIncreasedoubleNumberArray(1, 0.01, 1);
+//        double[] epsilonArray = BasicArray.getIncreasedoubleNumberArray(0.61, 0.01, 3.3);
         double totalDistance, tempEpsilon;
         int tempK;
         for (int d = 1; d <= maxSizeD; d++) {
