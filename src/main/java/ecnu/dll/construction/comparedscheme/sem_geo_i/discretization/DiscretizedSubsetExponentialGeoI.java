@@ -52,9 +52,9 @@ public class DiscretizedSubsetExponentialGeoI implements Cloneable {
     }
 
     public void resetGridLength(Double gridLength) {
-        //todo:
+        //todo: 重设置grid大小，从而设置sizeD大小
         this.gridLength = gridLength;
-        this.subsetExponentialGeoI.resetInputPointList();
+        this.subsetExponentialGeoI.resetInputPointList(xxx);
     }
 
     /**
