@@ -338,5 +338,7 @@ public class SubsetExponentialGeoI<X> {
     }
 
 
-
+    public void resetInputPointList() {
+        // todo:xxx
+    }
 }

@@ -51,8 +51,10 @@ public class DiscretizedSubsetExponentialGeoI implements Cloneable {
         this.subsetExponentialGeoI.resetEpsilon(epsilon);
     }
 
-    public void resetGridLength() {
+    public void resetGridLength(Double gridLength) {
         //todo:
+        this.gridLength = gridLength;
+        this.subsetExponentialGeoI.resetInputPointList();
     }
 
     /**
