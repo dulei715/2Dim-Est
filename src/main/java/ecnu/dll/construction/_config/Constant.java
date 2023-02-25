@@ -62,9 +62,9 @@ public class Constant {
 //    public static final double[] ALTER_SIDE_LENGTH_NUMBER_SIZE = new double[] {
 //            5.0, 6.0, 7.0, 8.0, 9.0
 //    };
-//    public static final double[] ALTER_SIDE_LENGTH_NUMBER_SIZE_for_DAM_and_SubsetGeoI_Comparison = new double[] {
-//            5.0, 10.0, 15.0, 20.0, 25.0
-//    };
+    public static final double[] ALTER_SIDE_LENGTH_NUMBER_SIZE_for_DAM_and_SubsetGeoI_Comparison = new double[] {
+            5.0, 10.0, 15.0, 20.0, 25.0
+    };
 
 //    public static final double DEFAULT_SIDE_LENGTH_NUMBER_SIZE = 4.0;
 //    public static final double[] ALTER_SIDE_LENGTH_NUMBER_SIZE = new double[] {

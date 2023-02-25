@@ -51,6 +51,10 @@ public class DiscretizedSubsetExponentialGeoI implements Cloneable {
         this.subsetExponentialGeoI.resetEpsilon(epsilon);
     }
 
+    public void resetGridLength() {
+        //todo:
+    }
+
     /**
      * 专门针对矩形区域的输入，排列根据x坐标大小结合y坐标大小
      * @param point
