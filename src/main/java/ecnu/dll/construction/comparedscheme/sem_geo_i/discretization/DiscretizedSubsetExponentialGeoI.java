@@ -53,8 +53,34 @@ public class DiscretizedSubsetExponentialGeoI implements Cloneable {
 
     public void resetGridLength(Double gridLength) {
         //todo: 重设置grid大小，从而设置sizeD大小
-        this.gridLength = gridLength;
-        this.subsetExponentialGeoI.resetInputPointList(xxx);
+        try {
+            this.gridLength = gridLength;
+            this.sizeD = (int)Math.ceil(DecimalTool.round(this.inputLength / gridLength, Constant.eliminateDoubleErrorIndexSize));
+            this.sortedInputPointList = Grid.generateTwoDimensionalIntegerPoint(this.sizeD, 0, 0);
+            this.sortedInputPointList.sort(new TwoDimensionalIntegerPointComparator());
+            this.subsetExponentialGeoI.resetInputPointList(this.sortedInputPointList);
+
+        } catch (InstantiationException e) {
+            throw new RuntimeException(e);
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void resetEpsilonAndGridLength(Double epsilon, Double gridLength) {
+        try {
+            this.epsilon = epsilon;
+            this.gridLength = gridLength;
+            this.sizeD = (int)Math.ceil(DecimalTool.round(this.inputLength / gridLength, Constant.eliminateDoubleErrorIndexSize));
+            this.sortedInputPointList = Grid.generateTwoDimensionalIntegerPoint(this.sizeD, 0, 0);
+            this.sortedInputPointList.sort(new TwoDimensionalIntegerPointComparator());
+            this.subsetExponentialGeoI.resetEpsilonAndInputPointList(epsilon, this.sortedInputPointList);
+
+        } catch (InstantiationException e) {
+            throw new RuntimeException(e);
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     /**
@@ -133,5 +159,9 @@ public class DiscretizedSubsetExponentialGeoI implements Cloneable {
 
     public Double getEpsilon() {
         return epsilon;
+    }
+
+    public Double getInputLength() {
+        return inputLength;
     }
 }

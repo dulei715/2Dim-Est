@@ -22,6 +22,8 @@ public class Constant {
     public static final String basicDatasetPath = StringUtil.join(ConstantValues.FILE_SPLIT, basicPath, "0_dataset");
     public static final String basicResultPath = StringUtil.join(ConstantValues.FILE_SPLIT, basicPath, "result");
 
+    public static final String subsetGeoIBudgetLPTableGeneratedPath = StringUtil.join(ConstantValues.FILE_SPLIT, basicPath, "subsetGeoIBudgetLPTable", "budgetLPTable.txt");
+
     public static final int eliminateDoubleErrorIndexSize = 2;
     public static final int invalidValue = -1;
 
@@ -101,6 +103,8 @@ public class Constant {
     public static final double[] ALTER_PRIVACY_BUDGET_ARRAY = new double[] {
             0.5, 1.2, 1.9, 2.6, 3.3
     };
+
+    public static final double[] ALTER_PRIVACY_BUDGET_ARRAY_for_DAM_and_SubsetGeoI_Comparison = BasicArray.getIncreasedoubleNumberArray(0.67, 0.01, 4);
 //    public static final double DEFAULT_PRIVACY_BUDGET = 2.5;
 //
 //

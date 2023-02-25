@@ -6,14 +6,12 @@ import cn.edu.ecnu.basic.BasicCalculation;
 import cn.edu.ecnu.basic.BasicSearch;
 import cn.edu.ecnu.basic.RandomUtil;
 import cn.edu.ecnu.basic.cumulate.CumulativeFunction;
-import cn.edu.ecnu.collection.ArraysUtils;
 import cn.edu.ecnu.collection.ListUtils;
 import cn.edu.ecnu.collection.SetUtils;
-import cn.edu.ecnu.differential_privacy.cdp.basic_struct.DistanceAble;
 import cn.edu.ecnu.differential_privacy.cdp.basic_struct.DistanceTor;
-import cn.edu.ecnu.differential_privacy.cdp.exponential_mechanism.utility.UtilityFunction;
 import cn.edu.ecnu.differential_privacy.ldp.consistent.Normalization;
 import cn.edu.ecnu.math.MathUtils;
+import cn.edu.ecnu.struct.point.TwoDimensionalIntegerPoint;
 import ecnu.dll.construction.comparedscheme.sem_geo_i.tool.SubsetExponentialGeoITool;
 
 import java.util.*;
@@ -54,11 +52,7 @@ public class SubsetExponentialGeoI<X> {
         this.normalizer();
     }
 
-    public void resetEpsilon(Double epsilon) {
-       this.epsilon = epsilon;
-       this.setSetSizeKWithMeanEpsilon();
-       this.normalizer();
-    }
+
 
     public Double getOmega() {
         return omega;
@@ -337,8 +331,28 @@ public class SubsetExponentialGeoI<X> {
 
     }
 
-
-    public void resetInputPointList() {
-        // todo:xxx
+    public void resetEpsilon(Double epsilon) {
+        this.epsilon = epsilon;
+        this.setSetSizeKWithMeanEpsilon();
+        this.normalizer();
     }
+
+
+    public void resetInputPointList(List<X> sortedInputPointList) throws InstantiationException, IllegalAccessException {
+        this.inputElementList = sortedInputPointList;
+        this.massArray = new Double[this.inputElementList.size()];
+        this.initializeTotalDistanceAndElementGivenDistance();
+        this.setSetSizeKWithMeanEpsilon();
+        this.normalizer();
+    }
+
+    public void resetEpsilonAndInputPointList(Double epsilon, List<X> sortedInputPointList) throws InstantiationException, IllegalAccessException {
+        this.epsilon = epsilon;
+        this.inputElementList = sortedInputPointList;
+        this.massArray = new Double[this.inputElementList.size()];
+        this.initializeTotalDistanceAndElementGivenDistance();
+        this.setSetSizeKWithMeanEpsilon();
+        this.normalizer();
+    }
+
 }
