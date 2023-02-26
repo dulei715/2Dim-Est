@@ -1,4 +1,4 @@
-package ecnu.dll.construction.run.main_process.b_comparision_run;
+package ecnu.dll.construction.run.main_process.b_comparision_run.basic;
 
 import cn.edu.ecnu.differential_privacy.cdp.basic_struct.impl.OneNormTwoDimensionalIntegerPointDistanceTor;
 import cn.edu.ecnu.differential_privacy.cdp.basic_struct.impl.TwoNormTwoDimensionalIntegerPointDistanceTor;
@@ -9,7 +9,7 @@ import ecnu.dll.construction.analysis.e_to_lp.Norm1RAMLocalPrivacy;
 import ecnu.dll.construction.analysis.e_to_lp.Norm2DAMLocalPrivacy;
 import ecnu.dll.construction.analysis.e_to_lp.abstract_class.DAMLocalPrivacy;
 import ecnu.dll.construction.analysis.e_to_lp.abstract_class.RAMLocalPrivacy;
-import ecnu.dll.construction.analysis.lp_to_e.SubsetGeoITransformEpsilon;
+import ecnu.dll.construction.analysis.lp_to_e.version_1.SubsetGeoITransformEpsilon;
 import ecnu.dll.construction.comparedscheme.sem_geo_i.discretization.DiscretizedSubsetExponentialGeoI;
 import ecnu.dll.construction.newscheme.discretization.DiscretizedDiskNonShrinkScheme;
 import ecnu.dll.construction.newscheme.discretization.DiscretizedDiskScheme;

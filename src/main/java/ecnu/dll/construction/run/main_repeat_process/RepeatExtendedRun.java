@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Map;
 
 @SuppressWarnings("Duplicates")
-public class RepeatMainRun {
+public class RepeatExtendedRun {
     public static void main(String[] args) throws IllegalAccessException, CloneNotSupportedException, InstantiationException {
 
         DataSetAreaInfo[] crimeDataSetArray = Constant.crimeDataSetArray;
@@ -25,14 +25,14 @@ public class RepeatMainRun {
 
         int repeatTimes = 10;
         for (int i = 0; i < repeatTimes; i++) {
-            crimeOutputDirArray = StringUtil.concatGiveString(Constant.basicOutputCrimeDirArray, ConstantValues.FILE_SPLIT.concat(String.valueOf(i)));
-            nycOutputDirArray = StringUtil.concatGiveString(Constant.basicOutputNYCDirArray, ConstantValues.FILE_SPLIT.concat(String.valueOf(i)));
+            crimeOutputDirArray = StringUtil.concatGiveString(Constant.extendedOutputCrimeDirArray, ConstantValues.FILE_SPLIT.concat(String.valueOf(i)));
+            nycOutputDirArray = StringUtil.concatGiveString(Constant.extendedOutputNYCDirArray, ConstantValues.FILE_SPLIT.concat(String.valueOf(i)));
 //            normalOutputDir = Constant.outputNormalDir;
-            normalOutputDir = Constant.basicOutputNormalDir.concat(ConstantValues.FILE_SPLIT).concat(String.valueOf(i));
-            zipfOutputDir = Constant.basicOutputZipfDir.concat(ConstantValues.FILE_SPLIT).concat(String.valueOf(i));
-            normalMultiCentersOutputDir = Constant.basicOutputMultiNormalDir.concat(ConstantValues.FILE_SPLIT).concat(String.valueOf(i));
+            normalOutputDir = Constant.extendedOutputNormalDir.concat(ConstantValues.FILE_SPLIT).concat(String.valueOf(i));
+            zipfOutputDir = Constant.extendedOutputZipfDir.concat(ConstantValues.FILE_SPLIT).concat(String.valueOf(i));
+            normalMultiCentersOutputDir = Constant.extendedOutputMultiNormalDir.concat(ConstantValues.FILE_SPLIT).concat(String.valueOf(i));
             Map<String, Map<String, Map<String, List<ExperimentResult>>>> resultMap = TotalRun.runAndWrite(crimeDataSetArray, crimeOutputDirArray, nycDataSetArray, nycOutputDirArray, twoDimNormalDataSet, normalOutputDir, twoDimZipfDataSet, zipfOutputDir, twoDimNormalMultiCentersDataSet, normalMultiCentersOutputDir);
-            System.out.println("Finish round " + i);
+            System.out.println("Finish extended round " + i);
         }
 
     }

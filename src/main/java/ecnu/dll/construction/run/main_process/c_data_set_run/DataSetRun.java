@@ -10,10 +10,10 @@ import cn.edu.ecnu.struct.point.TwoDimensionalDoublePoint;
 import cn.edu.ecnu.struct.point.TwoDimensionalIntegerPoint;
 import ecnu.dll.construction._config.Constant;
 import ecnu.dll.construction.newscheme.discretization.tool.DiscretizedSchemeTool;
-import ecnu.dll.construction.run.main_process.b_comparision_run.AlterParameterBRun;
-import ecnu.dll.construction.run.main_process.b_comparision_run.AlterParameterBudgetRun;
-import ecnu.dll.construction.run.main_process.b_comparision_run.AlterParameterGRun;
-import ecnu.dll.construction.run.main_process.b_comparision_run.AlterParameterKRun;
+import ecnu.dll.construction.run.main_process.b_comparision_run.basic.AlterParameterBRun;
+import ecnu.dll.construction.run.main_process.b_comparision_run.basic.AlterParameterBudgetRun;
+import ecnu.dll.construction.run.main_process.b_comparision_run.basic.AlterParameterGRun;
+import ecnu.dll.construction.run.main_process.b_comparision_run.basic.AlterParameterKRun;
 
 import java.util.HashMap;
 import java.util.List;

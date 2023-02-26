@@ -1,15 +1,14 @@
-package ecnu.dll.construction.analysis.lp_to_e;
+package ecnu.dll.construction.analysis.lp_to_e.version_2;
 
 import cn.edu.ecnu.basic.BasicArray;
 import cn.edu.ecnu.collection.ArraysUtils;
-import cn.edu.ecnu.constant_values.ConstantValues;
 import cn.edu.ecnu.struct.point.TwoDimensionalDoublePoint;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class TransformEpsilon {
+public class TransformEpsilonByTable {
     /**
      * 一. 初始化
      *      1. 初始化给定范围 R 以及给定精度 δ 的所有 LP 和 ε 的对应关系
@@ -25,7 +24,7 @@ public class TransformEpsilon {
     // 降序排列
     protected double[] relativeLocalPrivacyArray;
 
-    public TransformEpsilon(double[] ascendingSortedPrivacyBudgetArray, double[] relativeLocalPrivacyArray) {
+    public TransformEpsilonByTable(double[] ascendingSortedPrivacyBudgetArray, double[] relativeLocalPrivacyArray) {
         if (!ArraysUtils.isAscending(ascendingSortedPrivacyBudgetArray)) {
             throw new RuntimeException("The input privacy budget array is not ascending!");
         }
@@ -36,7 +35,7 @@ public class TransformEpsilon {
         this.relativeLocalPrivacyArray = relativeLocalPrivacyArray;
     }
 
-    public TransformEpsilon(Double[] ascendingSortedPrivacyBudgetArray, Double[] relativeLocalPrivacyArray) {
+    public TransformEpsilonByTable(Double[] ascendingSortedPrivacyBudgetArray, Double[] relativeLocalPrivacyArray) {
         this(ArraysUtils.toDoubleArray(ascendingSortedPrivacyBudgetArray), ArraysUtils.toDoubleArray(relativeLocalPrivacyArray));
     }
 
@@ -84,7 +83,4 @@ public class TransformEpsilon {
         return list;
     }
 
-    public static void main(String[] args) {
-
-    }
 }

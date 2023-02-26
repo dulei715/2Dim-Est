@@ -1,15 +1,12 @@
 package privacy_test;
 
-import cn.edu.ecnu.basic.BasicArray;
 import cn.edu.ecnu.collection.ArraysUtils;
-import cn.edu.ecnu.collection.ListUtils;
 import cn.edu.ecnu.constant_values.ConstantValues;
 import cn.edu.ecnu.io.print.MyPrint;
 import cn.edu.ecnu.io.read.TwoDimensionalPointRead;
 import cn.edu.ecnu.struct.point.TwoDimensionalDoublePoint;
 import cn.edu.ecnu.struct.point.TwoDimensionalDoublePointUtils;
-import ecnu.dll.construction._config.Constant;
-import ecnu.dll.construction.analysis.lp_to_e.TransformEpsilonEnhanced;
+import ecnu.dll.construction.analysis.lp_to_e.version_1.TransformEpsilonEnhanced;
 import org.junit.Test;
 
 import java.util.List;

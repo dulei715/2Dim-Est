@@ -103,6 +103,20 @@ public class DiscretizedDiskScheme extends AbstractDiscretizedScheme {
         }
     }
 
+    public void resetEpsilonAndGridLength(Double epsilon, Double gridLength, boolean whetherResetSizeB) {
+        this.epsilon = epsilon;
+        this.gridLength = gridLength;
+        //假设向上取整
+        this.sizeD = (int)Math.ceil(inputLength / gridLength);
+        if (whetherResetSizeB) {
+            this.sizeB = this.getOptimalSizeB();
+        }
+        this.setConstPQ();
+        this.setRawIntegerPointTypeList();
+        this.setNoiseIntegerPointTypeList();
+        this.setTransformMatrix();
+    }
+
 
     @Override
     public Integer getOptimalSizeB() {
@@ -461,4 +475,6 @@ public class DiscretizedDiskScheme extends AbstractDiscretizedScheme {
         }
         return null;
     }
+
+
 }

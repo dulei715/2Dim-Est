@@ -1,12 +1,11 @@
-package ecnu.dll.construction.run.main_process.b_comparision_run.tool;
+package ecnu.dll.construction.run.main_process.b_comparision_run.extended.tool;
 
+import cn.edu.ecnu.basic.BasicArray;
 import cn.edu.ecnu.collection.ArraysUtils;
 import cn.edu.ecnu.differential_privacy.cdp.basic_struct.impl.TwoNormTwoDimensionalIntegerPointDistanceTor;
 import cn.edu.ecnu.io.read.BasicRead;
 import cn.edu.ecnu.io.write.BasicWrite;
 import ecnu.dll.construction.analysis.e_to_lp.Norm2GeoILocalPrivacy;
-import ecnu.dll.construction.analysis.e_to_lp.basic.TransformLocalPrivacy;
-import ecnu.dll.construction.analysis.lp_to_e.SubsetGeoITransformEpsilon;
 import ecnu.dll.construction.comparedscheme.sem_geo_i.discretization.DiscretizedSubsetExponentialGeoI;
 
 import java.util.ArrayList;
@@ -121,6 +120,36 @@ public class SubsetGeoIEpsilonLocalPrivacyTable {
 
         return new SubsetGeoIEpsilonLocalPrivacyTable(sizeDToIndexMap, budgetToIndexMap, table);
 
+    }
+
+    public double getLocalPrivacy(Double sizeD, Double epsilon) {
+        Integer xIndex = this.sizeDToIndexMap.get(sizeD);
+        Integer yIndex = this.budgetToIndexMap.get(epsilon);
+        return this.lPTable[xIndex][yIndex];
+    }
+
+
+    public double getEpsilonByLocalPrivacy(Double sizeD, Double localPrivacy) {
+        double[] lPRow = this.lPTable[this.sizeDToIndexMap.get(sizeD)];
+        if (!ArraysUtils.isDescending(lPRow)) {
+            throw new RuntimeException("The local privacy for sizeD = " + sizeD + " in the table is not Descending!");
+        }
+        Double[] budgetArray = this.budgetToIndexMap.keySet().toArray(new Double[0]);
+        int index = ArraysUtils.binaryDescendSearch(lPRow, localPrivacy);
+        if (index >= 0) {
+            return budgetArray[index];
+        }
+        int rightIndex = -index - 1;
+        if (rightIndex < 1 || rightIndex >= lPRow.length) {
+            throw new RuntimeException("The local privacy is not in supported range! " + "the local privacy value should be in [" + lPRow[0]
+                    + ", " + lPRow[lPRow.length-1] +  "], however, the input local privacy value is " + localPrivacy);
+        }
+        int leftIndex = rightIndex - 1;
+        double leftLP = lPRow[leftIndex];
+        double rightLP = lPRow[rightIndex];
+        double leftEpsilon = budgetArray[leftIndex];
+        double rightEpsilon = budgetArray[rightIndex];
+        return BasicArray.getLinearTransformValue(leftLP, rightLP, localPrivacy, leftEpsilon, rightEpsilon);
     }
 
 }

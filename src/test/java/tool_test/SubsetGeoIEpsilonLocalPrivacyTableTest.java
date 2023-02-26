@@ -1,11 +1,9 @@
 package tool_test;
 
-import cn.edu.ecnu.basic.BasicArray;
 import cn.edu.ecnu.collection.ArraysUtils;
 import cn.edu.ecnu.io.print.MyPrint;
 import ecnu.dll.construction._config.Constant;
-import ecnu.dll.construction.analysis.lp_to_e.SubsetGeoITransformEpsilon;
-import ecnu.dll.construction.run.main_process.b_comparision_run.tool.SubsetGeoIEpsilonLocalPrivacyTable;
+import ecnu.dll.construction.run.main_process.b_comparision_run.extended.tool.SubsetGeoIEpsilonLocalPrivacyTable;
 import org.junit.Test;
 
 public class SubsetGeoIEpsilonLocalPrivacyTableTest {
@@ -31,6 +29,25 @@ public class SubsetGeoIEpsilonLocalPrivacyTableTest {
         double[][] readTable = tableReadStruct.getlPTable();
         MyPrint.show2DimensionDoubleArray(readTable);
 
+    }
+
+    @Test
+    public void fun2() {
+        double[] sizeDArrayValue = new double[] {
+                1.0, 2.0, 3.0, 4.0, 5.0
+        };
+        double[] budgetArrayValue = new double[] {
+                0.5, 1.2, 1.9, 2.6, 3.3
+        };
+        Double[] sizeDArray = ArraysUtils.toDoubleArray(sizeDArrayValue);
+        Double[] budgetArray = ArraysUtils.toDoubleArray(budgetArrayValue);
+        SubsetGeoIEpsilonLocalPrivacyTable tableStruct = new SubsetGeoIEpsilonLocalPrivacyTable(sizeDArray, budgetArray);
+
+        double[][] lpTable = tableStruct.getlPTable();
+        MyPrint.show2DimensionDoubleArray(lpTable);
+
+        System.out.println(tableStruct.getLocalPrivacy(2.0, 1.9));
+        System.out.println(tableStruct.getEpsilonByLocalPrivacy(3.0, 1.2));
 
     }
 }

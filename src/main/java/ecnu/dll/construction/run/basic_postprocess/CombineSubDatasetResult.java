@@ -1,9 +1,7 @@
 package ecnu.dll.construction.run.basic_postprocess;
 
-import cn.edu.ecnu.basic.BasicArray;
 import cn.edu.ecnu.basic.StringUtil;
 import cn.edu.ecnu.collection.ArraysUtils;
-import cn.edu.ecnu.collection.ListUtils;
 import cn.edu.ecnu.constant_values.ConstantValues;
 import cn.edu.ecnu.result.FileTool;
 import cn.edu.ecnu.struct.result.ColumnBean;
@@ -52,7 +50,7 @@ public class CombineSubDatasetResult {
     }
 
     public static void composeAllRepeat() throws ClassNotFoundException, InvocationTargetException, NoSuchMethodException, IllegalAccessException, InstantiationException {
-        String[] allRelativeBasicDir = ArraysUtils.combineArray(new String[][]{Constant.outputCrimeDirArray, Constant.outputNYCDirArray, new String[]{Constant.outputNormalDir}, new String[]{Constant.outputZipfDir}, new String[]{Constant.outputMultiNormalDir}});
+        String[] allRelativeBasicDir = ArraysUtils.combineArray(new String[][]{Constant.basicOutputCrimeDirArray, Constant.basicOutputNYCDirArray, new String[]{Constant.basicOutputNormalDir}, new String[]{Constant.basicOutputZipfDir}, new String[]{Constant.basicOutputMultiNormalDir}});
         String[] fileNameArray = StringUtil.concatGiveString(Constant.alterKeyArray, ".csv");
         for (String relativeBasicPath : allRelativeBasicDir) {
             composeCSVResult(relativeBasicPath, fileNameArray);

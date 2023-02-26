@@ -1,4 +1,4 @@
-package ecnu.dll.construction.run.main_process.b_comparision_run;
+package ecnu.dll.construction.run.main_process.b_comparision_run.basic;
 
 import cn.edu.ecnu.result.ExperimentResult;
 import cn.edu.ecnu.struct.point.TwoDimensionalIntegerPoint;

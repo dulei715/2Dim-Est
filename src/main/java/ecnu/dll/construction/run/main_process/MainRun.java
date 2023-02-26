@@ -1,6 +1,5 @@
 package ecnu.dll.construction.run.main_process;
 
-import cn.edu.ecnu.io.print.MyPrint;
 import cn.edu.ecnu.result.ExperimentResult;
 import ecnu.dll.construction._config.Constant;
 import ecnu.dll.construction.dataset.struct.DataSetAreaInfo;
@@ -29,10 +28,10 @@ public class MainRun {
         DataSetAreaInfo twoDimNormalDataSet = Constant.twoDimNormalDataSet;
         DataSetAreaInfo twoDimZipfDataSet = Constant.twoDimZipfDataSet;
 
-        String[] crimeOutputDirArray = Constant.outputCrimeDirArray;
-        String[] nycOutputDirArray = Constant.outputNYCDirArray;
-        String normalOutputDir = Constant.outputNormalDir;
-        String zipfOutputDir = Constant.outputZipfDir;
+        String[] crimeOutputDirArray = Constant.basicOutputCrimeDirArray;
+        String[] nycOutputDirArray = Constant.basicOutputNYCDirArray;
+        String normalOutputDir = Constant.basicOutputNormalDir;
+        String zipfOutputDir = Constant.basicOutputZipfDir;
 
 //        Map<String, Map<String, Map<String, List<ExperimentResult>>>> resultMap = TotalRun.runAndWrite(crimeDataSetArray, crimeOutputDirArray, nycDataSetArray, nycOutputDirArray, twoDimNormalDataSet, normalOutputDir, twoDimZipfDataSet, zipfOutputDir);
 //        Map<String, Map<String, Map<String, List<ExperimentResult>>>> resultMap = TotalRun.runAndWrite(null, crimeOutputDirArray, null, nycOutputDirArray, twoDimNormalDataSet, normalOutputDir, null, zipfOutputDir);

@@ -49,16 +49,9 @@ public abstract class AbstractDiscretizedScheme implements DiscretizedPlaneInter
         this.inputLength = inputLength;
         //假设向下取整 (为了提高精度，尽量让高概率部分小)
         this.sizeB = (int)Math.floor(DecimalTool.round(constB / gridLength, Constant.eliminateDoubleErrorIndexSize));
-//        if (constB < gridLength) {
-//            System.out.println("constB < gridLength");
-//        }
         //假设向上取整 (为了包含所有可能的点)
         this.sizeD = (int)Math.ceil(DecimalTool.round(inputLength / gridLength, Constant.eliminateDoubleErrorIndexSize));
         this.kParameter = kParameter;
-//        this.setConstPQ();
-//        this.setRawIntegerPointTypeList();
-//        this.setNoiseIntegerPointTypeList();
-//        this.setTransformMatrix();
     }
 
     public AbstractDiscretizedScheme(Double epsilon, Double gridLength, Double inputLength, Double kParameter, Double xLeft, Double yLeft) {
@@ -73,10 +66,6 @@ public abstract class AbstractDiscretizedScheme implements DiscretizedPlaneInter
         //假设向上取整
         this.sizeB = this.getOptimalSizeB();
         this.kParameter = kParameter;
-//        this.setConstPQ();
-//        this.setRawIntegerPointTypeList();
-//        this.setNoiseIntegerPointTypeList();
-//        this.setTransformMatrix();
     }
 
     protected abstract void resetEpsilon(Double epsilon, boolean whetherResetSizeB);
