@@ -6,6 +6,7 @@ import cn.edu.ecnu.result.ExperimentResult;
 import ecnu.dll.construction._config.Constant;
 import ecnu.dll.construction.dataset.struct.DataSetAreaInfo;
 import ecnu.dll.construction.run.main_process.d_total_run.TotalRun;
+import ecnu.dll.construction.run.main_process.d_total_run.TotalRunExtended;
 
 import java.util.List;
 import java.util.Map;
@@ -31,7 +32,7 @@ public class RepeatExtendedRun {
             normalOutputDir = Constant.extendedOutputNormalDir.concat(ConstantValues.FILE_SPLIT).concat(String.valueOf(i));
             zipfOutputDir = Constant.extendedOutputZipfDir.concat(ConstantValues.FILE_SPLIT).concat(String.valueOf(i));
             normalMultiCentersOutputDir = Constant.extendedOutputMultiNormalDir.concat(ConstantValues.FILE_SPLIT).concat(String.valueOf(i));
-            Map<String, Map<String, Map<String, List<ExperimentResult>>>> resultMap = TotalRun.runAndWrite(crimeDataSetArray, crimeOutputDirArray, nycDataSetArray, nycOutputDirArray, twoDimNormalDataSet, normalOutputDir, twoDimZipfDataSet, zipfOutputDir, twoDimNormalMultiCentersDataSet, normalMultiCentersOutputDir);
+            Map<String, Map<String, Map<String, List<ExperimentResult>>>> resultMap = TotalRunExtended.runAndWrite(crimeDataSetArray, crimeOutputDirArray, nycDataSetArray, nycOutputDirArray, twoDimNormalDataSet, normalOutputDir, twoDimZipfDataSet, zipfOutputDir, twoDimNormalMultiCentersDataSet, normalMultiCentersOutputDir);
             System.out.println("Finish extended round " + i);
         }
 

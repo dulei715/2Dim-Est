@@ -17,14 +17,14 @@ public class Constant {
 
 //    public static final String basicPath = "/root/code/2_2.ProgramForSpatialLDPEstimation/1.JavaCode";
 //    public static final String basicPath = "E:\\dataset";
-    public static final String basicPath = "/root/code/2_seldp/";
+    public static final String rootPath = "/root/code/2_seldp/";
 //    public static final String basicPath = "E:\\1.学习\\4.数据集\\2.dataset_for_spatial_estimation";
-    public static final String basicDatasetPath = StringUtil.join(ConstantValues.FILE_SPLIT, basicPath, "0_dataset");
-    public static final String basicResultPath = StringUtil.join(ConstantValues.FILE_SPLIT, basicPath, "result");
-    public static final String extendedResultPath = StringUtil.join(ConstantValues.FILE_SPLIT, basicPath, "result_extended");
+    public static final String datasetPath = StringUtil.join(ConstantValues.FILE_SPLIT, rootPath, "0_dataset");
+    public static final String basicResultPath = StringUtil.join(ConstantValues.FILE_SPLIT, rootPath, "result");
+    public static final String extendedResultPath = StringUtil.join(ConstantValues.FILE_SPLIT, rootPath, "result_extended");
 
-    public static final String damBudgetLPTableGeneratedPath = StringUtil.join(ConstantValues.FILE_SPLIT, basicPath, "budgetLPTable", "damBudgetLPTable.txt");
-    public static final String subsetGeoIBudgetLPTableGeneratedPath = StringUtil.join(ConstantValues.FILE_SPLIT, basicPath, "budgetLPTable", "geoIBudgetLPTable.txt");
+    public static final String damBudgetLPTableGeneratedPath = StringUtil.join(ConstantValues.FILE_SPLIT, rootPath, "budgetLPTable", "damBudgetLPTable.txt");
+    public static final String subsetGeoIBudgetLPTableGeneratedPath = StringUtil.join(ConstantValues.FILE_SPLIT, rootPath, "budgetLPTable", "geoIBudgetLPTable.txt");
 
     public static final int eliminateDoubleErrorIndexSize = 2;
     public static final int invalidValue = -1;
@@ -58,7 +58,7 @@ public class Constant {
 //            2.0, 3.0, 4.0, 5.0, 6.0
 //    };
     public static final double DEFAULT_SIDE_LENGTH_NUMBER_SIZE = 5.0;
-    public static final double DEFAULT_SIDE_LENGTH_NUMBER_SIZE_for_DAM_and_SubsetGeoI_Comparison = 15.0;
+    public static final double DEFAULT_SIDE_LENGTH_NUMBER_SIZE_for_DAM_and_SubsetGeoI_Comparison = 10.0;
 //    public static final double DEFAULT_SIDE_LENGTH_NUMBER_SIZE_for_b_change = DEFAULT_SIDE_LENGTH_NUMBER_SIZE;
     public static final double DEFAULT_SIDE_LENGTH_NUMBER_SIZE_for_b_change = 9.0;
     public static final double[] ALTER_SIDE_LENGTH_NUMBER_SIZE = new double[] {
@@ -108,7 +108,10 @@ public class Constant {
             0.5, 1.2, 1.9, 2.6, 3.3
     };
 
-    public static final double[] ALTER_PRIVACY_BUDGET_ARRAY_for_DAM_and_SubsetGeoI_Comparison = BasicArray.getIncreasedoubleNumberArray(0.67, 0.01, 4);
+    public static final double[] ALTER_PRIVACY_BUDGET_ARRAY_for_DAM_and_SubsetGeoI_Comparison = new double[] {
+            0.7, 1.4, 2.1, 2.8, 3.5
+    };
+    public static final double[] ALTER_PRIVACY_BUDGET_ARRAY_for_DAM_and_SubsetGeoI_Comparison_Total = BasicArray.getIncreasedoubleNumberArray(0.67, 0.01, 4, eliminateDoubleErrorIndexSize);
 
 //    public static final double DEFAULT_PRIVACY_BUDGET = 2.5;
 //
@@ -121,7 +124,7 @@ public class Constant {
 //    };
 
 //    public static final double[] FINE_GRIT_PRIVACY_BUDGET_ARRAY = BasicArray.getIncreaseDoubleNumberArray(0.2, 0.01, 3.0);
-    public static final double[] FINE_GRIT_PRIVACY_BUDGET_ARRAY = BasicArray.getIncreasedoubleNumberArray(0.35, 0.01, 5.05);
+    public static final double[] FINE_GRIT_PRIVACY_BUDGET_ARRAY = BasicArray.getIncreasedoubleNumberArray(0.35, 0.01, 5.05, eliminateDoubleErrorIndexSize);
 //    public static final double[] FINE_GRIT_PRIVACY_BUDGET_ARRAY = BasicArray.getIncreasedoubleNumberArray(0.35, 0.01, 3.05);
 //    public static final double[] FINE_GRIT_PRIVACY_BUDGET_ARRAY = BasicArray.getIncreaseDoubleNumberArray(0.9, 0.01, 3.1);
 
@@ -167,11 +170,15 @@ public class Constant {
     public static final String alterGKey = "alteringG";
     public static final String alterKKey = "alteringK";
 
-    public static final String[] alterKeyArray = new String[] {
+    public static final String[] basicAlterKeyArray = new String[] {
             alterBKey,
             alterBudgetKey,
             alterGKey,
             alterKKey
+    };
+    public static final String[] extendedAlterKeyArray = new String[] {
+//            alterBudgetKey,
+            alterGKey
     };
 
     // 记录数据集名称
@@ -186,20 +193,22 @@ public class Constant {
     public static final String multiNormalKey = "TwoDimMultiCenterNormal";
 
     // 记录数据集路径
-    public static final String chicagoAPath = StringUtil.join(ConstantValues.FILE_SPLIT, basicDatasetPath, "1_real", "1_crime", "chicago_point_A.txt");
-    public static final String chicagoBPath = StringUtil.join(ConstantValues.FILE_SPLIT, basicDatasetPath, "1_real", "1_crime", "chicago_point_B.txt");
-    public static final String chicagoCPath = StringUtil.join(ConstantValues.FILE_SPLIT, basicDatasetPath, "1_real", "1_crime", "chicago_point_C.txt");
-    public static final String nycAPath = StringUtil.join(ConstantValues.FILE_SPLIT, basicDatasetPath, "1_real", "2_nyc", "nyc_point_A.txt");
-    public static final String nycBPath = StringUtil.join(ConstantValues.FILE_SPLIT, basicDatasetPath, "1_real", "2_nyc", "nyc_point_B.txt");
-    public static final String nycCPath = StringUtil.join(ConstantValues.FILE_SPLIT, basicDatasetPath, "1_real", "2_nyc", "nyc_point_C.txt");
-    public static final String normalPath = StringUtil.join(ConstantValues.FILE_SPLIT, basicDatasetPath, "2_synthetic", "1_two_normal", "two_normal_point_extract.txt");
-    public static final String zipfPath = StringUtil.join(ConstantValues.FILE_SPLIT, basicDatasetPath, "2_synthetic", "2_two_zipf", "two_zipf_point.txt");
+    public static final String chicagoAPath = StringUtil.join(ConstantValues.FILE_SPLIT, datasetPath, "1_real", "1_crime", "chicago_point_A.txt");
+    public static final String chicagoBPath = StringUtil.join(ConstantValues.FILE_SPLIT, datasetPath, "1_real", "1_crime", "chicago_point_B.txt");
+    public static final String chicagoCPath = StringUtil.join(ConstantValues.FILE_SPLIT, datasetPath, "1_real", "1_crime", "chicago_point_C.txt");
+    public static final String nycAPath = StringUtil.join(ConstantValues.FILE_SPLIT, datasetPath, "1_real", "2_nyc", "nyc_point_A.txt");
+    public static final String nycBPath = StringUtil.join(ConstantValues.FILE_SPLIT, datasetPath, "1_real", "2_nyc", "nyc_point_B.txt");
+    public static final String nycCPath = StringUtil.join(ConstantValues.FILE_SPLIT, datasetPath, "1_real", "2_nyc", "nyc_point_C.txt");
+    public static final String normalPath = StringUtil.join(ConstantValues.FILE_SPLIT, datasetPath, "2_synthetic", "1_two_normal", "two_normal_point_extract.txt");
+    public static final String zipfPath = StringUtil.join(ConstantValues.FILE_SPLIT, datasetPath, "2_synthetic", "2_two_zipf", "two_zipf_point.txt");
 
-    public static final String multiNormalPath = StringUtil.join(ConstantValues.FILE_SPLIT, basicDatasetPath, "2_synthetic", "3_two_normal_multiple_center", "two_normal_point_multiple_centers_extract.txt");
+    public static final String multiNormalPath = StringUtil.join(ConstantValues.FILE_SPLIT, datasetPath, "2_synthetic", "3_two_normal_multiple_center", "two_normal_point_multiple_centers_extract.txt");
 
     // 记录被分割的dataset输出父路径的父路径
-    public static final String relativeParentCrimeDir = StringUtil.join(ConstantValues.FILE_SPLIT, basicResultPath, "crime");
-    public static final String relativeParentNYCDir = StringUtil.join(ConstantValues.FILE_SPLIT, basicResultPath, "nyc");
+    public static final String basicRelativeParentCrimeDir = StringUtil.join(ConstantValues.FILE_SPLIT, basicResultPath, "crime");
+    public static final String extendedRelativeParentCrimeDir = StringUtil.join(ConstantValues.FILE_SPLIT, extendedResultPath, "crime");
+    public static final String basicRelativeParentNYCDir = StringUtil.join(ConstantValues.FILE_SPLIT, basicResultPath, "nyc");
+    public static final String extendedRelativeParentNYCDir = StringUtil.join(ConstantValues.FILE_SPLIT, extendedResultPath, "nyc");
 
     // 记录dataset输出父路径
     public static final String[] basicOutputCrimeDirArray = new String[] {
@@ -207,29 +216,28 @@ public class Constant {
             StringUtil.join(ConstantValues.FILE_SPLIT, basicResultPath, "crime", "crimeB"),
             StringUtil.join(ConstantValues.FILE_SPLIT, basicResultPath, "crime", "crimeC")
     };
-    public static final String[] basicOutputNYCDirArray = new String[] {
-            StringUtil.join(ConstantValues.FILE_SPLIT, basicResultPath, "nyc", "nycA"),
-            StringUtil.join(ConstantValues.FILE_SPLIT, basicResultPath, "nyc", "nycB"),
-            StringUtil.join(ConstantValues.FILE_SPLIT, basicResultPath, "nyc", "nycC")
-    };
-    public static final String basicOutputNormalDir = StringUtil.join(ConstantValues.FILE_SPLIT, basicResultPath, "normal");
-    public static final String basicOutputZipfDir = StringUtil.join(ConstantValues.FILE_SPLIT, basicResultPath, "zipf");
-    public static final String basicOutputMultiNormalDir = StringUtil.join(ConstantValues.FILE_SPLIT, basicResultPath, "normal_multi_centers");
-
-
     public static final String[] extendedOutputCrimeDirArray = new String[] {
             StringUtil.join(ConstantValues.FILE_SPLIT, extendedResultPath, "crime", "crimeA"),
             StringUtil.join(ConstantValues.FILE_SPLIT, extendedResultPath, "crime", "crimeB"),
             StringUtil.join(ConstantValues.FILE_SPLIT, extendedResultPath, "crime", "crimeC")
+    };
+    public static final String[] basicOutputNYCDirArray = new String[] {
+            StringUtil.join(ConstantValues.FILE_SPLIT, basicResultPath, "nyc", "nycA"),
+            StringUtil.join(ConstantValues.FILE_SPLIT, basicResultPath, "nyc", "nycB"),
+            StringUtil.join(ConstantValues.FILE_SPLIT, basicResultPath, "nyc", "nycC")
     };
     public static final String[] extendedOutputNYCDirArray = new String[] {
             StringUtil.join(ConstantValues.FILE_SPLIT, extendedResultPath, "nyc", "nycA"),
             StringUtil.join(ConstantValues.FILE_SPLIT, extendedResultPath, "nyc", "nycB"),
             StringUtil.join(ConstantValues.FILE_SPLIT, extendedResultPath, "nyc", "nycC")
     };
+    public static final String basicOutputNormalDir = StringUtil.join(ConstantValues.FILE_SPLIT, basicResultPath, "normal");
     public static final String extendedOutputNormalDir = StringUtil.join(ConstantValues.FILE_SPLIT, extendedResultPath, "normal");
+    public static final String basicOutputZipfDir = StringUtil.join(ConstantValues.FILE_SPLIT, basicResultPath, "zipf");
     public static final String extendedOutputZipfDir = StringUtil.join(ConstantValues.FILE_SPLIT, extendedResultPath, "zipf");
+    public static final String basicOutputMultiNormalDir = StringUtil.join(ConstantValues.FILE_SPLIT, basicResultPath, "normal_multi_centers");
     public static final String extendedOutputMultiNormalDir = StringUtil.join(ConstantValues.FILE_SPLIT, extendedResultPath, "normal_multi_centers");
+
 
 
 

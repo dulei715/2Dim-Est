@@ -14,7 +14,7 @@ public class GenerateDatasetTest {
     @Test
     public void generateZipf() {
 //        String outputPath = "F:\\dataset\\test\\synthetic_dataset\\two_zipf_dataset.txt";
-        String outputPath = Constant.basicDatasetPath + "\\0_dataset\\2_synthetic\\2_two_zipf\\two_zipf_point_part.txt";
+        String outputPath = Constant.datasetPath + "\\0_dataset\\2_synthetic\\2_two_zipf\\two_zipf_point_part.txt";
         int size = 10000;
         double randomValueX, randomValueY;
         double[] doubleArrX, doubleArrY;
@@ -42,7 +42,7 @@ public class GenerateDatasetTest {
     @Deprecated
     @Test
     public void generateUniform() {
-        String outputPath = Constant.basicDatasetPath + "\\test\\synthetic_dataset\\two_uniform_dataset.txt";
+        String outputPath = Constant.datasetPath + "\\test\\synthetic_dataset\\two_uniform_dataset.txt";
         int size = 10000;
         double randomValueX, randomValueY;
         TwoDimensionalDoublePoint point;
@@ -75,7 +75,7 @@ public class GenerateDatasetTest {
 
     @Test
     public void generateNormWithMultipleCenter() {
-        String outputPath = Constant.basicDatasetPath + "\\0_dataset\\2_synthetic\\3_two_normal_multiple\\two_normal_multiple_point.txt";
+        String outputPath = Constant.datasetPath + "\\0_dataset\\2_synthetic\\3_two_normal_multiple\\two_normal_multiple_point.txt";
     }
 
 }

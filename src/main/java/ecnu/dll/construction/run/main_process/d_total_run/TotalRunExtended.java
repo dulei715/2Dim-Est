@@ -83,8 +83,6 @@ public class TotalRunExtended {
             resultMap.put(dataSetName, tempDataSetResult);
         }
 
-
-
         return resultMap;
     }
 

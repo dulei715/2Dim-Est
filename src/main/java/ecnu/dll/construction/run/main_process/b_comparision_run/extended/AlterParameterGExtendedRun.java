@@ -1,7 +1,5 @@
 package ecnu.dll.construction.run.main_process.b_comparision_run.extended;
 
-import cn.edu.ecnu.differential_privacy.cdp.basic_struct.impl.OneNormTwoDimensionalIntegerPointDistanceTor;
-import cn.edu.ecnu.differential_privacy.cdp.basic_struct.impl.TwoNormTwoDimensionalIntegerPointDistanceTor;
 import cn.edu.ecnu.result.ExperimentResult;
 import cn.edu.ecnu.statistic.StatisticTool;
 import cn.edu.ecnu.struct.grid.Grid;
@@ -9,14 +7,6 @@ import cn.edu.ecnu.struct.point.TwoDimensionalDoublePoint;
 import cn.edu.ecnu.struct.point.TwoDimensionalIntegerPoint;
 import ecnu.dll.construction._config.Constant;
 import ecnu.dll.construction._config.Initialized;
-import ecnu.dll.construction.analysis.e_to_lp.Norm1RAMLocalPrivacy;
-import ecnu.dll.construction.analysis.e_to_lp.Norm2DAMLocalPrivacy;
-import ecnu.dll.construction.analysis.e_to_lp.abstract_class.DAMLocalPrivacy;
-import ecnu.dll.construction.analysis.e_to_lp.abstract_class.RAMLocalPrivacy;
-import ecnu.dll.construction.analysis.lp_to_e.version_1.SubsetGeoITransformEpsilon;
-import ecnu.dll.construction.comparedscheme.sem_geo_i.discretization.DiscretizedSubsetExponentialGeoI;
-import ecnu.dll.construction.newscheme.discretization.DiscretizedDiskScheme;
-import ecnu.dll.construction.newscheme.discretization.DiscretizedRhombusScheme;
 import ecnu.dll.construction.newscheme.discretization.tool.DiscretizedDiskSchemeTool;
 import ecnu.dll.construction.newscheme.discretization.tool.DiscretizedRhombusSchemeTool;
 import ecnu.dll.construction.newscheme.discretization.tool.DiscretizedSchemeTool;
@@ -25,7 +15,7 @@ import ecnu.dll.construction.run.main_process.a_single_scheme_run.*;
 
 import java.util.*;
 
-@SuppressWarnings("Duplicates")
+
 public class AlterParameterGExtendedRun {
     public static Map<String, List<ExperimentResult>> run(final List<TwoDimensionalDoublePoint> doublePointList, double inputSideLength, double xBound, double yBound) throws InstantiationException, IllegalAccessException, CloneNotSupportedException {
 
@@ -73,14 +63,11 @@ public class AlterParameterGExtendedRun {
         TreeMap<TwoDimensionalIntegerPoint, Double> rawDataStatistic;
 
         ExperimentResultAndScheme tempDiskExperimentResultAndScheme;
-        DiscretizedDiskScheme tempDiskScheme;
-        DiscretizedSubsetExponentialGeoI tempGeoIScheme;
-        DAMLocalPrivacy damLocalPrivacy;
-        SubsetGeoITransformEpsilon geoITransformEpsilonNorm2;
         double tempLocalPrivacy, transformedEpsilon;
 
         for (int i = 0; i < arraySize; i++) {
 
+            System.out.println("Privacy Budget is " + epsilon + ", Input Length Size is " + inputLengthSizeNumberArray[i]);
 
             // 计算不同的gridLength对应的不同的integerPointList
             integerPointList = Grid.toIntegerPoint(doublePointList, new Double[]{xBound, yBound}, gridLengthArray[i]);
@@ -92,18 +79,12 @@ public class AlterParameterGExtendedRun {
             // for DMA
             tempDiskExperimentResultAndScheme = DAMRun.runEnhanced(integerPointList, rawDataStatistic, gridLengthArray[i], inputSideLength, alterDiskOptimalSizeB[i]*gridLengthArray[i], epsilon, kParameter, xBound, yBound);
             tempDiskExperimentResult = tempDiskExperimentResultAndScheme.getExperimentResult();
-            tempDiskScheme = (DiscretizedDiskScheme) tempDiskExperimentResultAndScheme.getAbstractDiscretizedScheme();
             tempDiskExperimentResult.addPair(1, Constant.areaLengthKey, String.valueOf(inputSideLength));
             diskExperimentResultList.add(tempDiskExperimentResult);
 
 
             // for Subset-Geo-I-norm2
             // 根据相应的DAM，计算出对应的LP
-//            damLocalPrivacy = new Norm2DAMLocalPrivacy(tempDiskScheme);
-//            tempLocalPrivacy = damLocalPrivacy.getTransformLocalPrivacyValue();
-//            tempGeoIScheme = new DiscretizedSubsetExponentialGeoI(epsilon, gridLengthArray[i], inputSideLength, xBound, yBound, new TwoNormTwoDimensionalIntegerPointDistanceTor());
-//            geoITransformEpsilonNorm2 = new SubsetGeoITransformEpsilon(Constant.FINE_GRIT_PRIVACY_BUDGET_ARRAY, tempGeoIScheme, SubsetGeoITransformEpsilon.Local_Privacy_Distance_Norm_Two);
-//            transformedEpsilon = geoITransformEpsilonNorm2.getEpsilonByLocalPrivacy(tempLocalPrivacy);
             tempLocalPrivacy = Initialized.damELPTable.getLocalPrivacy(inputLengthSizeNumberArray[i], epsilon);
             transformedEpsilon = Initialized.subGeoIELPTable.getEpsilonByLocalPrivacy(inputLengthSizeNumberArray[i], tempLocalPrivacy);
             tempSubsetGeoITwoNormExperimentResult = SubsetGeoITwoNormRun.run(integerPointList, rawDataStatistic, gridLengthArray[i], inputSideLength, transformedEpsilon, xBound, yBound);

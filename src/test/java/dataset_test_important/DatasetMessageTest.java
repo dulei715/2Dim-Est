@@ -16,13 +16,13 @@ public class DatasetMessageTest {
 
     public List<TwoDimensionalDoublePoint>[] pointList;
 
-    public String path = Constant.basicDatasetPath + "\\crime\\Chicago_Crimes_2022_01_06.csv";
+    public String path = Constant.datasetPath + "\\crime\\Chicago_Crimes_2022_01_06.csv";
     public String keyLatitude = "Latitude";
     public String keyLongitude = "Longitude";
     public String[] outputPathArray = new String[]{
-            Constant.basicDatasetPath + "\\test\\chicago_point_A.txt",
-            Constant.basicDatasetPath + "\\test\\chicago_point_B.txt",
-            Constant.basicDatasetPath + "\\test\\chicago_point_C.txt"
+            Constant.datasetPath + "\\test\\chicago_point_A.txt",
+            Constant.datasetPath + "\\test\\chicago_point_B.txt",
+            Constant.datasetPath + "\\test\\chicago_point_C.txt"
     };
 
 //    public String path = "F:\\dataset\\nyc\\2016_green_taxi_trip_data.csv";

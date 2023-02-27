@@ -2,6 +2,7 @@ package ecnu.dll.construction.analysis.lp_to_e.version_1;
 
 import cn.edu.ecnu.basic.BasicArray;
 import cn.edu.ecnu.collection.ArraysUtils;
+import ecnu.dll.construction._config.Constant;
 import ecnu.dll.construction.analysis.e_to_lp.Norm1GeoILocalPrivacy;
 import ecnu.dll.construction.analysis.e_to_lp.Norm2GeoILocalPrivacy;
 import ecnu.dll.construction.analysis.e_to_lp.abstract_class.GeoILocalPrivacy;
@@ -27,7 +28,7 @@ public class SubsetGeoITransformEpsilon {
         this.endEpsilon = endEpsilon;
 //        this.geoIScheme = geoIScheme;
         this.geoIScheme = (DiscretizedSubsetExponentialGeoI) geoIScheme.clone();
-        this.epsilonArray = BasicArray.getIncreasedoubleNumberArray(this.beginEpsilon, this.epsilonStep, this.endEpsilon);
+        this.epsilonArray = BasicArray.getIncreasedoubleNumberArray(this.beginEpsilon, this.epsilonStep, this.endEpsilon, Constant.eliminateDoubleErrorIndexSize);
         initializeTransformEpsilon(localPrivacyDistanceType);
     }
 

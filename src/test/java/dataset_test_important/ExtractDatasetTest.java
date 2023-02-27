@@ -3,7 +3,6 @@ package dataset_test_important;
 import cn.edu.ecnu.dataset.DatasetHandler;
 import cn.edu.ecnu.io.read.TwoDimensionalPointRead;
 import cn.edu.ecnu.io.write.PointWrite;
-import cn.edu.ecnu.struct.point.Point;
 import cn.edu.ecnu.struct.point.TwoDimensionalDoublePoint;
 import ecnu.dll.construction._config.Constant;
 import org.junit.Test;
@@ -14,8 +13,8 @@ public class ExtractDatasetTest {
 
     @Test
     public void extractCrimeDataset() {
-        String inputPath = Constant.basicDatasetPath + "\\crime\\Chicago_Crimes_2022_01_06.csv";
-        String outPath = Constant.basicDatasetPath + "\\test\\chicago_crimes_dataset.txt";
+        String inputPath = Constant.datasetPath + "\\crime\\Chicago_Crimes_2022_01_06.csv";
+        String outPath = Constant.datasetPath + "\\test\\chicago_crimes_dataset.txt";
         TwoDimensionalPointRead pointRead = new TwoDimensionalPointRead(inputPath);
         pointRead.readPointWithFirstLineCount();
         List<TwoDimensionalDoublePoint> pointList = pointRead.getPointList();
@@ -31,8 +30,8 @@ public class ExtractDatasetTest {
 
     @Test
     public void extractNormDataset() {
-        String inputPath = Constant.basicDatasetPath + "\\test\\synthetic_dataset\\two_normal_point.txt";
-        String outPath = Constant.basicDatasetPath + "\\test\\synthetic_dataset\\two_normal_point_extract.txt";
+        String inputPath = Constant.datasetPath + "\\test\\synthetic_dataset\\two_normal_point.txt";
+        String outPath = Constant.datasetPath + "\\test\\synthetic_dataset\\two_normal_point_extract.txt";
         TwoDimensionalPointRead pointRead = new TwoDimensionalPointRead(inputPath);
         pointRead.readPointWithFirstLineCount();
         List<TwoDimensionalDoublePoint> pointList = pointRead.getPointList();
@@ -48,8 +47,8 @@ public class ExtractDatasetTest {
 
     @Test
     public void extractZipFDatasetForPicture() {
-        String inputPath = Constant.basicDatasetPath + "\\2_synthetic\\2_two_zipf\\two_zipf_point.txt";
-        String outputPath = Constant.basicDatasetPath + "\\2_synthetic\\2_two_zipf\\two_zipf_point_part.txt";
+        String inputPath = Constant.datasetPath + "\\2_synthetic\\2_two_zipf\\two_zipf_point.txt";
+        String outputPath = Constant.datasetPath + "\\2_synthetic\\2_two_zipf\\two_zipf_point_part.txt";
         int shrinkUnit = 10, offset = 0;
         List<TwoDimensionalDoublePoint> rawPointList = TwoDimensionalPointRead.readPointWithFirstLineCount(inputPath);
         List<TwoDimensionalDoublePoint> extractPointList = DatasetHandler.extractDataPointGivenShrinkUnitAndOffset(rawPointList, shrinkUnit, offset);
@@ -61,8 +60,8 @@ public class ExtractDatasetTest {
 
     @Test
     public void extractNormalDatasetForPicture() {
-        String inputPath = Constant.basicDatasetPath + "\\2_synthetic\\1_two_normal\\two_normal_point.txt";
-        String outputPath = Constant.basicDatasetPath + "\\2_synthetic\\1_two_normal\\two_normal_point_extract_for_picture.txt";
+        String inputPath = Constant.datasetPath + "\\2_synthetic\\1_two_normal\\two_normal_point.txt";
+        String outputPath = Constant.datasetPath + "\\2_synthetic\\1_two_normal\\two_normal_point_extract_for_picture.txt";
         int shrinkUnit = 10, offset = 0;
         List<TwoDimensionalDoublePoint> rawPointList = TwoDimensionalPointRead.readPointWithFirstLineCount(inputPath);
         List<TwoDimensionalDoublePoint> extractPointList = DatasetHandler.extractDataPointGivenShrinkUnitAndOffset(rawPointList, shrinkUnit, offset);
@@ -74,8 +73,8 @@ public class ExtractDatasetTest {
 
     @Test
     public void extractNormalDatasetWithMultipleCenters() {
-        String inputPath = Constant.basicDatasetPath + "\\2_synthetic\\3_two_normal_multiple_center\\two_normal_point_multiple_centers.txt";
-        String outPath = Constant.basicDatasetPath + "\\2_synthetic\\3_two_normal_multiple_center\\two_normal_point_multiple_centers_extract.txt";
+        String inputPath = Constant.datasetPath + "\\2_synthetic\\3_two_normal_multiple_center\\two_normal_point_multiple_centers.txt";
+        String outPath = Constant.datasetPath + "\\2_synthetic\\3_two_normal_multiple_center\\two_normal_point_multiple_centers_extract.txt";
         TwoDimensionalPointRead pointRead = new TwoDimensionalPointRead(inputPath);
         pointRead.readPointWithFirstLineCount();
         List<TwoDimensionalDoublePoint> pointList = pointRead.getPointList();

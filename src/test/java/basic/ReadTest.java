@@ -14,7 +14,7 @@ import java.util.Map;
 public class ReadTest {
     @Test
     public void fun1() {
-        String path = Constant.basicDatasetPath + "\\crime\\Chicago_Crimes_2008_to_2011.csv";
+        String path = Constant.datasetPath + "\\crime\\Chicago_Crimes_2008_to_2011.csv";
         int lineSize = 10;
         List<Map<String, String>> result = CSVRead.readData(path, lineSize);
         MyPrint.showList(result, "\r\n");
@@ -22,7 +22,7 @@ public class ReadTest {
 
     @Test
     public void fun2() throws IOException {
-        String path = Constant.basicDatasetPath + "\\crime\\Chicago_Crimes_2008_to_2011.csv";
+        String path = Constant.datasetPath + "\\crime\\Chicago_Crimes_2008_to_2011.csv";
         CsvReader csvReader = new CsvReader(path, ',', Charset.forName("UTF-8"));
 //        csvReader.readRecord();
 //        String[] headers = csvReader.getHeaders();
@@ -38,7 +38,7 @@ public class ReadTest {
 
     @Test
     public void fun3() throws IOException {
-        String path = Constant.basicDatasetPath + "\\crime\\Chicago_Crimes_2008_to_2011.csv";
+        String path = Constant.datasetPath + "\\crime\\Chicago_Crimes_2008_to_2011.csv";
         CsvReader csvReader = new CsvReader(path, ',', Charset.forName("UTF-8"));
         String keyLatitude = "Latitude", valueLatitude;
         String keyLongitude = "Longitude", valueLongitude;
@@ -58,7 +58,7 @@ public class ReadTest {
 
     @Test
     public void fun4() throws IOException {
-        String path = Constant.basicDatasetPath + "\\crime\\Chicago_Crimes_2008_to_2011.csv";
+        String path = Constant.datasetPath + "\\crime\\Chicago_Crimes_2008_to_2011.csv";
         CsvReader csvReader = new CsvReader(path, ',', Charset.forName("UTF-8"));
 
         String keyLatitude = "Latitude", valueLatitudeStr;

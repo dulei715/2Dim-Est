@@ -87,7 +87,7 @@ public class GeoITest {
         int maxSizeD = 40;
 //        int maxSizeD = 25;
 //        double[] epsilonArray = Constant.ALTER_PRIVACY_BUDGET_ARRAY;
-        double[] epsilonArray = BasicArray.getIncreasedoubleNumberArray(0.5, 0.01, 4);
+        double[] epsilonArray = BasicArray.getIncreasedoubleNumberArray(0.5, 0.01, 4, Constant.eliminateDoubleErrorIndexSize);
 //        double[] epsilonArray = BasicArray.getIncreasedoubleNumberArray(2.6, 0.01, 2.6);
 //        double[] epsilonArray = BasicArray.getIncreasedoubleNumberArray(1, 0.01, 1);
 //        double[] epsilonArray = BasicArray.getIncreasedoubleNumberArray(0.61, 0.01, 3.3);
