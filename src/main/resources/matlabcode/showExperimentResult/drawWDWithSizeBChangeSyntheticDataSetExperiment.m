@@ -44,9 +44,9 @@ hold on;
 xlabel(xLabelName);
 
 %yyaxis left
-plot(x_DAM_one, y_DAM_one, 'g*-','LineWidth',2, 'MarkerSize',figure_MarkerSize);
-plot(x_DAM_two, y_DAM_two, 'gx-', 'LineWidth', 2, 'MarkerSize',figure_MarkerSize);
-plot(x_DAM_three, y_DAM_three, 'gd-', 'LineWidth', 2, 'MarkerSize',figure_MarkerSize);
+plot(x_DAM_one, y_DAM_one, 'g+:','LineWidth',2, 'MarkerSize',figure_MarkerSize);
+plot(x_DAM_two, y_DAM_two, 'go:', 'LineWidth', 2, 'MarkerSize',figure_MarkerSize);
+plot(x_DAM_three, y_DAM_three, 'g*:', 'LineWidth', 2, 'MarkerSize',figure_MarkerSize);
 ylabel(yLabelName_left);
 
 %yyaxis right
@@ -55,7 +55,7 @@ ylabel(yLabelName_left);
 %plot(x_RAM_three, y_RAM_three, 'r+:','LineWidth',2, 'MarkerSize',figure_MarkerSize);
 %ylabel(yLabelName_right);
 
-x = sort(unique([roundn(x_RAM_one,-1), roundn(x_DAM_one,-1), roundn(x_RAM_two,-1), roundn(x_DAM_two,-1)]));
+x = sort(unique([roundn(x_DAM_one,-1), roundn(x_DAM_two,-1)]));
 if length(x) > 1
    xlim([roundn(x(1),-1) x(length(x))]); 
 end
@@ -74,7 +74,8 @@ set(gca,'FontName','Times New Roman' ,'FontSize',figure_FontSize);
 set(get(gca,'XLabel'),'FontSize',figure_FontSize_X,'FontName','Times New Roman');
 set(get(gca,'YLabel'),'FontSize',figure_FontSize_Y,'FontName','Times New Roman');
 
-h = legend('DAM-Normal','DAM-Zipf','DAM-MC-Normal','RAM-Normal', 'RAM-Zipf','RAM-MC-Normal','Location','Best');
+%h = legend('DAM-Normal','DAM-Zipf','DAM-MC-Normal','RAM-Normal', 'RAM-Zipf','RAM-MC-Normal','Location','Best');
+h = legend('DAM-Normal','DAM-Zipf','DAM-MC-Normal','Location','Best');
 set(h,'FontName','Times New Roman','FontSize',14,'FontWeight','normal');
 legend('off');
 saveas(fig,outputFileName,'fig');

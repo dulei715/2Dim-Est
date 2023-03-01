@@ -15,21 +15,23 @@ y_DAM = x;
 a = plot(x, y_SubGeoI, 'ks-','LineWidth',2,'MarkerSize',figure_MarkerSize);
 b = plot(x, y_MDSW, 'mx-', 'LineWidth', 2,'MarkerSize',figure_MarkerSize);
 c = plot(x, y_HUE, 'b+-','LineWidth',2,'MarkerSize',figure_MarkerSize);
-d = plot(x,y_RAM, 'ro-','LineWidth',2,'MarkerSize',figure_MarkerSize);
-e = plot(x, y_DAM, 'g*-','LineWidth',2,'MarkerSize',figure_MarkerSize);
+%d = plot(x,y_RAM, 'ro-','LineWidth',2,'MarkerSize',figure_MarkerSize);
+%e = plot(x, y_DAM, 'r*-','LineWidth',2,'MarkerSize',figure_MarkerSize);
+e = plot(x, y_DAM, 'ro-','LineWidth',2,'MarkerSize',figure_MarkerSize);
 f = plot(x, y_DAM, 'cd:','LineWidth',2,'MarkerSize',figure_MarkerSize);
 
 
 a.Visible='off';
 b.Visible='off';
 c.Visible='off';
-d.Visible='off';
+%d.Visible='off';
 e.Visible='off';
 f.Visible='off';
 
 locationType = 'northoutside';
 orientationType = 'horizontal';
 textColor = 'black';
-h = legend('SubGeoI', 'MDSW','HUEM','RAM','DAM','DAM-NS','Location',locationType,'Orientation',orientationType, 'TextColor', textColor);
+%h = legend('SubGeoI', 'MDSW','HUEM','RAM','DAM','DAM-NS','Location',locationType,'Orientation',orientationType, 'TextColor', textColor);
+h = legend('SubGeoI', 'MDSW','HUEM','DAM','DAM-NS','Location',locationType,'Orientation',orientationType, 'TextColor', textColor);
 set(h,'FontName','Times New Roman','FontSize',legend_FontSize,'FontWeight','normal');
 axis off;

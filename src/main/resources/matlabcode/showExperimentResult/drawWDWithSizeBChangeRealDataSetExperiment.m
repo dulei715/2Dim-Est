@@ -46,8 +46,8 @@ xlabel(xLabelName);
 
 %yyaxis left
 
-plot(x_DAM_one, y_DAM_one, 'g*-','LineWidth',2, 'MarkerSize',figure_MarkerSize);
-plot(x_DAM_two, y_DAM_two, 'gx-', 'LineWidth', 2, 'MarkerSize',figure_MarkerSize);
+plot(x_DAM_one, y_DAM_one, 'rs-','LineWidth',2, 'MarkerSize',figure_MarkerSize);
+plot(x_DAM_two, y_DAM_two, 'rx-', 'LineWidth', 2, 'MarkerSize',figure_MarkerSize);
 ylabel(yLabelName_left);
 
 %yyaxis right
@@ -56,7 +56,8 @@ ylabel(yLabelName_left);
 %ylabel(yLabelName_right);
 
 %xlim([min([roundn(x_RAM_one(1),-1),roundn(x_DAM_one(1),-1),roundn(x_RAM_two(1),-1),roundn(x_DAM_two(1),-1)]) max([x_RAM_one(length(x_RAM_one)),x_DAM_one(length(x_DAM_one)),x_RAM_two(length(x_RAM_two)),x_DAM_two(length(x_DAM_two))])]);
-x = sort(unique([roundn(x_RAM_one,-1), roundn(x_DAM_one,-1), roundn(x_RAM_two,-1), roundn(x_DAM_two,-1)]));
+%x = sort(unique([roundn(x_RAM_one,-1), roundn(x_DAM_one,-1), roundn(x_RAM_two,-1), roundn(x_DAM_two,-1)]));
+x = sort(unique([roundn(x_DAM_one,-1), roundn(x_DAM_two,-1)]));
 if length(x) > 1
    xlim([roundn(x(1),-1) x(length(x))]); 
 end
@@ -75,7 +76,8 @@ set(gca,'FontName','Times New Roman' ,'FontSize',figure_FontSize);
 set(get(gca,'XLabel'),'FontSize',figure_FontSize_X,'FontName','Times New Roman');
 set(get(gca,'YLabel'),'FontSize',figure_FontSize_Y,'FontName','Times New Roman');
 
-h = legend('DAM-Crime','DAM-NYC','RAM-Crime', 'RAM-NYC','Location','Best');
+%h = legend('DAM-Crime','DAM-NYC','RAM-Crime', 'RAM-NYC','Location','Best');
+h = legend('DAM-Crime','DAM-NYC','Location','Best');
 set(h,'FontName','Times New Roman','FontSize',14,'FontWeight','normal');
 legend('off');
 saveas(fig,outputFileName,'fig');

@@ -55,7 +55,7 @@ xlabel(xLabelName);
 plot(x, y_SubGeoI_2, 'ks-','LineWidth',2, 'MarkerSize',figure_MarkerSize);
 plot(x, y_MDSW, 'mx-', 'LineWidth', 2, 'MarkerSize',figure_MarkerSize);
 plot(x, y_HUE, 'b+-','LineWidth',2, 'MarkerSize',figure_MarkerSize);
-plot(x, y_DAM, 'g*-','LineWidth',2, 'MarkerSize',figure_MarkerSize);
+plot(x, y_DAM, 'ro-','LineWidth',2, 'MarkerSize',figure_MarkerSize);
 plot(x, y_DAMShrink, 'cd-','LineWidth',2, 'MarkerSize',figure_MarkerSize);
 ylabel(yLabelName_left);
 
@@ -79,7 +79,8 @@ set(gca,'FontName','Times New Roman' ,'FontSize',figure_FontSize);
 set(get(gca,'XLabel'),'FontSize',figure_FontSize_X,'FontName','Times New Roman');
 set(get(gca,'YLabel'),'FontSize',figure_FontSize_Y,'FontName','Times New Roman');
 
-h = legend('SubGeoI_2', 'MDSW','HUEM','DAM','DAMShrink','SubGeoI_1','RAM','Location','Best');
+%h = legend('SubGeoI_2', 'MDSW','HUEM','DAM','DAMShrink','SubGeoI_1','RAM','Location','Best');
+h = legend('SubGeoI_2', 'MDSW','HUEM','DAM','DAMShrink','Location','Best');
 set(h,'FontName','Times New Roman','FontSize',14,'FontWeight','normal');
 legend('off');
 saveas(fig,outputFileName,'fig');
