@@ -18,8 +18,8 @@ public class Constant {
 //    public static final String rootPath = "/root/code/2_2.ProgramForSpatialLDPEstimation/1.JavaCode";
 //    public static final String rootPath = "E:\\dataset";
 //    public static final String rootPath = "/root/code/2_seldp/";
-    public static final String rootPath = "/root/code/2_2_spatialLDP/";
-//    public static final String rootPath = "E:\\1.学习\\4.数据集\\2.dataset_for_spatial_estimation";
+//    public static final String rootPath = "/root/code/2_2_spatialLDP/";
+    public static final String rootPath = "E:\\1.学习\\4.数据集\\2.dataset_for_spatial_estimation";
     public static final String datasetPath = StringUtil.join(ConstantValues.FILE_SPLIT, rootPath, "0_dataset");
     public static final String basicResultPath = StringUtil.join(ConstantValues.FILE_SPLIT, rootPath, "result");
     public static final String extendedResultPath = StringUtil.join(ConstantValues.FILE_SPLIT, rootPath, "result_extended");
@@ -259,6 +259,7 @@ public class Constant {
     public static final String contributionKKey = "ContributionK";
     public static final String wassersteinDistance1Key = "WassersteinDistance1";
     public static final String wassersteinDistance2Key = "WassersteinDistance2";
+    public static final String klDivergenceKey = "KLDivergence";
 
 //    public static final String meanDistanceKey = "MeanDistance";
 //    public static final String varianceDistanceKey = "VarianceDistance";
@@ -276,7 +277,8 @@ public class Constant {
             new ColumnBean(10, privacyBudgetKey, "java.lang.Double", false),
             new ColumnBean(11, contributionKKey, "java.lang.Double", false),
             new ColumnBean(12, wassersteinDistance1Key, "java.lang.Double", true),
-            new ColumnBean(13, wassersteinDistance2Key, "java.lang.Double", true)
+            new ColumnBean(13, wassersteinDistance2Key, "java.lang.Double", true),
+            new ColumnBean(14, klDivergenceKey, "java.lang.Double", true)
 
     };
 

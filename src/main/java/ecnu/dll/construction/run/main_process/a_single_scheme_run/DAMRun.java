@@ -2,6 +2,7 @@ package ecnu.dll.construction.run.main_process.a_single_scheme_run;
 
 import cn.edu.ecnu.basic.BasicCalculation;
 import cn.edu.ecnu.differential_privacy.accuracy.metrics.distance_quantities.Distance;
+import cn.edu.ecnu.differential_privacy.accuracy.metrics.distance_quantities.KLDivergence;
 import cn.edu.ecnu.differential_privacy.accuracy.metrics.distance_quantities.TwoDimensionalWassersteinDistance;
 import cn.edu.ecnu.result.ExperimentResult;
 import cn.edu.ecnu.struct.grid.Grid;
@@ -45,8 +46,9 @@ public class DAMRun {
         try {
             Double wassersteinDistance1 = TwoDimensionalWassersteinDistance.getWassersteinDistance(rawDataStatistic, estimationResult, 1);
             Double wassersteinDistance2 = TwoDimensionalWassersteinDistance.getWassersteinDistance(rawDataStatistic, estimationResult, 2);
-            Double meanDistance = Distance.getAbsMeanDifference(rawDataStatistic, estimationResult);
-            Double varianceDistance = Distance.getAbsVarianceDifference(rawDataStatistic, estimationResult);
+            Double klDivergence = KLDivergence.getKLDivergence(rawDataStatistic, estimationResult);
+//            Double meanDistance = Distance.getAbsMeanDifference(rawDataStatistic, estimationResult);
+//            Double varianceDistance = Distance.getAbsVarianceDifference(rawDataStatistic, estimationResult);
             experimentResult = new ExperimentResult();
             experimentResult.addPair(Constant.dataPointSizeKey, String.valueOf(integerPointList.size()));
             experimentResult.addPair(Constant.schemeNameKey, Constant.diskSchemeKey);
@@ -59,6 +61,7 @@ public class DAMRun {
             experimentResult.addPair(Constant.contributionKKey, String.valueOf(kParameter));
             experimentResult.addPair(Constant.wassersteinDistance1Key, String.valueOf(wassersteinDistance1));
             experimentResult.addPair(Constant.wassersteinDistance2Key, String.valueOf(wassersteinDistance2));
+            experimentResult.addPair(Constant.klDivergenceKey, String.valueOf(klDivergence));
 //            experimentResult.addPair(Constant.meanDistanceKey, String.valueOf(meanDistance));
 //            experimentResult.addPair(Constant.varianceDistanceKey, String.valueOf(varianceDistance));
         } catch (CPLException e) {

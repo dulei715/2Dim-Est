@@ -2,6 +2,7 @@ package ecnu.dll.construction.run.main_process.a_single_scheme_run;
 
 import cn.edu.ecnu.basic.BasicCalculation;
 import cn.edu.ecnu.differential_privacy.accuracy.metrics.distance_quantities.Distance;
+import cn.edu.ecnu.differential_privacy.accuracy.metrics.distance_quantities.KLDivergence;
 import cn.edu.ecnu.differential_privacy.accuracy.metrics.distance_quantities.TwoDimensionalWassersteinDistance;
 import cn.edu.ecnu.differential_privacy.cdp.basic_struct.impl.OneNormTwoDimensionalIntegerPointDistanceTor;
 import cn.edu.ecnu.result.ExperimentResult;
@@ -42,6 +43,7 @@ public class SubsetGeoIOneNormRun {
             try {
                 Double wassersteinDistance1 = TwoDimensionalWassersteinDistance.getWassersteinDistance(rawDataStatistic, estimationResult, 1);
                 Double wassersteinDistance2 = TwoDimensionalWassersteinDistance.getWassersteinDistance(rawDataStatistic, estimationResult, 2);
+                Double klDivergence = KLDivergence.getKLDivergence(rawDataStatistic, estimationResult);
 //                Double meanDistance = Distance.getAbsMeanDifference(rawDataStatistic, estimationResult);
 //                Double varianceDistance = Distance.getAbsVarianceDifference(rawDataStatistic, estimationResult);
                 experimentResult = new ExperimentResult();
@@ -56,6 +58,7 @@ public class SubsetGeoIOneNormRun {
                 experimentResult.addPair(Constant.contributionKKey, String.valueOf(Constant.invalidValue));
                 experimentResult.addPair(Constant.wassersteinDistance1Key, String.valueOf(wassersteinDistance1));
                 experimentResult.addPair(Constant.wassersteinDistance2Key, String.valueOf(wassersteinDistance2));
+                experimentResult.addPair(Constant.klDivergenceKey, String.valueOf(klDivergence));
 //                experimentResult.addPair(Constant.meanDistanceKey, String.valueOf(meanDistance));
 //                experimentResult.addPair(Constant.varianceDistanceKey, String.valueOf(varianceDistance));
             } catch (CPLException e) {
