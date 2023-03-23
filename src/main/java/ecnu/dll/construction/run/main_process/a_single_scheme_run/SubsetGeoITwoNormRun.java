@@ -36,7 +36,7 @@ public class SubsetGeoITwoNormRun {
             try {
                 Double wassersteinDistance1 = TwoDimensionalWassersteinDistance.getWassersteinDistance(rawDataStatistic, estimationResult, 1);
                 Double wassersteinDistance2 = TwoDimensionalWassersteinDistance.getWassersteinDistance(rawDataStatistic, estimationResult, 2);
-                Double klDivergence = KLDivergence.getKLDivergence(rawDataStatistic, estimationResult);
+                Double klDivergence = KLDivergence.getKLDivergence(rawDataStatistic, estimationResult, Constant.DEFAULT_MINIMAL_DENOMINATOR);
 //                Double meanDistance = Distance.getAbsMeanDifference(rawDataStatistic, estimationResult);
 //                Double varianceDistance = Distance.getAbsVarianceDifference(rawDataStatistic, estimationResult);
                 experimentResult = new ExperimentResult();
@@ -57,6 +57,44 @@ public class SubsetGeoITwoNormRun {
             } catch (CPLException e) {
                 e.printStackTrace();
             }
+
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+        return experimentResult;
+
+    }
+    public static ExperimentResult runWithoutWassersteinDistance(final List<TwoDimensionalIntegerPoint> integerPointList, final TreeMap<TwoDimensionalIntegerPoint, Double> rawDataStatistic, double cellLength, double inputLength, double epsilon, double xBound, double yBound) {
+        DiscretizedSubsetExponentialGeoI scheme = null;
+        ExperimentResult experimentResult = null;
+        try {
+            scheme = new DiscretizedSubsetExponentialGeoI(epsilon, cellLength, inputLength, xBound, yBound, new TwoNormTwoDimensionalIntegerPointDistanceTor());
+
+            /**
+             * 生成噪声数据
+             */
+            List<Set<Integer>> noiseSubsetIndexList = scheme.getNoiseSubsetIndexList(integerPointList);
+            //todo: ...
+            long startTime = System.currentTimeMillis();
+            TreeMap<TwoDimensionalIntegerPoint, Double> estimationResult = scheme.statistic(noiseSubsetIndexList);
+            long endTime = System.currentTimeMillis();
+            long postProcessTime = endTime - startTime;
+
+
+            Double klDivergence = KLDivergence.getKLDivergence(rawDataStatistic, estimationResult, Constant.DEFAULT_MINIMAL_DENOMINATOR);
+            experimentResult = new ExperimentResult();
+            experimentResult.addPair(Constant.dataPointSizeKey, String.valueOf(integerPointList.size()));
+            experimentResult.addPair(Constant.schemeNameKey, Constant.subsetGeoITwoNormSchemeKey);
+            experimentResult.addPair(Constant.postProcessTimeKey, String.valueOf(postProcessTime));
+            experimentResult.addPair(Constant.gridUnitSizeKey, String.valueOf(cellLength));
+            experimentResult.addPair(Constant.dataTypeSizeKey, String.valueOf(scheme.getSortedInputPointList().size()));
+            experimentResult.addPair(Constant.sizeDKey, String.valueOf(scheme.getSizeD()));
+            experimentResult.addPair(Constant.sizeBKey, String.valueOf(Constant.invalidValue));
+            experimentResult.addPair(Constant.privacyBudgetKey, String.valueOf(epsilon));
+            experimentResult.addPair(Constant.contributionKKey, String.valueOf(Constant.invalidValue));
+            experimentResult.addPair(Constant.klDivergenceKey, String.valueOf(klDivergence));
 
         } catch (InstantiationException e) {
             e.printStackTrace();

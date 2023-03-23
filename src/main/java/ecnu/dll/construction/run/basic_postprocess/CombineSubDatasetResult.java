@@ -13,6 +13,9 @@ import java.util.Arrays;
 import java.util.List;
 
 public class CombineSubDatasetResult {
+
+    public static final Double doubleUpperBound = Double.MAX_VALUE;
+    public static final Double doubleLowerBound = -Double.MAX_VALUE;
     /**
      * 将给定的目录下的文件按照文件名进行简单合并
      * @param relativeBasicPath 给出的根目录。下面放着一系列文件夹 dirA, dirB, ...

@@ -75,8 +75,13 @@ public class DataSetRun {
         List<TwoDimensionalIntegerPoint> integerPointTypeList = DiscretizedSchemeTool.getRawTwoDimensionalIntegerPointTypeList((int) Math.ceil(Constant.DEFAULT_SIDE_LENGTH_NUMBER_SIZE));
         TreeMap<TwoDimensionalIntegerPoint, Double> rawStatisticMap = StatisticTool.countHistogramRatioMap(integerPointTypeList, integerPointList);
 
+        List<TwoDimensionalIntegerPoint> integerPointListForChangeB = Grid.toIntegerPoint(doublePointList, new Double[]{xBound, yBound}, inputSideLength / Constant.DEFAULT_SIDE_LENGTH_NUMBER_SIZE_for_b_change);
+        List<TwoDimensionalIntegerPoint> integerPointTypeListForChangeB = DiscretizedSchemeTool.getRawTwoDimensionalIntegerPointTypeList((int) Math.ceil(Constant.DEFAULT_SIDE_LENGTH_NUMBER_SIZE_for_b_change));
+        TreeMap<TwoDimensionalIntegerPoint, Double> rawStatisticMapForChangeB = StatisticTool.countHistogramRatioMap(integerPointTypeListForChangeB, integerPointListForChangeB);
+
+
         String outputFileName;
-        Map<String, List<ExperimentResult>> alteringBResult = AlterParameterBRun.run(integerPointList, inputSideLength, rawStatisticMap, xBound, yBound);
+        Map<String, List<ExperimentResult>> alteringBResult = AlterParameterBRun.run(integerPointListForChangeB, inputSideLength, rawStatisticMapForChangeB, xBound, yBound);
         ExperimentResult.addPair(alteringBResult, 1, Constant.areaLengthKey, String.valueOf(inputSideLength));
         ExperimentResult.addPair(alteringBResult, 0, Constant.dataSetNameKey, datasetName);
         outputFileName = outputDir + ConstantValues.FILE_SPLIT + Constant.alterBKey + ".csv";

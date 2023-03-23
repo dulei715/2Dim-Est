@@ -43,7 +43,7 @@ public class SubsetGeoIOneNormRun {
             try {
                 Double wassersteinDistance1 = TwoDimensionalWassersteinDistance.getWassersteinDistance(rawDataStatistic, estimationResult, 1);
                 Double wassersteinDistance2 = TwoDimensionalWassersteinDistance.getWassersteinDistance(rawDataStatistic, estimationResult, 2);
-                Double klDivergence = KLDivergence.getKLDivergence(rawDataStatistic, estimationResult);
+                Double klDivergence = KLDivergence.getKLDivergence(rawDataStatistic, estimationResult, Constant.DEFAULT_MINIMAL_DENOMINATOR);
 //                Double meanDistance = Distance.getAbsMeanDifference(rawDataStatistic, estimationResult);
 //                Double varianceDistance = Distance.getAbsVarianceDifference(rawDataStatistic, estimationResult);
                 experimentResult = new ExperimentResult();

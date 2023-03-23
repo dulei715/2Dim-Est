@@ -46,7 +46,7 @@ public class DAMRun {
         try {
             Double wassersteinDistance1 = TwoDimensionalWassersteinDistance.getWassersteinDistance(rawDataStatistic, estimationResult, 1);
             Double wassersteinDistance2 = TwoDimensionalWassersteinDistance.getWassersteinDistance(rawDataStatistic, estimationResult, 2);
-            Double klDivergence = KLDivergence.getKLDivergence(rawDataStatistic, estimationResult);
+            Double klDivergence = KLDivergence.getKLDivergence(rawDataStatistic, estimationResult, Constant.DEFAULT_MINIMAL_DENOMINATOR);
 //            Double meanDistance = Distance.getAbsMeanDifference(rawDataStatistic, estimationResult);
 //            Double varianceDistance = Distance.getAbsVarianceDifference(rawDataStatistic, estimationResult);
             experimentResult = new ExperimentResult();
@@ -68,6 +68,44 @@ public class DAMRun {
             e.printStackTrace();
         }
 
+
+        return experimentResult;
+
+    }
+    public static ExperimentResult runWithoutWassersteinDistance(final List<TwoDimensionalIntegerPoint> integerPointList, final TreeMap<TwoDimensionalIntegerPoint, Double> rawDataStatistic, double cellLength, double inputLength, double bLength, double epsilon, double kParameter, double xBound, double yBound) {
+        DiscretizedDiskScheme scheme;
+        if (bLength > 0) {
+            scheme = new DiscretizedDiskScheme(epsilon, cellLength, bLength, inputLength, kParameter, xBound, yBound);
+        } else {
+            scheme = new DiscretizedDiskScheme(epsilon, cellLength, inputLength, kParameter, xBound, yBound);
+        }
+
+        /**
+         * 生成噪声数据
+         */
+        List<TwoDimensionalIntegerPoint> noiseIntegerPointList = scheme.getNoiseValueList(integerPointList);
+
+        long startTime = System.currentTimeMillis();
+        TreeMap<TwoDimensionalIntegerPoint, Double> estimationResult = scheme.statistic(noiseIntegerPointList);
+        long endTime = System.currentTimeMillis();
+        long postProcessTime = endTime - startTime;
+
+
+
+
+        ExperimentResult experimentResult = null;
+        Double klDivergence = KLDivergence.getKLDivergence(rawDataStatistic, estimationResult, Constant.DEFAULT_MINIMAL_DENOMINATOR);
+        experimentResult = new ExperimentResult();
+        experimentResult.addPair(Constant.dataPointSizeKey, String.valueOf(integerPointList.size()));
+        experimentResult.addPair(Constant.schemeNameKey, Constant.diskSchemeKey);
+        experimentResult.addPair(Constant.postProcessTimeKey, String.valueOf(postProcessTime));
+        experimentResult.addPair(Constant.gridUnitSizeKey, String.valueOf(cellLength));
+        experimentResult.addPair(Constant.dataTypeSizeKey, String.valueOf(scheme.getRawIntegerPointTypeList().size()));
+        experimentResult.addPair(Constant.sizeDKey, String.valueOf(scheme.getSizeD()));
+        experimentResult.addPair(Constant.sizeBKey, String.valueOf(scheme.getSizeB()));
+        experimentResult.addPair(Constant.privacyBudgetKey, String.valueOf(epsilon));
+        experimentResult.addPair(Constant.contributionKKey, String.valueOf(kParameter));
+        experimentResult.addPair(Constant.klDivergenceKey, String.valueOf(klDivergence));
 
         return experimentResult;
 
@@ -100,6 +138,7 @@ public class DAMRun {
         try {
             Double wassersteinDistance1 = TwoDimensionalWassersteinDistance.getWassersteinDistance(rawDataStatistic, estimationResult, 1);
             Double wassersteinDistance2 = TwoDimensionalWassersteinDistance.getWassersteinDistance(rawDataStatistic, estimationResult, 2);
+            Double klDivergence = KLDivergence.getKLDivergence(rawDataStatistic, estimationResult, Constant.DEFAULT_MINIMAL_DENOMINATOR);
 //            Double meanDistance = Distance.getAbsMeanDifference(rawDataStatistic, estimationResult);
 //            Double varianceDistance = Distance.getAbsVarianceDifference(rawDataStatistic, estimationResult);
             experimentResult = new ExperimentResult();
@@ -114,6 +153,7 @@ public class DAMRun {
             experimentResult.addPair(Constant.contributionKKey, String.valueOf(kParameter));
             experimentResult.addPair(Constant.wassersteinDistance1Key, String.valueOf(wassersteinDistance1));
             experimentResult.addPair(Constant.wassersteinDistance2Key, String.valueOf(wassersteinDistance2));
+            experimentResult.addPair(Constant.klDivergenceKey, String.valueOf(klDivergence));
 //            experimentResult.addPair(Constant.meanDistanceKey, String.valueOf(meanDistance));
 //            experimentResult.addPair(Constant.varianceDistanceKey, String.valueOf(varianceDistance));
         } catch (CPLException e) {

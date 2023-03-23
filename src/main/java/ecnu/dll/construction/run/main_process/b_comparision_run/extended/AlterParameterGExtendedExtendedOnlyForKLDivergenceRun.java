@@ -11,20 +11,21 @@ import ecnu.dll.construction.newscheme.discretization.tool.DiscretizedDiskScheme
 import ecnu.dll.construction.newscheme.discretization.tool.DiscretizedRhombusSchemeTool;
 import ecnu.dll.construction.newscheme.discretization.tool.DiscretizedSchemeTool;
 import ecnu.dll.construction.run._struct.ExperimentResultAndScheme;
-import ecnu.dll.construction.run.main_process.a_single_scheme_run.*;
+import ecnu.dll.construction.run.main_process.a_single_scheme_run.DAMRun;
+import ecnu.dll.construction.run.main_process.a_single_scheme_run.SubsetGeoITwoNormRun;
 
 import java.util.*;
 
 
-public class AlterParameterGExtendedRun {
+public class AlterParameterGExtendedExtendedOnlyForKLDivergenceRun {
     public static Map<String, List<ExperimentResult>> run(final List<TwoDimensionalDoublePoint> doublePointList, double inputSideLength, double xBound, double yBound) throws InstantiationException, IllegalAccessException, CloneNotSupportedException {
 
-        int arraySize = Constant.ALTER_SIDE_LENGTH_NUMBER_SIZE_for_DAM_and_SubsetGeoI_Comparison.length;
+        int arraySize = Constant.ALTER_SIDE_LENGTH_NUMBER_SIZE_for_DAM_and_SubsetGeoI_Comparison2.length;
 
         /*
             1. 设置cell大小的变化参数（同时也是设置整数input的边长大小）
          */
-        double[] inputLengthSizeNumberArray = Constant.ALTER_SIDE_LENGTH_NUMBER_SIZE_for_DAM_and_SubsetGeoI_Comparison;
+        double[] inputLengthSizeNumberArray = Constant.ALTER_SIDE_LENGTH_NUMBER_SIZE_for_DAM_and_SubsetGeoI_Comparison2;
         double[] gridLengthArray = new double[arraySize];
         for (int i = 0; i < gridLengthArray.length; i++) {
             gridLengthArray[i] = inputSideLength / inputLengthSizeNumberArray[i];
@@ -33,7 +34,7 @@ public class AlterParameterGExtendedRun {
         /*
             2. 设置隐私预算budget
          */
-        double epsilon = Constant.DEFAULT_PRIVACY_BUDGET_for_DAM_and_SubsetGeoI_Comparison;
+        double epsilon = Constant.DEFAULT_PRIVACY_BUDGET_for_DAM_and_SubsetGeoI_Comparison2;
 
         /*
             3. 根据inputIntegerSizeLengthArray，分别计算Rhombus和Disk方案对应的Optimal sizeB的取值
@@ -76,8 +77,7 @@ public class AlterParameterGExtendedRun {
             rawDataStatistic = StatisticTool.countHistogramRatioMap(integerPointTypeList, integerPointList);
 
             // for DMA
-            tempDiskExperimentResult = DAMRun.run(integerPointList, rawDataStatistic, gridLengthArray[i], inputSideLength, alterDiskOptimalSizeB[i]*gridLengthArray[i], epsilon, kParameter, xBound, yBound);
-//            tempDiskExperimentResult = tempDiskExperimentResultAndScheme.getExperimentResult();
+            tempDiskExperimentResult = DAMRun.runWithoutWassersteinDistance(integerPointList, rawDataStatistic, gridLengthArray[i], inputSideLength, alterDiskOptimalSizeB[i]*gridLengthArray[i], epsilon, kParameter, xBound, yBound);
             tempDiskExperimentResult.addPair(1, Constant.areaLengthKey, String.valueOf(inputSideLength));
             diskExperimentResultList.add(tempDiskExperimentResult);
 
@@ -86,7 +86,7 @@ public class AlterParameterGExtendedRun {
             // 根据相应的DAM，计算出对应的LP
             tempLocalPrivacy = Initialized.damELPTable.getLocalPrivacy(inputLengthSizeNumberArray[i], epsilon);
             transformedEpsilon = Initialized.subGeoIELPTable.getEpsilonByLocalPrivacy(inputLengthSizeNumberArray[i], tempLocalPrivacy);
-            tempSubsetGeoITwoNormExperimentResult = SubsetGeoITwoNormRun.run(integerPointList, rawDataStatistic, gridLengthArray[i], inputSideLength, transformedEpsilon, xBound, yBound);
+            tempSubsetGeoITwoNormExperimentResult = SubsetGeoITwoNormRun.runWithoutWassersteinDistance(integerPointList, rawDataStatistic, gridLengthArray[i], inputSideLength, transformedEpsilon, xBound, yBound);
             tempSubsetGeoITwoNormExperimentResult.addPair(1, Constant.areaLengthKey, String.valueOf(inputSideLength));
             subsetGeoITwoNormExperimentResultList.add(tempSubsetGeoITwoNormExperimentResult);
 

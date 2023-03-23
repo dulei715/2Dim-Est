@@ -18,19 +18,23 @@ public class Constant {
 //    public static final String rootPath = "/root/code/2_2.ProgramForSpatialLDPEstimation/1.JavaCode";
 //    public static final String rootPath = "E:\\dataset";
 //    public static final String rootPath = "/root/code/2_seldp/";
-//    public static final String rootPath = "/root/code/2_2_spatialLDP/";
-    public static final String rootPath = "E:\\1.学习\\4.数据集\\2.dataset_for_spatial_estimation";
+    public static final String rootPath = "/root/code/2_2_spatialLDP/";
+//    public static final String rootPath = "E:\\1.学习\\4.数据集\\2.dataset_for_spatial_estimation";
     public static final String datasetPath = StringUtil.join(ConstantValues.FILE_SPLIT, rootPath, "0_dataset");
     public static final String basicResultPath = StringUtil.join(ConstantValues.FILE_SPLIT, rootPath, "result");
     public static final String extendedResultPath = StringUtil.join(ConstantValues.FILE_SPLIT, rootPath, "result_extended");
 
     public static final String damBudgetLPTableGeneratedPath = StringUtil.join(ConstantValues.FILE_SPLIT, rootPath, "budgetLPTable", "damBudgetLPTable.txt");
+    public static final String damBudgetLPTableGeneratedPathOnlyForKLDivergence = StringUtil.join(ConstantValues.FILE_SPLIT, rootPath, "budgetLPTable", "damBudgetLPTable2.txt");
     public static final String subsetGeoIBudgetLPTableGeneratedPath = StringUtil.join(ConstantValues.FILE_SPLIT, rootPath, "budgetLPTable", "geoIBudgetLPTable.txt");
+    public static final String subsetGeoIBudgetLPTableGeneratedPathOnlyForKLDivergence = StringUtil.join(ConstantValues.FILE_SPLIT, rootPath, "budgetLPTable", "geoIBudgetLPTable2.txt");
 
     public static final int eliminateDoubleErrorIndexSize = 2;
     public static final int invalidValue = -1;
 
     public static final double DEFAULT_PRECISION = Math.pow(10,-6);
+    public static final double DEFAULT_MINIMAL_DENOMINATOR = Math.pow(10,-6);
+
 
 //    public static final double DEFAULT_STOP_VALUE_TAO = Math.pow(10, -3);
     public static final double DEFAULT_STOP_VALUE_TAO = Math.pow(10, -6);
@@ -60,7 +64,7 @@ public class Constant {
 //    };
     public static final double DEFAULT_SIDE_LENGTH_NUMBER_SIZE = 5.0;
     public static final double DEFAULT_SIDE_LENGTH_NUMBER_SIZE_for_DAM_and_SubsetGeoI_Comparison = 10.0;
-//    public static final double DEFAULT_SIDE_LENGTH_NUMBER_SIZE_for_b_change = DEFAULT_SIDE_LENGTH_NUMBER_SIZE;
+    public static final double DEFAULT_SIDE_LENGTH_NUMBER_SIZE_for_DAM_and_SubsetGeoI_Comparison_for_KL_Divergence = 50.0;
     public static final double DEFAULT_SIDE_LENGTH_NUMBER_SIZE_for_b_change = 9.0;
     public static final double[] ALTER_SIDE_LENGTH_NUMBER_SIZE = new double[] {
             1.0, 2.0, 3.0, 4.0, 5.0
@@ -71,10 +75,19 @@ public class Constant {
 //    public static final double[] ALTER_SIDE_LENGTH_NUMBER_SIZE_for_DAM_and_SubsetGeoI_Comparison = new double[] {
 //            5.0, 10.0, 15.0, 20.0, 25.0
 //    };
-    public static final double[] ALTER_SIDE_LENGTH_NUMBER_SIZE_for_DAM_and_SubsetGeoI_Comparison = new double[] {
-            6.0, 7.0, 8.0, 9.0, 10.0
-    };
+
+
     public static final double[] ALTER_SIDE_LENGTH_NUMBER_SIZE_for_DAM_and_SubsetGeoI_Comparison_Total = BasicArray.getIncreasedoubleNumberArray(1.0, 1.0, 30.0, 2);
+//    public static final double[] ALTER_SIDE_LENGTH_NUMBER_SIZE_for_DAM_and_SubsetGeoI_Comparison_Extended = new double[]{1.0, 25.0, 50.0, 75.0, 100.0};
+    public static final double[] ALTER_SIDE_LENGTH_NUMBER_SIZE_for_DAM_and_SubsetGeoI_Comparison_Extended = new double[]{10.0, 20.0, 30.0, 40.0, 50.0};
+//    public static final double[] ALTER_SIDE_LENGTH_NUMBER_SIZE_for_DAM_and_SubsetGeoI_Comparison = new double[] {
+//            6.0, 7.0, 8.0, 9.0, 10.0
+//    };
+    public static final double[] ALTER_SIDE_LENGTH_NUMBER_SIZE_for_DAM_and_SubsetGeoI_Comparison = new double[] {
+            8.0, 9.0, 10.0, 11.0, 12.0
+    };
+    public static final double[] ALTER_SIDE_LENGTH_NUMBER_SIZE_for_DAM_and_SubsetGeoI_Comparison2 = ALTER_SIDE_LENGTH_NUMBER_SIZE_for_DAM_and_SubsetGeoI_Comparison_Extended;
+
 
 //    public static final double DEFAULT_SIDE_LENGTH_NUMBER_SIZE = 4.0;
 //    public static final double[] ALTER_SIDE_LENGTH_NUMBER_SIZE = new double[] {
@@ -105,6 +118,8 @@ public class Constant {
 //            4.7, 5.4, 6.1, 6.8, 7.5
 //    };
     public static final double DEFAULT_PRIVACY_BUDGET = 2.6;
+    public static final double DEFAULT_PRIVACY_BUDGET_for_DAM_and_SubsetGeoI_Comparison = DEFAULT_PRIVACY_BUDGET;
+    public static final double DEFAULT_PRIVACY_BUDGET_for_DAM_and_SubsetGeoI_Comparison2 = DEFAULT_PRIVACY_BUDGET_for_DAM_and_SubsetGeoI_Comparison;
 //    public static final double DEFAULT_PRIVACY_BUDGET = 1.9;
     public static final double DEFAULT_PRIVACY_BUDGET_for_b_change = 2.6;
 
@@ -115,7 +130,9 @@ public class Constant {
     public static final double[] ALTER_PRIVACY_BUDGET_ARRAY_for_DAM_and_SubsetGeoI_Comparison = new double[] {
             0.7, 1.4, 2.1, 2.8, 3.5
     };
+    public static final double[] ALTER_PRIVACY_BUDGET_ARRAY_for_DAM_and_SubsetGeoI_Comparison2 = ALTER_PRIVACY_BUDGET_ARRAY_for_DAM_and_SubsetGeoI_Comparison;
     public static final double[] ALTER_PRIVACY_BUDGET_ARRAY_for_DAM_and_SubsetGeoI_Comparison_Total = BasicArray.getIncreasedoubleNumberArray(0.67, 0.01, 10, eliminateDoubleErrorIndexSize);
+    public static final double[] ALTER_PRIVACY_BUDGET_ARRAY_for_DAM_and_SubsetGeoI_Comparison_Extended = ALTER_PRIVACY_BUDGET_ARRAY_for_DAM_and_SubsetGeoI_Comparison_Total;
 
 //    public static final double DEFAULT_PRIVACY_BUDGET = 2.5;
 //

@@ -10,11 +10,6 @@ import cn.edu.ecnu.struct.point.TwoDimensionalDoublePoint;
 import cn.edu.ecnu.struct.point.TwoDimensionalIntegerPoint;
 import ecnu.dll.construction._config.Constant;
 import ecnu.dll.construction.newscheme.discretization.tool.DiscretizedSchemeTool;
-import ecnu.dll.construction.run.main_process.b_comparision_run.basic.AlterParameterBRun;
-import ecnu.dll.construction.run.main_process.b_comparision_run.basic.AlterParameterBudgetRun;
-import ecnu.dll.construction.run.main_process.b_comparision_run.basic.AlterParameterGRun;
-import ecnu.dll.construction.run.main_process.b_comparision_run.basic.AlterParameterKRun;
-import ecnu.dll.construction.run.main_process.b_comparision_run.extended.AlterParameterBudgetExtendedRun;
 import ecnu.dll.construction.run.main_process.b_comparision_run.extended.AlterParameterGExtendedRun;
 
 import java.util.HashMap;
@@ -23,7 +18,7 @@ import java.util.Map;
 import java.util.TreeMap;
 
 @SuppressWarnings("Duplicates")
-public class DataSetRunExtended {
+public class DataSetRunExtendedForKLDivergenceOnly {
     public static Map<String, Map<String, List<ExperimentResult>>> runAndWrite(String dataSetPath, String datasetName, String outputDir, double xBound, double yBound, double inputSideLength) throws IllegalAccessException, CloneNotSupportedException, InstantiationException {
         /**
          *  1. 读取 DoublePointList
@@ -36,8 +31,8 @@ public class DataSetRunExtended {
         pointRead.readPointWithFirstLineCount();
         List<TwoDimensionalDoublePoint> doublePointList = pointRead.getPointList();
 
-//        List<TwoDimensionalIntegerPoint> integerPointList = Grid.toIntegerPoint(doublePointList, new Double[]{xBound, yBound}, inputSideLength / Constant.DEFAULT_SIDE_LENGTH_NUMBER_SIZE_for_DAM_and_SubsetGeoI_Comparison);
-//        List<TwoDimensionalIntegerPoint> integerPointTypeList = DiscretizedSchemeTool.getRawTwoDimensionalIntegerPointTypeList((int) Math.ceil(Constant.DEFAULT_SIDE_LENGTH_NUMBER_SIZE_for_DAM_and_SubsetGeoI_Comparison));
+        List<TwoDimensionalIntegerPoint> integerPointList = Grid.toIntegerPoint(doublePointList, new Double[]{xBound, yBound}, inputSideLength / Constant.DEFAULT_SIDE_LENGTH_NUMBER_SIZE_for_DAM_and_SubsetGeoI_Comparison_for_KL_Divergence);
+        List<TwoDimensionalIntegerPoint> integerPointTypeList = DiscretizedSchemeTool.getRawTwoDimensionalIntegerPointTypeList((int) Math.ceil(Constant.DEFAULT_SIDE_LENGTH_NUMBER_SIZE_for_DAM_and_SubsetGeoI_Comparison_for_KL_Divergence));
 //        TreeMap<TwoDimensionalIntegerPoint, Double> rawStatisticMap = StatisticTool.countHistogramRatioMap(integerPointTypeList, integerPointList);
 
         String outputFileName;

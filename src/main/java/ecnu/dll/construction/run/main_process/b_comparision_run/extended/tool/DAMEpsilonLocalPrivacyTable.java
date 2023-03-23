@@ -49,15 +49,19 @@ public class DAMEpsilonLocalPrivacyTable {
             dam.resetEpsilonAndGridLength(budgetArray[0], inputLength / sizeDArray[i], true);
             localPrivacy = new Norm2DAMLocalPrivacy(dam);
             this.lPTable[i][0] = localPrivacy.getTransformLocalPrivacyValue();
-//            System.out.println("finish sizeD: " + sizeDArray[i] + " and budget: " + budgetArray[0] + " for DAM");
+            if (sizeDArray[i] >= 10) {
+                System.out.println("finish sizeD: " + sizeDArray[i] + " and budget: " + budgetArray[0] + " for DAM");
+            }
             for (int j = 1; j < this.lPTable[0].length; j++) {
                 dam.resetEpsilon(budgetArray[j], true);
                 localPrivacy = new Norm2DAMLocalPrivacy(dam);
                 this.lPTable[i][j] = localPrivacy.getTransformLocalPrivacyValue();
-//                System.out.println("finish sizeD: " + sizeDArray[i] + " and budget: " + budgetArray[j] + " for DAM");
+                if (sizeDArray[i] >= 10) {
+                    System.out.println("finish sizeD: " + sizeDArray[i] + " and budget: " + budgetArray[j] + " for DAM");
+                }
             }
-//            System.out.println("finish sizeD: " + sizeDArray[i] + " and all budgets for DAM");
-//            System.out.println();
+            System.out.println("finish sizeD: " + sizeDArray[i] + " and all budgets for DAM");
+            System.out.println();
         }
     }
 

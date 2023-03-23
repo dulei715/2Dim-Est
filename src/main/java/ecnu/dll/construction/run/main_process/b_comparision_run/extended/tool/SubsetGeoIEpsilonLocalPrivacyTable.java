@@ -57,13 +57,19 @@ public class SubsetGeoIEpsilonLocalPrivacyTable {
                 subsetGeoI.resetEpsilonAndGridLength(budgetArray[0], inputLength / sizeDArray[i]);
                 localPrivacy = new Norm2GeoILocalPrivacy(subsetGeoI);
                 this.lPTable[i][0] = localPrivacy.getTransformLocalPrivacyValue();
-//                System.out.println("change gridLength and budget!");
+                if (sizeDArray[i] >= 10) {
+                    System.out.println("finish sizeD: " + sizeDArray[i] + " and budget: " + budgetArray[0] + " for SubsetGeoI");
+                }
                 for (int j = 1; j < this.lPTable[0].length; j++) {
                     subsetGeoI.resetEpsilon(budgetArray[j]);
                     localPrivacy = new Norm2GeoILocalPrivacy(subsetGeoI);
                     this.lPTable[i][j] = localPrivacy.getTransformLocalPrivacyValue();
-//                    System.out.println("change budget!");
+                    if (sizeDArray[i] >= 10) {
+                        System.out.println("finish sizeD: " + sizeDArray[i] + " and budget: " + budgetArray[j] + " for SubsetGeoI");
+                    }
                 }
+                System.out.println("finish sizeD: " + sizeDArray[i] + " and all budgets for SubsetGeoI");
+                System.out.println();
             }
         } catch (InstantiationException e) {
             throw new RuntimeException(e);
