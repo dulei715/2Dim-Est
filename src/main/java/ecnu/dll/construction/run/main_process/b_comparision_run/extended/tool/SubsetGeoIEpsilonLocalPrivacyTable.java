@@ -13,12 +13,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.TreeMap;
 
-public class SubsetGeoIEpsilonLocalPrivacyTable {
-    protected TreeMap<Double, Integer> sizeDToIndexMap = null;
-    protected TreeMap<Double, Integer> budgetToIndexMap = null;
+public class SubsetGeoIEpsilonLocalPrivacyTable extends LocalPrivacyTable {
 
-//    protected TransformLocalPrivacy<T, S> transformLocalPrivacy = null;
-//    protected DiscretizedSubsetExponentialGeoI subsetGeoI = null;
 
     protected double[][] lPTable = null;
 
@@ -37,14 +33,19 @@ public class SubsetGeoIEpsilonLocalPrivacyTable {
             this.budgetToIndexMap.put(budgetArray[index], index);
         }
         this.initializeLPTable(sizeDArray, budgetArray);
+        this.initializeUpperBoundLPTableByLPTable();
+        this.initializeLowerBoundLPTableByLPTable();
     }
 
     public SubsetGeoIEpsilonLocalPrivacyTable(TreeMap<Double, Integer> sizeDToIndexMap, TreeMap<Double, Integer> budgetToIndexMap, double[][] lPTable) {
         this.sizeDToIndexMap = sizeDToIndexMap;
         this.budgetToIndexMap = budgetToIndexMap;
         this.lPTable = lPTable;
+        this.initializeUpperBoundLPTableByLPTable();
+        this.initializeLowerBoundLPTableByLPTable();
     }
 
+    @Override
     protected void initializeLPTable(Double[] sizeDArray, Double[] budgetArray) {
         this.lPTable = new double[sizeDArray.length][budgetArray.length];
         Norm2GeoILocalPrivacy localPrivacy;
@@ -78,26 +79,8 @@ public class SubsetGeoIEpsilonLocalPrivacyTable {
         }
     }
 
-    public double[][] getlPTable() {
-        return lPTable;
-    }
 
-    public void writeTable(String outputPath) {
-        List tempList, sizeDList, sizeBudgetList;
-        sizeDList = new ArrayList(this.sizeDToIndexMap.keySet());
-        sizeBudgetList = new ArrayList(this.budgetToIndexMap.keySet());
-        BasicWrite basicWrite = new BasicWrite();
-        basicWrite.startWriting(outputPath);
-        basicWrite.writeOneLineListData(sizeDList);
-        basicWrite.writeOneLineListData(sizeBudgetList);
-        Double[] tempDoubleArray;
-        for (int i = 0; i < this.lPTable.length; i++) {
-            tempDoubleArray = ArraysUtils.toDoubleArray(this.lPTable[i]);
-            tempList = Arrays.asList(tempDoubleArray);
-            basicWrite.writeOneLineListData(tempList);
-        }
-        basicWrite.endWriting();
-    }
+
 
     public static SubsetGeoIEpsilonLocalPrivacyTable readTable(String inputPath) {
         TreeMap<Double, Integer> sizeDToIndexMap = new TreeMap<>(), budgetToIndexMap = new TreeMap<>();
@@ -128,34 +111,7 @@ public class SubsetGeoIEpsilonLocalPrivacyTable {
 
     }
 
-    public double getLocalPrivacy(Double sizeD, Double epsilon) {
-        Integer xIndex = this.sizeDToIndexMap.get(sizeD);
-        Integer yIndex = this.budgetToIndexMap.get(epsilon);
-        return this.lPTable[xIndex][yIndex];
-    }
 
 
-    public double getEpsilonByLocalPrivacy(Double sizeD, Double localPrivacy) {
-        double[] lPRow = this.lPTable[this.sizeDToIndexMap.get(sizeD)];
-        if (!ArraysUtils.isDescending(lPRow)) {
-            throw new RuntimeException("The local privacy for sizeD = " + sizeD + " in the table is not Descending!");
-        }
-        Double[] budgetArray = this.budgetToIndexMap.keySet().toArray(new Double[0]);
-        int index = ArraysUtils.binaryDescendSearch(lPRow, localPrivacy);
-        if (index >= 0) {
-            return budgetArray[index];
-        }
-        int rightIndex = -index - 1;
-        if (rightIndex < 1 || rightIndex >= lPRow.length) {
-            throw new RuntimeException("The local privacy is not in supported range! " + "the local privacy value should be in [" + lPRow[0]
-                    + ", " + lPRow[lPRow.length-1] +  "], however, the input local privacy value is " + localPrivacy);
-        }
-        int leftIndex = rightIndex - 1;
-        double leftLP = lPRow[leftIndex];
-        double rightLP = lPRow[rightIndex];
-        double leftEpsilon = budgetArray[leftIndex];
-        double rightEpsilon = budgetArray[rightIndex];
-        return BasicArray.getLinearTransformValue(leftLP, rightLP, localPrivacy, leftEpsilon, rightEpsilon);
-    }
 
 }

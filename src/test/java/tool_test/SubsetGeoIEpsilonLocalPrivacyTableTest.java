@@ -23,7 +23,7 @@ public class SubsetGeoIEpsilonLocalPrivacyTableTest {
         MyPrint.showSplitLine("+", 150);
 
         String outputPath = "E:\\temp\\budgetLPTable.txt";
-        tableStruct.writeTable(outputPath);
+        tableStruct.writeLPTable(outputPath);
 
         SubsetGeoIEpsilonLocalPrivacyTable tableReadStruct = SubsetGeoIEpsilonLocalPrivacyTable.readTable(outputPath);
         double[][] readTable = tableReadStruct.getlPTable();

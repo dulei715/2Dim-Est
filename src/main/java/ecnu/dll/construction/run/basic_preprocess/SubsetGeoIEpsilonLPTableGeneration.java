@@ -12,7 +12,7 @@ public class SubsetGeoIEpsilonLPTableGeneration {
         Double[] sizeDArray = ArraysUtils.toDoubleArray(sizeDArrayValue);
         Double[] budgetArray = ArraysUtils.toDoubleArray(budgetArrayValue);
         SubsetGeoIEpsilonLocalPrivacyTable tableStruct = new SubsetGeoIEpsilonLocalPrivacyTable(sizeDArray, budgetArray);
-        tableStruct.writeTable(Constant.subsetGeoIBudgetLPTableGeneratedPath);
+        tableStruct.writeLPTable(Constant.subsetGeoIBudgetLPTableGeneratedPath);
         System.out.println("Finish total table generation for SubsetGeoI!");
     }
 
@@ -22,7 +22,7 @@ public class SubsetGeoIEpsilonLPTableGeneration {
         Double[] sizeDArray = ArraysUtils.toDoubleArray(sizeDArrayValue);
         Double[] budgetArray = ArraysUtils.toDoubleArray(budgetArrayValue);
         SubsetGeoIEpsilonLocalPrivacyTable tableStruct = new SubsetGeoIEpsilonLocalPrivacyTable(sizeDArray, budgetArray);
-        tableStruct.writeTable(Constant.subsetGeoIBudgetLPTableGeneratedPathOnlyForKLDivergence);
+        tableStruct.writeLPTable(Constant.subsetGeoIBudgetLPTableGeneratedPathOnlyForKLDivergence);
         System.out.println("Finish extended table generation for SubsetGeoI!");
     }
     public static void main(String[] args) {
