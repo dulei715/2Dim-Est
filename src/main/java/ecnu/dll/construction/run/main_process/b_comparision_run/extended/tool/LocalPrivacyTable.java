@@ -18,34 +18,82 @@ public abstract class LocalPrivacyTable {
     protected TreeMap<Double, Integer> budgetToIndexMap = null;
 
     protected abstract void initializeLPTable(Double[] sizeDArray, Double[] budgetArray);
+
+    /**
+     * 对于突增的部分，先设为不增，然后遇到下一个递减的值后对中间不增的部分进行线性拟合。
+     * （这会出现中间突增被“线性拟合”但末尾突增“不增”处理）
+     */
     protected void initializeLowerBoundLPTableByLPTable() {
-        Double currentMaxLineValue, tempValue;
+        Double currentMaxLineValueLeft, currentMaxLineValueRight, tempValue;
+        int leftIndex, rightIndex;
+        this.lowerBoundLPTable = new double[this.lPTable.length][this.lPTable[0].length];
+        int indexDiffer;
         for (int i = 0; i < this.lPTable.length; i++) {
-            currentMaxLineValue = Double.MAX_VALUE;
+            currentMaxLineValueLeft = currentMaxLineValueRight = Double.MAX_VALUE;
+            leftIndex = rightIndex = -1;
             for (int j = 0; j < this.lPTable[0].length; j++) {
                 tempValue = this.lPTable[i][j];
-                if (tempValue < currentMaxLineValue) {
-                    currentMaxLineValue = this.lowerBoundLPTable[i][j] = tempValue;
+                ++rightIndex;
+                if (tempValue < currentMaxLineValueRight) {
+                    currentMaxLineValueRight = this.lowerBoundLPTable[i][j] = tempValue;
+                    indexDiffer = rightIndex - leftIndex;
+                    if (indexDiffer > 1) {
+                        // 中间部分进行线性拟合
+                        BasicArray.fillLinearTransformValue(currentMaxLineValueLeft, currentMaxLineValueRight, this.lowerBoundLPTable[i], leftIndex + 1, rightIndex - 1, false);
+                    }
+                    currentMaxLineValueLeft = currentMaxLineValueRight;
+                    leftIndex = rightIndex;
                 } else {
-                    this.lowerBoundLPTable[i][j] = currentMaxLineValue;
+                    this.lowerBoundLPTable[i][j] = currentMaxLineValueLeft;
                 }
             }
         }
     }
+
     protected void initializeUpperBoundLPTableByLPTable(){
-        Double currentMinLineValue, tempValue;
+        Double currentMinLineValueLeft, currentMinLineValueRight, tempValue;
+        int leftIndex, rightIndex;
+        this.upperBoundLPTable = new double[this.lPTable.length][this.lPTable[0].length];
+        int indexDiffer;
         for (int i = 0; i < this.lPTable.length; i++) {
-            currentMinLineValue = -1D;
+            currentMinLineValueRight = currentMinLineValueLeft = -1D;
+            rightIndex = leftIndex = this.lPTable[0].length;
             for (int j = this.lPTable[0].length - 1; j >= 0; j--) {
                 tempValue = this.lPTable[i][j];
-                if (tempValue > currentMinLineValue) {
-                    currentMinLineValue = this.lowerBoundLPTable[i][j] = tempValue;
+                --leftIndex;
+                if (tempValue > currentMinLineValueLeft) {
+                    currentMinLineValueLeft = this.upperBoundLPTable[i][j] = tempValue;
+                    indexDiffer = rightIndex - leftIndex;
+                    if (indexDiffer > 1) {
+//                        int indexDiffer2 = indexDiffer - 2;
+//                        if (indexDiffer2 < 0 || indexDiffer2 < 1 && true) {
+//                            System.out.println("wrong!");
+//                        }
+                        BasicArray.fillLinearTransformValue(currentMinLineValueLeft, currentMinLineValueRight, this.upperBoundLPTable[i], leftIndex + 1, rightIndex - 1, false);
+                    }
+                    currentMinLineValueRight = currentMinLineValueLeft;
+                    rightIndex = leftIndex;
                 } else {
-                    this.lowerBoundLPTable[i][j] = currentMinLineValue;
+                    this.upperBoundLPTable[i][j] = currentMinLineValueRight;
                 }
             }
         }
     }
+//    protected void initializeUpperBoundLPTableByLPTable(){
+//        Double currentMinLineValue, tempValue;
+//        this.upperBoundLPTable = new double[this.lPTable.length][this.lPTable[0].length];
+//        for (int i = 0; i < this.lPTable.length; i++) {
+//            currentMinLineValue = -1D;
+//            for (int j = this.lPTable[0].length - 1; j >= 0; j--) {
+//                tempValue = this.lPTable[i][j];
+//                if (tempValue > currentMinLineValue) {
+//                    currentMinLineValue = this.upperBoundLPTable[i][j] = tempValue;
+//                } else {
+//                    this.upperBoundLPTable[i][j] = currentMinLineValue;
+//                }
+//            }
+//        }
+//    }
 
 
     protected double getEpsilonByLocalPrivacyGivenTable(double[][] table, Double sizeD, Double localPrivacy) {
