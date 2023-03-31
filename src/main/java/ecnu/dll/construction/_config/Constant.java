@@ -17,9 +17,9 @@ public class Constant {
 
 //    public static final String rootPath = "/root/code/2_2.ProgramForSpatialLDPEstimation/1.JavaCode";
 //    public static final String rootPath = "E:\\dataset";
-    public static final String rootPath = "/root/code/2_seldp/";
+//    public static final String rootPath = "/root/code/2_seldp/";
 //    public static final String rootPath = "/root/code/2_2_spatialLDP/";
-//    public static final String rootPath = "E:\\1.学习\\4.数据集\\2.dataset_for_spatial_estimation";
+    public static final String rootPath = "E:\\1.学习\\4.数据集\\2.dataset_for_spatial_estimation";
     public static final String datasetPath = StringUtil.join(ConstantValues.FILE_SPLIT, rootPath, "0_dataset");
     public static final String basicResultPath = StringUtil.join(ConstantValues.FILE_SPLIT, rootPath, "result");
     public static final String extendedResultPath = StringUtil.join(ConstantValues.FILE_SPLIT, rootPath, "result_extended");
