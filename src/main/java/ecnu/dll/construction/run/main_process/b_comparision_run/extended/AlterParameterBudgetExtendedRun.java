@@ -63,7 +63,7 @@ public class AlterParameterBudgetExtendedRun {
 
 
             // for Subset-Geo-I-norm2
-            tempLocalPrivacy = Initialized.damELPTable.getLocalPrivacy(inputLengthSize, epsilonArray[i]);
+            tempLocalPrivacy = Initialized.damELPTable.getLocalPrivacyByEpsilon(inputLengthSize, epsilonArray[i]);
             transformedEpsilon = Initialized.subGeoIELPTable.getEpsilonByLocalPrivacy(inputLengthSize, tempLocalPrivacy);
             tempSubsetGeoITwoNormExperimentResult = SubsetGeoITwoNormRun.run(integerPointList, rawDataStatistic, gridLength, inputSideLength, transformedEpsilon, xBound, yBound);
             subsetGeoITwoNormExperimentResultList.add(tempSubsetGeoITwoNormExperimentResult);

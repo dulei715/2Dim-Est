@@ -16,8 +16,8 @@ public class Constant {
 
 
 //    public static final String rootPath = "/root/code/2_2.ProgramForSpatialLDPEstimation/1.JavaCode";
-    public static final String rootPath = "E:\\dataset";
-//    public static final String rootPath = "/root/code/2_seldp/";
+//    public static final String rootPath = "E:\\dataset";
+    public static final String rootPath = "/root/code/2_seldp/";
 //    public static final String rootPath = "/root/code/2_2_spatialLDP/";
 //    public static final String rootPath = "E:\\1.学习\\4.数据集\\2.dataset_for_spatial_estimation";
     public static final String datasetPath = StringUtil.join(ConstantValues.FILE_SPLIT, rootPath, "0_dataset");
@@ -66,7 +66,7 @@ public class Constant {
 //    };
     public static final double DEFAULT_SIDE_LENGTH_NUMBER_SIZE = 5.0;
     public static final double DEFAULT_SIDE_LENGTH_NUMBER_SIZE_for_DAM_and_SubsetGeoI_Comparison = 10.0;
-    public static final double DEFAULT_SIDE_LENGTH_NUMBER_SIZE_for_DAM_and_SubsetGeoI_Comparison_for_KL_Divergence = 50.0;
+    public static final double DEFAULT_SIDE_LENGTH_NUMBER_SIZE_for_DAM_and_SubsetGeoI_Comparison_for_KL_Divergence = 30.0;
     public static final double DEFAULT_SIDE_LENGTH_NUMBER_SIZE_for_b_change = 9.0;
     public static final double[] ALTER_SIDE_LENGTH_NUMBER_SIZE = new double[] {
             1.0, 2.0, 3.0, 4.0, 5.0
@@ -135,7 +135,9 @@ public class Constant {
     public static final double[] ALTER_PRIVACY_BUDGET_ARRAY_for_DAM_and_SubsetGeoI_Comparison = new double[] {
             0.7, 1.4, 2.1, 2.8, 3.5
     };
-    public static final double[] ALTER_PRIVACY_BUDGET_ARRAY_for_DAM_and_SubsetGeoI_Comparison2 = ALTER_PRIVACY_BUDGET_ARRAY_for_DAM_and_SubsetGeoI_Comparison;
+    public static final double[] ALTER_PRIVACY_BUDGET_ARRAY_for_DAM_and_SubsetGeoI_Comparison2 = new double[] {
+            6.0, 6.7, 7.4, 8.1, 8.8
+    };
     public static final double[] ALTER_PRIVACY_BUDGET_ARRAY_for_DAM_and_SubsetGeoI_Comparison_Total = BasicArray.getIncreasedoubleNumberArray(0.67, 0.01, 10, eliminateDoubleErrorIndexSize);
     public static final double[] ALTER_PRIVACY_BUDGET_ARRAY_for_DAM_and_SubsetGeoI_Comparison_Extended = ALTER_PRIVACY_BUDGET_ARRAY_for_DAM_and_SubsetGeoI_Comparison_Total;
 //    public static final double[] ALTER_PRIVACY_BUDGET_ARRAY_for_DAM_and_SubsetGeoI_Comparison_Extended = new double[]{0.8};

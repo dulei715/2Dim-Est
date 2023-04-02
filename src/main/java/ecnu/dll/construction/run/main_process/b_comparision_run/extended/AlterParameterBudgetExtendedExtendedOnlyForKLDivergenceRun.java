@@ -64,8 +64,8 @@ public class AlterParameterBudgetExtendedExtendedOnlyForKLDivergenceRun {
 
 
             // for Subset-Geo-I-norm2
-            tempLocalPrivacy = Initialized.damELPTable.getLocalPrivacy(inputLengthSize, epsilonArray[i]);
-            transformedEpsilon = Initialized.subGeoIELPTable.getEpsilonByLocalPrivacy(inputLengthSize, tempLocalPrivacy);
+            tempLocalPrivacy = Initialized.damELPTableOnlyForKLDivergence.getLowerBoundLocalPrivacyByEpsilon(inputLengthSize, epsilonArray[i]);
+            transformedEpsilon = Initialized.subGeoIELPTableOnlyForKLDivergence.getEpsilonByUpperBoundLocalPrivacy(inputLengthSize, tempLocalPrivacy);
             tempSubsetGeoITwoNormExperimentResult = SubsetGeoITwoNormRun.runWithoutWassersteinDistance(integerPointList, rawDataStatistic, gridLength, inputSideLength, transformedEpsilon, xBound, yBound);
             subsetGeoITwoNormExperimentResultList.add(tempSubsetGeoITwoNormExperimentResult);
 

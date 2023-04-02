@@ -16,7 +16,7 @@ import java.util.TreeMap;
 public class SubsetGeoIEpsilonLocalPrivacyTable extends LocalPrivacyTable {
 
 
-    protected double[][] lPTable = null;
+//    protected double[][] lPTable = null;
 
     public SubsetGeoIEpsilonLocalPrivacyTable(Double[] sizeDArray, Double[] budgetArray) {
 //        if (sizeDArray.length != budgetArray.length) {

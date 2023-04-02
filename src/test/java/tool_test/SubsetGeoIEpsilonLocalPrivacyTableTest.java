@@ -46,7 +46,7 @@ public class SubsetGeoIEpsilonLocalPrivacyTableTest {
         double[][] lpTable = tableStruct.getlPTable();
         MyPrint.show2DimensionDoubleArray(lpTable);
 
-        System.out.println(tableStruct.getLocalPrivacy(2.0, 1.9));
+        System.out.println(tableStruct.getLocalPrivacyByEpsilon(2.0, 1.9));
         System.out.println(tableStruct.getEpsilonByLocalPrivacy(3.0, 1.2));
 
     }

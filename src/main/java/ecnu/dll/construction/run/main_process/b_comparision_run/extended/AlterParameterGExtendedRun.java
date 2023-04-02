@@ -8,7 +8,6 @@ import cn.edu.ecnu.struct.point.TwoDimensionalIntegerPoint;
 import ecnu.dll.construction._config.Constant;
 import ecnu.dll.construction._config.Initialized;
 import ecnu.dll.construction.newscheme.discretization.tool.DiscretizedDiskSchemeTool;
-import ecnu.dll.construction.newscheme.discretization.tool.DiscretizedRhombusSchemeTool;
 import ecnu.dll.construction.newscheme.discretization.tool.DiscretizedSchemeTool;
 import ecnu.dll.construction.run._struct.ExperimentResultAndScheme;
 import ecnu.dll.construction.run.main_process.a_single_scheme_run.*;
@@ -84,7 +83,7 @@ public class AlterParameterGExtendedRun {
 
             // for Subset-Geo-I-norm2
             // 根据相应的DAM，计算出对应的LP
-            tempLocalPrivacy = Initialized.damELPTable.getLocalPrivacy(inputLengthSizeNumberArray[i], epsilon);
+            tempLocalPrivacy = Initialized.damELPTable.getLocalPrivacyByEpsilon(inputLengthSizeNumberArray[i], epsilon);
             transformedEpsilon = Initialized.subGeoIELPTable.getEpsilonByLocalPrivacy(inputLengthSizeNumberArray[i], tempLocalPrivacy);
             tempSubsetGeoITwoNormExperimentResult = SubsetGeoITwoNormRun.run(integerPointList, rawDataStatistic, gridLengthArray[i], inputSideLength, transformedEpsilon, xBound, yBound);
             tempSubsetGeoITwoNormExperimentResult.addPair(1, Constant.areaLengthKey, String.valueOf(inputSideLength));

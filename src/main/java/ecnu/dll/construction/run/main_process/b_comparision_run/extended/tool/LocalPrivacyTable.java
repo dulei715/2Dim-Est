@@ -119,13 +119,30 @@ public abstract class LocalPrivacyTable {
         return BasicArray.getLinearTransformValue(leftLP, rightLP, localPrivacy, leftEpsilon, rightEpsilon);
     }
 
+    protected double getLocalPrivacyByEpsilonGivenTable(double[][] table, Double sizeD, Double epsilon) {
+        double[] lPRow = table[this.sizeDToIndexMap.get(sizeD)];
+        Double[] budgetArray = this.budgetToIndexMap.keySet().toArray(new Double[0]);
+        int index = Arrays.binarySearch(budgetArray, epsilon);
+        if (index >= 0) {
+            return lPRow[index];
+        }
+        int rightIndex = -index - 1;
+        if (rightIndex < 1 || rightIndex >= budgetArray.length) {
+            throw new RuntimeException("The privacy budget is not in supported range! " + "the privacy budget (epsilon) should be in [" + budgetArray[0]
+                    + ", " + budgetArray[budgetArray.length-1] + "], however, the input privacy budget (epsilon) is " + epsilon);
+        }
+        int leftIndex = rightIndex - 1;
+        double leftEpsilon = budgetArray[leftIndex];
+        double rightEpsilon = budgetArray[rightIndex];
+        double leftLP = lPRow[leftIndex];
+        double rightLP = lPRow[rightIndex];
+        return BasicArray.getLinearTransformValue(leftEpsilon, rightEpsilon, epsilon, leftLP, rightLP);
+    }
+
     public double getEpsilonByLocalPrivacy(Double sizeD, Double localPrivacy) {
         return getEpsilonByLocalPrivacyGivenTable(this.lPTable, sizeD, localPrivacy);
     }
 
-    public double getLocalPrivacyByEpsilon() {
-        
-    }
 
     public double getEpsilonByUpperBoundLocalPrivacy(Double sizeD, Double localPrivacy) {
         return getEpsilonByLocalPrivacyGivenTable(this.upperBoundLPTable, sizeD, localPrivacy);
@@ -133,6 +150,18 @@ public abstract class LocalPrivacyTable {
 
     public double getEpsilonByLowerBoundLocalPrivacy(Double sizeD, Double localPrivacy) {
         return getEpsilonByLocalPrivacyGivenTable(this.lowerBoundLPTable, sizeD, localPrivacy);
+    }
+
+    public double getLocalPrivacyByEpsilon(Double sizeD, Double epsilon) {
+        return getLocalPrivacyByEpsilonGivenTable(this.lPTable, sizeD, epsilon);
+    }
+
+    public double getUpperBoundLocalPrivacyByEpsilon(Double sizeD, Double epsilon) {
+        return getLocalPrivacyByEpsilonGivenTable(this.upperBoundLPTable, sizeD, epsilon);
+    }
+
+    public double getLowerBoundLocalPrivacyByEpsilon(Double sizeD, Double epsilon) {
+        return getLocalPrivacyByEpsilonGivenTable(this.lowerBoundLPTable, sizeD, epsilon);
     }
 
     protected void writeTable(String outputPath, double[][] table) {
@@ -180,11 +209,11 @@ public abstract class LocalPrivacyTable {
     }
 
 
-    public double getLocalPrivacy(Double sizeD, Double epsilon) {
-        Integer xIndex = this.sizeDToIndexMap.get(sizeD);
-        Integer yIndex = this.budgetToIndexMap.get(epsilon);
-        return this.lPTable[xIndex][yIndex];
-    }
+//    public double getLocalPrivacyByEpsilon(Double sizeD, Double epsilon) {
+//        Integer xIndex = this.sizeDToIndexMap.get(sizeD);
+//        Integer yIndex = this.budgetToIndexMap.get(epsilon);
+//        return this.lPTable[xIndex][yIndex];
+//    }
 
     public double[][] getlPTable() {
         return lPTable;
