@@ -123,6 +123,10 @@ public abstract class LocalPrivacyTable {
         return getEpsilonByLocalPrivacyGivenTable(this.lPTable, sizeD, localPrivacy);
     }
 
+    public double getLocalPrivacyByEpsilon() {
+        
+    }
+
     public double getEpsilonByUpperBoundLocalPrivacy(Double sizeD, Double localPrivacy) {
         return getEpsilonByLocalPrivacyGivenTable(this.upperBoundLPTable, sizeD, localPrivacy);
     }

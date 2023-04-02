@@ -16,18 +16,20 @@ public class Constant {
 
 
 //    public static final String rootPath = "/root/code/2_2.ProgramForSpatialLDPEstimation/1.JavaCode";
-//    public static final String rootPath = "E:\\dataset";
+    public static final String rootPath = "E:\\dataset";
 //    public static final String rootPath = "/root/code/2_seldp/";
 //    public static final String rootPath = "/root/code/2_2_spatialLDP/";
-    public static final String rootPath = "E:\\1.学习\\4.数据集\\2.dataset_for_spatial_estimation";
+//    public static final String rootPath = "E:\\1.学习\\4.数据集\\2.dataset_for_spatial_estimation";
     public static final String datasetPath = StringUtil.join(ConstantValues.FILE_SPLIT, rootPath, "0_dataset");
     public static final String basicResultPath = StringUtil.join(ConstantValues.FILE_SPLIT, rootPath, "result");
     public static final String extendedResultPath = StringUtil.join(ConstantValues.FILE_SPLIT, rootPath, "result_extended");
 
     public static final String damBudgetLPTableGeneratedPath = StringUtil.join(ConstantValues.FILE_SPLIT, rootPath, "budgetLPTable", "damBudgetLPTable.txt");
     public static final String damBudgetLPTableGeneratedPathOnlyForKLDivergence = StringUtil.join(ConstantValues.FILE_SPLIT, rootPath, "budgetLPTable", "damBudgetLPTable2.txt");
+    public static final String damBudgetLPLowerBoundTableGeneratedPathOnlyForKLDivergence = StringUtil.join(ConstantValues.FILE_SPLIT, rootPath, "budgetLPTable", "bound", "damBudgetLPTableLowerBound2.txt");
     public static final String subsetGeoIBudgetLPTableGeneratedPath = StringUtil.join(ConstantValues.FILE_SPLIT, rootPath, "budgetLPTable", "geoIBudgetLPTable.txt");
     public static final String subsetGeoIBudgetLPTableGeneratedPathOnlyForKLDivergence = StringUtil.join(ConstantValues.FILE_SPLIT, rootPath, "budgetLPTable", "geoIBudgetLPTable2.txt");
+//    public static final String subsetGeoIBudgetLPUpperBoundTableGeneratedPathOnlyForKLDivergence = StringUtil.join(ConstantValues.FILE_SPLIT, rootPath, "budgetLPTable", "bound", "geoIBudgetLPTableUpperBound2.txt");
 
     public static final int eliminateDoubleErrorIndexSize = 2;
     public static final int invalidValue = -1;
@@ -122,7 +124,7 @@ public class Constant {
     public static final double DEFAULT_PRIVACY_BUDGET = 2.6;
 //    public static final double DEFAULT_PRIVACY_BUDGET = 3.3;
     public static final double DEFAULT_PRIVACY_BUDGET_for_DAM_and_SubsetGeoI_Comparison = DEFAULT_PRIVACY_BUDGET;
-    public static final double DEFAULT_PRIVACY_BUDGET_for_DAM_and_SubsetGeoI_Comparison2 = DEFAULT_PRIVACY_BUDGET_for_DAM_and_SubsetGeoI_Comparison;
+    public static final double DEFAULT_PRIVACY_BUDGET_for_DAM_and_SubsetGeoI_Comparison2 = 8.0;
 //    public static final double DEFAULT_PRIVACY_BUDGET = 1.9;
     public static final double DEFAULT_PRIVACY_BUDGET_for_b_change = 2.6;
 

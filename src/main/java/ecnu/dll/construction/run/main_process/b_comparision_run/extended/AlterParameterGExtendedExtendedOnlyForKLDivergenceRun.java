@@ -53,7 +53,7 @@ public class AlterParameterGExtendedExtendedOnlyForKLDivergenceRun {
 
 
         /*
-            针对SubsetGeoI, MSW, Rhombus, Disk, Disk-non-Shrink, HUEM 分别计算对应grid下的估计并返回相应的wasserstein距离
+            针对SubsetGeoI, Disk 分别计算对应grid下的估计并返回相应的wasserstein距离
          */
         Map<String, List<ExperimentResult>> alterParameterMap = new HashMap<>();
         String diskKey = Constant.diskSchemeKey, subsetGeoITwoNorm = Constant.subsetGeoITwoNormSchemeKey;

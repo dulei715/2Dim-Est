@@ -6,7 +6,7 @@ subGeoITablePath = strcat(basicPath, 'geoIBudgetLPTable2.txt');
 damUpperPath = strcat(basicPath, 'bound\damBudgetLPTableUpperBound2.txt');
 damLowerPath = strcat(basicPath, 'bound\damBudgetLPTableLowerBound2.txt');
 geoIUpperPath = strcat(basicPath, 'bound\geoIBudgetLPTableUpperBound2.txt');
-geoILowerPath = strcat(basicPath, 'bound\geoIBudgetLPTableLowerBound2.txt');
+geoILowerPath = strcat(basicPath, 'bound\geoIBudgetLPTableLowerBound.txt');
 
 yDAM = readBudgetLPWithFixedSizeD(damTablePath, sizeDIndex);
 yGeoI = readBudgetLPWithFixedSizeD(subGeoITablePath, sizeDIndex);

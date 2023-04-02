@@ -10,6 +10,7 @@ import cn.edu.ecnu.struct.point.TwoDimensionalDoublePoint;
 import cn.edu.ecnu.struct.point.TwoDimensionalIntegerPoint;
 import ecnu.dll.construction._config.Constant;
 import ecnu.dll.construction.newscheme.discretization.tool.DiscretizedSchemeTool;
+import ecnu.dll.construction.run.main_process.b_comparision_run.extended.AlterParameterGExtendedExtendedOnlyForKLDivergenceRun;
 import ecnu.dll.construction.run.main_process.b_comparision_run.extended.AlterParameterGExtendedRun;
 
 import java.util.HashMap;
@@ -31,8 +32,6 @@ public class DataSetRunExtendedForKLDivergenceOnly {
         pointRead.readPointWithFirstLineCount();
         List<TwoDimensionalDoublePoint> doublePointList = pointRead.getPointList();
 
-        List<TwoDimensionalIntegerPoint> integerPointList = Grid.toIntegerPoint(doublePointList, new Double[]{xBound, yBound}, inputSideLength / Constant.DEFAULT_SIDE_LENGTH_NUMBER_SIZE_for_DAM_and_SubsetGeoI_Comparison_for_KL_Divergence);
-        List<TwoDimensionalIntegerPoint> integerPointTypeList = DiscretizedSchemeTool.getRawTwoDimensionalIntegerPointTypeList((int) Math.ceil(Constant.DEFAULT_SIDE_LENGTH_NUMBER_SIZE_for_DAM_and_SubsetGeoI_Comparison_for_KL_Divergence));
 //        TreeMap<TwoDimensionalIntegerPoint, Double> rawStatisticMap = StatisticTool.countHistogramRatioMap(integerPointTypeList, integerPointList);
 
         String outputFileName;
@@ -44,7 +43,7 @@ public class DataSetRunExtendedForKLDivergenceOnly {
 //        ExperimentResultWrite.write(outputFileName, ExperimentResult.getCombineResultList(alteringBudgetResult));
 
 
-        Map<String, List<ExperimentResult>> alteringGResult = AlterParameterGExtendedRun.run(doublePointList, inputSideLength, xBound, yBound);
+        Map<String, List<ExperimentResult>> alteringGResult = AlterParameterGExtendedExtendedOnlyForKLDivergenceRun.run(doublePointList, inputSideLength, xBound, yBound);
         ExperimentResult.addPair(alteringGResult, 0, Constant.dataSetNameKey, datasetName);
         outputFileName = outputDir + ConstantValues.FILE_SPLIT + Constant.alterGKey + ".csv";
         ExperimentResultWrite.write(outputFileName, ExperimentResult.getCombineResultList(alteringGResult));
