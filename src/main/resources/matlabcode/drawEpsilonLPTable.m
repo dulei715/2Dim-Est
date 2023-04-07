@@ -1,6 +1,6 @@
 function drawEpsilonLPTable(sizeDIndex)
-%basicPath = 'E:\1.学习\4.数据集\2.dataset_for_spatial_estimation\budgetLPTable\';
-basicPath = 'E:\dataset\budgetLPTable\';
+basicPath = 'E:\1.学习\4.数据集\2.dataset_for_spatial_estimation\budgetLPTable\';
+%basicPath = 'E:\dataset\budgetLPTable\';
 damTablePath = strcat(basicPath, 'damBudgetLPTable2.txt');
 subGeoITablePath = strcat(basicPath, 'geoIBudgetLPTable2.txt');
 damUpperPath = strcat(basicPath, 'bound\damBudgetLPTableUpperBound2.txt');

@@ -10,6 +10,8 @@ import cn.edu.ecnu.struct.point.TwoDimensionalDoublePoint;
 import cn.edu.ecnu.struct.point.TwoDimensionalIntegerPoint;
 import ecnu.dll.construction._config.Constant;
 import ecnu.dll.construction.newscheme.discretization.tool.DiscretizedSchemeTool;
+import ecnu.dll.construction.run.main_process.b_comparision_run.basic.AlterParameterBudgetRun;
+import ecnu.dll.construction.run.main_process.b_comparision_run.extended.AlterParameterBudgetExtendedExtendedOnlyForKLDivergenceRun;
 import ecnu.dll.construction.run.main_process.b_comparision_run.extended.AlterParameterGExtendedExtendedOnlyForKLDivergenceRun;
 import ecnu.dll.construction.run.main_process.b_comparision_run.extended.AlterParameterGExtendedRun;
 
@@ -33,14 +35,20 @@ public class DataSetRunExtendedForKLDivergenceOnly {
         List<TwoDimensionalDoublePoint> doublePointList = pointRead.getPointList();
 
 //        TreeMap<TwoDimensionalIntegerPoint, Double> rawStatisticMap = StatisticTool.countHistogramRatioMap(integerPointTypeList, integerPointList);
+        List<TwoDimensionalIntegerPoint> integerPointList = Grid.toIntegerPoint(doublePointList, new Double[]{xBound, yBound}, inputSideLength / Constant.DEFAULT_SIDE_LENGTH_NUMBER_SIZE_for_DAM_and_SubsetGeoI_Comparison_for_KL_Divergence);
+        List<TwoDimensionalIntegerPoint> integerPointTypeList = DiscretizedSchemeTool.getRawTwoDimensionalIntegerPointTypeList((int) Math.ceil(Constant.DEFAULT_SIDE_LENGTH_NUMBER_SIZE_for_DAM_and_SubsetGeoI_Comparison_for_KL_Divergence));
+        TreeMap<TwoDimensionalIntegerPoint, Double> rawStatisticMap = StatisticTool.countHistogramRatioMap(integerPointTypeList, integerPointList);
+
 
         String outputFileName;
+        Map<String, Map<String, List<ExperimentResult>>> datasetResult = new HashMap<>();
 
-//        Map<String, List<ExperimentResult>> alteringBudgetResult = AlterParameterBudgetExtendedRun.run(integerPointList, inputSideLength, rawStatisticMap, xBound, yBound);
-//        ExperimentResult.addPair(alteringBudgetResult, 1, Constant.areaLengthKey, String.valueOf(inputSideLength));
-//        ExperimentResult.addPair(alteringBudgetResult, 0, Constant.dataSetNameKey, datasetName);
-//        outputFileName = outputDir + ConstantValues.FILE_SPLIT + Constant.alterBudgetKey + ".csv";
-//        ExperimentResultWrite.write(outputFileName, ExperimentResult.getCombineResultList(alteringBudgetResult));
+        Map<String, List<ExperimentResult>> alteringBudgetResult = AlterParameterBudgetExtendedExtendedOnlyForKLDivergenceRun.run(integerPointList, inputSideLength, rawStatisticMap, xBound, yBound);
+        ExperimentResult.addPair(alteringBudgetResult, 1, Constant.areaLengthKey, String.valueOf(inputSideLength));
+        ExperimentResult.addPair(alteringBudgetResult, 0, Constant.dataSetNameKey, datasetName);
+        outputFileName = outputDir + ConstantValues.FILE_SPLIT + Constant.alterBudgetKey + ".csv";
+        ExperimentResultWrite.write(outputFileName, ExperimentResult.getCombineResultList(alteringBudgetResult));
+        datasetResult.put(Constant.alterBudgetKey, alteringBudgetResult);
 
 
         Map<String, List<ExperimentResult>> alteringGResult = AlterParameterGExtendedExtendedOnlyForKLDivergenceRun.run(doublePointList, inputSideLength, xBound, yBound);
@@ -48,8 +56,6 @@ public class DataSetRunExtendedForKLDivergenceOnly {
         outputFileName = outputDir + ConstantValues.FILE_SPLIT + Constant.alterGKey + ".csv";
         ExperimentResultWrite.write(outputFileName, ExperimentResult.getCombineResultList(alteringGResult));
 
-        Map<String, Map<String, List<ExperimentResult>>> datasetResult = new HashMap<>();
-//        datasetResult.put(Constant.alterBudgetKey, alteringBudgetResult);
         datasetResult.put(Constant.alterGKey, alteringGResult);
 
         return datasetResult;
