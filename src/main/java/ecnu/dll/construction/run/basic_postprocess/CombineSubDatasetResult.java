@@ -39,12 +39,12 @@ public class CombineSubDatasetResult {
 //    public static void composeCSVResult(List<String> inputPathList, String outputDir, List<ColumnBean> columnBeanList, double divideFactor) {
 //
 //    }
-    public static void composeCSVResult(String relativeBasicPath, String... fileNames) throws ClassNotFoundException, InvocationTargetException, NoSuchMethodException, IllegalAccessException, InstantiationException {
+    public static void composeCSVResult(String relativeBasicPath, ColumnBean[] columnBeansArray, String... fileNames) throws ClassNotFoundException, InvocationTargetException, NoSuchMethodException, IllegalAccessException, InstantiationException {
         File relativeBasicFile = new File(relativeBasicPath);
         String[] directoryPathArray = FileTool.toStringArray(relativeBasicFile.listFiles(Constant.directoryFilter));
         String[] tempInputFilePathArray;
         String tempOutputFilePath;
-        List<ColumnBean> columnBeanList = Arrays.asList(Constant.columnBeanArray);
+        List<ColumnBean> columnBeanList = Arrays.asList(columnBeansArray);
         for (String fileName : fileNames) {
             tempInputFilePathArray = StringUtil.concatGiveString(directoryPathArray, ConstantValues.FILE_SPLIT, fileName);
             tempOutputFilePath = relativeBasicPath.concat(ConstantValues.FILE_SPLIT).concat(fileName);
@@ -56,14 +56,22 @@ public class CombineSubDatasetResult {
         String[] allRelativeBasicDir = ArraysUtils.combineArray(new String[][]{Constant.basicOutputCrimeDirArray, Constant.basicOutputNYCDirArray, new String[]{Constant.basicOutputNormalDir}, new String[]{Constant.basicOutputZipfDir}, new String[]{Constant.basicOutputMultiNormalDir}});
         String[] fileNameArray = StringUtil.concatGiveString(Constant.basicAlterKeyArray, ".csv");
         for (String relativeBasicPath : allRelativeBasicDir) {
-            composeCSVResult(relativeBasicPath, fileNameArray);
+            composeCSVResult(relativeBasicPath, Constant.columnBeanArray, fileNameArray);
         }
     }
     public static void composeAllExtendedRepeat() throws ClassNotFoundException, InvocationTargetException, NoSuchMethodException, IllegalAccessException, InstantiationException {
         String[] allRelativeBasicDir = ArraysUtils.combineArray(new String[][]{Constant.extendedOutputCrimeDirArray, Constant.extendedOutputNYCDirArray, new String[]{Constant.extendedOutputNormalDir}, new String[]{Constant.extendedOutputZipfDir}, new String[]{Constant.extendedOutputMultiNormalDir}});
         String[] fileNameArray = StringUtil.concatGiveString(Constant.extendedAlterKeyArray, ".csv");
         for (String relativeBasicPath : allRelativeBasicDir) {
-            composeCSVResult(relativeBasicPath, fileNameArray);
+            composeCSVResult(relativeBasicPath, Constant.columnBeanArray, fileNameArray);
+        }
+    }
+
+    public static void composeAllExtendedRepeatForKLDivergence() throws ClassNotFoundException, InvocationTargetException, NoSuchMethodException, IllegalAccessException, InstantiationException {
+        String[] allRelativeBasicDir = ArraysUtils.combineArray(new String[][]{Constant.extendedOutputCrimeDirArray, Constant.extendedOutputNYCDirArray, new String[]{Constant.extendedOutputNormalDir}, new String[]{Constant.extendedOutputZipfDir}, new String[]{Constant.extendedOutputMultiNormalDir}});
+        String[] fileNameArray = StringUtil.concatGiveString(Constant.extendedAlterKeyArray, ".csv");
+        for (String relativeBasicPath : allRelativeBasicDir) {
+            composeCSVResult(relativeBasicPath, Constant.columnBeanArrayForKLDivergence, fileNameArray);
         }
     }
 
@@ -86,8 +94,13 @@ public class CombineSubDatasetResult {
     public static void main(String[] args) throws ClassNotFoundException, InvocationTargetException, NoSuchMethodException, IllegalAccessException, InstantiationException {
 //        composeAllBasicRepeat();
 //        combineAllBasicPart();
-        composeAllExtendedRepeat();
+
+//        composeAllExtendedRepeat();
+//        combineAllExtendedPart();
+
+        composeAllExtendedRepeatForKLDivergence();
         combineAllExtendedPart();
+
     }
     public static void main0(String[] args) {
         String[] inputArrayParentPath = new String[]{
