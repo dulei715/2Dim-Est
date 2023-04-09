@@ -9,7 +9,10 @@ public class Initialized {
     static {
         damELPTable = DAMEpsilonLocalPrivacyTable.readTable(Constant.damBudgetLPTableGeneratedPath);
         subGeoIELPTable = SubsetGeoIEpsilonLocalPrivacyTable.readTable(Constant.subsetGeoIBudgetLPTableGeneratedPath);
-        damELPTableOnlyForKLDivergence = DAMEpsilonLocalPrivacyTable.readTable(Constant.damBudgetLPTableGeneratedPathOnlyForKLDivergence);
-        subGeoIELPTableOnlyForKLDivergence = SubsetGeoIEpsilonLocalPrivacyTable.readTable(Constant.subsetGeoIBudgetLPTableGeneratedPathOnlyForKLDivergence);
+//        damELPTableOnlyForKLDivergence = DAMEpsilonLocalPrivacyTable.readTable(Constant.damBudgetLPTableGeneratedPathOnlyForKLDivergence);
+//        subGeoIELPTableOnlyForKLDivergence = SubsetGeoIEpsilonLocalPrivacyTable.readTable(Constant.subsetGeoIBudgetLPTableGeneratedPathOnlyForKLDivergence);
+        // 这里调整参数，onlyForKLDivergence的与之前的相同
+        damELPTableOnlyForKLDivergence = DAMEpsilonLocalPrivacyTable.readTable(Constant.damBudgetLPTableGeneratedPath);
+        subGeoIELPTableOnlyForKLDivergence = SubsetGeoIEpsilonLocalPrivacyTable.readTable(Constant.subsetGeoIBudgetLPTableGeneratedPath);
     }
 }

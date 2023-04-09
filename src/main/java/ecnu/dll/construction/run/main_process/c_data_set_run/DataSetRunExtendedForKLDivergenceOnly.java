@@ -55,7 +55,6 @@ public class DataSetRunExtendedForKLDivergenceOnly {
         ExperimentResult.addPair(alteringGResult, 0, Constant.dataSetNameKey, datasetName);
         outputFileName = outputDir + ConstantValues.FILE_SPLIT + Constant.alterGKey + ".csv";
         ExperimentResultWrite.write(outputFileName, ExperimentResult.getCombineResultList(alteringGResult));
-
         datasetResult.put(Constant.alterGKey, alteringGResult);
 
         return datasetResult;
