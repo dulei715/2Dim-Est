@@ -189,8 +189,8 @@ public class Constant {
             alterKKey
     };
     public static final String[] extendedAlterKeyArray = new String[] {
-            alterBudgetKey,
-//            alterGKey
+//            alterBudgetKey,
+            alterGKey
     };
 
     // 记录数据集名称
