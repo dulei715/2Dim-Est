@@ -1,4 +1,4 @@
-function y = drawPointDataset(path, factorK, constA)
+function y = drawPointDataset(path, factorK, constA, shrinkSize)
 % taskPath = [fileParentPath, '\task_point.txt'];
 % workerPath = [fileParentPath, '\worker_point.txt'];
 % disp(taskPath);
@@ -7,7 +7,7 @@ function y = drawPointDataset(path, factorK, constA)
 points = textread(path);
 %size = points(1);
 
-points = points(2:end,:).*factorK+constA;
+points = points(2:shrinkSize:end,:).*factorK+constA;
 %taskColor = 'black';
 %workerColor = 'red';
 %disp(tasks(:,1))
@@ -17,7 +17,7 @@ points = points(2:end,:).*factorK+constA;
 %scatter(points(:,1), points(:,2));
 plot(points(:,1),points(:,2),'.');
 % set(gca,'FontSize',20);
-figure_FontSize = 18;
+figure_FontSize = 40;
 set(get(gca,'XLabel'),'FontSize',figure_FontSize,'FontName','Times New Roman');
 set(get(gca,'YLabel'),'FontSize',figure_FontSize,'FontName','Times New Roman');
 set(gca,'FontName','Times New Roman' ,'FontSize',figure_FontSize);
