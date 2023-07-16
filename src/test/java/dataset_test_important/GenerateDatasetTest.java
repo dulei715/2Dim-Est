@@ -15,7 +15,7 @@ public class GenerateDatasetTest {
     public void generateZipf() {
 //        String outputPath = "F:\\dataset\\test\\synthetic_dataset\\two_zipf_dataset.txt";
         String outputPath = Constant.datasetPath + "\\0_dataset\\2_synthetic\\2_two_zipf\\two_zipf_point_part.txt";
-        int size = 10000;
+        int size = 100000;
         double randomValueX, randomValueY;
         double[] doubleArrX, doubleArrY;
         TwoDimensionalDoublePoint point;
