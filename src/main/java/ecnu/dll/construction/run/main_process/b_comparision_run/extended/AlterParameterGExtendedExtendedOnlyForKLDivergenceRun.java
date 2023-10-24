@@ -9,7 +9,6 @@ import ecnu.dll.construction._config.Constant;
 import ecnu.dll.construction._config.Initialized;
 import ecnu.dll.construction.newscheme.discretization.tool.DiscretizedDiskSchemeTool;
 import ecnu.dll.construction.newscheme.discretization.tool.DiscretizedSchemeTool;
-import ecnu.dll.construction.run._struct.ExperimentResultAndScheme;
 import ecnu.dll.construction.run.main_process.a_single_scheme_run.DAMRun;
 import ecnu.dll.construction.run.main_process.a_single_scheme_run.SubsetGeoITwoNormRun;
 
@@ -19,12 +18,12 @@ import java.util.*;
 public class AlterParameterGExtendedExtendedOnlyForKLDivergenceRun {
     public static Map<String, List<ExperimentResult>> run(final List<TwoDimensionalDoublePoint> doublePointList, double inputSideLength, double xBound, double yBound) throws InstantiationException, IllegalAccessException, CloneNotSupportedException {
 
-        int arraySize = Constant.ALTER_SIDE_LENGTH_NUMBER_SIZE_for_DAM_and_SubsetGeoI_Comparison2.length;
+        int arraySize = Constant.ALTER_SIDE_LENGTH_NUMBER_SIZE_for_DAM_and_SubsetGeoI_Comparison_for_KL_Divergence.length;
 
         /*
             1. 设置cell大小的变化参数（同时也是设置整数input的边长大小）
          */
-        double[] inputLengthSizeNumberArray = Constant.ALTER_SIDE_LENGTH_NUMBER_SIZE_for_DAM_and_SubsetGeoI_Comparison2;
+        double[] inputLengthSizeNumberArray = Constant.ALTER_SIDE_LENGTH_NUMBER_SIZE_for_DAM_and_SubsetGeoI_Comparison_for_KL_Divergence;
         double[] gridLengthArray = new double[arraySize];
         for (int i = 0; i < gridLengthArray.length; i++) {
             gridLengthArray[i] = inputSideLength / inputLengthSizeNumberArray[i];
@@ -33,7 +32,7 @@ public class AlterParameterGExtendedExtendedOnlyForKLDivergenceRun {
         /*
             2. 设置隐私预算budget
          */
-        double epsilon = Constant.DEFAULT_PRIVACY_BUDGET_for_DAM_and_SubsetGeoI_Comparison2;
+        double epsilon = Constant.DEFAULT_PRIVACY_BUDGET_for_DAM_and_SubsetGeoI_Comparison_for_KL_Divergence;
 
         /*
             3. 根据inputIntegerSizeLengthArray，分别计算Rhombus和Disk方案对应的Optimal sizeB的取值
