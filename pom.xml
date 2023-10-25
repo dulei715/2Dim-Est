@@ -36,6 +36,12 @@
             <version>1.01.01</version>
         </dependency>
 
+        <dependency>
+            <groupId>cn.edu.ecnu</groupId>
+            <artifactId>MultiScaleSparseSinkhorn</artifactId>
+            <version>1.01.01</version>
+        </dependency>
+
         <!-- https://mvnrepository.com/artifact/gov.nist.math/jama -->
         <dependency>
             <groupId>gov.nist.math</groupId>
