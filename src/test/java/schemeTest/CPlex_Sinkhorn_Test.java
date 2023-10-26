@@ -41,7 +41,12 @@ public class CPlex_Sinkhorn_Test {
             dataB.put(tempPoint, tempDistributionValue);
         }
 
+        long startTime = System.currentTimeMillis();
         double result = TwoDimensionalWassersteinDistance.getWassersteinDistanceBySinkhorn(dataA, dataB, 2, Constant.SINKHORN_LAMBDA, Constant.SINKHORN_LOWER_BOUND);
+        long endTime = System.currentTimeMillis();
+        long timeCost = endTime - startTime;
+
         System.out.println(result);
+        System.out.println(timeCost);
     }
 }

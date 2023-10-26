@@ -17,9 +17,18 @@ public abstract class LocalPrivacyTable {
     protected TreeMap<Double, Integer> sizeDToIndexMap = null;
     protected TreeMap<Double, Integer> budgetToIndexMap = null;
 
+    public double[][] getLowerBoundLPTable() {
+        return lowerBoundLPTable;
+    }
+
+    public double[][] getUpperBoundLPTable() {
+        return upperBoundLPTable;
+    }
+
     protected abstract void initializeLPTable(Double[] sizeDArray, Double[] budgetArray);
 
     /**
+     * 平滑local privacy带来的非单调情况，这里取下界
      * 对于突增的部分，先设为不增，然后遇到下一个递减的值后对中间不增的部分进行线性拟合。
      * （这会出现中间突增被“线性拟合”但末尾突增“不增”处理）
      */
@@ -50,6 +59,9 @@ public abstract class LocalPrivacyTable {
         }
     }
 
+    /**
+     * 平滑local privacy带来的非单调情况，这里取上界
+     */
     protected void initializeUpperBoundLPTableByLPTable(){
         Double currentMinLineValueLeft, currentMinLineValueRight, tempValue;
         int leftIndex, rightIndex;
@@ -94,6 +106,29 @@ public abstract class LocalPrivacyTable {
 //            }
 //        }
 //    }
+
+    public List<Double> getSizeDList() {
+        return new ArrayList<>(this.sizeDToIndexMap.keySet());
+    }
+
+    public List<Double> getBudgetList() {
+        return new ArrayList<>(this.budgetToIndexMap.keySet());
+    }
+
+    protected double getMaxLocalPrivacyValueGivenTable(double[][] table, Double sizeD) {
+        double[] lPRow = table[this.sizeDToIndexMap.get(sizeD)];
+        if (!ArraysUtils.isDescending(lPRow)) {
+            throw new RuntimeException("The local privacy for sizeD = " + sizeD + " in the table is not Descending!");
+        }
+        return lPRow[0];
+    }
+    protected double getMinLocalPrivacyValueGivenTable(double[][] table, Double sizeD) {
+        double[] lPRow = table[this.sizeDToIndexMap.get(sizeD)];
+        if (!ArraysUtils.isDescending(lPRow)) {
+            throw new RuntimeException("The local privacy for sizeD = " + sizeD + " in the table is not Descending!");
+        }
+        return lPRow[lPRow.length-1];
+    }
 
 
     protected double getEpsilonByLocalPrivacyGivenTable(double[][] table, Double sizeD, Double localPrivacy) {
@@ -162,6 +197,14 @@ public abstract class LocalPrivacyTable {
 
     public double getLowerBoundLocalPrivacyByEpsilon(Double sizeD, Double epsilon) {
         return getLocalPrivacyByEpsilonGivenTable(this.lowerBoundLPTable, sizeD, epsilon);
+    }
+
+    public double getMaxLocalPrivacyValue(Double sizeD) {
+        return getMaxLocalPrivacyValueGivenTable(this.lPTable, sizeD);
+    }
+
+    public double getMinLocalPrivacyValue(Double sizeD) {
+        return getMinLocalPrivacyValueGivenTable(this.lPTable, sizeD);
     }
 
     protected void writeTable(String outputPath, double[][] table) {

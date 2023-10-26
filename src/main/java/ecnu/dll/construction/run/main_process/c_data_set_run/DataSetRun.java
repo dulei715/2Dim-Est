@@ -22,6 +22,7 @@ import java.util.TreeMap;
 
 @SuppressWarnings("Duplicates")
 public class DataSetRun {
+    @Deprecated
     public static Map<String, Map<String, List<ExperimentResult>>> run(String dataSetPath, String datasetName, double xBound, double yBound, double inputSideLength) throws IllegalAccessException, CloneNotSupportedException, InstantiationException {
         /**
          *  1. 读取 DoublePointList

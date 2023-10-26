@@ -32,19 +32,17 @@ public class AlterParameterBRun {
             3. 分别针对Rhombus和Disk方案计算变化的整数b值
          */
         double[] alterSizeBRatioArray = Constant.ALTER_B_LENGTH_RATIO_ARRAY;
-        int rhombusOptimalSizeB, diskOptimalSizeB;
+//        int rhombusOptimalSizeB;
+        int diskOptimalSizeB;
         int inputIntegerLengthSize = (int)Math.ceil(inputLengthSize);
-        rhombusOptimalSizeB = DiscretizedRhombusSchemeTool.getOptimalSizeBOfRhombusScheme(epsilon, inputIntegerLengthSize);
+//        rhombusOptimalSizeB = DiscretizedRhombusSchemeTool.getOptimalSizeBOfRhombusScheme(epsilon, inputIntegerLengthSize);
         diskOptimalSizeB = DiscretizedDiskSchemeTool.getOptimalSizeBOfDiskScheme(epsilon, inputIntegerLengthSize);
         int[] alterRhombusSizeB = new int[arraySize], alterDiskSizeB = new int[arraySize];
         for (int i = 0; i < arraySize; i++) {
-            alterRhombusSizeB[i] = (int)Math.round(rhombusOptimalSizeB * alterSizeBRatioArray[i]);
+//            alterRhombusSizeB[i] = (int)Math.round(rhombusOptimalSizeB * alterSizeBRatioArray[i]);
             alterDiskSizeB[i] = (int)Math.round(diskOptimalSizeB * alterSizeBRatioArray[i]);
-            // todo: for b alter
-//            alterRhombusSizeB[i] = i + 1;
-//            alterDiskSizeB[i] = i + 1;
         }
-        System.out.println("R's best b is " + rhombusOptimalSizeB);
+//        System.out.println("R's best b is " + rhombusOptimalSizeB);
         System.out.println("D's best b is " + diskOptimalSizeB);
         /*
             4. 设置邻居属性smooth的参与率
@@ -60,10 +58,12 @@ public class AlterParameterBRun {
         ExperimentResult tempRhombusExperimentResult, tempDiskExperimentResult;
         List<ExperimentResult> rhombusExperimentResultList = new ArrayList<>(), diskExperimentResultList = new ArrayList<>();
         for (int i = 0; i < arraySize; i++) {
-            tempRhombusExperimentResult = RAMRun.run(integerPointList, rawDataStatistic, gridLength, inputSideLength, alterRhombusSizeB[i]*gridLength, epsilon, kParameter, xBound, yBound);
-            rhombusExperimentResultList.add(tempRhombusExperimentResult);
+//            tempRhombusExperimentResult = RAMRun.run(integerPointList, rawDataStatistic, gridLength, inputSideLength, alterRhombusSizeB[i]*gridLength, epsilon, kParameter, xBound, yBound);
+//            rhombusExperimentResultList.add(tempRhombusExperimentResult);
             tempDiskExperimentResult = DAMRun.run(integerPointList, rawDataStatistic, gridLength, inputSideLength, alterDiskSizeB[i]*gridLength, epsilon, kParameter, xBound, yBound);
             diskExperimentResultList.add(tempDiskExperimentResult);
+            //todo: 这里不运行ram，为了保证结果列标，这里把ram的值赋值为dam的值
+            rhombusExperimentResultList.add(tempDiskExperimentResult);
         }
         alterParameterMap.put(rhombusKey, rhombusExperimentResultList);
         alterParameterMap.put(diskKey, diskExperimentResultList);
