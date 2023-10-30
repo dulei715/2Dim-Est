@@ -36,11 +36,11 @@ public class ParameterObservation {
         Map<String, List<Double>> tempInnerMap;
         Double tempDAMMaxValue, tempDAMMinValue, tempSubGeoIMaxValue, tempSubGeoIMinValue;
         for (Double sizeD : sizeDList) {
-            // todo: alter wrong
-            tempDAMMaxValue = damEpsilonLocalPrivacyTable.getMaxLocalPrivacyValue(sizeD);
-            tempDAMMinValue = damEpsilonLocalPrivacyTable.getMinLocalPrivacyValue(sizeD);
-            tempSubGeoIMaxValue = subsetGeoIEpsilonLPTable.getMaxLocalPrivacyValue(sizeD);
-            tempSubGeoIMinValue = subsetGeoIEpsilonLPTable.getMinLocalPrivacyValue(sizeD);
+
+            tempDAMMaxValue = damEpsilonLocalPrivacyTable.getMaxLocalPrivacyValueInLowerBoundTable(sizeD);
+            tempDAMMinValue = damEpsilonLocalPrivacyTable.getMinLocalPrivacyValueInLowerBoundTable(sizeD);
+            tempSubGeoIMaxValue = subsetGeoIEpsilonLPTable.getMaxLocalPrivacyValueInUpperBoundTable(sizeD);
+            tempSubGeoIMinValue = subsetGeoIEpsilonLPTable.getMinLocalPrivacyValueInUpperBoundTable(sizeD);
 
             tempInnerMap = new TreeMap<>();
             damLimitation = new ArrayList<>();

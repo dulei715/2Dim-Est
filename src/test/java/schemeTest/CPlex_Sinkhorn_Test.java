@@ -42,11 +42,55 @@ public class CPlex_Sinkhorn_Test {
         }
 
         long startTime = System.currentTimeMillis();
-        double result = TwoDimensionalWassersteinDistance.getWassersteinDistanceBySinkhorn(dataA, dataB, 2, Constant.SINKHORN_LAMBDA, Constant.SINKHORN_LOWER_BOUND);
+        double result = TwoDimensionalWassersteinDistance.getWassersteinDistanceBySinkhorn(dataA, dataB, 2, Constant.SINKHORN_LAMBDA, Constant.SINKHORN_LOWER_BOUND, 0D);
         long endTime = System.currentTimeMillis();
         long timeCost = endTime - startTime;
 
         System.out.println(result);
         System.out.println(timeCost);
+    }
+    @Test
+    public void fun2() throws CPLException {
+        String basicPath = "E:\\1.学习\\4.数据集\\temp2";
+
+//        String dataAPath = StringUtil.join(ConstantValues.FILE_SPLIT, basicPath, "test_for_NAN_data_original_DAM.txt");
+//        String dataBPath = StringUtil.join(ConstantValues.FILE_SPLIT, basicPath, "test_for_NAN_data_estimation_DAM.txt");
+        String dataAPath = StringUtil.join(ConstantValues.FILE_SPLIT, basicPath, "test_for_NAN_data_original_subGeoI.txt");
+        String dataBPath = StringUtil.join(ConstantValues.FILE_SPLIT, basicPath, "test_for_NAN_data_estimation_subGeoI.txt");
+
+        TreeMap<TwoDimensionalIntegerPoint, Double> dataA, dataB;
+        TwoDimensionalIntegerPoint tempPoint;
+        Double tempDistributionValue;
+
+        dataA = new TreeMap<>();
+        List<Map<String, String>> dataAMap = CSVRead.readData(dataAPath);
+        for (Map<String, String> map : dataAMap) {
+            tempPoint = new TwoDimensionalIntegerPoint(Integer.valueOf(map.get("xIndex")), Integer.valueOf(map.get("yIndex")));
+            tempDistributionValue = Double.valueOf(map.get("distributionValue"));
+            dataA.put(tempPoint, tempDistributionValue);
+        }
+
+        dataB = new TreeMap<>();
+        List<Map<String, String>> dataBMap = CSVRead.readData(dataBPath);
+        for (Map<String, String> map : dataBMap) {
+            tempPoint = new TwoDimensionalIntegerPoint(Integer.valueOf(map.get("xIndex")), Integer.valueOf(map.get("yIndex")));
+            tempDistributionValue = Double.valueOf(map.get("distributionValue"));
+            dataB.put(tempPoint, tempDistributionValue);
+        }
+
+        long startTime = System.currentTimeMillis();
+        double resultSinkhorn = TwoDimensionalWassersteinDistance.getWassersteinDistanceBySinkhorn(dataA, dataB, 2, Constant.SINKHORN_LAMBDA, Constant.SINKHORN_LOWER_BOUND, Constant.SUPPORTED_MINIMAL_POSITIVE_VALUE);
+        long endTime = System.currentTimeMillis();
+        long sinkhornTimeCost = endTime - startTime;
+
+//        startTime = System.currentTimeMillis();
+//        double resultCPlex = TwoDimensionalWassersteinDistance.getWassersteinDistanceByCPlex(dataA, dataB, 2);
+//        endTime = System.currentTimeMillis();
+//        long cplexTimeCost = endTime - startTime;
+
+        System.out.println("Sinkhorn: " + resultSinkhorn);
+//        System.out.println("CPlex: " + resultCPlex);
+        System.out.println("Sinkhorn time cost: " + sinkhornTimeCost);
+//        System.out.println("CPlex time cost: " + cplexTimeCost);
     }
 }

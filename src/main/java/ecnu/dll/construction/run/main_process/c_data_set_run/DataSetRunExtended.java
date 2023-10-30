@@ -36,17 +36,17 @@ public class DataSetRunExtended {
         pointRead.readPointWithFirstLineCount();
         List<TwoDimensionalDoublePoint> doublePointList = pointRead.getPointList();
 
-//        List<TwoDimensionalIntegerPoint> integerPointList = Grid.toIntegerPoint(doublePointList, new Double[]{xBound, yBound}, inputSideLength / Constant.DEFAULT_SIDE_LENGTH_NUMBER_SIZE_for_DAM_and_SubsetGeoI_Comparison);
-//        List<TwoDimensionalIntegerPoint> integerPointTypeList = DiscretizedSchemeTool.getRawTwoDimensionalIntegerPointTypeList((int) Math.ceil(Constant.DEFAULT_SIDE_LENGTH_NUMBER_SIZE_for_DAM_and_SubsetGeoI_Comparison));
-//        TreeMap<TwoDimensionalIntegerPoint, Double> rawStatisticMap = StatisticTool.countHistogramRatioMap(integerPointTypeList, integerPointList);
+        List<TwoDimensionalIntegerPoint> integerPointList = Grid.toIntegerPoint(doublePointList, new Double[]{xBound, yBound}, inputSideLength / Constant.DEFAULT_SIDE_LENGTH_NUMBER_SIZE_for_DAM_and_SubsetGeoI_Comparison);
+        List<TwoDimensionalIntegerPoint> integerPointTypeList = DiscretizedSchemeTool.getRawTwoDimensionalIntegerPointTypeList((int) Math.ceil(Constant.DEFAULT_SIDE_LENGTH_NUMBER_SIZE_for_DAM_and_SubsetGeoI_Comparison));
+        TreeMap<TwoDimensionalIntegerPoint, Double> rawStatisticMap = StatisticTool.countHistogramRatioMap(integerPointTypeList, integerPointList);
 
         String outputFileName;
 
-//        Map<String, List<ExperimentResult>> alteringBudgetResult = AlterParameterBudgetExtendedRun.run(integerPointList, inputSideLength, rawStatisticMap, xBound, yBound);
-//        ExperimentResult.addPair(alteringBudgetResult, 1, Constant.areaLengthKey, String.valueOf(inputSideLength));
-//        ExperimentResult.addPair(alteringBudgetResult, 0, Constant.dataSetNameKey, datasetName);
-//        outputFileName = outputDir + ConstantValues.FILE_SPLIT + Constant.alterBudgetKey + ".csv";
-//        ExperimentResultWrite.write(outputFileName, ExperimentResult.getCombineResultList(alteringBudgetResult));
+        Map<String, List<ExperimentResult>> alteringBudgetResult = AlterParameterBudgetExtendedRun.run(integerPointList, inputSideLength, rawStatisticMap, xBound, yBound);
+        ExperimentResult.addPair(alteringBudgetResult, 1, Constant.areaLengthKey, String.valueOf(inputSideLength));
+        ExperimentResult.addPair(alteringBudgetResult, 0, Constant.dataSetNameKey, datasetName);
+        outputFileName = outputDir + ConstantValues.FILE_SPLIT + Constant.alterBudgetKey + ".csv";
+        ExperimentResultWrite.write(outputFileName, ExperimentResult.getCombineResultList(alteringBudgetResult));
 
 
         Map<String, List<ExperimentResult>> alteringGResult = AlterParameterGExtendedRun.run(doublePointList, inputSideLength, xBound, yBound);
@@ -55,7 +55,7 @@ public class DataSetRunExtended {
         ExperimentResultWrite.write(outputFileName, ExperimentResult.getCombineResultList(alteringGResult));
 
         Map<String, Map<String, List<ExperimentResult>>> datasetResult = new HashMap<>();
-//        datasetResult.put(Constant.alterBudgetKey, alteringBudgetResult);
+        datasetResult.put(Constant.alterBudgetKey, alteringBudgetResult);
         datasetResult.put(Constant.alterGKey, alteringGResult);
 
         return datasetResult;

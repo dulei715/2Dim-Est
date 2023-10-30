@@ -1,5 +1,7 @@
 package ecnu.dll.construction.run.main_process.a_single_scheme_run;
 
+import cn.edu.ecnu.basic.StringUtil;
+import cn.edu.ecnu.constant_values.ConstantValues;
 import cn.edu.ecnu.differential_privacy.accuracy.metrics.distance_quantities.KLDivergence;
 import cn.edu.ecnu.differential_privacy.accuracy.metrics.distance_quantities.TwoDimensionalWassersteinDistance;
 import cn.edu.ecnu.differential_privacy.cdp.basic_struct.impl.TwoNormTwoDimensionalIntegerPointDistanceTor;
@@ -8,6 +10,7 @@ import cn.edu.ecnu.struct.point.TwoDimensionalIntegerPoint;
 import ecnu.dll.construction._config.Constant;
 import ecnu.dll.construction.comparedscheme.sem_geo_i.discretization.DiscretizedSubsetExponentialGeoI;
 import edu.ecnu.dll.cpl.expection.CPLException;
+import tools.TestTool;
 
 import java.util.List;
 import java.util.Set;
@@ -31,6 +34,13 @@ public class SubsetGeoITwoNormRun {
             TreeMap<TwoDimensionalIntegerPoint, Double> estimationResult = scheme.statistic(noiseSubsetIndexList);
             long endTime = System.currentTimeMillis();
             long postProcessTime = endTime - startTime;
+
+
+            // todo: for test
+            String outputPathIn = StringUtil.join(ConstantValues.FILE_SPLIT, "E:", "test_for_NAN_data_original_subGeoI.txt");
+            TestTool.writeDistribution(rawDataStatistic, outputPathIn);
+            String outputPathEst = StringUtil.join(ConstantValues.FILE_SPLIT, "E:", "test_for_NAN_data_estimation_subGeoI.txt");
+            TestTool.writeDistribution(estimationResult, outputPathEst);
 
 
             try {

@@ -203,8 +203,24 @@ public abstract class LocalPrivacyTable {
         return getMaxLocalPrivacyValueGivenTable(this.lPTable, sizeD);
     }
 
+    public double getMaxLocalPrivacyValueInLowerBoundTable(Double sizeD) {
+        return getMaxLocalPrivacyValueGivenTable(this.lowerBoundLPTable, sizeD);
+    }
+
+    public double getMaxLocalPrivacyValueInUpperBoundTable(Double sizeD) {
+        return getMaxLocalPrivacyValueGivenTable(this.upperBoundLPTable, sizeD);
+    }
+
     public double getMinLocalPrivacyValue(Double sizeD) {
         return getMinLocalPrivacyValueGivenTable(this.lPTable, sizeD);
+    }
+
+    public double getMinLocalPrivacyValueInLowerBoundTable(Double sizeD) {
+        return getMinLocalPrivacyValueGivenTable(this.lowerBoundLPTable, sizeD);
+    }
+
+    public double getMinLocalPrivacyValueInUpperBoundTable(Double sizeD) {
+        return getMinLocalPrivacyValueGivenTable(this.upperBoundLPTable, sizeD);
     }
 
     protected void writeTable(String outputPath, double[][] table) {
