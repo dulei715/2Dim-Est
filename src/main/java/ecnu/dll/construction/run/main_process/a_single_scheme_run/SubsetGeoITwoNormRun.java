@@ -37,10 +37,10 @@ public class SubsetGeoITwoNormRun {
 
 
             // todo: for test
-            String outputPathIn = StringUtil.join(ConstantValues.FILE_SPLIT, "E:", "test_for_NAN_data_original_subGeoI.txt");
-            TestTool.writeDistribution(rawDataStatistic, outputPathIn);
-            String outputPathEst = StringUtil.join(ConstantValues.FILE_SPLIT, "E:", "test_for_NAN_data_estimation_subGeoI.txt");
-            TestTool.writeDistribution(estimationResult, outputPathEst);
+//            String outputPathIn = StringUtil.join(ConstantValues.FILE_SPLIT, "E:", "test_for_NAN_data_original_subGeoI.txt");
+//            TestTool.writeDistribution(rawDataStatistic, outputPathIn);
+//            String outputPathEst = StringUtil.join(ConstantValues.FILE_SPLIT, "E:", "test_for_NAN_data_estimation_subGeoI.txt");
+//            TestTool.writeDistribution(estimationResult, outputPathEst);
 
 
             try {

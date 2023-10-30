@@ -17,9 +17,9 @@ public class Constant {
     // 实验路径
 
     //    public static final String rootPath = "E:\\dataset";
-    public static final String rootPath = "E:\\1.学习\\4.数据集\\2.dataset_for_spatial_estimation";
+//    public static final String rootPath = "E:\\1.学习\\4.数据集\\2.dataset_for_spatial_estimation";
 //    public static final String rootPath = "/root/code/2_2.ProgramForSpatialLDPEstimation/1.JavaCode";
-//    public static final String rootPath = "/root/code/2_2_spatialLDP/";
+    public static final String rootPath = "/root/code/2_2_spatialLDP/";
 //    public static final String rootPath = "/root/code/2_seldp/";
 
 
@@ -45,13 +45,13 @@ public class Constant {
     public static final Integer[] DEFAULT_ONE_DIMENSIONAL_COEFFICIENTS = new Integer[]{1, 2, 1};
 //    public static final Double SINKHORN_LAMBDA = 10D;
 //    public static final Double SINKHORN_LAMBDA = 15D;
-//    public static final Double SINKHORN_LAMBDA = 5D;      // todo: for basic experiments
-    public static final Double SINKHORN_LAMBDA = 1D;        // todo: for extend experiments     由于extend版本分割格子多，每个格子内数据少，有些格子会出现0频率，因此更容易收敛爆炸，因此需要粗粒度些
+    public static final Double SINKHORN_LAMBDA = 5D;      // todo: for basic experiments
+//    public static final Double SINKHORN_LAMBDA = 1D;        // todo: for extend experiments     由于extend版本分割格子多，每个格子内数据少，有些格子会出现0频率，因此更容易收敛爆炸，因此需要粗粒度些
 
 
 //    public static final Double SINKHORN_LOWER_BOUND = Math.pow(10, -10);
     public static final Double SINKHORN_LOWER_BOUND = Math.pow(10, -6);
-    public static final Double SUPPORTED_MINIMAL_POSITIVE_VALUE = Double.MIN_VALUE;
+//    public static final Double SUPPORTED_MINIMAL_POSITIVE_VALUE = Double.MIN_VALUE;
 
 
 
