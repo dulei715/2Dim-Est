@@ -5,6 +5,7 @@ import cn.edu.ecnu.differential_privacy.cdp.basic_struct.impl.TwoNormTwoDimensio
 import cn.edu.ecnu.result.ExperimentResult;
 import cn.edu.ecnu.struct.point.TwoDimensionalIntegerPoint;
 import ecnu.dll.construction._config.Constant;
+import ecnu.dll.construction._config.Initialized;
 import ecnu.dll.construction.analysis.e_to_lp.Norm1RAMLocalPrivacy;
 import ecnu.dll.construction.analysis.e_to_lp.Norm2DAMLocalPrivacy;
 import ecnu.dll.construction.analysis.e_to_lp.abstract_class.DAMLocalPrivacy;
@@ -99,7 +100,7 @@ public class AlterParameterBudgetRun {
             tempMdswExperimentResult = MDSWRun.run(integerPointList, rawDataStatistic, gridLength, inputSideLength, epsilonArray[i], xBound, yBound);
             mdswExperimentResultList.add(tempMdswExperimentResult);
 
-            // for RAM
+            // for RAM (没啥用，数据占位)
             tempRhombusExperimentResult = RAMRun.run(integerPointList, rawDataStatistic, gridLength, inputSideLength, alterRhombusOptimalSizeB[i]*gridLength, epsilonArray[i], kParameterForRAM, xBound, yBound);
             rhombusExperimentResultList.add(tempRhombusExperimentResult);
 
@@ -111,7 +112,7 @@ public class AlterParameterBudgetRun {
             tempDiskExperimentResult = DAMRun.run(integerPointList, rawDataStatistic, gridLength, inputSideLength, alterDiskOptimalSizeB[i]*gridLength, epsilonArray[i], kParameter, xBound, yBound);
             diskExperimentResultList.add(tempDiskExperimentResult);
 
-            // for Subset-Geo-I-norm1 todo: alter
+            // for Subset-Geo-I-norm1 (没啥用，数据占位)
             ramLocalPrivacy.resetEpsilon(epsilonArray[i]);
             tempLocalPrivacy = ramLocalPrivacy.getTransformLocalPrivacyValue();
             transformedEpsilon = geoITransformEpsilonNorm1.getEpsilonByLocalPrivacy(tempLocalPrivacy);
@@ -119,9 +120,12 @@ public class AlterParameterBudgetRun {
             subsetGeoIOneNormExperimentResultList.add(tempSubsetGeoIOneNormExperimentResult);
 
             // for Subset-Geo-I-norm2
-            damLocalPrivacy.resetEpsilon(epsilonArray[i]);
-            tempLocalPrivacy = damLocalPrivacy.getTransformLocalPrivacyValue();
-            transformedEpsilon = geoITransformEpsilonNorm2.getEpsilonByLocalPrivacy(tempLocalPrivacy);
+            // todo: 这里修改了Localprivacy的转化为表格转化
+//            damLocalPrivacy.resetEpsilon(epsilonArray[i]);
+//            tempLocalPrivacy = damLocalPrivacy.getTransformLocalPrivacyValue();
+            tempLocalPrivacy = Initialized.damELPTable.getLowerBoundLocalPrivacyByEpsilon(inputLengthSize, epsilonArray[i]);
+//            transformedEpsilon = geoITransformEpsilonNorm2.getEpsilonByLocalPrivacy(tempLocalPrivacy);
+            transformedEpsilon = Initialized.subGeoIELPTable.getEpsilonByUpperBoundLocalPrivacy(inputLengthSize, tempLocalPrivacy);
             tempSubsetGeoITwoNormExperimentResult = SubsetGeoITwoNormRun.run(integerPointList, rawDataStatistic, gridLength, inputSideLength, transformedEpsilon, xBound, yBound);
             subsetGeoITwoNormExperimentResultList.add(tempSubsetGeoITwoNormExperimentResult);
 

@@ -16,11 +16,13 @@ public class Constant {
 
     // 实验路径
 
-    //    public static final String rootPath = "E:\\dataset";
+//        public static final String rootPath = "E:\\dataset";
 //    public static final String rootPath = "E:\\1.学习\\4.数据集\\2.dataset_for_spatial_estimation";
 //    public static final String rootPath = "/root/code/2_2.ProgramForSpatialLDPEstimation/1.JavaCode";
-    public static final String rootPath = "/root/code/2_2_spatialLDP/";
+//    public static final String rootPath = "/root/code/2_2_spatialLDP/";
 //    public static final String rootPath = "/root/code/2_seldp/";
+//    public static final String rootPath = "/root/code/aaai00_2330/2.spatialLDPEstimation/";
+    public static final String rootPath = "/root/code/aaai01_2331/2.spatialLDPEstimation/";
 
 
     // 实验相对路径
@@ -45,8 +47,7 @@ public class Constant {
     public static final Integer[] DEFAULT_ONE_DIMENSIONAL_COEFFICIENTS = new Integer[]{1, 2, 1};
 //    public static final Double SINKHORN_LAMBDA = 10D;
 //    public static final Double SINKHORN_LAMBDA = 15D;
-    public static final Double SINKHORN_LAMBDA = 5D;      // todo: for basic experiments
-//    public static final Double SINKHORN_LAMBDA = 1D;        // todo: for extend experiments     由于extend版本分割格子多，每个格子内数据少，有些格子会出现0频率，因此更容易收敛爆炸，因此需要粗粒度些
+    public static final Double SINKHORN_LAMBDA = 5D;
 
 
 //    public static final Double SINKHORN_LOWER_BOUND = Math.pow(10, -10);
@@ -68,7 +69,9 @@ public class Constant {
      * 生成 LP Table 所需要的参数
      */
     public static final double[] ALTER_SIDE_LENGTH_NUMBER_SIZE_for_DAM_and_SubsetGeoI_Comparison_Total = BasicArray.getIncreasedoubleNumberArray(1.0, 1.0, 30.0, 2);
-    public static final double[] ALTER_SIDE_LENGTH_NUMBER_SIZE_for_DAM_and_SubsetGeoI_Comparison_Extended = new double[]{10.0, 15.0, 20.0, 25.0, 30.0};
+//    public static final double[] ALTER_SIDE_LENGTH_NUMBER_SIZE_for_DAM_and_SubsetGeoI_Comparison_Extended = new double[]{10.0, 15.0, 20.0, 25.0, 30.0};
+//    public static final double[] ALTER_SIDE_LENGTH_NUMBER_SIZE_for_DAM_and_SubsetGeoI_Comparison_Extended = new double[]{5.0, 10, 15.0, 20.0, 25.0};
+    public static final double[] ALTER_SIDE_LENGTH_NUMBER_SIZE_for_DAM_and_SubsetGeoI_Comparison_Extended = new double[]{1.0, 5, 10.0, 15.0, 20.0};
     public static final double[] ALTER_PRIVACY_BUDGET_ARRAY_for_DAM_and_SubsetGeoI_Comparison_Total = BasicArray.getIncreasedoubleNumberArray(0.67, 0.01, 10, eliminateDoubleErrorIndexSize);
     public static final double[] ALTER_PRIVACY_BUDGET_ARRAY_for_DAM_and_SubsetGeoI_Comparison_Extended = ALTER_PRIVACY_BUDGET_ARRAY_for_DAM_and_SubsetGeoI_Comparison_Total;
 
@@ -88,8 +91,9 @@ public class Constant {
             1.0/3, 2.0/3, 1.0, 4.0/3, 5.0/3
     };
 
-//        public static final double DEFAULT_SIDE_LENGTH_NUMBER_SIZE_for_b_change = 9.0;  // todo: version1
-    public static final double DEFAULT_SIDE_LENGTH_NUMBER_SIZE_for_b_change = 15.0; // todo: version2
+//        public static final double DEFAULT_SIDE_LENGTH_NUMBER_SIZE_for_b_change = 9.0;  // todo: version 1
+//    public static final double DEFAULT_SIDE_LENGTH_NUMBER_SIZE_for_b_change = 15.0; // todo: version 2
+    public static final double DEFAULT_SIDE_LENGTH_NUMBER_SIZE_for_b_change = 20.0; // todo: version 4
 
 
 
@@ -103,18 +107,21 @@ public class Constant {
     //---固定值-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     public static final double DEFAULT_SIDE_LENGTH_NUMBER_SIZE = 5.0;
 
-//    public static final double DEFAULT_SIDE_LENGTH_NUMBER_SIZE_for_DAM_and_SubsetGeoI_Comparison = 10.0;    // todo: version1
-    public static final double DEFAULT_SIDE_LENGTH_NUMBER_SIZE_for_DAM_and_SubsetGeoI_Comparison = 20.0;    // todo: version2
+//    public static final double DEFAULT_SIDE_LENGTH_NUMBER_SIZE_for_DAM_and_SubsetGeoI_Comparison = 10.0;    // todo: version 1
+    public static final double DEFAULT_SIDE_LENGTH_NUMBER_SIZE_for_DAM_and_SubsetGeoI_Comparison = 20.0;    // todo: version 2
+//    public static final double DEFAULT_SIDE_LENGTH_NUMBER_SIZE_for_DAM_and_SubsetGeoI_Comparison = 20.0;    // todo: version 4
 
     public static final double DEFAULT_SIDE_LENGTH_NUMBER_SIZE_for_DAM_and_SubsetGeoI_Comparison_for_KL_Divergence = 20.0;
 
     //---变动值-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-        public static final double[] ALTER_SIDE_LENGTH_NUMBER_SIZE = new double[] { 1.0, 2.0, 3.0, 4.0, 5.0 };  // todo: version1
+        public static final double[] ALTER_SIDE_LENGTH_NUMBER_SIZE = new double[] { 1.0, 2.0, 3.0, 4.0, 5.0 };  // todo: version 1
 
 
-    //    public static final double[] ALTER_SIDE_LENGTH_NUMBER_SIZE_for_DAM_and_SubsetGeoI_Comparison = new double[] { 8.0, 9.0, 10.0, 11.0, 12.0 }; // todo: version1
-    public static final double[] ALTER_SIDE_LENGTH_NUMBER_SIZE_for_DAM_and_SubsetGeoI_Comparison = new double[] { 10.0, 15.0, 20.0, 25.0, 30.0 };   // todo: version2
+    //    public static final double[] ALTER_SIDE_LENGTH_NUMBER_SIZE_for_DAM_and_SubsetGeoI_Comparison = new double[] { 8.0, 9.0, 10.0, 11.0, 12.0 }; // todo: version 1
+    public static final double[] ALTER_SIDE_LENGTH_NUMBER_SIZE_for_DAM_and_SubsetGeoI_Comparison = new double[] { 10.0, 15.0, 20.0, 25.0, 30.0 };   // todo: version 2
+//    public static final double[] ALTER_SIDE_LENGTH_NUMBER_SIZE_for_DAM_and_SubsetGeoI_Comparison = new double[] { 5.0, 10.0, 15.0, 20.0, 25.0};   // todo: version 3
+//    public static final double[] ALTER_SIDE_LENGTH_NUMBER_SIZE_for_DAM_and_SubsetGeoI_Comparison = new double[] { 1.0, 5.0, 10.0, 15.0, 20.0};   // todo: version 4
 
     public static final double[] ALTER_SIDE_LENGTH_NUMBER_SIZE_for_DAM_and_SubsetGeoI_Comparison_for_KL_Divergence = new double[] { 10.0, 15.0, 20.0, 25.0, 30.0 };
 
@@ -137,6 +144,8 @@ public class Constant {
 //        public static final double DEFAULT_PRIVACY_BUDGET_for_DAM_and_SubsetGeoI_Comparison = DEFAULT_PRIVACY_BUDGET;   // todo: version1
 //        public static final double DEFAULT_PRIVACY_BUDGET_for_DAM_and_SubsetGeoI_Comparison = 3.5;   // todo: version 1.5
     public static final double DEFAULT_PRIVACY_BUDGET_for_DAM_and_SubsetGeoI_Comparison = 6.0;  // todo: version 2
+//    public static final double DEFAULT_PRIVACY_BUDGET_for_DAM_and_SubsetGeoI_Comparison = 5.5;  // todo: version 3
+//    public static final double DEFAULT_PRIVACY_BUDGET_for_DAM_and_SubsetGeoI_Comparison = 5.0;  // todo: version 4
 
     public static final double DEFAULT_PRIVACY_BUDGET_for_DAM_and_SubsetGeoI_Comparison_for_KL_Divergence = 6.0; // 要取最大的
 
@@ -145,8 +154,10 @@ public class Constant {
     public static final double[] ALTER_PRIVACY_BUDGET_ARRAY = new double[] { 0.7, 1.4, 2.1, 2.8, 3.5 }; // todo: version 2
 
 
-//    public static final double[] ALTER_PRIVACY_BUDGET_ARRAY_for_DAM_and_SubsetGeoI_Comparison = new double[] { 0.7, 1.4, 2.1, 2.8, 3.5 };   // todo: version1
-    public static final double[] ALTER_PRIVACY_BUDGET_ARRAY_for_DAM_and_SubsetGeoI_Comparison = new double[] { 6.0, 6.7, 7.4, 8.1, 8.8 };   // todo: version2
+//    public static final double[] ALTER_PRIVACY_BUDGET_ARRAY_for_DAM_and_SubsetGeoI_Comparison = new double[] { 0.7, 1.4, 2.1, 2.8, 3.5 };   // todo: version 1
+    public static final double[] ALTER_PRIVACY_BUDGET_ARRAY_for_DAM_and_SubsetGeoI_Comparison = new double[] { 6.0, 6.7, 7.4, 8.1, 8.8 };   // todo: version 2
+//    public static final double[] ALTER_PRIVACY_BUDGET_ARRAY_for_DAM_and_SubsetGeoI_Comparison = new double[] {5.5, 6.0, 6.5, 7.0, 7.5};   // todo: version 3
+//    public static final double[] ALTER_PRIVACY_BUDGET_ARRAY_for_DAM_and_SubsetGeoI_Comparison = new double[] {5.0, 6.0, 7.0, 8.0, 9.0};   // todo: version 4
 
     public static final double[] ALTER_PRIVACY_BUDGET_ARRAY_for_DAM_and_SubsetGeoI_Comparison2 = new double[] { 6.0, 6.7, 7.4, 8.1, 8.8 };
 

@@ -14,7 +14,7 @@ import ecnu.dll.construction.run.main_process.a_single_scheme_run.SubsetGeoITwoN
 
 import java.util.*;
 
-
+@Deprecated
 public class AlterParameterGExtendedExtendedOnlyForKLDivergenceRun {
     public static Map<String, List<ExperimentResult>> run(final List<TwoDimensionalDoublePoint> doublePointList, double inputSideLength, double xBound, double yBound) throws InstantiationException, IllegalAccessException, CloneNotSupportedException {
 

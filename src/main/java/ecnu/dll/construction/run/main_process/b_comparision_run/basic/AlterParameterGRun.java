@@ -8,6 +8,7 @@ import cn.edu.ecnu.struct.grid.Grid;
 import cn.edu.ecnu.struct.point.TwoDimensionalDoublePoint;
 import cn.edu.ecnu.struct.point.TwoDimensionalIntegerPoint;
 import ecnu.dll.construction._config.Constant;
+import ecnu.dll.construction._config.Initialized;
 import ecnu.dll.construction.analysis.e_to_lp.Norm1RAMLocalPrivacy;
 import ecnu.dll.construction.analysis.e_to_lp.Norm2DAMLocalPrivacy;
 import ecnu.dll.construction.analysis.e_to_lp.abstract_class.DAMLocalPrivacy;
@@ -112,7 +113,7 @@ public class AlterParameterGRun {
             tempMdswExperimentResult.addPair(1, Constant.areaLengthKey, String.valueOf(inputSideLength));
             mdswExperimentResultList.add(tempMdswExperimentResult);
 
-            // for RAM
+            // for RAM (没啥用，数据占位)
             tempRhombusExperimentResultAndScheme = RAMRun.runEnhanced(integerPointList, rawDataStatistic, gridLengthArray[i], inputSideLength, alterRhombusOptimalSizeB[i]*gridLengthArray[i], epsilon, kParameterForRAM, xBound, yBound);
             tempRhombusExperimentResult = tempRhombusExperimentResultAndScheme.getExperimentResult();
             tempRhombusScheme = (DiscretizedRhombusScheme)tempRhombusExperimentResultAndScheme.getAbstractDiscretizedScheme();
@@ -131,7 +132,7 @@ public class AlterParameterGRun {
             tempDiskExperimentResult.addPair(1, Constant.areaLengthKey, String.valueOf(inputSideLength));
             diskExperimentResultList.add(tempDiskExperimentResult);
 
-            // for Subset-Geo-I-norm1
+            // for Subset-Geo-I-norm1 (没啥用，数据占位)
             // 根据相应的DAM，计算出对应的LP
             ramLocalPrivacy = new Norm1RAMLocalPrivacy(tempRhombusScheme);
             tempLocalPrivacy = ramLocalPrivacy.getTransformLocalPrivacyValue();
@@ -144,14 +145,16 @@ public class AlterParameterGRun {
             subsetGeoIOneNormExperimentResultList.add(tempSubsetGeoIOneNormExperimentResult);
 
 
-            // for Subset-Geo-I-norm2
+            // for Subset-Geo-I-norm2 todo: 这里修改为直接查表
             // 根据相应的DAM，计算出对应的LP
-            damLocalPrivacy = new Norm2DAMLocalPrivacy(tempDiskScheme);
-            tempLocalPrivacy = damLocalPrivacy.getTransformLocalPrivacyValue();
+//            damLocalPrivacy = new Norm2DAMLocalPrivacy(tempDiskScheme);
+//            tempLocalPrivacy = damLocalPrivacy.getTransformLocalPrivacyValue();
+            tempLocalPrivacy = Initialized.damELPTable.getLowerBoundLocalPrivacyByEpsilon(inputLengthSizeNumberArray[i], epsilon);
             // geoI - two norm: 根据相应的DAM，计算出对应的LP，根据LP，计算出Geo-I对应的epsilon
-            tempGeoIScheme = new DiscretizedSubsetExponentialGeoI(epsilon, gridLengthArray[i], inputSideLength, xBound, yBound, new TwoNormTwoDimensionalIntegerPointDistanceTor());
-            geoITransformEpsilonNorm2 = new SubsetGeoITransformEpsilon(Constant.FINE_GRIT_PRIVACY_BUDGET_ARRAY, tempGeoIScheme, SubsetGeoITransformEpsilon.Local_Privacy_Distance_Norm_Two);
-            transformedEpsilon = geoITransformEpsilonNorm2.getEpsilonByLocalPrivacy(tempLocalPrivacy);
+//            tempGeoIScheme = new DiscretizedSubsetExponentialGeoI(epsilon, gridLengthArray[i], inputSideLength, xBound, yBound, new TwoNormTwoDimensionalIntegerPointDistanceTor());
+//            geoITransformEpsilonNorm2 = new SubsetGeoITransformEpsilon(Constant.FINE_GRIT_PRIVACY_BUDGET_ARRAY, tempGeoIScheme, SubsetGeoITransformEpsilon.Local_Privacy_Distance_Norm_Two);
+//            transformedEpsilon = geoITransformEpsilonNorm2.getEpsilonByLocalPrivacy(tempLocalPrivacy);
+            transformedEpsilon = Initialized.subGeoIELPTable.getEpsilonByUpperBoundLocalPrivacy(inputLengthSizeNumberArray[i], tempLocalPrivacy);
             tempSubsetGeoITwoNormExperimentResult = SubsetGeoITwoNormRun.run(integerPointList, rawDataStatistic, gridLengthArray[i], inputSideLength, transformedEpsilon, xBound, yBound);
             tempSubsetGeoITwoNormExperimentResult.addPair(1, Constant.areaLengthKey, String.valueOf(inputSideLength));
             subsetGeoITwoNormExperimentResultList.add(tempSubsetGeoITwoNormExperimentResult);

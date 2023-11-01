@@ -10,7 +10,7 @@ import ecnu.dll.construction.run.main_process.a_single_scheme_run.SubsetGeoITwoN
 
 import java.util.*;
 
-
+@Deprecated
 public class AlterParameterBudgetExtendedExtendedOnlyForKLDivergenceRun {
     public static Map<String, List<ExperimentResult>> run(final List<TwoDimensionalIntegerPoint> integerPointList, double inputSideLength, final TreeMap<TwoDimensionalIntegerPoint, Double> rawDataStatistic, double xBound, double yBound) throws InstantiationException, IllegalAccessException, CloneNotSupportedException {
 //        String inputDataPath = Constant.DEFAULT_INPUT_PATH;
