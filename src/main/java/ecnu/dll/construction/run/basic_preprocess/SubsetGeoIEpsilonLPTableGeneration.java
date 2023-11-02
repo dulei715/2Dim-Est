@@ -26,7 +26,7 @@ public class SubsetGeoIEpsilonLPTableGeneration {
         System.out.println("Finish extended table generation for SubsetGeoI!");
     }
     public static void main(String[] args) {
-//        generateTotalTable();
-        generateExtendedTable();
+        generateTotalTable();
+//        generateExtendedTable();
     }
 }

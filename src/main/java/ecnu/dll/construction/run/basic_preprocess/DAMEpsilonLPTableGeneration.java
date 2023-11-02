@@ -37,7 +37,7 @@ public class DAMEpsilonLPTableGeneration {
     }
 
     public static void main(String[] args) {
-//        generateTotalTable();
-        generateExtendedTable();
+        generateTotalTable();
+//        generateExtendedTable();
     }
 }
