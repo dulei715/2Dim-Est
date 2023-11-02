@@ -120,12 +120,12 @@ public class AlterParameterBudgetRun {
             subsetGeoIOneNormExperimentResultList.add(tempSubsetGeoIOneNormExperimentResult);
 
             // for Subset-Geo-I-norm2
-            // todo: 这里修改了Localprivacy的转化为表格转化
-//            damLocalPrivacy.resetEpsilon(epsilonArray[i]);
-//            tempLocalPrivacy = damLocalPrivacy.getTransformLocalPrivacyValue();
-            tempLocalPrivacy = Initialized.damELPTable.getLowerBoundLocalPrivacyByEpsilon(inputLengthSize, epsilonArray[i]);
-//            transformedEpsilon = geoITransformEpsilonNorm2.getEpsilonByLocalPrivacy(tempLocalPrivacy);
-            transformedEpsilon = Initialized.subGeoIELPTable.getEpsilonByUpperBoundLocalPrivacy(inputLengthSize, tempLocalPrivacy);
+            // todo: 这里修改了Localprivacy的转化为表格转化 (取消)
+            damLocalPrivacy.resetEpsilon(epsilonArray[i]);
+            tempLocalPrivacy = damLocalPrivacy.getTransformLocalPrivacyValue();
+//            tempLocalPrivacy = Initialized.damELPTable.getLowerBoundLocalPrivacyByEpsilon(inputLengthSize, epsilonArray[i]);
+            transformedEpsilon = geoITransformEpsilonNorm2.getEpsilonByLocalPrivacy(tempLocalPrivacy);
+//            transformedEpsilon = Initialized.subGeoIELPTable.getEpsilonByUpperBoundLocalPrivacy(inputLengthSize, tempLocalPrivacy);
             tempSubsetGeoITwoNormExperimentResult = SubsetGeoITwoNormRun.run(integerPointList, rawDataStatistic, gridLength, inputSideLength, transformedEpsilon, xBound, yBound);
             subsetGeoITwoNormExperimentResultList.add(tempSubsetGeoITwoNormExperimentResult);
 

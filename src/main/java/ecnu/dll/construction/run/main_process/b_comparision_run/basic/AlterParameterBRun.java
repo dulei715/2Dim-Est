@@ -4,9 +4,7 @@ import cn.edu.ecnu.result.ExperimentResult;
 import cn.edu.ecnu.struct.point.TwoDimensionalIntegerPoint;
 import ecnu.dll.construction._config.Constant;
 import ecnu.dll.construction.newscheme.discretization.tool.DiscretizedDiskSchemeTool;
-import ecnu.dll.construction.newscheme.discretization.tool.DiscretizedRhombusSchemeTool;
 import ecnu.dll.construction.run.main_process.a_single_scheme_run.DAMRun;
-import ecnu.dll.construction.run.main_process.a_single_scheme_run.RAMRun;
 
 import java.util.*;
 

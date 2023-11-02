@@ -7,7 +7,6 @@ import cn.edu.ecnu.filter.file_filter.DirectoryFileFilter;
 import cn.edu.ecnu.result.ResultTool;
 import cn.edu.ecnu.struct.result.ColumnBean;
 import ecnu.dll.construction.dataset.struct.DataSetAreaInfo;
-//import io.netty.util.internal.StringUtil;
 
 import java.io.FileFilter;
 import java.util.List;

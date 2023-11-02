@@ -1,6 +1,5 @@
 package ecnu.dll.construction.run.main_process.b_comparision_run.extended;
 
-import cn.edu.ecnu.constant_values.ConstantValues;
 import cn.edu.ecnu.io.print.MyPrint;
 import cn.edu.ecnu.io.read.TwoDimensionalPointRead;
 import cn.edu.ecnu.result.ExperimentResult;

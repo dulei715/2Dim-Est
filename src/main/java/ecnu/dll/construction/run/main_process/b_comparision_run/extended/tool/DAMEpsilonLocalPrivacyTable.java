@@ -1,9 +1,7 @@
 package ecnu.dll.construction.run.main_process.b_comparision_run.extended.tool;
 
-import cn.edu.ecnu.basic.BasicArray;
 import cn.edu.ecnu.collection.ArraysUtils;
 import cn.edu.ecnu.io.read.BasicRead;
-import cn.edu.ecnu.io.write.BasicWrite;
 import ecnu.dll.construction._config.Constant;
 import ecnu.dll.construction.analysis.e_to_lp.Norm2DAMLocalPrivacy;
 import ecnu.dll.construction.newscheme.discretization.DiscretizedDiskScheme;

@@ -4,7 +4,6 @@ import cn.edu.ecnu.basic.BasicArray;
 import cn.edu.ecnu.struct.point.TwoDimensionalIntegerPoint;
 import ecnu.dll.construction._config.Constant;
 import ecnu.dll.construction.basicscheme.geo_i.DiscretizationGeoI;
-import ecnu.dll.construction.comparedscheme.sem_geo_i.SubsetExponentialGeoI;
 import ecnu.dll.construction.comparedscheme.sem_geo_i.tool.SubsetExponentialGeoITool;
 import org.junit.Test;
 

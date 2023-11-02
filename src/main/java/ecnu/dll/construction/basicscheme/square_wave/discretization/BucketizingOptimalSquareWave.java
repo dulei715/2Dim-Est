@@ -5,7 +5,6 @@ import cn.edu.ecnu.basic.RandomUtil;
 import cn.edu.ecnu.statistic.StatisticTool;
 import ecnu.dll.construction._config.Constant;
 import ecnu.dll.construction.basicscheme.square_wave.continued.SquareWave;
-import edu.ecnu.dll.tools.collection.ArraysUtils;
 
 import java.util.List;
 import java.util.Map;

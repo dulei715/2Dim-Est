@@ -18,7 +18,6 @@ import ecnu.dll.construction.comparedscheme.sem_geo_i.discretization.Discretized
 import ecnu.dll.construction.newscheme.discretization.DiscretizedDiskScheme;
 import ecnu.dll.construction.newscheme.discretization.DiscretizedRhombusScheme;
 import ecnu.dll.construction.newscheme.discretization.tool.DiscretizedDiskSchemeTool;
-import ecnu.dll.construction.newscheme.discretization.tool.DiscretizedRhombusSchemeTool;
 import ecnu.dll.construction.newscheme.discretization.tool.DiscretizedSchemeTool;
 import ecnu.dll.construction.run._struct.ExperimentResultAndScheme;
 import ecnu.dll.construction.run.main_process.a_single_scheme_run.*;
@@ -145,16 +144,16 @@ public class AlterParameterGRun {
             subsetGeoIOneNormExperimentResultList.add(tempSubsetGeoIOneNormExperimentResult);
 
 
-            // for Subset-Geo-I-norm2 todo: 这里修改为直接查表
+            // for Subset-Geo-I-norm2 todo: 这里修改为直接查表（取消）
             // 根据相应的DAM，计算出对应的LP
-//            damLocalPrivacy = new Norm2DAMLocalPrivacy(tempDiskScheme);
-//            tempLocalPrivacy = damLocalPrivacy.getTransformLocalPrivacyValue();
-            tempLocalPrivacy = Initialized.damELPTable.getLowerBoundLocalPrivacyByEpsilon(inputLengthSizeNumberArray[i], epsilon);
+            damLocalPrivacy = new Norm2DAMLocalPrivacy(tempDiskScheme);
+            tempLocalPrivacy = damLocalPrivacy.getTransformLocalPrivacyValue();
+//            tempLocalPrivacy = Initialized.damELPTable.getLowerBoundLocalPrivacyByEpsilon(inputLengthSizeNumberArray[i], epsilon);
             // geoI - two norm: 根据相应的DAM，计算出对应的LP，根据LP，计算出Geo-I对应的epsilon
-//            tempGeoIScheme = new DiscretizedSubsetExponentialGeoI(epsilon, gridLengthArray[i], inputSideLength, xBound, yBound, new TwoNormTwoDimensionalIntegerPointDistanceTor());
-//            geoITransformEpsilonNorm2 = new SubsetGeoITransformEpsilon(Constant.FINE_GRIT_PRIVACY_BUDGET_ARRAY, tempGeoIScheme, SubsetGeoITransformEpsilon.Local_Privacy_Distance_Norm_Two);
-//            transformedEpsilon = geoITransformEpsilonNorm2.getEpsilonByLocalPrivacy(tempLocalPrivacy);
-            transformedEpsilon = Initialized.subGeoIELPTable.getEpsilonByUpperBoundLocalPrivacy(inputLengthSizeNumberArray[i], tempLocalPrivacy);
+            tempGeoIScheme = new DiscretizedSubsetExponentialGeoI(epsilon, gridLengthArray[i], inputSideLength, xBound, yBound, new TwoNormTwoDimensionalIntegerPointDistanceTor());
+            geoITransformEpsilonNorm2 = new SubsetGeoITransformEpsilon(Constant.FINE_GRIT_PRIVACY_BUDGET_ARRAY, tempGeoIScheme, SubsetGeoITransformEpsilon.Local_Privacy_Distance_Norm_Two);
+            transformedEpsilon = geoITransformEpsilonNorm2.getEpsilonByLocalPrivacy(tempLocalPrivacy);
+//            transformedEpsilon = Initialized.subGeoIELPTable.getEpsilonByUpperBoundLocalPrivacy(inputLengthSizeNumberArray[i], tempLocalPrivacy);
             tempSubsetGeoITwoNormExperimentResult = SubsetGeoITwoNormRun.run(integerPointList, rawDataStatistic, gridLengthArray[i], inputSideLength, transformedEpsilon, xBound, yBound);
             tempSubsetGeoITwoNormExperimentResult.addPair(1, Constant.areaLengthKey, String.valueOf(inputSideLength));
             subsetGeoITwoNormExperimentResultList.add(tempSubsetGeoITwoNormExperimentResult);
@@ -173,10 +172,10 @@ public class AlterParameterGRun {
 
 
         alterParameterMap.put(mdsw, mdswExperimentResultList);
-        // todo: 不计算ram相关的了，用dam替换，保证输出结构的一致性
+        // todo: 不计算ram相关的了，用dam替换，保证输出结构的一致性（取消）
         alterParameterMap.put(subsetGeoIOneNorm, subsetGeoIOneNormExperimentResultList);
         alterParameterMap.put(subsetGeoITwoNorm, subsetGeoITwoNormExperimentResultList);
-        // todo: 不计算ram相关的了，用dam替换，保证输出结构的一致性
+        // todo: 不计算ram相关的了，用dam替换，保证输出结构的一致性（取消）
         alterParameterMap.put(rhombusKey, rhombusExperimentResultList);
         alterParameterMap.put(diskNonShrinkKey, diskNonShrinkExperimentResultList);
         alterParameterMap.put(diskKey, diskExperimentResultList);

@@ -10,10 +10,8 @@ import cn.edu.ecnu.struct.point.TwoDimensionalDoublePoint;
 import cn.edu.ecnu.struct.point.TwoDimensionalIntegerPoint;
 import ecnu.dll.construction._config.Constant;
 import ecnu.dll.construction.newscheme.discretization.tool.DiscretizedSchemeTool;
-import ecnu.dll.construction.run.main_process.b_comparision_run.basic.AlterParameterBudgetRun;
 import ecnu.dll.construction.run.main_process.b_comparision_run.extended.AlterParameterBudgetExtendedExtendedOnlyForKLDivergenceRun;
 import ecnu.dll.construction.run.main_process.b_comparision_run.extended.AlterParameterGExtendedExtendedOnlyForKLDivergenceRun;
-import ecnu.dll.construction.run.main_process.b_comparision_run.extended.AlterParameterGExtendedRun;
 
 import java.util.HashMap;
 import java.util.List;
