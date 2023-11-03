@@ -4,15 +4,22 @@ import ecnu.dll.construction.run.main_process.b_comparision_run.extended.tool.DA
 import ecnu.dll.construction.run.main_process.b_comparision_run.extended.tool.SubsetGeoIEpsilonLocalPrivacyTable;
 
 public class Initialized {
-    public static DAMEpsilonLocalPrivacyTable damELPTable, damELPTableOnlyForKLDivergence;
-    public static SubsetGeoIEpsilonLocalPrivacyTable subGeoIELPTable, subGeoIELPTableOnlyForKLDivergence;
+    public static DAMEpsilonLocalPrivacyTable damELPTotalTable, damELPBasicTable, damELPExtendedTable, damELPKLTable;
+    public static SubsetGeoIEpsilonLocalPrivacyTable subGeoIELPTotalTable, subGeoIELPBasicTable, subGeoIELPExtendedTable, subGeoIELPKLTable;
     static {
-        damELPTable = DAMEpsilonLocalPrivacyTable.readTable(Constant.damBudgetLPTableGeneratedPath);
-        subGeoIELPTable = SubsetGeoIEpsilonLocalPrivacyTable.readTable(Constant.subsetGeoIBudgetLPTableGeneratedPath);
+        damELPTotalTable = DAMEpsilonLocalPrivacyTable.readTable(Constant.damBudgetLPTableGeneratedTotalPath);
+        subGeoIELPTotalTable = SubsetGeoIEpsilonLocalPrivacyTable.readTable(Constant.subsetGeoIBudgetLPTableGeneratedTotalPath);
+
+        damELPBasicTable = DAMEpsilonLocalPrivacyTable.readTable(Constant.damBudgetLPTableGeneratedPathOnlyForBasic);
+        subGeoIELPBasicTable = SubsetGeoIEpsilonLocalPrivacyTable.readTable(Constant.subsetGeoIBudgetLPTableGeneratedPathOnlyForBasic);
+
+//        damELPExtendedTable = DAMEpsilonLocalPrivacyTable.readTable(Constant.damBudgetLPTableGeneratedPathOnlyForExtended);
+//        subGeoIELPExtendedTable = SubsetGeoIEpsilonLocalPrivacyTable.readTable(Constant.subsetGeoIBudgetLPTableGeneratedPathOnlyForExtended);
+
+//        damELPTableOnlyForKLDivergence = DAMEpsilonLocalPrivacyTable.readTable(Constant.damBudgetLPTableGeneratedTotalPath);
+//        subGeoIELPTableOnlyForKLDivergence = SubsetGeoIEpsilonLocalPrivacyTable.readTable(Constant.subsetGeoIBudgetLPTableGeneratedTotalPath);
 //        damELPTableOnlyForKLDivergence = DAMEpsilonLocalPrivacyTable.readTable(Constant.damBudgetLPTableGeneratedPathOnlyForKLDivergence);
 //        subGeoIELPTableOnlyForKLDivergence = SubsetGeoIEpsilonLocalPrivacyTable.readTable(Constant.subsetGeoIBudgetLPTableGeneratedPathOnlyForKLDivergence);
         // 这里调整参数，onlyForKLDivergence的与之前的相同
-        damELPTableOnlyForKLDivergence = DAMEpsilonLocalPrivacyTable.readTable(Constant.damBudgetLPTableGeneratedPath);
-        subGeoIELPTableOnlyForKLDivergence = SubsetGeoIEpsilonLocalPrivacyTable.readTable(Constant.subsetGeoIBudgetLPTableGeneratedPath);
     }
 }

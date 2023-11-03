@@ -41,6 +41,14 @@ public class DiscretizedRhombusScheme extends AbstractDiscretizedScheme {
         this.setTransformMatrix();
     }
 
+    private DiscretizedRhombusScheme() {
+        super(1.0, 1.0, 1.0, 1.0, 1.0, 1.0);
+    }
+
+    public static DiscretizedRhombusScheme generateDefaultScheme() {
+        return new DiscretizedRhombusScheme();
+    }
+
 
     @Override
     public void resetEpsilon(Double epsilon, boolean whetherResetSizeB) {

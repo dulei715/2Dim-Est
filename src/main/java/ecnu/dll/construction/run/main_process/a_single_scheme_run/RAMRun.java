@@ -17,6 +17,24 @@ import java.util.TreeMap;
  */
 @SuppressWarnings("Duplicates")
 public class RAMRun {
+
+    public static ExperimentResult generateDefaultRunResult() {
+        ExperimentResult experimentResult = new ExperimentResult();
+        experimentResult.addPair(Constant.dataPointSizeKey, String.valueOf(0));
+        experimentResult.addPair(Constant.schemeNameKey, Constant.rhombusSchemeKey);
+        experimentResult.addPair(Constant.postProcessTimeKey, String.valueOf(0));
+        experimentResult.addPair(Constant.gridUnitSizeKey, String.valueOf(0));
+        experimentResult.addPair(Constant.dataTypeSizeKey, String.valueOf(0));
+        experimentResult.addPair(Constant.sizeDKey, String.valueOf(0));
+        experimentResult.addPair(Constant.sizeBKey, String.valueOf(0));
+        experimentResult.addPair(Constant.privacyBudgetKey, String.valueOf(0));
+        experimentResult.addPair(Constant.contributionKKey, String.valueOf(0));
+        experimentResult.addPair(Constant.wassersteinDistance1Key, String.valueOf(0));
+        experimentResult.addPair(Constant.wassersteinDistance2Key, String.valueOf(0));
+        experimentResult.addPair(Constant.klDivergenceKey, String.valueOf(0));
+        return experimentResult;
+    }
+
     /**
      * 根据参数执行响应的 RAM 方案
      *
@@ -73,6 +91,24 @@ public class RAMRun {
 
         return experimentResult;
 
+    }
+
+    public static ExperimentResultAndScheme generateDefaultEnhancedResultAndScheme() {
+        DiscretizedRhombusScheme scheme = DiscretizedRhombusScheme.generateDefaultScheme();
+        ExperimentResult experimentResult = new ExperimentResult();
+        experimentResult.addPair(Constant.dataPointSizeKey, String.valueOf(0));
+        experimentResult.addPair(Constant.schemeNameKey, Constant.rhombusSchemeKey);
+        experimentResult.addPair(Constant.postProcessTimeKey, String.valueOf(0));
+        experimentResult.addPair(Constant.gridUnitSizeKey, String.valueOf(0));
+        experimentResult.addPair(Constant.dataTypeSizeKey, String.valueOf(0));
+        experimentResult.addPair(Constant.sizeDKey, String.valueOf(0));
+        experimentResult.addPair(Constant.sizeBKey, String.valueOf(0));
+        experimentResult.addPair(Constant.privacyBudgetKey, String.valueOf(0));
+        experimentResult.addPair(Constant.contributionKKey, String.valueOf(0));
+        experimentResult.addPair(Constant.wassersteinDistance1Key, String.valueOf(0));
+        experimentResult.addPair(Constant.wassersteinDistance2Key, String.valueOf(0));
+        experimentResult.addPair(Constant.klDivergenceKey, String.valueOf(0));
+        return new ExperimentResultAndScheme(experimentResult, scheme);
     }
     public static ExperimentResultAndScheme runEnhanced(final List<TwoDimensionalIntegerPoint> integerPointList, final TreeMap<TwoDimensionalIntegerPoint, Double> rawDataStatistic, double cellLength, double inputLength, double bLength, double epsilon, double kParameter, double xBound, double yBound) {
         DiscretizedRhombusScheme scheme;

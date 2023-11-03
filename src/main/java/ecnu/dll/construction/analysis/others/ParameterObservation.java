@@ -24,8 +24,10 @@ public class ParameterObservation {
         // 读取 damBudgetTable 和 subsetGeoITable的对应关系
         DAMEpsilonLocalPrivacyTable damEpsilonLocalPrivacyTable;
         SubsetGeoIEpsilonLocalPrivacyTable subsetGeoIEpsilonLPTable;
-        damEpsilonLocalPrivacyTable = DAMEpsilonLocalPrivacyTable.readTable(Constant.damBudgetLPTableGeneratedPath);
-        subsetGeoIEpsilonLPTable = SubsetGeoIEpsilonLocalPrivacyTable.readTable(Constant.subsetGeoIBudgetLPTableGeneratedPath);
+//        damEpsilonLocalPrivacyTable = DAMEpsilonLocalPrivacyTable.readTable(Constant.damBudgetLPTableGeneratedTotalPath);
+//        subsetGeoIEpsilonLPTable = SubsetGeoIEpsilonLocalPrivacyTable.readTable(Constant.subsetGeoIBudgetLPTableGeneratedTotalPath);
+        damEpsilonLocalPrivacyTable = DAMEpsilonLocalPrivacyTable.readTable(Constant.damBudgetLPTableGeneratedPathOnlyForBasic);
+        subsetGeoIEpsilonLPTable = SubsetGeoIEpsilonLocalPrivacyTable.readTable(Constant.subsetGeoIBudgetLPTableGeneratedPathOnlyForBasic);
 
         // 选取subGeoIEpsilonLPTable中的每行的最大值lineMaxLPValue和最小值lineMinLPValue，查找他们在damEpsilonLPTable中对应的epsilon
         // 这里要保证两个table的sizeD和epsilon的取值域完全相同
@@ -96,8 +98,8 @@ public class ParameterObservation {
     }
 
     public static void main0(String[] args) {
-        DAMEpsilonLocalPrivacyTable damEpsilonLocalPrivacyTable = DAMEpsilonLocalPrivacyTable.readTable(Constant.damBudgetLPTableGeneratedPath);
-        SubsetGeoIEpsilonLocalPrivacyTable subsetGeoIEpsilonLPTable = SubsetGeoIEpsilonLocalPrivacyTable.readTable(Constant.subsetGeoIBudgetLPTableGeneratedPath);
+        DAMEpsilonLocalPrivacyTable damEpsilonLocalPrivacyTable = DAMEpsilonLocalPrivacyTable.readTable(Constant.damBudgetLPTableGeneratedTotalPath);
+        SubsetGeoIEpsilonLocalPrivacyTable subsetGeoIEpsilonLPTable = SubsetGeoIEpsilonLocalPrivacyTable.readTable(Constant.subsetGeoIBudgetLPTableGeneratedTotalPath);
 
         List<Double> damNonDecreaseSizeDList = getNonDecreaseSizeD(damEpsilonLocalPrivacyTable);
         List<Double> subsetGeoINonDecreaseSizeDList = getNonDecreaseSizeD(subsetGeoIEpsilonLPTable);

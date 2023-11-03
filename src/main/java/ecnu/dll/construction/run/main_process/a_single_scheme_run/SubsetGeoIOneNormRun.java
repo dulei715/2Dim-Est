@@ -16,6 +16,27 @@ import java.util.TreeMap;
 
 @SuppressWarnings("Duplicates")
 public class SubsetGeoIOneNormRun {
+
+    /**
+     * 只是用来占位，没其他啥用
+     * @return
+     */
+    public static ExperimentResult generateDefaultRunResult() {
+        ExperimentResult experimentResult = new ExperimentResult();
+        experimentResult.addPair(Constant.dataPointSizeKey, String.valueOf(0));
+        experimentResult.addPair(Constant.schemeNameKey, Constant.subsetGeoIOneNormSchemeKey);
+        experimentResult.addPair(Constant.postProcessTimeKey, String.valueOf(0));
+        experimentResult.addPair(Constant.gridUnitSizeKey, String.valueOf(0));
+        experimentResult.addPair(Constant.dataTypeSizeKey, String.valueOf(0));
+        experimentResult.addPair(Constant.sizeDKey, String.valueOf(0));
+        experimentResult.addPair(Constant.sizeBKey, String.valueOf(Constant.invalidValue));
+        experimentResult.addPair(Constant.privacyBudgetKey, String.valueOf(0));
+        experimentResult.addPair(Constant.contributionKKey, String.valueOf(Constant.invalidValue));
+        experimentResult.addPair(Constant.wassersteinDistance1Key, String.valueOf(0));
+        experimentResult.addPair(Constant.wassersteinDistance2Key, String.valueOf(0));
+        experimentResult.addPair(Constant.klDivergenceKey, String.valueOf(0));
+        return experimentResult;
+    }
     public static ExperimentResult run(final List<TwoDimensionalIntegerPoint> integerPointList, final TreeMap<TwoDimensionalIntegerPoint, Double> rawDataStatistic, double cellLength, double inputLength, double epsilon, double xBound, double yBound) {
         DiscretizedSubsetExponentialGeoI scheme = null;
         ExperimentResult experimentResult = null;

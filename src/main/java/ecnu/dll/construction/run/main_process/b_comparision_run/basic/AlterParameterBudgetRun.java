@@ -101,7 +101,8 @@ public class AlterParameterBudgetRun {
             mdswExperimentResultList.add(tempMdswExperimentResult);
 
             // for RAM (没啥用，数据占位)
-            tempRhombusExperimentResult = RAMRun.run(integerPointList, rawDataStatistic, gridLength, inputSideLength, alterRhombusOptimalSizeB[i]*gridLength, epsilonArray[i], kParameterForRAM, xBound, yBound);
+//            tempRhombusExperimentResult = RAMRun.run(integerPointList, rawDataStatistic, gridLength, inputSideLength, alterRhombusOptimalSizeB[i]*gridLength, epsilonArray[i], kParameterForRAM, xBound, yBound);
+            tempRhombusExperimentResult = RAMRun.generateDefaultRunResult();
             rhombusExperimentResultList.add(tempRhombusExperimentResult);
 
             // for DAM-non-shrink
@@ -113,19 +114,22 @@ public class AlterParameterBudgetRun {
             diskExperimentResultList.add(tempDiskExperimentResult);
 
             // for Subset-Geo-I-norm1 (没啥用，数据占位)
-            ramLocalPrivacy.resetEpsilon(epsilonArray[i]);
-            tempLocalPrivacy = ramLocalPrivacy.getTransformLocalPrivacyValue();
-            transformedEpsilon = geoITransformEpsilonNorm1.getEpsilonByLocalPrivacy(tempLocalPrivacy);
-            tempSubsetGeoIOneNormExperimentResult = SubsetGeoIOneNormRun.run(integerPointList, rawDataStatistic, gridLength, inputSideLength, transformedEpsilon, xBound, yBound);
+//            ramLocalPrivacy.resetEpsilon(epsilonArray[i]);
+//            tempLocalPrivacy = ramLocalPrivacy.getTransformLocalPrivacyValue();
+//            transformedEpsilon = geoITransformEpsilonNorm1.getEpsilonByLocalPrivacy(tempLocalPrivacy);
+//            tempSubsetGeoIOneNormExperimentResult = SubsetGeoIOneNormRun.run(integerPointList, rawDataStatistic, gridLength, inputSideLength, transformedEpsilon, xBound, yBound);
+//            subsetGeoIOneNormExperimentResultList.add(tempSubsetGeoIOneNormExperimentResult);
+
+            tempSubsetGeoIOneNormExperimentResult = SubsetGeoIOneNormRun.generateDefaultRunResult();
             subsetGeoIOneNormExperimentResultList.add(tempSubsetGeoIOneNormExperimentResult);
 
             // for Subset-Geo-I-norm2
-            // todo: 这里修改了Localprivacy的转化为表格转化 (取消)
-            damLocalPrivacy.resetEpsilon(epsilonArray[i]);
-            tempLocalPrivacy = damLocalPrivacy.getTransformLocalPrivacyValue();
-//            tempLocalPrivacy = Initialized.damELPTable.getLowerBoundLocalPrivacyByEpsilon(inputLengthSize, epsilonArray[i]);
-            transformedEpsilon = geoITransformEpsilonNorm2.getEpsilonByLocalPrivacy(tempLocalPrivacy);
-//            transformedEpsilon = Initialized.subGeoIELPTable.getEpsilonByUpperBoundLocalPrivacy(inputLengthSize, tempLocalPrivacy);
+            // todo: 这里修改了Localprivacy的转化为表格转化
+//            damLocalPrivacy.resetEpsilon(epsilonArray[i]);
+//            tempLocalPrivacy = damLocalPrivacy.getTransformLocalPrivacyValue();
+            tempLocalPrivacy = Initialized.damELPBasicTable.getLowerBoundLocalPrivacyByEpsilon(inputLengthSize, epsilonArray[i]);
+//            transformedEpsilon = geoITransformEpsilonNorm2.getEpsilonByLocalPrivacy(tempLocalPrivacy);
+            transformedEpsilon = Initialized.subGeoIELPBasicTable.getEpsilonByUpperBoundLocalPrivacy(inputLengthSize, tempLocalPrivacy);
             tempSubsetGeoITwoNormExperimentResult = SubsetGeoITwoNormRun.run(integerPointList, rawDataStatistic, gridLength, inputSideLength, transformedEpsilon, xBound, yBound);
             subsetGeoITwoNormExperimentResultList.add(tempSubsetGeoITwoNormExperimentResult);
 
@@ -141,10 +145,8 @@ public class AlterParameterBudgetRun {
 
 
         alterParameterMap.put(mdsw, mdswExperimentResultList);
-        // todo: 不计算ram相关的了，用dam替换，保证输出结构的一致性 (没修改)
         alterParameterMap.put(subsetGeoIOneNorm, subsetGeoIOneNormExperimentResultList);
         alterParameterMap.put(subsetGeoITwoNorm, subsetGeoITwoNormExperimentResultList);
-        // todo: 不计算ram相关的了，用dam替换，保证输出结构的一致性 (没修改)
         alterParameterMap.put(rhombusKey, rhombusExperimentResultList);
         alterParameterMap.put(diskNonShrinkKey, diskNonShrinkExperimentResultList);
         alterParameterMap.put(diskKey, diskExperimentResultList);
