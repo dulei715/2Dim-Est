@@ -1,7 +1,7 @@
 package schemeTest;
 
 import ecnu.dll.construction._config.Constant;
-import ecnu.dll.construction.run.main_process.b_comparision_run.extended.tool.DAMEpsilonLocalPrivacyTable;
+import ecnu.dll.construction.run._1_total_run.main_process.b_comparision_run.extended.tool.DAMEpsilonLocalPrivacyTable;
 import org.junit.Test;
 
 public class LocalPrivacyTableTest {

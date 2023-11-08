@@ -1,5 +1,7 @@
 package ecnu.dll.construction.dataset.struct;
 
+import cn.edu.ecnu.constant_values.ConstantValues;
+
 public class DataSetAreaInfo {
     private String dataSetPath = null;
     private String dataSetName = null;
@@ -17,6 +19,10 @@ public class DataSetAreaInfo {
 
     public String getDataSetPath() {
         return dataSetPath;
+    }
+
+    public String getParentPath() {
+        return this.dataSetPath.substring(0, this.dataSetPath.lastIndexOf(ConstantValues.FILE_SPLIT));
     }
 
     public void setDataSetPath(String dataSetPath) {

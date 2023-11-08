@@ -10,7 +10,7 @@ import cn.edu.ecnu.struct.point.TwoDimensionalIntegerPoint;
 import ecnu.dll.construction._config.Constant;
 import ecnu.dll.construction.dataset.struct.DataSetAreaInfo;
 import ecnu.dll.construction.newscheme.discretization.tool.DiscretizedSchemeTool;
-import ecnu.dll.construction.run.main_process.a_single_scheme_run.*;
+import ecnu.dll.construction.run._1_total_run.main_process.a_single_scheme_run.SubsetGeoITwoNormRun;
 import org.junit.Test;
 
 import java.util.*;

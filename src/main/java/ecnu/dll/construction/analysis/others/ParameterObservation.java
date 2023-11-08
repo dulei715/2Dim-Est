@@ -3,9 +3,9 @@ package ecnu.dll.construction.analysis.others;
 import cn.edu.ecnu.collection.ArraysUtils;
 import cn.edu.ecnu.io.print.MyPrint;
 import ecnu.dll.construction._config.Constant;
-import ecnu.dll.construction.run.main_process.b_comparision_run.extended.tool.DAMEpsilonLocalPrivacyTable;
-import ecnu.dll.construction.run.main_process.b_comparision_run.extended.tool.LocalPrivacyTable;
-import ecnu.dll.construction.run.main_process.b_comparision_run.extended.tool.SubsetGeoIEpsilonLocalPrivacyTable;
+import ecnu.dll.construction.run._1_total_run.main_process.b_comparision_run.extended.tool.DAMEpsilonLocalPrivacyTable;
+import ecnu.dll.construction.run._1_total_run.main_process.b_comparision_run.extended.tool.LocalPrivacyTable;
+import ecnu.dll.construction.run._1_total_run.main_process.b_comparision_run.extended.tool.SubsetGeoIEpsilonLocalPrivacyTable;
 
 import java.util.ArrayList;
 import java.util.List;

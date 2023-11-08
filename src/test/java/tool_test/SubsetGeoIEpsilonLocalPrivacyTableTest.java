@@ -3,7 +3,7 @@ package tool_test;
 import cn.edu.ecnu.collection.ArraysUtils;
 import cn.edu.ecnu.io.print.MyPrint;
 import ecnu.dll.construction._config.Constant;
-import ecnu.dll.construction.run.main_process.b_comparision_run.extended.tool.SubsetGeoIEpsilonLocalPrivacyTable;
+import ecnu.dll.construction.run._1_total_run.main_process.b_comparision_run.extended.tool.SubsetGeoIEpsilonLocalPrivacyTable;
 import org.junit.Test;
 
 public class SubsetGeoIEpsilonLocalPrivacyTableTest {

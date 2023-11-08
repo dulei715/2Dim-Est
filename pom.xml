@@ -86,7 +86,7 @@
                     <!-- MainClass in mainfest make a executable jar -->
                     <archive>
                         <manifest>
-                            <mainClass>ecnu.dll.construction.run.main_repeat_process.RepeatMainRun.Main</mainClass>
+                            <mainClass>ecnu.dll.construction.run._1_total_run.main_repeat_process.RepeatMainRun.Main</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
