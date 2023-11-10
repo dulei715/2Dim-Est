@@ -1,6 +1,5 @@
-package ecnu.dll.construction.run._2_split_run._1_grid_statistic.basic_run;
+package ecnu.dll.construction.run._2_split_run_for_extend_test._1_grid_statistic.basic_run;
 
-import cn.edu.ecnu.io.read.TwoDimensionalPointRead;
 import cn.edu.ecnu.io.write.CSVWrite;
 import cn.edu.ecnu.statistic.StatisticTool;
 import cn.edu.ecnu.struct.grid.Grid;
