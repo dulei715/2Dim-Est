@@ -8,6 +8,7 @@ import ecnu.dll.construction._config.Constant;
 import ecnu.dll.construction.newscheme.discretization.DiscretizedDiskScheme;
 import ecnu.dll.construction.run._0_base_run._struct.ExperimentResultAndScheme;
 import edu.ecnu.dll.cpl.expection.CPLException;
+import tools.others.Sinkhorn;
 
 import java.util.List;
 import java.util.TreeMap;
@@ -51,7 +52,7 @@ public class DAMRun {
             Double wassersteinDistance1 = 0D;
 //            Double wassersteinDistance2 = TwoDimensionalWassersteinDistance.getWassersteinDistanceBySinkhorn(rawDataStatistic, estimationResult, 2, Constant.SINKHORN_LAMBDA, Constant.SINKHORN_LOWER_BOUND);
             startTime = System.currentTimeMillis();
-            Double wassersteinDistance2 = TwoDimensionalWassersteinDistance.getWassersteinDistanceBySinkhorn(estimationResult, rawDataStatistic, 2, Constant.SINKHORN_LAMBDA, Constant.SINKHORN_LOWER_BOUND, Constant.SINKHORN_ITERATOR_UPPERBOUND);
+            Double wassersteinDistance2 = Sinkhorn.getWassersteinDistanceBySinkhorn(estimationResult, rawDataStatistic, 2, Constant.SINKHORN_LAMBDA, Constant.SINKHORN_LOWER_BOUND, Constant.SINKHORN_ITERATOR_UPPERBOUND);
             endTime = System.currentTimeMillis();
             long wDTime = endTime - startTime;
             System.out.println("Wasserstein 2 distantce time is " + wDTime);
@@ -147,7 +148,7 @@ public class DAMRun {
         try {
 //            Double wassersteinDistance1 = TwoDimensionalWassersteinDistance.getWassersteinDistanceByCPlex(rawDataStatistic, estimationResult, 1);
             Double wassersteinDistance1 = 0D;
-            Double wassersteinDistance2 = TwoDimensionalWassersteinDistance.getWassersteinDistanceBySinkhorn(rawDataStatistic, estimationResult, 2, Constant.SINKHORN_LAMBDA, Constant.SINKHORN_LOWER_BOUND, Constant.SINKHORN_ITERATOR_UPPERBOUND);
+            Double wassersteinDistance2 = Sinkhorn.getWassersteinDistanceBySinkhorn(rawDataStatistic, estimationResult, 2, Constant.SINKHORN_LAMBDA, Constant.SINKHORN_LOWER_BOUND, Constant.SINKHORN_ITERATOR_UPPERBOUND);
             Double klDivergence = KLDivergence.getKLDivergence(rawDataStatistic, estimationResult, Constant.DEFAULT_MINIMAL_DENOMINATOR);
 //            Double meanDistance = Distance.getAbsMeanDifference(rawDataStatistic, estimationResult);
 //            Double varianceDistance = Distance.getAbsVarianceDifference(rawDataStatistic, estimationResult);

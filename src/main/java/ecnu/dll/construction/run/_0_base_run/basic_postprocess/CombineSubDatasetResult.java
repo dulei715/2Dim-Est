@@ -3,6 +3,7 @@ package ecnu.dll.construction.run._0_base_run.basic_postprocess;
 import cn.edu.ecnu.basic.StringUtil;
 import cn.edu.ecnu.collection.ArraysUtils;
 import cn.edu.ecnu.constant_values.ConstantValues;
+import cn.edu.ecnu.io.print.MyPrint;
 import cn.edu.ecnu.result.FileTool;
 import cn.edu.ecnu.struct.result.ColumnBean;
 import ecnu.dll.construction._config.Constant;
@@ -41,7 +42,15 @@ public class CombineSubDatasetResult {
 //    }
     public static void composeCSVResult(String relativeBasicPath, ColumnBean[] columnBeansArray, String... fileNames) throws ClassNotFoundException, InvocationTargetException, NoSuchMethodException, IllegalAccessException, InstantiationException {
         File relativeBasicFile = new File(relativeBasicPath);
-        String[] directoryPathArray = FileTool.toStringArray(relativeBasicFile.listFiles(Constant.directoryFilter));
+        // todo: for test
+//        System.out.println(relativeBasicFile);
+//        System.out.println(relativeBasicFile.getAbsolutePath());
+
+        File[] files = relativeBasicFile.listFiles(Constant.directoryFilter);
+
+//        MyPrint.showArray(files);
+
+        String[] directoryPathArray = FileTool.toStringArray(files);
         String[] tempInputFilePathArray;
         String tempOutputFilePath;
         List<ColumnBean> columnBeanList = Arrays.asList(columnBeansArray);

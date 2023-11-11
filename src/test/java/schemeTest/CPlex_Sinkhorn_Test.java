@@ -8,6 +8,7 @@ import cn.edu.ecnu.struct.point.TwoDimensionalIntegerPoint;
 import ecnu.dll.construction._config.Constant;
 import edu.ecnu.dll.cpl.expection.CPLException;
 import org.junit.Test;
+import tools.others.Sinkhorn;
 
 import java.util.List;
 import java.util.Map;
@@ -42,7 +43,7 @@ public class CPlex_Sinkhorn_Test {
         }
 
         long startTime = System.currentTimeMillis();
-        double result = TwoDimensionalWassersteinDistance.getWassersteinDistanceBySinkhorn(dataA, dataB, 2, Constant.SINKHORN_LAMBDA, Constant.SINKHORN_LOWER_BOUND);
+        double result = Sinkhorn.getWassersteinDistanceBySinkhorn(dataA, dataB, 2, Constant.SINKHORN_LAMBDA, Constant.SINKHORN_LOWER_BOUND, Constant.SINKHORN_ITERATOR_UPPERBOUND);
         long endTime = System.currentTimeMillis();
         long timeCost = endTime - startTime;
 
@@ -79,7 +80,7 @@ public class CPlex_Sinkhorn_Test {
         }
 
         long startTime = System.currentTimeMillis();
-        double resultSinkhorn = TwoDimensionalWassersteinDistance.getWassersteinDistanceBySinkhorn(dataA, dataB, 2, Constant.SINKHORN_LAMBDA, Constant.SINKHORN_LOWER_BOUND);
+        double resultSinkhorn = Sinkhorn.getWassersteinDistanceBySinkhorn(dataA, dataB, 2, Constant.SINKHORN_LAMBDA, Constant.SINKHORN_LOWER_BOUND, Constant.SINKHORN_ITERATOR_UPPERBOUND);
         long endTime = System.currentTimeMillis();
         long sinkhornTimeCost = endTime - startTime;
 
