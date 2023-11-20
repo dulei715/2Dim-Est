@@ -17,12 +17,12 @@ public class Constant {
     // 实验路径
 
 //        public static final String rootPath = "E:\\dataset";
-//    public static final String rootPath = "E:\\1.学习\\4.数据集\\2.dataset_for_spatial_estimation";
+    public static final String rootPath = "E:\\1.学习\\4.数据集\\2.dataset_for_spatial_estimation";
 //    public static final String rootPath = "/root/code/2_2.ProgramForSpatialLDPEstimation/1.JavaCode";
 //    public static final String rootPath = "/root/code/2_2_spatialLDP/";
 //    public static final String rootPath = "/root/code/2_seldp/";
 //    public static final String rootPath = "/root/code/aaai00_2330/2.spatialLDPEstimation/";
-    public static final String rootPath = "/root/code/aaai01_2331/2.spatialLDPEstimation/";
+//    public static final String rootPath = "/root/code/aaai01_2331/2.spatialLDPEstimation/";
 
 
     // 实验相对路径
@@ -228,7 +228,7 @@ public class Constant {
             alterKKey
     };
     public static final String[] extendedAlterKeyArray = new String[] {
-//            alterBudgetKey,
+            alterBudgetKey,
             alterGKey
     };
 

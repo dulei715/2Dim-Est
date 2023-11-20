@@ -153,6 +153,15 @@ public class basicTest {
         System.out.println(index);
     }
 
+    @Test
+    public void fun13() {
+        double valueA = 0.0;
+        double valueB = 0.0;
+        double valueC = valueA / valueB;
+        System.out.println(valueC);
+        System.out.println(Float.valueOf("NaN").equals(valueC));
+    }
+
 
 
 

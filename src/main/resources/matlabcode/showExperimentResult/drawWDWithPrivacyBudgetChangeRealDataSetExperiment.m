@@ -8,7 +8,7 @@ wassersteinDistanceIndexLine_1 = 8;
 wassersteinDistanceIndexLine_2 = 9;
 
 matrix = importdata(filename, ',',1);
-x = matrix.data(6:10,privacyBudgetIndexLine);
+x = matrix.data(11:15,privacyBudgetIndexLine);
 
 
 y_A_SubGeoI_1 = matrix.data(1:5,wassersteinDistanceIndexLine_1);

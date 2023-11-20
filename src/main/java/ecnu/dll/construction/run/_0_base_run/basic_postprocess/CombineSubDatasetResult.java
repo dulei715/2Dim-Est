@@ -40,6 +40,26 @@ public class CombineSubDatasetResult {
 //    public static void composeCSVResult(List<String> inputPathList, String outputDir, List<ColumnBean> columnBeanList, double divideFactor) {
 //
 //    }
+    public static void composeCSVResult_before(String relativeBasicPath, ColumnBean[] columnBeansArray, String... fileNames) throws ClassNotFoundException, InvocationTargetException, NoSuchMethodException, IllegalAccessException, InstantiationException {
+        File relativeBasicFile = new File(relativeBasicPath);
+        // todo: for test
+//        System.out.println(relativeBasicFile);
+//        System.out.println(relativeBasicFile.getAbsolutePath());
+
+        File[] files = relativeBasicFile.listFiles(Constant.directoryFilter);
+
+//        MyPrint.showArray(files);
+
+        String[] directoryPathArray = FileTool.toStringArray(files);
+        String[] tempInputFilePathArray;
+        String tempOutputFilePath;
+        List<ColumnBean> columnBeanList = Arrays.asList(columnBeansArray);
+        for (String fileName : fileNames) {
+            tempInputFilePathArray = StringUtil.concatGiveString(directoryPathArray, ConstantValues.FILE_SPLIT, fileName);
+            tempOutputFilePath = relativeBasicPath.concat(ConstantValues.FILE_SPLIT).concat(fileName);
+            FileTool.composeCSVFileWithTheSameFirstLine(tempInputFilePathArray, tempOutputFilePath, columnBeanList, FileTool.AVERAGE_COMPOSE);
+        }
+    }
     public static void composeCSVResult(String relativeBasicPath, ColumnBean[] columnBeansArray, String... fileNames) throws ClassNotFoundException, InvocationTargetException, NoSuchMethodException, IllegalAccessException, InstantiationException {
         File relativeBasicFile = new File(relativeBasicPath);
         // todo: for test
