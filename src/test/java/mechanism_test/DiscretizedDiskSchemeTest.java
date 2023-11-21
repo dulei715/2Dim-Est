@@ -89,4 +89,19 @@ public class DiscretizedDiskSchemeTest {
 //        pointWrite.writePoint(noiseDoubleRandomCentralValue);
 //        pointWrite.endWriting();
     }
+
+    @Test
+    public void fun4() {
+        double epsilon = 3.5;
+        int sizeD = 15;
+        Integer optimalB = DiscretizedDiskSchemeTool.getOptimalSizeBOfDiskScheme(epsilon, sizeD);
+        System.out.println(optimalB);
+    }
+    @Test
+    public void fun5() {
+        double epsilon = 3.5;
+        double sizeD = 15;
+        double optimalB = DiscretizedDiskSchemeTool.getDoubleOptimalSizeBOfDiskScheme(epsilon, sizeD);
+        System.out.println(optimalB);
+    }
 }

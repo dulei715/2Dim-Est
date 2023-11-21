@@ -429,6 +429,12 @@ public class DiscretizedDiskSchemeTool {
 //        return (int)Math.ceil((2*mB+Math.sqrt(4*mB*mB+Math.PI*Math.exp(epsilon)*mA*mB))/(Math.PI*Math.exp(epsilon)*mA) * sizeD);
         return (int)Math.floor((2*mB+Math.sqrt(4*mB*mB+Math.PI*Math.exp(epsilon)*mA*mB))/(Math.PI*Math.exp(epsilon)*mA) * sizeD);
     }
+    public static double getDoubleOptimalSizeBOfDiskScheme(double epsilon, double sizeD) {
+        double mA = Math.exp(epsilon) - 1 - epsilon;
+        double mB = 1 - (1 - epsilon) * Math.exp(epsilon);
+//        return (int)Math.ceil((2*mB+Math.sqrt(4*mB*mB+Math.PI*Math.exp(epsilon)*mA*mB))/(Math.PI*Math.exp(epsilon)*mA) * sizeD);
+        return (2*mB+Math.sqrt(4*mB*mB+Math.PI*Math.exp(epsilon)*mA*mB))/(Math.PI*Math.exp(epsilon)*mA) * sizeD;
+    }
 
 
     public static ThreePartsStruct<TwoDimensionalIntegerPoint> getSplitCellsInInputArea(TwoDimensionalIntegerPoint centerCell, int sizeD, int sizeB) {
