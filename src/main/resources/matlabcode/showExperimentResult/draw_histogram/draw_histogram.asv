@@ -1,0 +1,41 @@
+function y = draw_histogram(data_path_A, data_path_B, data_path_C,data_path_D, data_path_E)
+inputBasicPath = 'E:\1.学习\4.数据集\2.dataset_for_spatial_estimation\result';
+outputBasicPath = 'E:\1.学习\4.数据集\histogram';
+yLabelName_left = 'W_2';
+figure_MarkerSize = 15;
+figure_FontSize = 30;
+figure_FontSize_X = 30;
+figure_FontSize_Y = 30;
+
+xLabelName = 'b';
+inputFileNameA = [inputBasicPath, '\crime', '\alteringB.csv'];
+inputFileNameB = [inputBasicPath, '\nyc', '\alteringB.csv'];
+outputFileNameP = [outputBasicPath, '\alter_b_real_datasets'];
+
+crime_data = getBChangeRealDataSetResult(inputFileNameA);
+synthetic_data = getBChangeRealDataSetResult(inputFileNameB);
+
+inputFileNameD = [inputBasicPath, '\normal', '\alteringB.csv'];
+inputFileNameE = [inputBasicPath, '\zipf', '\alteringB.csv'];
+inputFileNameF = [inputBasicPath, '\normal_multi_centers', '\alteringB.csv'];
+outputFileNameQ = [outputBasicPath, '\alter_b_synthetic_datasets'];
+
+normal_data = getBChangeSyntheticDataSetResult(inputFileNameD);
+zipf_data = getBChangeSyntheticDataSetResult(inputFileNameE);
+normal_multi_data = getBChangeSyntheticDataSetResult(inputFileNameF);
+
+x_data = crime_data(:,1);
+y_data = [crime_data(:,2), synthetic_data(:,2), normal_data(:,2), ]
+
+
+
+
+
+
+
+
+
+
+
+
+
