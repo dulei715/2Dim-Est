@@ -51,11 +51,11 @@ set(get(gca,'YLabel'),'FontSize',figure_FontSize_Y,'FontName','Times New Roman')
 set(lgnd,'EdgeColor','none');
 set(lgnd, 'FontSize', figure_FontSize_B);
 
-set(fig,'Position',[650 550 600 240]);
+set()
 
-outputFileName = [outputBasicPath, '\alter_b_datasets'];
-saveas(fig,outputFileName,'fig');
-export_fig(fig , '-pdf' , '-r256' , '-transparent' , outputFileName);
+%outputFileName = [outputBasicPath, '\alter_b_datasets'];
+%saveas(fig,outputFileName,'fig');
+%export_fig(fig , '-pdf' , '-r256' , '-transparent' , outputFileName);
 
 
 
