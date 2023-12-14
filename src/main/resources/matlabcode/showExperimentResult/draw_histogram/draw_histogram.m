@@ -32,7 +32,7 @@ h = bar(x_data,y_data);
 
 yLabelName_left = 'W_2';
 figure_MarkerSize = 15;
-figure_FontSize_A = 20;
+figure_FontSize_A = 13;
 figure_FontSize_B = 10;
 figure_FontSize_X = 30;
 figure_FontSize_Y = 30;
