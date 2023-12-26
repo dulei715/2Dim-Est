@@ -3,9 +3,14 @@ package basic;
 import Jama.Matrix;
 import cn.edu.ecnu.collection.ArraysUtils;
 import cn.edu.ecnu.io.print.MyPrint;
+import cn.edu.ecnu.io.read.TwoDimensionalPointRead;
 import cn.edu.ecnu.struct.pair.BasicPair;
 import cn.edu.ecnu.struct.pair.IdentityPair;
+import cn.edu.ecnu.struct.point.TwoDimensionalDoublePoint;
+import cn.edu.ecnu.struct.point.TwoDimensionalDoublePointUtils;
+import ecnu.dll.construction.extend_tools.TwoDimensionalDoublePointListUtilExtend;
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.hadoop.thirdparty.protobuf.Internal;
 import org.junit.Test;
 
 import java.util.*;
@@ -160,6 +165,16 @@ public class basicTest {
         double valueC = valueA / valueB;
         System.out.println(valueC);
         System.out.println(Float.valueOf("NaN").equals(valueC));
+    }
+
+    @Test
+    public void fun14() {
+//        String path = "/Users/admin/MainFiles/1.Research/dataset/2_two_dim_LDP/0_dataset/1_real/1_crime/chicago_point.txt";
+        String path = "/Users/admin/MainFiles/1.Research/dataset/2_two_dim_LDP/0_dataset/1_real/2_nyc/nyc_point.txt";
+        List<TwoDimensionalDoublePoint> data = TwoDimensionalPointRead.readPointWithFirstLineCount(path);
+        System.out.println(data.size());
+        List<TwoDimensionalDoublePoint> result = TwoDimensionalDoublePointListUtilExtend.getTwoBorderPoints(data);
+        MyPrint.showList(result);
     }
 
 
