@@ -28,6 +28,8 @@ public class ExtractDatasetTest {
         pointWrite.endWriting();
     }
 
+
+
     @Test
     public void extractNormDataset() {
         String inputPath = Constant.datasetPath + "\\test\\synthetic_dataset\\two_normal_point.txt";
