@@ -110,6 +110,46 @@ public class AlterParameterGTest {
         }
         MyPrint.showMap(resultMap);
     }
+    @Test
+    public void subsetGeoITest2() {
+        // 测试Crime三个数据集下，AlterParameterGRun中SubsetGeoIRun
+        String dataSetPath, dataSetName;
+        Double xBound, yBound, length;
+//        ExperimentResult tempDataSetResult;
+        Map<String, Map<String, List<ExperimentResult>>> tempDataSetResult;
+        Map<String, Map<String, Map<String, List<ExperimentResult>>>> resultMap = new HashMap<>();
+
+        for (DataSetAreaInfo dataSetInfo : Constant.crimeDataSetArray) {
+            dataSetPath = dataSetInfo.getDataSetPath();
+            dataSetName = dataSetInfo.getDataSetName();
+            xBound = dataSetInfo.getxBound();
+            yBound = dataSetInfo.getyBound();
+            length = dataSetInfo.getLength();
+            tempDataSetResult = datasetRunRun(dataSetPath, dataSetName, xBound, yBound, length);
+            resultMap.put(dataSetName, tempDataSetResult);
+        }
+        MyPrint.showMap(resultMap);
+    }
+    @Test
+    public void MSETest3() {
+        // 测试Crime三个数据集下，AlterParameterGRun中SubsetGeoIRun
+        String dataSetPath, dataSetName;
+        Double xBound, yBound, length;
+//        ExperimentResult tempDataSetResult;
+        Map<String, Map<String, List<ExperimentResult>>> tempDataSetResult;
+        Map<String, Map<String, Map<String, List<ExperimentResult>>>> resultMap = new HashMap<>();
+
+        for (DataSetAreaInfo dataSetInfo : Constant.crimeDataSetArray) {
+            dataSetPath = dataSetInfo.getDataSetPath();
+            dataSetName = dataSetInfo.getDataSetName();
+            xBound = dataSetInfo.getxBound();
+            yBound = dataSetInfo.getyBound();
+            length = dataSetInfo.getLength();
+            tempDataSetResult = datasetRunRun(dataSetPath, dataSetName, xBound, yBound, length);
+            resultMap.put(dataSetName, tempDataSetResult);
+        }
+        MyPrint.showMap(resultMap);
+    }
 
 
 }

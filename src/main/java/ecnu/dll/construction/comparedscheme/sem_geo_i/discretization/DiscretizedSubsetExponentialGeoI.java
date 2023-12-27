@@ -114,6 +114,9 @@ public class DiscretizedSubsetExponentialGeoI implements Cloneable {
         List<Set<Integer>> resultList = new ArrayList<>();
         Set<Integer> tempSet;
         for (TwoDimensionalIntegerPoint rawPoint : inputList) {
+//            if(!rawPoint.getXIndex().equals(0) || !rawPoint.getYIndex().equals(0)) {
+//                System.out.println("Not (0,0)");
+//            }
             tempSet = this.getNoiseIndexSubset(rawPoint);
             resultList.add(tempSet);
         }
