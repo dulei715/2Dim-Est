@@ -1,24 +1,19 @@
 package run_test;
 
-import cn.edu.ecnu.differential_privacy.cdp.basic_struct.impl.OneNormTwoDimensionalIntegerPointDistanceTor;
-import cn.edu.ecnu.differential_privacy.cdp.basic_struct.impl.TwoNormTwoDimensionalIntegerPointDistanceTor;
+import cn.edu.ecnu.io.print.MyPrint;
+import cn.edu.ecnu.io.read.TwoDimensionalPointRead;
 import cn.edu.ecnu.result.ExperimentResult;
+import cn.edu.ecnu.statistic.StatisticTool;
+import cn.edu.ecnu.struct.grid.Grid;
+import cn.edu.ecnu.struct.point.TwoDimensionalDoublePoint;
 import cn.edu.ecnu.struct.point.TwoDimensionalIntegerPoint;
 import ecnu.dll.construction._config.Constant;
-import ecnu.dll.construction._config.Initialized;
-import ecnu.dll.construction.analysis.e_to_lp.Norm1RAMLocalPrivacy;
-import ecnu.dll.construction.analysis.e_to_lp.Norm2DAMLocalPrivacy;
-import ecnu.dll.construction.analysis.e_to_lp.abstract_class.DAMLocalPrivacy;
-import ecnu.dll.construction.analysis.e_to_lp.abstract_class.RAMLocalPrivacy;
-import ecnu.dll.construction.analysis.lp_to_e.version_1.SubsetGeoITransformEpsilon;
-import ecnu.dll.construction.comparedscheme.sem_geo_i.discretization.DiscretizedSubsetExponentialGeoI;
-import ecnu.dll.construction.newscheme.discretization.DiscretizedDiskNonShrinkScheme;
-import ecnu.dll.construction.newscheme.discretization.DiscretizedDiskScheme;
-import ecnu.dll.construction.newscheme.discretization.DiscretizedRhombusScheme;
+import ecnu.dll.construction.dataset.struct.DataSetAreaInfo;
 import ecnu.dll.construction.newscheme.discretization.tool.DiscretizedDiskSchemeTool;
 import ecnu.dll.construction.newscheme.discretization.tool.DiscretizedRhombusSchemeTool;
-import ecnu.dll.construction.run._0_base_run._struct.ExperimentResultAndScheme;
+import ecnu.dll.construction.newscheme.discretization.tool.DiscretizedSchemeTool;
 import ecnu.dll.construction.run._1_total_run.main_process.a_single_scheme_run.*;
+import org.junit.Test;
 
 import java.util.*;
 
@@ -57,15 +52,9 @@ public class AlterParameterBudgetTest {
             针对SubsetGeoI, MSW, Rhombus, Disk, Disk-non-Shrink, HUEM 分别计算对应budget下的估计并返回相应的wasserstein距离
          */
         Map<String, List<ExperimentResult>> alterParameterMap = new HashMap<>();
-        String rhombusKey = Constant.rhombusSchemeKey, diskKey = Constant.diskSchemeKey, diskNonShrinkKey = Constant.diskNonShrinkSchemeKey, subsetGeoIOneNorm = Constant.subsetGeoIOneNormSchemeKey, subsetGeoITwoNorm = Constant.subsetGeoITwoNormSchemeKey, mdsw = Constant.multiDimensionalSquareWaveSchemeKey, hue = Constant.hybridUniformExponentialSchemeKey;
-        ExperimentResult tempRhombusExperimentResult;
-        ExperimentResult tempDiskExperimentResult, tempDiskNonShrinkExperimentResult;
-        ExperimentResult tempSubsetGeoIOneNormExperimentResult;
-        ExperimentResult tempSubsetGeoITwoNormExperimentResult, tempMdswExperimentResult, tempHUEMExperimentResult;
-        List<ExperimentResult> rhombusExperimentResultList = new ArrayList<>();
-        List<ExperimentResult> diskExperimentResultList = new ArrayList<>(), diskNonShrinkExperimentResultList = new ArrayList<>();
-        List<ExperimentResult> subsetGeoIOneNormExperimentResultList = new ArrayList<>();
-        List<ExperimentResult> subsetGeoITwoNormExperimentResultList = new ArrayList<>(), mdswExperimentResultList = new ArrayList<>(), huemExperimentResultList = new ArrayList<>();
+        String mdsw = Constant.multiDimensionalSquareWaveSchemeKey;
+        ExperimentResult tempMdswExperimentResult;
+        List<ExperimentResult> mdswExperimentResultList = new ArrayList<>();
 
 
         for (int i = 0; i < arraySize; i++) {
@@ -83,5 +72,24 @@ public class AlterParameterBudgetTest {
         return alterParameterMap;
 
     }
+    @Test
+    public void fun1() {
+        DataSetAreaInfo dataSetAreaInfo = Constant.crimeDataSetArray[0];
+        String dataSetPath = dataSetAreaInfo.getDataSetPath();
+        Double xBound = dataSetAreaInfo.getxBound();
+        Double yBound = dataSetAreaInfo.getyBound();
+        Double inputSideLength = dataSetAreaInfo.getLength();
+        TwoDimensionalPointRead pointRead = new TwoDimensionalPointRead(dataSetPath);
+        pointRead.readPointWithFirstLineCount();
+        List<TwoDimensionalDoublePoint> doublePointList = pointRead.getPointList();
 
+        List<TwoDimensionalIntegerPoint> integerPointList = Grid.toIntegerPoint(doublePointList, new Double[]{xBound, yBound}, inputSideLength / Constant.DEFAULT_SIDE_LENGTH_NUMBER_SIZE);
+        List<TwoDimensionalIntegerPoint> integerPointTypeList = DiscretizedSchemeTool.getRawTwoDimensionalIntegerPointTypeList((int) Math.ceil(Constant.DEFAULT_SIDE_LENGTH_NUMBER_SIZE));
+        TreeMap<TwoDimensionalIntegerPoint, Double> rawStatisticMap = StatisticTool.countHistogramRatioMap(integerPointTypeList, integerPointList);
+
+        Map<String, List<ExperimentResult>> result = alterBudgetRun(integerPointList, inputSideLength, rawStatisticMap, xBound, yBound);
+        MyPrint.showMap(result);
+
+
+    }
 }
