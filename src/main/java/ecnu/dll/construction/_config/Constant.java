@@ -17,8 +17,8 @@ public class Constant {
     // 实验路径
 
 //        public static final String rootPath = "E:\\dataset";
-    public static final String rootPath = "E:\\1.学习\\4.数据集\\2.dataset_for_spatial_estimation";
-//    public static final String rootPath = "/root/code/2_2.ProgramForSpatialLDPEstimation/1.JavaCode";
+//    public static final String rootPath = "E:\\1.学习\\4.数据集\\2.dataset_for_spatial_estimation";
+    public static final String rootPath = "/root/code/2_2.ProgramForSpatialLDPEstimation/1.JavaCode";
 //    public static final String rootPath = "/root/code/2_2_spatialLDP/";
 //    public static final String rootPath = "/root/code/2_seldp/";
 //    public static final String rootPath = "/root/code/aaai00_2330/2.spatialLDPEstimation/";
@@ -107,8 +107,8 @@ public class Constant {
 
 //        public static final double DEFAULT_SIDE_LENGTH_NUMBER_SIZE_for_b_change = 9.0;  // todo: version 1
 //    public static final double DEFAULT_SIDE_LENGTH_NUMBER_SIZE_for_b_change = 15.0; // todo: version 2
-    public static final double DEFAULT_SIDE_LENGTH_NUMBER_SIZE_for_b_change = 20.0; // todo: version 4
-//    public static final double DEFAULT_SIDE_LENGTH_NUMBER_SIZE_for_b_change = 15.0; // todo: version 8
+//    public static final double DEFAULT_SIDE_LENGTH_NUMBER_SIZE_for_b_change = 20.0; // todo: version 4
+    public static final double DEFAULT_SIDE_LENGTH_NUMBER_SIZE_for_b_change = 15.0; // todo: version 8
 
 
 
@@ -123,8 +123,8 @@ public class Constant {
     public static final double DEFAULT_SIDE_LENGTH_NUMBER_SIZE = 5.0;
 
 //    public static final double DEFAULT_SIDE_LENGTH_NUMBER_SIZE_for_DAM_and_SubsetGeoI_Comparison = 10.0;    // todo: version 1
-    public static final double DEFAULT_SIDE_LENGTH_NUMBER_SIZE_for_DAM_and_SubsetGeoI_Comparison = 20.0;    // todo: version 2
-//    public static final double DEFAULT_SIDE_LENGTH_NUMBER_SIZE_for_DAM_and_SubsetGeoI_Comparison = 20.0;    // todo: version 4
+//    public static final double DEFAULT_SIDE_LENGTH_NUMBER_SIZE_for_DAM_and_SubsetGeoI_Comparison = 20.0;    // todo: version 2
+    public static final double DEFAULT_SIDE_LENGTH_NUMBER_SIZE_for_DAM_and_SubsetGeoI_Comparison = 20.0;    // todo: version 4
 //    public static final double DEFAULT_SIDE_LENGTH_NUMBER_SIZE_for_DAM_and_SubsetGeoI_Comparison = 10.0;    // todo: version 5
 //    public static final double DEFAULT_SIDE_LENGTH_NUMBER_SIZE_for_DAM_and_SubsetGeoI_Comparison = 15.0;    // todo: version 6
 //    public static final double DEFAULT_SIDE_LENGTH_NUMBER_SIZE_for_DAM_and_SubsetGeoI_Comparison = 15.0;    // todo: version 8
@@ -233,27 +233,37 @@ public class Constant {
     };
 
     // 记录数据集名称
-    public static final String chicagoAKey = "ChicagoA";
-    public static final String chicagoBKey = "ChicagoB";
-    public static final String chicagoCKey = "ChicagoC";
-    public static final String nycAKey = "NYCA";
-    public static final String nycBKey = "NYCB";
-    public static final String nycCKey = "NYCC";
+//    public static final String chicagoAKey = "ChicagoA";
+//    public static final String chicagoBKey = "ChicagoB";
+//    public static final String chicagoCKey = "ChicagoC";
+    public static final String chicagoKey = "Chicago";
+
+
+//    public static final String nycAKey = "NYCA";
+//    public static final String nycBKey = "NYCB";
+//    public static final String nycCKey = "NYCC";
+    public static final String nycKey = "NYC";
     public static final String normalKey = "TwoDimNormal";
     public static final String zipfKey = "TwoDimZipf";
     public static final String multiNormalKey = "TwoDimMultiCenterNormal";
 
     // 记录数据集路径
-    public static final String chicagoAPath = StringUtil.join(ConstantValues.FILE_SPLIT, datasetPath, "1_real", "1_crime", "chicago_point_A.txt");
-    public static final String chicagoBPath = StringUtil.join(ConstantValues.FILE_SPLIT, datasetPath, "1_real", "1_crime", "chicago_point_B.txt");
-    public static final String chicagoCPath = StringUtil.join(ConstantValues.FILE_SPLIT, datasetPath, "1_real", "1_crime", "chicago_point_C.txt");
-    public static final String nycAPath = StringUtil.join(ConstantValues.FILE_SPLIT, datasetPath, "1_real", "2_nyc", "nyc_point_A.txt");
-    public static final String nycBPath = StringUtil.join(ConstantValues.FILE_SPLIT, datasetPath, "1_real", "2_nyc", "nyc_point_B.txt");
-    public static final String nycCPath = StringUtil.join(ConstantValues.FILE_SPLIT, datasetPath, "1_real", "2_nyc", "nyc_point_C.txt");
-    public static final String normalPath = StringUtil.join(ConstantValues.FILE_SPLIT, datasetPath, "2_synthetic", "1_two_normal", "two_normal_point_extract.txt");
+//    public static final String chicagoAPath = StringUtil.join(ConstantValues.FILE_SPLIT, datasetPath, "1_real", "1_crime", "chicago_point_A.txt");
+//    public static final String chicagoBPath = StringUtil.join(ConstantValues.FILE_SPLIT, datasetPath, "1_real", "1_crime", "chicago_point_B.txt");
+//    public static final String chicagoCPath = StringUtil.join(ConstantValues.FILE_SPLIT, datasetPath, "1_real", "1_crime", "chicago_point_C.txt");
+    public static final String chicagoPath = StringUtil.join(ConstantValues.FILE_SPLIT, datasetPath, "1_real", "1_crime", "chicago_point.txt");
+
+//    public static final String nycAPath = StringUtil.join(ConstantValues.FILE_SPLIT, datasetPath, "1_real", "2_nyc", "nyc_point_A.txt");
+//    public static final String nycBPath = StringUtil.join(ConstantValues.FILE_SPLIT, datasetPath, "1_real", "2_nyc", "nyc_point_B.txt");
+//    public static final String nycCPath = StringUtil.join(ConstantValues.FILE_SPLIT, datasetPath, "1_real", "2_nyc", "nyc_point_C.txt");
+    public static final String nycPath = StringUtil.join(ConstantValues.FILE_SPLIT, datasetPath, "1_real", "2_nyc", "nyc_point.txt");
+
+//    public static final String normalPath = StringUtil.join(ConstantValues.FILE_SPLIT, datasetPath, "2_synthetic", "1_two_normal", "two_normal_point_extract.txt");
+    public static final String normalPath = StringUtil.join(ConstantValues.FILE_SPLIT, datasetPath, "2_synthetic", "1_two_normal", "two_normal_point.txt");
     public static final String zipfPath = StringUtil.join(ConstantValues.FILE_SPLIT, datasetPath, "2_synthetic", "2_two_zipf", "two_zipf_point.txt");
 
-    public static final String multiNormalPath = StringUtil.join(ConstantValues.FILE_SPLIT, datasetPath, "2_synthetic", "3_two_normal_multiple_center", "two_normal_point_multiple_centers_extract.txt");
+//    public static final String multiNormalPath = StringUtil.join(ConstantValues.FILE_SPLIT, datasetPath, "2_synthetic", "3_two_normal_multiple_center", "two_normal_point_multiple_centers_extract.txt");
+    public static final String multiNormalPath = StringUtil.join(ConstantValues.FILE_SPLIT, datasetPath, "2_synthetic", "3_two_normal_multiple_center", "two_normal_point_multiple_centers.txt");
 
     // 记录被分割的dataset输出父路径的父路径
     public static final String basicRelativeParentCrimeDir = StringUtil.join(ConstantValues.FILE_SPLIT, basicResultPath, "crime");
@@ -375,20 +385,28 @@ public class Constant {
     public static final List<ColumnBean> attributeList = ResultTool.getAttributeListFromConfigureFile(configName);
     public static final FileFilter directoryFilter = new DirectoryFileFilter();
 
+//    public static final DataSetAreaInfo[] crimeDataSetArray = new DataSetAreaInfo[]{
+//            new DataSetAreaInfo(chicagoAPath, chicagoAKey, 41.72, -87.68, 0.09),
+//            new DataSetAreaInfo(chicagoBPath, chicagoBKey, 41.82, -87.73, 0.09),
+//            new DataSetAreaInfo(chicagoCPath, chicagoCKey, 41.92, -87.77,0.07)
+//    };
     public static final DataSetAreaInfo[] crimeDataSetArray = new DataSetAreaInfo[]{
-            new DataSetAreaInfo(chicagoAPath, chicagoAKey, 41.72, -87.68, 0.09),
-            new DataSetAreaInfo(chicagoBPath, chicagoBKey, 41.82, -87.73, 0.09),
-            new DataSetAreaInfo(chicagoCPath, chicagoCKey, 41.92, -87.77,0.07)
+            new DataSetAreaInfo(chicagoPath, chicagoKey, 41.65, -87.94,0.416)
     };
+//    public static final DataSetAreaInfo[] nycDataSetArray = new DataSetAreaInfo[]{
+//            new DataSetAreaInfo(nycAPath, nycAKey, 40.65, -73.84, 0.10),
+//            new DataSetAreaInfo(nycBPath, nycBKey, 40.65, -73.95, 0.09),
+//            new DataSetAreaInfo(nycCPath, nycCKey, 40.82, -73.90,0.07)
+//    };
     public static final DataSetAreaInfo[] nycDataSetArray = new DataSetAreaInfo[]{
-            new DataSetAreaInfo(nycAPath, nycAKey, 40.65, -73.84, 0.10),
-            new DataSetAreaInfo(nycBPath, nycBKey, 40.65, -73.95, 0.09),
-            new DataSetAreaInfo(nycCPath, nycCKey, 40.82, -73.90,0.07)
+            new DataSetAreaInfo(nycPath, nycKey, 0.0, -75.1675,75.1675)
     };
 
-    public static final DataSetAreaInfo twoDimNormalDataSet = new DataSetAreaInfo(normalPath, normalKey, -1.5, -1.5, 3.0);
+//    public static final DataSetAreaInfo twoDimNormalDataSet = new DataSetAreaInfo(normalPath, normalKey, -1.5, -1.5, 3.0);
+    public static final DataSetAreaInfo twoDimNormalDataSet = new DataSetAreaInfo(normalPath, normalKey, -4.34, -4.87, 9.44);
     public static final DataSetAreaInfo twoDimZipfDataSet = new DataSetAreaInfo(zipfPath, zipfKey, 0.0, 0.0, 1.0);
-    public static final DataSetAreaInfo twoDimMultipleCenterNormalDataSet = new DataSetAreaInfo(multiNormalPath, multiNormalKey, -1.5, -2.0, 5.0);
+//    public static final DataSetAreaInfo twoDimMultipleCenterNormalDataSet = new DataSetAreaInfo(multiNormalPath, multiNormalKey, -1.5, -2.0, 5.0);
+    public static final DataSetAreaInfo twoDimMultipleCenterNormalDataSet = new DataSetAreaInfo(multiNormalPath, multiNormalKey, -4.25, -4.32, 10.76);
 
 
 

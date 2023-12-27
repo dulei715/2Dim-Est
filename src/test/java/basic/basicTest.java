@@ -170,7 +170,12 @@ public class basicTest {
     @Test
     public void fun14() {
 //        String path = "/Users/admin/MainFiles/1.Research/dataset/2_two_dim_LDP/0_dataset/1_real/1_crime/chicago_point.txt";
-        String path = "/Users/admin/MainFiles/1.Research/dataset/2_two_dim_LDP/0_dataset/1_real/2_nyc/nyc_point.txt";
+//        String path = "/Users/admin/MainFiles/1.Research/dataset/2_two_dim_LDP/0_dataset/1_real/2_nyc/nyc_point.txt";
+//        String path = "E:\\1.学习\\4.数据集\\2.dataset_for_spatial_estimation\\0_dataset\\1_real\\1_crime\\chicago_point.txt";
+//        String path = "E:\\1.学习\\4.数据集\\2.dataset_for_spatial_estimation\\0_dataset\\1_real\\2_nyc\\nyc_point.txt";
+//        String path = "E:\\1.学习\\4.数据集\\2.dataset_for_spatial_estimation\\0_dataset\\2_synthetic\\1_two_normal\\two_normal_point.txt";
+//        String path = "E:\\1.学习\\4.数据集\\2.dataset_for_spatial_estimation\\0_dataset\\2_synthetic\\2_two_zipf\\two_zipf_point.txt";
+        String path = "E:\\1.学习\\4.数据集\\2.dataset_for_spatial_estimation\\0_dataset\\2_synthetic\\3_two_normal_multiple_center\\two_normal_point_multiple_centers.txt";
         List<TwoDimensionalDoublePoint> data = TwoDimensionalPointRead.readPointWithFirstLineCount(path);
         System.out.println(data.size());
         List<TwoDimensionalDoublePoint> result = TwoDimensionalDoublePointListUtilExtend.getTwoBorderPoints(data);
