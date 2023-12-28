@@ -56,7 +56,8 @@ public class DAMRun {
             endTime = System.currentTimeMillis();
             long wDTime = endTime - startTime;
             System.out.println("Wasserstein 2 distantce time is " + wDTime);
-            Double klDivergence = KLDivergence.getKLDivergence(rawDataStatistic, estimationResult, Constant.DEFAULT_MINIMAL_DENOMINATOR);
+//            Double klDivergence = KLDivergence.getKLDivergence(rawDataStatistic, estimationResult, Constant.DEFAULT_MINIMAL_DENOMINATOR);
+            Double klDivergence = 0D;
 //            Double meanDistance = Distance.getAbsMeanDifference(rawDataStatistic, estimationResult);
 //            Double varianceDistance = Distance.getAbsVarianceDifference(rawDataStatistic, estimationResult);
             experimentResult = new ExperimentResult();

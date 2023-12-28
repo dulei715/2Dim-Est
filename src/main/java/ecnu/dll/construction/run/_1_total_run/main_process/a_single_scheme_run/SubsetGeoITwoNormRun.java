@@ -46,7 +46,8 @@ public class SubsetGeoITwoNormRun {
                 Double wassersteinDistance1 = 0D;
 //                Double wassersteinDistance2 = TwoDimensionalWassersteinDistance.getWassersteinDistanceBySinkhorn(rawDataStatistic, estimationResult, 2, Constant.SINKHORN_LAMBDA, Constant.SINKHORN_LOWER_BOUND);
                 Double wassersteinDistance2 = Sinkhorn.getWassersteinDistanceBySinkhorn(estimationResult, rawDataStatistic, 2, Constant.SINKHORN_LAMBDA, Constant.SINKHORN_LOWER_BOUND, Constant.SINKHORN_ITERATOR_UPPERBOUND);
-                Double klDivergence = KLDivergence.getKLDivergence(rawDataStatistic, estimationResult, Constant.DEFAULT_MINIMAL_DENOMINATOR);
+//                Double klDivergence = KLDivergence.getKLDivergence(rawDataStatistic, estimationResult, Constant.DEFAULT_MINIMAL_DENOMINATOR);
+                Double klDivergence = 0D;
 //                Double meanDistance = Distance.getAbsMeanDifference(rawDataStatistic, estimationResult);
 //                Double varianceDistance = Distance.getAbsVarianceDifference(rawDataStatistic, estimationResult);
                 experimentResult = new ExperimentResult();
