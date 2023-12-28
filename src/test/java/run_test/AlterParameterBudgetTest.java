@@ -9,6 +9,7 @@ import cn.edu.ecnu.struct.point.TwoDimensionalDoublePoint;
 import cn.edu.ecnu.struct.point.TwoDimensionalIntegerPoint;
 import ecnu.dll.construction._config.Constant;
 import ecnu.dll.construction.dataset.struct.DataSetAreaInfo;
+import ecnu.dll.construction.extend_tools.StatisticUtil;
 import ecnu.dll.construction.newscheme.discretization.tool.DiscretizedDiskSchemeTool;
 import ecnu.dll.construction.newscheme.discretization.tool.DiscretizedRhombusSchemeTool;
 import ecnu.dll.construction.newscheme.discretization.tool.DiscretizedSchemeTool;
@@ -74,7 +75,7 @@ public class AlterParameterBudgetTest {
     }
     @Test
     public void fun1() {
-        DataSetAreaInfo dataSetAreaInfo = Constant.crimeDataSetArray[0];
+        DataSetAreaInfo dataSetAreaInfo = Constant.nycDataSetArray[0];
         String dataSetPath = dataSetAreaInfo.getDataSetPath();
         Double xBound = dataSetAreaInfo.getxBound();
         Double yBound = dataSetAreaInfo.getyBound();
@@ -84,6 +85,32 @@ public class AlterParameterBudgetTest {
         List<TwoDimensionalDoublePoint> doublePointList = pointRead.getPointList();
 
         List<TwoDimensionalIntegerPoint> integerPointList = Grid.toIntegerPoint(doublePointList, new Double[]{xBound, yBound}, inputSideLength / Constant.DEFAULT_SIDE_LENGTH_NUMBER_SIZE);
+        TreeMap<TwoDimensionalIntegerPoint, Integer> testResult = StatisticUtil.statisticPoint(integerPointList);
+        MyPrint.showMap(testResult);
+
+        List<TwoDimensionalIntegerPoint> integerPointTypeList = DiscretizedSchemeTool.getRawTwoDimensionalIntegerPointTypeList((int) Math.ceil(Constant.DEFAULT_SIDE_LENGTH_NUMBER_SIZE));
+        TreeMap<TwoDimensionalIntegerPoint, Double> rawStatisticMap = StatisticTool.countHistogramRatioMap(integerPointTypeList, integerPointList);
+
+        Map<String, List<ExperimentResult>> result = alterBudgetRun(integerPointList, inputSideLength, rawStatisticMap, xBound, yBound);
+        MyPrint.showMap(result);
+
+
+    }
+    @Test
+    public void fun2() {
+        DataSetAreaInfo dataSetAreaInfo = Constant.twoDimNormalDataSet;
+        String dataSetPath = dataSetAreaInfo.getDataSetPath();
+        Double xBound = dataSetAreaInfo.getxBound();
+        Double yBound = dataSetAreaInfo.getyBound();
+        Double inputSideLength = dataSetAreaInfo.getLength();
+        TwoDimensionalPointRead pointRead = new TwoDimensionalPointRead(dataSetPath);
+        pointRead.readPointWithFirstLineCount();
+        List<TwoDimensionalDoublePoint> doublePointList = pointRead.getPointList();
+
+        List<TwoDimensionalIntegerPoint> integerPointList = Grid.toIntegerPoint(doublePointList, new Double[]{xBound, yBound}, inputSideLength / Constant.DEFAULT_SIDE_LENGTH_NUMBER_SIZE);
+        TreeMap<TwoDimensionalIntegerPoint, Integer> testResult = StatisticUtil.statisticPoint(integerPointList);
+        MyPrint.showMap(testResult);
+
         List<TwoDimensionalIntegerPoint> integerPointTypeList = DiscretizedSchemeTool.getRawTwoDimensionalIntegerPointTypeList((int) Math.ceil(Constant.DEFAULT_SIDE_LENGTH_NUMBER_SIZE));
         TreeMap<TwoDimensionalIntegerPoint, Double> rawStatisticMap = StatisticTool.countHistogramRatioMap(integerPointTypeList, integerPointList);
 

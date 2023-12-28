@@ -5,6 +5,7 @@ import cn.edu.ecnu.basic.StringUtil;
 import cn.edu.ecnu.collection.ListUtils;
 import cn.edu.ecnu.constant_values.ConstantValues;
 import cn.edu.ecnu.filter.file_filter.DirectoryFileFilter;
+import cn.edu.ecnu.io.print.MyPrint;
 import cn.edu.ecnu.result.ResultTool;
 import cn.edu.ecnu.struct.result.ColumnBean;
 import ecnu.dll.construction.dataset.struct.DataSetAreaInfo;
@@ -18,9 +19,9 @@ import java.util.Properties;
 
 public class Constant {
 
-//    public static String rootPath = "/Users/admin/MainFiles/1.Research/dataset/2_two_dim_LDP";
-    public static String rootPath;
-    public static String propertyPath;
+    public static String rootPath = System.getProperty("user.dir");
+//    public static String rootPath = "E:\\1.学习\\4.数据集\\2.dataset_for_spatial_estimation";
+    public static String propertyPath = System.getProperty("user.dir") + ConstantValues.FILE_SPLIT + "config" + ConstantValues.FILE_SPLIT + "parameter.properties";;
 
     // 实验固定基本参数
     public static final int eliminateDoubleErrorIndexSize = 2;
@@ -131,13 +132,14 @@ public class Constant {
     //---变动值-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 //    public static final double[] ALTER_PRIVACY_BUDGET_ARRAY = new double[] { 0.5, 1.2, 1.9, 2.6, 3.3 };   // todo: version 1
 //    public static final double[] ALTER_PRIVACY_BUDGET_ARRAY = new double[] { 0.7, 1.4, 2.1, 2.8, 3.5 }; // todo: version 2
-    public static double[] ALTER_PRIVACY_BUDGET_ARRAY = new double[] { 0.7, 1.4, 2.1, 2.8, 3.5 }; // todo: version 2
+    public static double[] ALTER_PRIVACY_BUDGET_ARRAY = null; // todo: version 2
 
 
     //    public static final double[] ALTER_PRIVACY_BUDGET_ARRAY_for_DAM_and_SubsetGeoI_Comparison = new double[] { 0.7, 1.4, 2.1, 2.8, 3.5 };   // todo: version 1
 //    public static final double[] ALTER_PRIVACY_BUDGET_ARRAY_for_DAM_and_SubsetGeoI_Comparison = new double[] { 6.0, 6.7, 7.4, 8.1, 8.8 };   // todo: version 2
 //    public static final double[] ALTER_PRIVACY_BUDGET_ARRAY_for_DAM_and_SubsetGeoI_Comparison = new double[] {5.5, 6.0, 6.5, 7.0, 7.5};   // todo: version 3
 //    public static final double[] ALTER_PRIVACY_BUDGET_ARRAY_for_DAM_and_SubsetGeoI_Comparison = new double[] {5.0, 6.0, 7.0, 8.0, 9.0};   // todo: version 4
+//    public static final double[] ALTER_PRIVACY_BUDGET_ARRAY_for_DAM_and_SubsetGeoI_Comparison = new double[] {3.5, 4.0, 4.5, 5.0, 5.5};   // todo: version 4
     public static double[] ALTER_PRIVACY_BUDGET_ARRAY_for_DAM_and_SubsetGeoI_Comparison = null;   // todo: version 8
 
     public static final double[] ALTER_PRIVACY_BUDGET_ARRAY_for_DAM_and_SubsetGeoI_Comparison_for_KL_Divergence = new double[] { 6.0, 6.7, 7.4, 8.1, 8.8 };
@@ -160,8 +162,8 @@ public class Constant {
 
 
     static {
-        rootPath = System.getProperty("user.dir");
-        propertyPath = rootPath + ConstantValues.FILE_SPLIT + "config" + ConstantValues.FILE_SPLIT + "parameter.properties";
+
+
         Properties properties = new Properties();
         try {
             properties.load(new FileInputStream(propertyPath));
@@ -429,6 +431,10 @@ public class Constant {
     public static final List<ColumnBean> attributeList = ResultTool.getAttributeListFromConfigureFile(configName);
     public static final FileFilter directoryFilter = new DirectoryFileFilter();
 
+    /**
+     * The leftBottom must no greater than real left and bottom point
+     * The sum of leftBottom and length is strictly greater than the real right and top point
+     */
 //    public static final DataSetAreaInfo[] crimeDataSetArray = new DataSetAreaInfo[]{
 //            new DataSetAreaInfo(chicagoAPath, chicagoAKey, 41.72, -87.68, 0.09),
 //            new DataSetAreaInfo(chicagoBPath, chicagoBKey, 41.82, -87.73, 0.09),
@@ -443,14 +449,41 @@ public class Constant {
 //            new DataSetAreaInfo(nycCPath, nycCKey, 40.82, -73.90,0.07)
 //    };
     public static final DataSetAreaInfo[] nycDataSetArray = new DataSetAreaInfo[]{
-            new DataSetAreaInfo(nycPath, nycKey, 0.0, -75.1675,75.1675)
+            new DataSetAreaInfo(nycPath, nycKey, 0.0, -75.1675,75.1676)
     };
 
 //    public static final DataSetAreaInfo twoDimNormalDataSet = new DataSetAreaInfo(normalPath, normalKey, -1.5, -1.5, 3.0);
-    public static final DataSetAreaInfo twoDimNormalDataSet = new DataSetAreaInfo(normalPath, normalKey, -4.34, -4.87, 9.44);
+    public static final DataSetAreaInfo twoDimNormalDataSet = new DataSetAreaInfo(normalPath, normalKey, -4.44, -4.87, 9.45);
     public static final DataSetAreaInfo twoDimZipfDataSet = new DataSetAreaInfo(zipfPath, zipfKey, 0.0, 0.0, 1.0);
 //    public static final DataSetAreaInfo twoDimMultipleCenterNormalDataSet = new DataSetAreaInfo(multiNormalPath, multiNormalKey, -1.5, -2.0, 5.0);
     public static final DataSetAreaInfo twoDimMultipleCenterNormalDataSet = new DataSetAreaInfo(multiNormalPath, multiNormalKey, -4.25, -4.32, 10.76);
+
+    public static void main(String[] args) {
+        System.out.println(rootPath);
+        System.out.println(propertyPath);
+        MyPrint.showSplitLine("*", 150);
+
+        System.out.println("DEFAULT_SIDE_LENGTH_NUMBER_SIZE_for_b_change: " + DEFAULT_SIDE_LENGTH_NUMBER_SIZE_for_b_change);
+        System.out.println("DEFAULT_PRIVACY_BUDGET_for_b_change: " + DEFAULT_PRIVACY_BUDGET_for_b_change);
+        MyPrint.showSplitLine("*", 150);
+
+        System.out.println("DEFAULT_SIDE_LENGTH_NUMBER_SIZE: " + DEFAULT_SIDE_LENGTH_NUMBER_SIZE);
+        System.out.print("ALTER_SIDE_LENGTH_NUMBER_SIZE: ");
+        MyPrint.showDoubleArray(ALTER_SIDE_LENGTH_NUMBER_SIZE);
+        System.out.print("ALTER_SIDE_LENGTH_NUMBER_SIZE_for_DAM_and_SubsetGeoI_Comparison: ");
+        MyPrint.showDoubleArray(ALTER_SIDE_LENGTH_NUMBER_SIZE_for_DAM_and_SubsetGeoI_Comparison);
+        MyPrint.showSplitLine("*", 150);
+
+        System.out.println("DEFAULT_PRIVACY_BUDGET: " + DEFAULT_PRIVACY_BUDGET);
+        System.out.println("DEFAULT_PRIVACY_BUDGET_for_DAM_and_SubsetGeoI_Comparison: " + DEFAULT_PRIVACY_BUDGET_for_DAM_and_SubsetGeoI_Comparison);
+        System.out.print("ALTER_PRIVACY_BUDGET_ARRAY_for_DAM_and_SubsetGeoI_Comparison: ");
+        MyPrint.showDoubleArray(ALTER_PRIVACY_BUDGET_ARRAY_for_DAM_and_SubsetGeoI_Comparison);
+
+
+
+
+
+    }
 
 
 

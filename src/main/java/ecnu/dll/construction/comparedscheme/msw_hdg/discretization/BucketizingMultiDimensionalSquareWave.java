@@ -72,6 +72,9 @@ public class BucketizingMultiDimensionalSquareWave {
         List<BasicPair<Integer, Integer>> resultList = new ArrayList<>(pointList.size());
         BasicPair<Integer, Integer> tempPair;
         for (TwoDimensionalIntegerPoint point : pointList) {
+//            if (!point.getXIndex().equals(2) || !point.getYIndex().equals(0)) {
+//                System.out.println("hahaha");
+//            }
             tempPair = getNoiseIndex(point);
             resultList.add(tempPair);
         }
