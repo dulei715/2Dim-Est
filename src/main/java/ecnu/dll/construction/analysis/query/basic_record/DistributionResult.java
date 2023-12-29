@@ -1,4 +1,4 @@
-package ecnu.dll.construction.run._2_inplement_query.basic_record;
+package ecnu.dll.construction.analysis.query.basic_record;
 
 public class DistributionResult {
     private Integer xSize = null;
