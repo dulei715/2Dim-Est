@@ -1,4 +1,4 @@
-package ecnu.dll.construction.run._2_split_run_for_extend_test._1_grid_statistic;
+package _2_extend_test._1_grid_statistic;
 
 import cn.edu.ecnu.basic.StringUtil;
 import cn.edu.ecnu.constant_values.ConstantValues;
@@ -6,7 +6,7 @@ import cn.edu.ecnu.io.read.TwoDimensionalPointRead;
 import cn.edu.ecnu.struct.point.TwoDimensionalDoublePoint;
 import ecnu.dll.construction._config.Constant;
 import ecnu.dll.construction.dataset.struct.DataSetAreaInfo;
-import ecnu.dll.construction.run._2_split_run_for_extend_test._1_grid_statistic.basic_run.GridStatistic;
+import _2_extend_test._1_grid_statistic.basic_run.GridStatistic;
 
 import java.util.List;
 
