@@ -19,8 +19,8 @@ import java.util.Properties;
 
 public class Constant {
 
-    public static String rootPath = System.getProperty("user.dir");
-//    public static String rootPath = "E:\\1.学习\\4.数据集\\2.dataset_for_spatial_estimation";
+//    public static String rootPath = System.getProperty("user.dir");
+    public static String rootPath = "E:\\1.学习\\4.数据集\\2.dataset_for_spatial_estimation";
     public static String propertyPath = System.getProperty("user.dir") + ConstantValues.FILE_SPLIT + "config" + ConstantValues.FILE_SPLIT + "parameter.properties";;
 
     // 实验固定基本参数

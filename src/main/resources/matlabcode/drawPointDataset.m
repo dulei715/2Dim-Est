@@ -17,7 +17,7 @@ points = points(2:shrinkSize:end,:).*factorK+constA;
 %scatter(points(:,1), points(:,2));
 plot(points(:,1),points(:,2),'.');
 % set(gca,'FontSize',20);
-figure_FontSize = 40;
+figure_FontSize = 30;
 set(get(gca,'XLabel'),'FontSize',figure_FontSize,'FontName','Times New Roman');
 set(get(gca,'YLabel'),'FontSize',figure_FontSize,'FontName','Times New Roman');
 set(gca,'FontName','Times New Roman' ,'FontSize',figure_FontSize);
