@@ -159,11 +159,13 @@ public class DiscretizedHybridUniformExponentialSchemeTest {
 
     @Test
     public void fun7() {
-        String outputPath = Constant.basicDatasetPath + "\\test\\synthetic_dataset\\test2\\single_point_center_test2.txt";
+//        String outputPath = Constant.basicDatasetPath + "\\test\\synthetic_dataset\\test2\\single_point_center_test2.txt";
         double epsilon = 1;
         double gridLength = 0.2;
+//        double constB = 1.6;
         double constB = 1.6;
-        Double inputLength = 1.0;
+//        Double inputLength = 1.0;
+        Double inputLength = 10.0;
         Double kParameter = 0.2;
         Double xLeft = 0.0;
         Double yLeft = 0.0;
@@ -173,7 +175,6 @@ public class DiscretizedHybridUniformExponentialSchemeTest {
 
         TwoDimensionalIntegerPoint originalPoint = new TwoDimensionalIntegerPoint(0, 0);
         List<TwoDimensionalIntegerPoint> pointList = ListUtils.copyToListGivenElement(originalPoint, 50000);
-//        MyPrint.showList(pointList, ConstantValues.LINE_SPLIT);
 
 
         List<TwoDimensionalIntegerPoint> noiseValue = scheme.getNoiseValueList(pointList);
