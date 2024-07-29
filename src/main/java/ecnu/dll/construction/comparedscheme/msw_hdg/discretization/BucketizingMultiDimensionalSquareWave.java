@@ -1,10 +1,10 @@
 package ecnu.dll.construction.comparedscheme.msw_hdg.discretization;
 
-import cn.edu.ecnu.DecimalTool;
-import cn.edu.ecnu.statistic.StatisticTool;
-import cn.edu.ecnu.struct.grid.Grid;
-import cn.edu.ecnu.struct.pair.BasicPair;
-import cn.edu.ecnu.struct.point.TwoDimensionalIntegerPoint;
+import cn.edu.dll.DecimalTool;
+import cn.edu.dll.statistic.StatisticTool;
+import cn.edu.dll.struct.grid.Grid;
+import cn.edu.dll.struct.pair.BasicPair;
+import cn.edu.dll.struct.point.TwoDimensionalIntegerPoint;
 import ecnu.dll.construction._config.Constant;
 import ecnu.dll.construction.basicscheme.square_wave.discretization.BucketizingOptimalSquareWave;
 import ecnu.dll.construction.comparedscheme.msw_hdg.IndexFlag;

@@ -1,7 +1,7 @@
 package ecnu.dll.construction.analysis.others;
 
-import cn.edu.ecnu.collection.ArraysUtils;
-import cn.edu.ecnu.io.print.MyPrint;
+import cn.edu.dll.basic.BasicArrayUtil;
+import cn.edu.dll.io.print.MyPrint;
 import ecnu.dll.construction._config.Constant;
 import ecnu.dll.construction.run._1_total_run.main_process.b_comparision_run.extended.tool.DAMEpsilonLocalPrivacyTable;
 import ecnu.dll.construction.run._1_total_run.main_process.b_comparision_run.extended.tool.LocalPrivacyTable;
@@ -89,7 +89,7 @@ public class ParameterObservation {
         List<Double> sizeDList = localPrivacyTable.getSizeDList();
         for (int i = 0; i < table.length; i++) {
             tempArray = table[i];
-            boolean descending = ArraysUtils.isDescending(tempArray);
+            boolean descending = BasicArrayUtil.isDescending(tempArray);
             if (!descending) {
                 result.add(sizeDList.get(i));
             }

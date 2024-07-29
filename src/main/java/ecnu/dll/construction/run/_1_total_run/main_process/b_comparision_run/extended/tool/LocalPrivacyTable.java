@@ -1,8 +1,8 @@
 package ecnu.dll.construction.run._1_total_run.main_process.b_comparision_run.extended.tool;
 
-import cn.edu.ecnu.basic.BasicArray;
-import cn.edu.ecnu.collection.ArraysUtils;
-import cn.edu.ecnu.io.write.BasicWrite;
+
+import cn.edu.dll.basic.BasicArrayUtil;
+import cn.edu.dll.io.write.BasicWrite;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -48,7 +48,7 @@ public abstract class LocalPrivacyTable {
                     indexDiffer = rightIndex - leftIndex;
                     if (indexDiffer > 1) {
                         // 中间部分进行线性拟合
-                        BasicArray.fillLinearTransformValue(currentMaxLineValueLeft, currentMaxLineValueRight, this.lowerBoundLPTable[i], leftIndex + 1, rightIndex - 1, false);
+                        BasicArrayUtil.fillLinearTransformValue(currentMaxLineValueLeft, currentMaxLineValueRight, this.lowerBoundLPTable[i], leftIndex + 1, rightIndex - 1, false);
                     }
                     currentMaxLineValueLeft = currentMaxLineValueRight;
                     leftIndex = rightIndex;
@@ -81,7 +81,7 @@ public abstract class LocalPrivacyTable {
 //                        if (indexDiffer2 < 0 || indexDiffer2 < 1 && true) {
 //                            System.out.println("wrong!");
 //                        }
-                        BasicArray.fillLinearTransformValue(currentMinLineValueLeft, currentMinLineValueRight, this.upperBoundLPTable[i], leftIndex + 1, rightIndex - 1, false);
+                        BasicArrayUtil.fillLinearTransformValue(currentMinLineValueLeft, currentMinLineValueRight, this.upperBoundLPTable[i], leftIndex + 1, rightIndex - 1, false);
                     }
                     currentMinLineValueRight = currentMinLineValueLeft;
                     rightIndex = leftIndex;
@@ -117,14 +117,14 @@ public abstract class LocalPrivacyTable {
 
     protected double getMaxLocalPrivacyValueGivenTable(double[][] table, Double sizeD) {
         double[] lPRow = table[this.sizeDToIndexMap.get(sizeD)];
-        if (!ArraysUtils.isDescending(lPRow)) {
+        if (!BasicArrayUtil.isDescending(lPRow)) {
             throw new RuntimeException("The local privacy for sizeD = " + sizeD + " in the table is not Descending!");
         }
         return lPRow[0];
     }
     protected double getMinLocalPrivacyValueGivenTable(double[][] table, Double sizeD) {
         double[] lPRow = table[this.sizeDToIndexMap.get(sizeD)];
-        if (!ArraysUtils.isDescending(lPRow)) {
+        if (!BasicArrayUtil.isDescending(lPRow)) {
             throw new RuntimeException("The local privacy for sizeD = " + sizeD + " in the table is not Descending!");
         }
         return lPRow[lPRow.length-1];
@@ -133,11 +133,11 @@ public abstract class LocalPrivacyTable {
 
     protected double getEpsilonByLocalPrivacyGivenTable(double[][] table, Double sizeD, Double localPrivacy) {
         double[] lPRow = table[this.sizeDToIndexMap.get(sizeD)];
-        if (!ArraysUtils.isDescending(lPRow)) {
+        if (!BasicArrayUtil.isDescending(lPRow)) {
             throw new RuntimeException("The local privacy for sizeD = " + sizeD + " in the table is not Descending!");
         }
         Double[] budgetArray = this.budgetToIndexMap.keySet().toArray(new Double[0]);
-        int index = ArraysUtils.binaryDescendSearch(lPRow, localPrivacy);
+        int index = BasicArrayUtil.binaryDescendSearch(lPRow, localPrivacy);
         if (index >= 0) {
             return budgetArray[index];
         }
@@ -151,7 +151,7 @@ public abstract class LocalPrivacyTable {
         double rightLP = lPRow[rightIndex];
         double leftEpsilon = budgetArray[leftIndex];
         double rightEpsilon = budgetArray[rightIndex];
-        return BasicArray.getLinearTransformValue(leftLP, rightLP, localPrivacy, leftEpsilon, rightEpsilon);
+        return BasicArrayUtil.getLinearTransformValue(leftLP, rightLP, localPrivacy, leftEpsilon, rightEpsilon);
     }
 
     protected double getLocalPrivacyByEpsilonGivenTable(double[][] table, Double sizeD, Double epsilon) {
@@ -171,7 +171,7 @@ public abstract class LocalPrivacyTable {
         double rightEpsilon = budgetArray[rightIndex];
         double leftLP = lPRow[leftIndex];
         double rightLP = lPRow[rightIndex];
-        return BasicArray.getLinearTransformValue(leftEpsilon, rightEpsilon, epsilon, leftLP, rightLP);
+        return BasicArrayUtil.getLinearTransformValue(leftEpsilon, rightEpsilon, epsilon, leftLP, rightLP);
     }
 
     public double getEpsilonByLocalPrivacy(Double sizeD, Double localPrivacy) {
@@ -233,7 +233,7 @@ public abstract class LocalPrivacyTable {
         basicWrite.writeOneLineListData(sizeBudgetList);
         Double[] tempDoubleArray;
         for (int i = 0; i < table.length; i++) {
-            tempDoubleArray = ArraysUtils.toDoubleArray(table[i]);
+            tempDoubleArray = BasicArrayUtil.toDoubleArray(table[i]);
             tempList = Arrays.asList(tempDoubleArray);
             basicWrite.writeOneLineListData(tempList);
         }

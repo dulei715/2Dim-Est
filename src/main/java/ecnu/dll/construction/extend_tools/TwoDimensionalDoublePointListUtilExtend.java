@@ -1,6 +1,7 @@
 package ecnu.dll.construction.extend_tools;
 
-import cn.edu.ecnu.struct.point.TwoDimensionalDoublePoint;
+
+import cn.edu.dll.struct.point.TwoDimensionalDoublePoint;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,8 +1,8 @@
 package ecnu.dll.construction.analysis.lp_to_e.version_2;
 
-import cn.edu.ecnu.basic.BasicArray;
-import cn.edu.ecnu.collection.ArraysUtils;
-import cn.edu.ecnu.struct.point.TwoDimensionalDoublePoint;
+
+import cn.edu.dll.basic.BasicArrayUtil;
+import cn.edu.dll.struct.point.TwoDimensionalDoublePoint;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -25,18 +25,18 @@ public class TransformEpsilonByTable {
     protected double[] relativeLocalPrivacyArray;
 
     public TransformEpsilonByTable(double[] ascendingSortedPrivacyBudgetArray, double[] relativeLocalPrivacyArray) {
-        if (!ArraysUtils.isAscending(ascendingSortedPrivacyBudgetArray)) {
+        if (!BasicArrayUtil.isAscending(ascendingSortedPrivacyBudgetArray)) {
             throw new RuntimeException("The input privacy budget array is not ascending!");
         }
         this.ascendingSortedPrivacyBudgetArray = ascendingSortedPrivacyBudgetArray;
-        if (!ArraysUtils.isDescending(relativeLocalPrivacyArray)) {
+        if (!BasicArrayUtil.isDescending(relativeLocalPrivacyArray)) {
             throw new RuntimeException("The input relative local privacy array is not descending!");
         }
         this.relativeLocalPrivacyArray = relativeLocalPrivacyArray;
     }
 
     public TransformEpsilonByTable(Double[] ascendingSortedPrivacyBudgetArray, Double[] relativeLocalPrivacyArray) {
-        this(ArraysUtils.toDoubleArray(ascendingSortedPrivacyBudgetArray), ArraysUtils.toDoubleArray(relativeLocalPrivacyArray));
+        this(BasicArrayUtil.toDoubleArray(ascendingSortedPrivacyBudgetArray), BasicArrayUtil.toDoubleArray(relativeLocalPrivacyArray));
     }
 
 
@@ -54,11 +54,11 @@ public class TransformEpsilonByTable {
         double rightEpsilon = this.ascendingSortedPrivacyBudgetArray[rightIndex];
         double leftLP = this.relativeLocalPrivacyArray[leftIndex];
         double rightLP = this.relativeLocalPrivacyArray[rightIndex];
-        return BasicArray.getLinearTransformValue(leftEpsilon, rightEpsilon, privacyBudget, leftLP, rightLP);
+        return BasicArrayUtil.getLinearTransformValue(leftEpsilon, rightEpsilon, privacyBudget, leftLP, rightLP);
     }
 
     public double getPrivacyBudgetByLocalPrivacy(double localPrivacy) {
-        int index = ArraysUtils.binaryDescendSearch(this.relativeLocalPrivacyArray, localPrivacy);
+        int index = BasicArrayUtil.binaryDescendSearch(this.relativeLocalPrivacyArray, localPrivacy);
         if (index >= 0) {
             return this.ascendingSortedPrivacyBudgetArray[index];
         }
@@ -72,7 +72,7 @@ public class TransformEpsilonByTable {
         double rightLP = this.relativeLocalPrivacyArray[rightIndex];
         double leftEpsilon = this.ascendingSortedPrivacyBudgetArray[leftIndex];
         double rightEpsilon = this.ascendingSortedPrivacyBudgetArray[rightIndex];
-        return BasicArray.getLinearTransformValue(leftLP, rightLP, localPrivacy, leftEpsilon, rightEpsilon);
+        return BasicArrayUtil.getLinearTransformValue(leftLP, rightLP, localPrivacy, leftEpsilon, rightEpsilon);
     }
 
     public List<TwoDimensionalDoublePoint> getParameterPointList() {

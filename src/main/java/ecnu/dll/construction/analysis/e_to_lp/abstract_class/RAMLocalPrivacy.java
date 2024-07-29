@@ -1,7 +1,7 @@
 package ecnu.dll.construction.analysis.e_to_lp.abstract_class;
 
-import cn.edu.ecnu.differential_privacy.cdp.basic_struct.DistanceTor;
-import cn.edu.ecnu.struct.point.TwoDimensionalIntegerPoint;
+import cn.edu.dll.differential_privacy.cdp.basic_struct.DistanceTor;
+import cn.edu.dll.struct.point.TwoDimensionalIntegerPoint;
 import ecnu.dll.construction.analysis.e_to_lp.basic.TransformLocalPrivacy;
 import ecnu.dll.construction.analysis.e_to_lp.tools.CellDistanceTool;
 import ecnu.dll.construction.newscheme.discretization.DiscretizedRhombusScheme;

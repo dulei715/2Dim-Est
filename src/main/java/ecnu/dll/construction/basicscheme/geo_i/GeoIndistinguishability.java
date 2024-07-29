@@ -1,8 +1,8 @@
 package ecnu.dll.construction.basicscheme.geo_i;
 
 
-import cn.edu.ecnu.math.LambertW;
-import cn.edu.ecnu.struct.PolarPoint;
+import cn.edu.dll.math.LambertW;
+import cn.edu.dll.struct.PolarPoint;
 import ecnu.dll.construction._config.Constant;
 
 public class GeoIndistinguishability {

@@ -1,6 +1,6 @@
 package ecnu.dll.construction.extend_tools;
 
-import cn.edu.ecnu.struct.point.TwoDimensionalIntegerPoint;
+import cn.edu.dll.struct.point.TwoDimensionalIntegerPoint;
 
 import java.util.List;
 import java.util.TreeMap;

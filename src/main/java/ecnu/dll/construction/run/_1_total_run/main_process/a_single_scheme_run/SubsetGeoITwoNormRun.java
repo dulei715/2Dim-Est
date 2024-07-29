@@ -1,10 +1,8 @@
 package ecnu.dll.construction.run._1_total_run.main_process.a_single_scheme_run;
 
-import cn.edu.ecnu.differential_privacy.accuracy.metrics.distance_quantities.KLDivergence;
-import cn.edu.ecnu.differential_privacy.accuracy.metrics.distance_quantities.TwoDimensionalWassersteinDistance;
-import cn.edu.ecnu.differential_privacy.cdp.basic_struct.impl.TwoNormTwoDimensionalIntegerPointDistanceTor;
-import cn.edu.ecnu.result.ExperimentResult;
-import cn.edu.ecnu.struct.point.TwoDimensionalIntegerPoint;
+import cn.edu.dll.differential_privacy.cdp.basic_struct.impl.TwoNormTwoDimensionalIntegerPointDistanceTor;
+import cn.edu.dll.result.ExperimentResult;
+import cn.edu.dll.struct.point.TwoDimensionalIntegerPoint;
 import ecnu.dll.construction._config.Constant;
 import ecnu.dll.construction.comparedscheme.sem_geo_i.discretization.DiscretizedSubsetExponentialGeoI;
 import edu.ecnu.dll.cpl.expection.CPLException;
@@ -29,7 +27,7 @@ public class SubsetGeoITwoNormRun {
             List<Set<Integer>> noiseSubsetIndexList = scheme.getNoiseSubsetIndexList(integerPointList);
             //todo: ...
             long startTime = System.currentTimeMillis();
-            TreeMap<TwoDimensionalIntegerPoint, Double> estimationResult = scheme.statistic(noiseSubsetIndexList);
+            TreeMap<cn.edu.ecnu.struct.TwoDimensionalIntegerPoint, Double> estimationResult = scheme.statistic(noiseSubsetIndexList);
             long endTime = System.currentTimeMillis();
             long postProcessTime = endTime - startTime;
 

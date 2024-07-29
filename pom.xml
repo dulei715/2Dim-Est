@@ -24,16 +24,11 @@
             <version>3.6.1</version>
         </dependency>
 
-        <dependency>
-            <groupId>cn.edu.ecnu</groupId>
-            <artifactId>clp-java-1.80</artifactId>
-            <version>1.01.01</version>
-        </dependency>
 
         <dependency>
             <groupId>cn.edu.ecnu</groupId>
             <artifactId>java-tools</artifactId>
-            <version>1.01.01</version>
+            <version>1.02.01</version>
         </dependency>
 
         <dependency>
@@ -55,7 +50,7 @@
             <version>2.0</version>
         </dependency>
 
-<!--        <dependency>-->
+        <!--        <dependency>-->
 <!--            <groupId>javafx</groupId>-->
 <!--            <artifactId>jfxrt</artifactId>-->
 <!--            <version>2.0</version>-->

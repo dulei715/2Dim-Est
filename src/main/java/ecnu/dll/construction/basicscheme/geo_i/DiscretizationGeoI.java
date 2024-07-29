@@ -1,9 +1,9 @@
 package ecnu.dll.construction.basicscheme.geo_i;
 
-import cn.edu.ecnu.math.methods.solve_function.iteration_methods.IterationMethod;
-import cn.edu.ecnu.struct.PolarPoint;
-import cn.edu.ecnu.struct.point.TwoDimensionalDoublePoint;
-import cn.edu.ecnu.struct.point.TwoDimensionalIntegerPoint;
+import cn.edu.dll.math.methods.solve_function.iteration_methods.IterationMethod;
+import cn.edu.dll.struct.PolarPoint;
+import cn.edu.dll.struct.point.TwoDimensionalDoublePoint;
+import cn.edu.dll.struct.point.TwoDimensionalIntegerPoint;
 import ecnu.dll.construction._config.Constant;
 
 public class DiscretizationGeoI extends IterationMethod {

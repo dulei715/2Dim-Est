@@ -1,12 +1,13 @@
 package ecnu.dll.construction.newscheme.discretization;
 
 
-import cn.edu.ecnu.DecimalTool;
-import cn.edu.ecnu.basic.BasicArray;
-import cn.edu.ecnu.statistic.StatisticTool;
-import cn.edu.ecnu.struct.grid.Grid;
-import cn.edu.ecnu.struct.point.TwoDimensionalDoublePoint;
-import cn.edu.ecnu.struct.point.TwoDimensionalIntegerPoint;
+
+import cn.edu.dll.DecimalTool;
+import cn.edu.dll.basic.BasicArrayUtil;
+import cn.edu.dll.statistic.StatisticTool;
+import cn.edu.dll.struct.grid.Grid;
+import cn.edu.dll.struct.point.TwoDimensionalDoublePoint;
+import cn.edu.dll.struct.point.TwoDimensionalIntegerPoint;
 import ecnu.dll.construction._config.Constant;
 import ecnu.dll.construction.newscheme.basic.DiscretizedPlaneInterface;
 import ecnu.dll.construction.newscheme.discretization.tool.DiscretizedSchemeTool;
@@ -98,7 +99,6 @@ public abstract class AbstractDiscretizedScheme implements DiscretizedPlaneInter
     public abstract void setTransformMatrix();
 
 
-    @Override
     public abstract TwoDimensionalIntegerPoint getNoiseValue(TwoDimensionalIntegerPoint originalPoint);
 
 //    public TwoDimensionalIntegerPoint toIntegerPoint(TwoDimensionalDoublePoint doublePoint, double xLeft, double yLeft) {
@@ -149,7 +149,7 @@ public abstract class AbstractDiscretizedScheme implements DiscretizedPlaneInter
         Integer[] noiseValueCountArray = StatisticTool.countHistogramNumber(this.noiseIntegerPointTypeList,valueList);
         Double[] initialValueCountArray = new Double[this.transformMatrix[0].length];
         double initialValue = 1.0 / initialValueCountArray.length;
-        BasicArray.setDoubleArrayTo(initialValueCountArray, initialValue);
+        BasicArrayUtil.setDoubleArrayTo(initialValueCountArray, initialValue);
         Double[] resultRatio = StatisticTool.getTwoDimensionalExpectationMaximizationSmooth(this.transformMatrix, noiseValueCountArray, Constant.DEFAULT_STOP_VALUE_TAO, initialValueCountArray, this.kParameter, this.sizeD, this.sizeD);
         TreeMap<TwoDimensionalIntegerPoint, Double> resultMap = new TreeMap<>();
         for (int i = 0; i < this.rawIntegerPointTypeList.size(); i++) {

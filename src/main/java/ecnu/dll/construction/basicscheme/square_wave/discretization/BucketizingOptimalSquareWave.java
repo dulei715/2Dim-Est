@@ -1,8 +1,8 @@
 package ecnu.dll.construction.basicscheme.square_wave.discretization;
 
-import cn.edu.ecnu.basic.BasicArray;
-import cn.edu.ecnu.basic.RandomUtil;
-import cn.edu.ecnu.statistic.StatisticTool;
+import cn.edu.dll.basic.BasicArrayUtil;
+import cn.edu.dll.basic.RandomUtil;
+import cn.edu.dll.statistic.StatisticTool;
 import ecnu.dll.construction._config.Constant;
 import ecnu.dll.construction.basicscheme.square_wave.continued.SquareWave;
 
@@ -49,7 +49,7 @@ public class BucketizingOptimalSquareWave extends SquareWave<Integer> {
         }
 
         this.initAverageRatio = new Double[this.inputSize];
-        BasicArray.setDoubleArrayTo(this.initAverageRatio, 1.0 / this.initAverageRatio.length);
+        BasicArrayUtil.setDoubleArrayTo(this.initAverageRatio, 1.0 / this.initAverageRatio.length);
 
     }
 

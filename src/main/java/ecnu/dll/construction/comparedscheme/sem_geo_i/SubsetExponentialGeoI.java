@@ -1,17 +1,16 @@
 package ecnu.dll.construction.comparedscheme.sem_geo_i;
 
 import Jama.Matrix;
-import cn.edu.ecnu.basic.BasicArray;
-import cn.edu.ecnu.basic.BasicCalculation;
-import cn.edu.ecnu.basic.BasicSearch;
-import cn.edu.ecnu.basic.RandomUtil;
-import cn.edu.ecnu.basic.cumulate.CumulativeFunction;
-import cn.edu.ecnu.collection.ListUtils;
-import cn.edu.ecnu.collection.SetUtils;
-import cn.edu.ecnu.differential_privacy.cdp.basic_struct.DistanceTor;
-import cn.edu.ecnu.differential_privacy.ldp.consistent.Normalization;
-import cn.edu.ecnu.math.MathUtils;
-import cn.edu.ecnu.struct.point.TwoDimensionalIntegerPoint;
+import cn.edu.dll.basic.BasicArrayUtil;
+import cn.edu.dll.basic.BasicCalculation;
+import cn.edu.dll.basic.BasicSearch;
+import cn.edu.dll.basic.RandomUtil;
+import cn.edu.dll.basic.cumulate.CumulativeFunction;
+import cn.edu.dll.collection.ListUtils;
+import cn.edu.dll.collection.SetUtils;
+import cn.edu.dll.differential_privacy.cdp.basic_struct.DistanceTor;
+import cn.edu.dll.differential_privacy.ldp.consistent.Normalization;
+import cn.edu.dll.math.MathUtils;
 import ecnu.dll.construction.comparedscheme.sem_geo_i.tool.SubsetExponentialGeoITool;
 
 import java.util.*;
@@ -103,7 +102,7 @@ public class SubsetExponentialGeoI<X> {
     private void initializeTotalDistanceAndElementGivenDistance() throws InstantiationException, IllegalAccessException {
         // 每个X有一个treeMap，用于记录距自己不同距离对应的其他X的集合。该数组下标代表X在inputList中的下标
         TreeMap<Double, List<Integer>>[] treeMapArray = new TreeMap[inputElementList.size()];
-        BasicArray.setToEmptyGroup(treeMapArray, TreeMap.class);
+        BasicArrayUtil.setToEmptyGroup(treeMapArray, TreeMap.class);
         int inputListSize = this.inputElementList.size();
 
         X elementA, elementB;
@@ -175,7 +174,7 @@ public class SubsetExponentialGeoI<X> {
         Double tempResult, tempValue;
         X elemA, elemB;
 
-        BasicArray.setIntArrayTo(this.discount, 0);
+        BasicArrayUtil.setIntArrayTo(this.discount, 0);
         for (int i = 0; i < m; i++) {
             res = m;
             former = MathUtils.getBinomialResult(m, this.setSizeK);
@@ -253,7 +252,7 @@ public class SubsetExponentialGeoI<X> {
 //        }
 
         List<Integer> positionList = RandomUtil.getRandomIntegerArrayWithoutRepeat(0, sizeeq - 1, eqnum);
-        resultPartList = BasicArray.getElementListInGivenIndexes(smallestDistanceElementsIndexList, positionList);
+        resultPartList = BasicArrayUtil.getElementListInGivenIndexes(smallestDistanceElementsIndexList, positionList);
         resultSet.addAll(resultPartList);
 
 //        if (sizegt < this.setSizeK - eqnum) {
@@ -263,7 +262,7 @@ public class SubsetExponentialGeoI<X> {
 //            System.out.println("sizegt=0");
 //        }
         positionList = RandomUtil.getRandomIntegerArrayWithoutRepeat(0, sizegt - 1, this.setSizeK - eqnum);
-        resultPartList = BasicArray.getElementListInGivenIndexes(allLargerDistanceElementsIndexList, positionList);
+        resultPartList = BasicArrayUtil.getElementListInGivenIndexes(allLargerDistanceElementsIndexList, positionList);
         resultSet.addAll(resultPartList);
 
         return resultSet;
@@ -287,11 +286,11 @@ public class SubsetExponentialGeoI<X> {
         int z = this.dis.length;
         int res, former, tempBinomialValue, tempElementIndex;
         double[][] h = new double[m][m];
-        BasicArray.setDoubleArrayToZero(h);
+        BasicArrayUtil.setDoubleArrayToZero(h);
         Matrix noiseStatisticMatrix, matrixH, resultMatrix;
         double partmass;
         double[][] noiseStatistic = new double[1][m];
-        BasicArray.setDoubleArrayToZero(noiseStatistic);
+        BasicArrayUtil.setDoubleArrayToZero(noiseStatistic);
         for (int i = 0; i < m; i++) {
             res = m - 1;
             former = MathUtils.getBinomialResult(res, this.setSizeK - 1);

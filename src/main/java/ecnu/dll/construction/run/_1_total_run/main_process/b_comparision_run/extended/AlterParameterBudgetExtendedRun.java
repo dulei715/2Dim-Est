@@ -1,7 +1,7 @@
 package ecnu.dll.construction.run._1_total_run.main_process.b_comparision_run.extended;
 
-import cn.edu.ecnu.result.ExperimentResult;
-import cn.edu.ecnu.struct.point.TwoDimensionalIntegerPoint;
+import cn.edu.dll.result.ExperimentResult;
+import cn.edu.dll.struct.point.TwoDimensionalIntegerPoint;
 import ecnu.dll.construction._config.Constant;
 import ecnu.dll.construction._config.Initialized;
 import ecnu.dll.construction.newscheme.discretization.tool.DiscretizedDiskSchemeTool;

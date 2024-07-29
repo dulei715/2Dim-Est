@@ -1,7 +1,7 @@
 package ecnu.dll.construction.dataset;
 
-import cn.edu.ecnu.io.write.PointWrite;
-import cn.edu.ecnu.struct.point.TwoDimensionalDoublePoint;
+import cn.edu.dll.io.write.PointWrite;
+import cn.edu.dll.struct.point.TwoDimensionalDoublePoint;
 import com.csvreader.CsvReader;
 import ecnu.dll.construction._config.Constant;
 
@@ -11,7 +11,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Preprocess {
-//    public List<TwoDimensionalDoublePoint>[] pointList;
 
 
     public static final String keyLatitudeCrime = "Latitude";

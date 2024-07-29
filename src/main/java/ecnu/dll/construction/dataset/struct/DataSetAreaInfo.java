@@ -1,6 +1,7 @@
 package ecnu.dll.construction.dataset.struct;
 
-import cn.edu.ecnu.constant_values.ConstantValues;
+
+import cn.edu.dll.constant_values.ConstantValues;
 
 public class DataSetAreaInfo {
     private String dataSetPath = null;

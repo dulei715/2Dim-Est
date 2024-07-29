@@ -1,10 +1,10 @@
 package ecnu.dll.construction.analysis.e_to_lp.abstract_class;
 
-import cn.edu.ecnu.basic.BasicArray;
-import cn.edu.ecnu.collection.ListUtils;
-import cn.edu.ecnu.collection.SetUtils;
-import cn.edu.ecnu.differential_privacy.cdp.basic_struct.DistanceTor;
-import cn.edu.ecnu.struct.point.TwoDimensionalIntegerPoint;
+import cn.edu.dll.basic.BasicArrayUtil;
+import cn.edu.dll.collection.ListUtils;
+import cn.edu.dll.collection.SetUtils;
+import cn.edu.dll.differential_privacy.cdp.basic_struct.DistanceTor;
+import cn.edu.dll.struct.point.TwoDimensionalIntegerPoint;
 import ecnu.dll.construction.analysis.e_to_lp.basic.TransformLocalPrivacy;
 import ecnu.dll.construction.comparedscheme.sem_geo_i.discretization.DiscretizedSubsetExponentialGeoI;
 
@@ -67,7 +67,7 @@ public abstract class GeoILocalPrivacy extends TransformLocalPrivacy<TwoDimensio
         this.intermediateIndexSetList = SetUtils.getSubsetList(this.originalSetList.size(), this.setSizeK, 0);
         this.intermediateIndexSetList.add(new ArrayList<>());
         // 这里的intermediateSetList是中间元素的索引的索引，而非中间元素
-        this.intermediateSetList = BasicArray.getIncreaseIntegerNumberList(0, 1, this.intermediateIndexSetList.size() - 1);
+        this.intermediateSetList = BasicArrayUtil.getIncreaseIntegerNumberList(0, 1, this.intermediateIndexSetList.size() - 1);
         this.initializeProbabilityMatrix();
     }
 
@@ -83,7 +83,7 @@ public abstract class GeoILocalPrivacy extends TransformLocalPrivacy<TwoDimensio
         this.intermediateIndexSetList = SetUtils.getSubsetList(this.originalSetList.size(), this.setSizeK, 0);
         this.intermediateIndexSetList.add(new ArrayList<>());
         // 这里的intermediateSetList是中间元素的索引的索引，而非中间元素
-        this.intermediateSetList = BasicArray.getIncreaseIntegerNumberList(0, 1, this.intermediateIndexSetList.size() - 1);
+        this.intermediateSetList = BasicArrayUtil.getIncreaseIntegerNumberList(0, 1, this.intermediateIndexSetList.size() - 1);
         this.initializeProbabilityMatrix();
     }
 
@@ -98,7 +98,7 @@ public abstract class GeoILocalPrivacy extends TransformLocalPrivacy<TwoDimensio
         this.intermediateIndexSetList = SetUtils.getSubsetList(this.originalSetList.size(), this.setSizeK, 0);
         this.intermediateIndexSetList.add(new ArrayList<>());
         // 这里的intermediateSetList是中间元素的索引的索引，而非中间元素
-        this.intermediateSetList = BasicArray.getIncreaseIntegerNumberList(0, 1, this.intermediateIndexSetList.size() - 1);
+        this.intermediateSetList = BasicArrayUtil.getIncreaseIntegerNumberList(0, 1, this.intermediateIndexSetList.size() - 1);
         this.initializeProbabilityMatrix();
     }
 

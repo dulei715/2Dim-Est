@@ -1,9 +1,9 @@
 package ecnu.dll.construction.newscheme.discretization.tool;
 
-import cn.edu.ecnu.collection.ArraysUtils;
-import cn.edu.ecnu.collection.SetUtils;
-import cn.edu.ecnu.struct.point.TwoDimensionalIntegerPoint;
-import cn.edu.ecnu.struct.point.TwoDimensionalIntegerPointUtils;
+import cn.edu.dll.basic.BasicArrayUtil;
+import cn.edu.dll.collection.SetUtils;
+import cn.edu.dll.struct.point.TwoDimensionalIntegerPoint;
+import cn.edu.dll.struct.point.TwoDimensionalIntegerPointUtils;
 import ecnu.dll.construction.newscheme.discretization.struct.ThreePartsStruct;
 
 import java.util.*;
@@ -42,7 +42,7 @@ public class DiscretizedDiskSchemeTool {
         differenceArray[0] = Math.abs(centerCell.getXIndex() - judgeCell.getXIndex());
         differenceArray[1] = Math.abs(centerCell.getYIndex() - judgeCell.getYIndex());
         if (differenceArray[0] < differenceArray[1]) {
-            ArraysUtils.swap(differenceArray, 0, 1);
+            BasicArrayUtil.swap(differenceArray, 0, 1);
         }
         return new TwoDimensionalIntegerPoint(differenceArray[0], differenceArray[1]);
     }

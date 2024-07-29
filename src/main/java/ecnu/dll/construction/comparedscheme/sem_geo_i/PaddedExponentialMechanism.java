@@ -1,10 +1,11 @@
 package ecnu.dll.construction.comparedscheme.sem_geo_i;
 
-import cn.edu.ecnu.basic.BasicArray;
-import cn.edu.ecnu.basic.RandomUtil;
-import cn.edu.ecnu.differential_privacy.cdp.basic_struct.DistanceAble;
-import cn.edu.ecnu.differential_privacy.cdp.exponential_mechanism.SimpleLDPExponentialMechanism;
-import cn.edu.ecnu.differential_privacy.cdp.exponential_mechanism.utility.UtilityFunction;
+
+import cn.edu.dll.basic.BasicArrayUtil;
+import cn.edu.dll.basic.RandomUtil;
+import cn.edu.dll.differential_privacy.cdp.basic_struct.DistanceAble;
+import cn.edu.dll.differential_privacy.cdp.exponential_mechanism.SimpleLDPExponentialMechanism;
+import cn.edu.dll.differential_privacy.cdp.exponential_mechanism.utility.UtilityFunction;
 
 import java.util.List;
 
@@ -30,7 +31,7 @@ public class PaddedExponentialMechanism<X extends DistanceAble<X>, R> extends Si
 
     @Override
     public R disturb(X inputElement) {
-        int inputElementIndex = BasicArray.getFirstFindValueIndex(super.inputList, inputElement);
+        int inputElementIndex = BasicArrayUtil.getFirstFindValueIndex(super.inputList, inputElement);
         Double[] cumulationProbabilityArray = new Double[]{0.0, super.moleculeSum[inputElementIndex] / this.omega};
         Integer index = RandomUtil.getRandomIndexGivenCumulatedPoint(cumulationProbabilityArray);
         if (index == 0) {
