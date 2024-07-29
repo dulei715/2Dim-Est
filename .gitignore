@@ -27,5 +27,6 @@ replay_pid*
 target/
 .idea/
 *.iml
+*.jar
 
 .DS_Store

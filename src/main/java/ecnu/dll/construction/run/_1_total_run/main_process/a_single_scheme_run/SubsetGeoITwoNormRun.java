@@ -77,6 +77,7 @@ public class SubsetGeoITwoNormRun {
         return experimentResult;
 
     }
+    @Deprecated
     public static ExperimentResult runWithoutWassersteinDistance(final List<TwoDimensionalIntegerPoint> integerPointList, final TreeMap<TwoDimensionalIntegerPoint, Double> rawDataStatistic, double cellLength, double inputLength, double epsilon, double xBound, double yBound) {
         DiscretizedSubsetExponentialGeoI scheme = null;
         ExperimentResult experimentResult = null;

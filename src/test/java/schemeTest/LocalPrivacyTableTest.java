@@ -6,7 +6,7 @@ import org.junit.Test;
 
 public class LocalPrivacyTableTest {
 
-    public static String basicPath = Constant.rootPath;
+    public static String basicPath = Constant.projectPath;
 
     @Test
     public void fun1() {

@@ -19,9 +19,11 @@ import java.util.Properties;
 
 public class Constant {
 
-//    public static String rootPath = System.getProperty("user.dir");
-    public static String rootPath = "E:\\1.学习\\4.数据集\\2.dataset_for_spatial_estimation";
-    public static String propertyPath = System.getProperty("user.dir") + ConstantValues.FILE_SPLIT + "config" + ConstantValues.FILE_SPLIT + "parameter.properties";;
+    public static String projectPath = System.getProperty("user.dir");
+//    public static String rootPath = "E:\\1.学习\\4.数据集\\2.dataset_for_spatial_estimation";
+
+//    public static String propertyPath = System.getProperty("user.dir") + ConstantValues.FILE_SPLIT + "config" + ConstantValues.FILE_SPLIT + "parameter.properties";;
+    public static String propertyPath;
 
     // 实验固定基本参数
     public static final int eliminateDoubleErrorIndexSize = 2;
@@ -163,7 +165,7 @@ public class Constant {
 
     static {
 
-
+        propertyPath = StringUtil.join(ConstantValues.FILE_SPLIT, projectPath, "deployment", "config", "parameter.properties");
         Properties properties = new Properties();
         try {
             properties.load(new FileInputStream(propertyPath));
@@ -197,19 +199,19 @@ public class Constant {
 
 
     // 实验相对路径
-    public static final String datasetPath = StringUtil.join(ConstantValues.FILE_SPLIT, rootPath, "0_dataset");
-    public static final String basicResultPath = StringUtil.join(ConstantValues.FILE_SPLIT, rootPath, "result");
-    public static final String extendedResultPath = StringUtil.join(ConstantValues.FILE_SPLIT, rootPath, "result_extended");
+    public static final String datasetPath = StringUtil.join(ConstantValues.FILE_SPLIT, projectPath, "0_dataset");
+    public static final String basicResultPath = StringUtil.join(ConstantValues.FILE_SPLIT, projectPath, "result");
+    public static final String extendedResultPath = StringUtil.join(ConstantValues.FILE_SPLIT, projectPath, "result_extended");
 
-    public static final String damBudgetLPTableGeneratedTotalPath = StringUtil.join(ConstantValues.FILE_SPLIT, rootPath, "budgetLPTable", "damBudgetLPTable.txt");
-    public static final String damBudgetLPTableGeneratedPathOnlyForBasic = StringUtil.join(ConstantValues.FILE_SPLIT, rootPath, "budgetLPTable", "damBudgetLPTable_basic.txt");
-    public static final String damBudgetLPTableGeneratedPathOnlyForExtended = StringUtil.join(ConstantValues.FILE_SPLIT, rootPath, "budgetLPTable", "damBudgetLPTable_extended.txt");
-    public static final String damBudgetLPTableGeneratedPathOnlyForKLDivergence = StringUtil.join(ConstantValues.FILE_SPLIT, rootPath, "budgetLPTable", "damBudgetLPTable2.txt");
+    public static final String damBudgetLPTableGeneratedTotalPath = StringUtil.join(ConstantValues.FILE_SPLIT, projectPath, "budgetLPTable", "damBudgetLPTable.txt");
+    public static final String damBudgetLPTableGeneratedPathOnlyForBasic = StringUtil.join(ConstantValues.FILE_SPLIT, projectPath, "budgetLPTable", "damBudgetLPTable_basic.txt");
+    public static final String damBudgetLPTableGeneratedPathOnlyForExtended = StringUtil.join(ConstantValues.FILE_SPLIT, projectPath, "budgetLPTable", "damBudgetLPTable_extended.txt");
+    public static final String damBudgetLPTableGeneratedPathOnlyForKLDivergence = StringUtil.join(ConstantValues.FILE_SPLIT, projectPath, "budgetLPTable", "damBudgetLPTable2.txt");
 //    public static final String damBudgetLPLowerBoundTableGeneratedPathOnlyForKLDivergence = StringUtil.join(ConstantValues.FILE_SPLIT, rootPath, "budgetLPTable", "bound", "damBudgetLPTableLowerBound2.txt");
-    public static final String subsetGeoIBudgetLPTableGeneratedTotalPath = StringUtil.join(ConstantValues.FILE_SPLIT, rootPath, "budgetLPTable", "geoIBudgetLPTable.txt");
-    public static final String subsetGeoIBudgetLPTableGeneratedPathOnlyForBasic = StringUtil.join(ConstantValues.FILE_SPLIT, rootPath, "budgetLPTable", "geoIBudgetLPTable_basic.txt");
-    public static final String subsetGeoIBudgetLPTableGeneratedPathOnlyForExtended = StringUtil.join(ConstantValues.FILE_SPLIT, rootPath, "budgetLPTable", "geoIBudgetLPTable_extended.txt");
-    public static final String subsetGeoIBudgetLPTableGeneratedPathOnlyForKLDivergence = StringUtil.join(ConstantValues.FILE_SPLIT, rootPath, "budgetLPTable", "geoIBudgetLPTable2.txt");
+    public static final String subsetGeoIBudgetLPTableGeneratedTotalPath = StringUtil.join(ConstantValues.FILE_SPLIT, projectPath, "budgetLPTable", "geoIBudgetLPTable.txt");
+    public static final String subsetGeoIBudgetLPTableGeneratedPathOnlyForBasic = StringUtil.join(ConstantValues.FILE_SPLIT, projectPath, "budgetLPTable", "geoIBudgetLPTable_basic.txt");
+    public static final String subsetGeoIBudgetLPTableGeneratedPathOnlyForExtended = StringUtil.join(ConstantValues.FILE_SPLIT, projectPath, "budgetLPTable", "geoIBudgetLPTable_extended.txt");
+    public static final String subsetGeoIBudgetLPTableGeneratedPathOnlyForKLDivergence = StringUtil.join(ConstantValues.FILE_SPLIT, projectPath, "budgetLPTable", "geoIBudgetLPTable2.txt");
 //    public static final String subsetGeoIBudgetLPUpperBoundTableGeneratedPathOnlyForKLDivergence = StringUtil.join(ConstantValues.FILE_SPLIT, rootPath, "budgetLPTable", "bound", "geoIBudgetLPTableUpperBound2.txt");
 
 
@@ -459,7 +461,7 @@ public class Constant {
     public static final DataSetAreaInfo twoDimMultipleCenterNormalDataSet = new DataSetAreaInfo(multiNormalPath, multiNormalKey, -4.25, -4.32, 10.76);
 
     public static void main(String[] args) {
-        System.out.println(rootPath);
+        System.out.println(projectPath);
         System.out.println(propertyPath);
         MyPrint.showSplitLine("*", 150);
 
