@@ -22,7 +22,7 @@ public class Preprocess {
 //            Constant.datasetPath + "\\test\\chicago_point_B.txt",
 //            Constant.datasetPath + "\\test\\chicago_point_C.txt"
 //    };
-    public String outputPath = Constant.datasetPath + "\\1_real\\1_crime\\chicago_point.txt";
+    public String outputPath = Constant.basicDatasetPath + "\\1_real\\1_crime\\chicago_point.txt";
 
 //    public String path = "F:\\dataset\\nyc\\2016_green_taxi_trip_data.csv";
 //    public String keyLatitude = "Pickup_latitude";
@@ -129,13 +129,13 @@ public class Preprocess {
 //        String inputPathChicago = Constant.datasetPath + "\\1_real\\1_crime\\Chicago_Crimes_2022_01_06.csv";
 //        String outputPathChicago = Constant.datasetPath + "\\1_real\\1_crime\\chicago_point.txt";
 //        readAndOutputData(inputPathChicago, outputPathChicago, Preprocess.keyLatitudeCrime, Preprocess.keyLongitudeCrime);
-        String inputPathSyn = Constant.datasetPath + "\\1_real\\2_nyc\\2016_green_taxi_trip_data.csv";
-        String outputPathSyn = Constant.datasetPath + "\\1_real\\2_nyc\\nyc_point.txt";
+        String inputPathSyn = Constant.basicDatasetPath + "\\1_real\\2_nyc\\2016_green_taxi_trip_data.csv";
+        String outputPathSyn = Constant.basicDatasetPath + "\\1_real\\2_nyc\\nyc_point.txt";
         readAndOutputData(inputPathSyn, outputPathSyn, Preprocess.keyLatitudeNyc, Preprocess.keyLongitudeNyc);
     }
     public static void main(String[] args) throws IOException {
-        String inputPathSyn = Constant.datasetPath + "\\1_real\\2_nyc\\2016_green_taxi_trip_data.csv";
-        String outputPathSyn = Constant.datasetPath + "\\1_real\\2_nyc\\nyc_point_part.txt";
+        String inputPathSyn = Constant.basicDatasetPath + "\\1_real\\2_nyc\\2016_green_taxi_trip_data.csv";
+        String outputPathSyn = Constant.basicDatasetPath + "\\1_real\\2_nyc\\nyc_point_part.txt";
         readAndOutputDataForNYC(inputPathSyn, outputPathSyn, Preprocess.keyLatitudeNyc, Preprocess.keyLongitudeNyc);
     }
 

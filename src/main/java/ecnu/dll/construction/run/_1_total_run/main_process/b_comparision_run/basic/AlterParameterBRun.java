@@ -1,7 +1,7 @@
 package ecnu.dll.construction.run._1_total_run.main_process.b_comparision_run.basic;
 
-import cn.edu.ecnu.result.ExperimentResult;
-import cn.edu.ecnu.struct.point.TwoDimensionalIntegerPoint;
+import cn.edu.dll.result.ExperimentResult;
+import cn.edu.dll.struct.point.TwoDimensionalIntegerPoint;
 import ecnu.dll.construction._config.Constant;
 import ecnu.dll.construction.newscheme.discretization.tool.DiscretizedDiskSchemeTool;
 import ecnu.dll.construction.run._1_total_run.main_process.a_single_scheme_run.DAMRun;
@@ -27,21 +27,17 @@ public class AlterParameterBRun {
         double epsilon = Constant.DEFAULT_PRIVACY_BUDGET_for_b_change;
 
         /*
-            3. 分别针对Rhombus和Disk方案计算变化的整数b值
+            3. 针对Disk方案计算变化的整数b值
          */
         double[] alterSizeBRatioArray = Constant.ALTER_B_LENGTH_RATIO_ARRAY;
-//        int rhombusOptimalSizeB;
         int diskOptimalSizeB;
         int inputIntegerLengthSize = (int)Math.ceil(inputLengthSize);
-//        rhombusOptimalSizeB = DiscretizedRhombusSchemeTool.getOptimalSizeBOfRhombusScheme(epsilon, inputIntegerLengthSize);
         diskOptimalSizeB = DiscretizedDiskSchemeTool.getOptimalSizeBOfDiskScheme(epsilon, inputIntegerLengthSize);
         int[] alterRhombusSizeB = new int[arraySize], alterDiskSizeB = new int[arraySize];
         for (int i = 0; i < arraySize; i++) {
-//            alterRhombusSizeB[i] = (int)Math.round(rhombusOptimalSizeB * alterSizeBRatioArray[i]);
             alterDiskSizeB[i] = (int)Math.round(diskOptimalSizeB * alterSizeBRatioArray[i]);
         }
-//        System.out.println("R's best b is " + rhombusOptimalSizeB);
-        System.out.println("D's best b is " + diskOptimalSizeB);
+//        System.out.println("D's best b is " + diskOptimalSizeB);
         /*
             4. 设置邻居属性smooth的参与率
          */
@@ -49,21 +45,16 @@ public class AlterParameterBRun {
 
 
         /*
-            针对Rhombus和Disk分别执行在b变化时的估计，并返回对应的wasserstein距离
+            针对Disk执行在b变化时的估计，并返回对应的wasserstein距离
          */
         Map<String, List<ExperimentResult>> alterParameterMap = new HashMap<>();
         String rhombusKey = Constant.rhombusSchemeKey, diskKey = Constant.diskSchemeKey;
         ExperimentResult tempRhombusExperimentResult, tempDiskExperimentResult;
         List<ExperimentResult> rhombusExperimentResultList = new ArrayList<>(), diskExperimentResultList = new ArrayList<>();
         for (int i = 0; i < arraySize; i++) {
-//            tempRhombusExperimentResult = RAMRun.run(integerPointList, rawDataStatistic, gridLength, inputSideLength, alterRhombusSizeB[i]*gridLength, epsilon, kParameter, xBound, yBound);
-//            rhombusExperimentResultList.add(tempRhombusExperimentResult);
             tempDiskExperimentResult = DAMRun.run(integerPointList, rawDataStatistic, gridLength, inputSideLength, alterDiskSizeB[i]*gridLength, epsilon, kParameter, xBound, yBound);
             diskExperimentResultList.add(tempDiskExperimentResult);
-            //todo: 这里不运行ram，为了保证结果列标，这里把ram的值赋值为dam的值
-            rhombusExperimentResultList.add(tempDiskExperimentResult);
         }
-        alterParameterMap.put(rhombusKey, rhombusExperimentResultList);
         alterParameterMap.put(diskKey, diskExperimentResultList);
         return alterParameterMap;
 

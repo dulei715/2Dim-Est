@@ -1,7 +1,7 @@
 package mechanism_test;
 
-import cn.edu.ecnu.basic.BasicArray;
-import cn.edu.ecnu.struct.point.TwoDimensionalIntegerPoint;
+import cn.edu.dll.basic.BasicArrayUtil;
+import cn.edu.dll.struct.point.TwoDimensionalIntegerPoint;
 import ecnu.dll.construction._config.Constant;
 import ecnu.dll.construction.basicscheme.geo_i.DiscretizationGeoI;
 import ecnu.dll.construction.comparedscheme.sem_geo_i.tool.SubsetExponentialGeoITool;
@@ -86,7 +86,7 @@ public class GeoITest {
         int maxSizeD = 40;
 //        int maxSizeD = 25;
 //        double[] epsilonArray = Constant.ALTER_PRIVACY_BUDGET_ARRAY;
-        double[] epsilonArray = BasicArray.getIncreasedoubleNumberArray(0.5, 0.01, 4, Constant.eliminateDoubleErrorIndexSize);
+        double[] epsilonArray = BasicArrayUtil.getIncreasedoubleNumberArray(0.5, 0.01, 4, Constant.eliminateDoubleErrorIndexSize);
 //        double[] epsilonArray = BasicArray.getIncreasedoubleNumberArray(2.6, 0.01, 2.6);
 //        double[] epsilonArray = BasicArray.getIncreasedoubleNumberArray(1, 0.01, 1);
 //        double[] epsilonArray = BasicArray.getIncreasedoubleNumberArray(0.61, 0.01, 3.3);

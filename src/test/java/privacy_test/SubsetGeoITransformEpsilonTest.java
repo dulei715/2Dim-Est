@@ -1,8 +1,8 @@
 package privacy_test;
 
-import cn.edu.ecnu.differential_privacy.cdp.basic_struct.DistanceTor;
-import cn.edu.ecnu.differential_privacy.cdp.basic_struct.impl.TwoNormTwoDimensionalIntegerPointDistanceTor;
-import cn.edu.ecnu.struct.point.TwoDimensionalIntegerPoint;
+import cn.edu.dll.differential_privacy.cdp.basic_struct.DistanceTor;
+import cn.edu.dll.differential_privacy.cdp.basic_struct.impl.TwoNormTwoDimensionalIntegerPointDistanceTor;
+import cn.edu.dll.struct.point.TwoDimensionalIntegerPoint;
 import ecnu.dll.construction.analysis.lp_to_e.version_1.SubsetGeoITransformEpsilon;
 import ecnu.dll.construction.comparedscheme.sem_geo_i.discretization.DiscretizedSubsetExponentialGeoI;
 import org.junit.Test;

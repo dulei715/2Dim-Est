@@ -1,9 +1,9 @@
 package ecnu.dll.construction.newscheme.discretization;
 
-import cn.edu.ecnu.basic.BasicArray;
-import cn.edu.ecnu.basic.RandomUtil;
-import cn.edu.ecnu.collection.SetUtils;
-import cn.edu.ecnu.struct.point.TwoDimensionalIntegerPoint;
+import cn.edu.dll.basic.BasicArrayUtil;
+import cn.edu.dll.basic.RandomUtil;
+import cn.edu.dll.collection.SetUtils;
+import cn.edu.dll.struct.point.TwoDimensionalIntegerPoint;
 import ecnu.dll.construction.newscheme.discretization.state.DiscretizedDiskPlaneState;
 import ecnu.dll.construction.newscheme.discretization.tool.DiscretizedDiskSchemeTool;
 
@@ -443,7 +443,7 @@ public class DiscretizedDiskNonShrinkScheme extends AbstractDiscretizedScheme {
 
                 // 随机返回外边界cell
                 case 2:
-                    Double[] residualOuterAreaSizeArray = BasicArray.getLinearTransform(this.highProbabilityBorderCellAreaSizeList, -1, 1);
+                    Double[] residualOuterAreaSizeArray = BasicArrayUtil.getLinearTransform(this.highProbabilityBorderCellAreaSizeList, -1, 1);
                     randomIndex = RandomUtil.getRandomIndexGivenCountPoint(residualOuterAreaSizeArray);
                     chosenPair = this.highProbabilityBorderCellIndexList.get(randomIndex);
                     tempX = chosenPair.getXIndex();

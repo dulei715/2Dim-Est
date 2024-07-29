@@ -1,7 +1,7 @@
 package ecnu.dll.construction.run._1_total_run.main_process.d_total_run;
 
-import cn.edu.ecnu.io.print.MyPrint;
-import cn.edu.ecnu.result.ExperimentResult;
+import cn.edu.dll.io.print.MyPrint;
+import cn.edu.dll.result.ExperimentResult;
 import ecnu.dll.construction.dataset.struct.DataSetAreaInfo;
 import ecnu.dll.construction.run._1_total_run.main_process.c_data_set_run.DataSetRun;
 

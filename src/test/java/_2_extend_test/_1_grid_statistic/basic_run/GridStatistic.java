@@ -1,10 +1,10 @@
 package _2_extend_test._1_grid_statistic.basic_run;
 
-import cn.edu.ecnu.io.write.CSVWrite;
-import cn.edu.ecnu.statistic.StatisticTool;
-import cn.edu.ecnu.struct.grid.Grid;
-import cn.edu.ecnu.struct.point.TwoDimensionalDoublePoint;
-import cn.edu.ecnu.struct.point.TwoDimensionalIntegerPoint;
+import cn.edu.dll.io.write.CSVWrite;
+import cn.edu.dll.statistic.StatisticTool;
+import cn.edu.dll.struct.grid.Grid;
+import cn.edu.dll.struct.point.TwoDimensionalDoublePoint;
+import cn.edu.dll.struct.point.TwoDimensionalIntegerPoint;
 import ecnu.dll.construction._config.Constant;
 import ecnu.dll.construction.newscheme.discretization.tool.DiscretizedSchemeTool;
 

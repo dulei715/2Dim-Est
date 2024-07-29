@@ -1,6 +1,6 @@
 package ecnu.dll.construction.newscheme.discretization.struct;
 
-import cn.edu.ecnu.struct.point.TwoDimensionalIntegerPoint;
+import cn.edu.dll.struct.point.TwoDimensionalIntegerPoint;
 import ecnu.dll.construction.newscheme.discretization.tool.DiscretizedDiskSchemeTool;
 
 import java.util.*;

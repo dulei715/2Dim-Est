@@ -1,10 +1,9 @@
 package schemeTest;
 
-import cn.edu.ecnu.basic.StringUtil;
-import cn.edu.ecnu.constant_values.ConstantValues;
-import cn.edu.ecnu.differential_privacy.accuracy.metrics.distance_quantities.TwoDimensionalWassersteinDistance;
-import cn.edu.ecnu.io.read.CSVRead;
-import cn.edu.ecnu.struct.point.TwoDimensionalIntegerPoint;
+import cn.edu.dll.basic.StringUtil;
+import cn.edu.dll.constant_values.ConstantValues;
+import cn.edu.dll.io.read.CSVRead;
+import cn.edu.dll.struct.point.TwoDimensionalIntegerPoint;
 import ecnu.dll.construction._config.Constant;
 import edu.ecnu.dll.cpl.expection.CPLException;
 import org.junit.Test;

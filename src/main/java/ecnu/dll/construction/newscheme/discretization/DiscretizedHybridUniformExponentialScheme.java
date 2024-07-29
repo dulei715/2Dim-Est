@@ -1,11 +1,10 @@
 package ecnu.dll.construction.newscheme.discretization;
 
 
-import cn.edu.ecnu.basic.BasicArray;
-import cn.edu.ecnu.basic.RandomUtil;
-import cn.edu.ecnu.collection.SetUtils;
-import cn.edu.ecnu.struct.pair.IdentityPair;
-import cn.edu.ecnu.struct.point.TwoDimensionalIntegerPoint;
+import cn.edu.dll.basic.BasicArrayUtil;
+import cn.edu.dll.basic.RandomUtil;
+import cn.edu.dll.collection.SetUtils;
+import cn.edu.dll.struct.point.TwoDimensionalIntegerPoint;
 import ecnu.dll.construction.newscheme.discretization.struct.Annular;
 import ecnu.dll.construction.newscheme.discretization.struct.AnnularIndex;
 import ecnu.dll.construction.newscheme.discretization.struct.MultipleRelativeElement;
@@ -427,7 +426,7 @@ public class DiscretizedHybridUniformExponentialScheme extends AbstractDiscretiz
 
                 // 随机返回外边界cell
                 case 2:
-                    Double[] residualOuterAreaSizeArray = BasicArray.getLinearTransform(this.outerCellAreaSizeList, -1, 1);
+                    Double[] residualOuterAreaSizeArray = BasicArrayUtil.getLinearTransform(this.outerCellAreaSizeList, -1, 1);
                     randomIndex = RandomUtil.getRandomIndexGivenCountPoint(residualOuterAreaSizeArray);
                     chosenPair = this.outerCellIndexList.get(randomIndex);
                     tempX = chosenPair.getXIndex();

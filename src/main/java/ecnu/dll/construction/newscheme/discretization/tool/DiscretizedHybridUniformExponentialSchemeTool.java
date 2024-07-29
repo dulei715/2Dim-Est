@@ -1,7 +1,6 @@
 package ecnu.dll.construction.newscheme.discretization.tool;
 
-import cn.edu.ecnu.struct.pair.IdentityPair;
-import cn.edu.ecnu.struct.point.TwoDimensionalIntegerPoint;
+import cn.edu.dll.struct.point.TwoDimensionalIntegerPoint;
 import ecnu.dll.construction.newscheme.discretization.struct.Annular;
 import ecnu.dll.construction.newscheme.discretization.struct.AreaMessage;
 

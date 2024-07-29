@@ -30,4 +30,11 @@ public class ConfigureUtils {
         }
         throw new RuntimeException("No valid data set path!");
     }
+
+    public static String getDatasetFileName(String tagName) {
+        Document document = Constant.xmlConfigure.getDocument();
+        Element element = (Element)document.selectNodes("//datasets/fileName[@name='" + tagName + "']").get(0);
+        return element.getTextTrim();
+    }
+
 }

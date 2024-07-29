@@ -14,4 +14,8 @@
         <fileName name="zip_f_2">2_two_zip_f</fileName>
         <fileName name="norm_multiple_center_2">3_two_normal_multiple_center</fileName>
     </datasets>
+    <output>
+        <datasetRelativePath name="basic_result_path">output</datasetRelativePath>
+        <datasetRelativePath name="extend_result_path">output_extend</datasetRelativePath>
+    </output>
 </root>

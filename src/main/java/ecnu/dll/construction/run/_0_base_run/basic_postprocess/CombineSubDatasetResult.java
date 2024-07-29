@@ -1,11 +1,10 @@
 package ecnu.dll.construction.run._0_base_run.basic_postprocess;
 
-import cn.edu.ecnu.basic.StringUtil;
-import cn.edu.ecnu.collection.ArraysUtils;
-import cn.edu.ecnu.constant_values.ConstantValues;
-import cn.edu.ecnu.io.print.MyPrint;
-import cn.edu.ecnu.result.FileTool;
-import cn.edu.ecnu.struct.result.ColumnBean;
+import cn.edu.dll.basic.BasicArrayUtil;
+import cn.edu.dll.basic.StringUtil;
+import cn.edu.dll.constant_values.ConstantValues;
+import cn.edu.dll.result.FileTool;
+import cn.edu.dll.struct.result.ColumnBean;
 import ecnu.dll.construction._config.Constant;
 
 import java.io.File;
@@ -82,14 +81,14 @@ public class CombineSubDatasetResult {
     }
 
     public static void composeAllBasicRepeat() throws ClassNotFoundException, InvocationTargetException, NoSuchMethodException, IllegalAccessException, InstantiationException {
-        String[] allRelativeBasicDir = ArraysUtils.combineArray(new String[][]{Constant.basicOutputCrimeDirArray, Constant.basicOutputNYCDirArray, new String[]{Constant.basicOutputNormalDir}, new String[]{Constant.basicOutputZipfDir}, new String[]{Constant.basicOutputMultiNormalDir}});
+        String[] allRelativeBasicDir = BasicArrayUtil.combineArray(new String[][]{Constant.basicOutputCrimeDirArray, Constant.basicOutputNYCDirArray, new String[]{Constant.basicOutputNormalDir}, new String[]{Constant.basicOutputZipfDir}, new String[]{Constant.basicOutputMultiNormalDir}});
         String[] fileNameArray = StringUtil.concatGiveString(Constant.basicAlterKeyArray, ".csv");
         for (String relativeBasicPath : allRelativeBasicDir) {
             composeCSVResult(relativeBasicPath, Constant.columnBeanArray, fileNameArray);
         }
     }
     public static void composeAllExtendedRepeat() throws ClassNotFoundException, InvocationTargetException, NoSuchMethodException, IllegalAccessException, InstantiationException {
-        String[] allRelativeBasicDir = ArraysUtils.combineArray(new String[][]{Constant.extendedOutputCrimeDirArray, Constant.extendedOutputNYCDirArray, new String[]{Constant.extendedOutputNormalDir}, new String[]{Constant.extendedOutputZipfDir}, new String[]{Constant.extendedOutputMultiNormalDir}});
+        String[] allRelativeBasicDir = BasicArrayUtil.combineArray(new String[][]{Constant.extendedOutputCrimeDirArray, Constant.extendedOutputNYCDirArray, new String[]{Constant.extendedOutputNormalDir}, new String[]{Constant.extendedOutputZipfDir}, new String[]{Constant.extendedOutputMultiNormalDir}});
         String[] fileNameArray = StringUtil.concatGiveString(Constant.extendedAlterKeyArray, ".csv");
         for (String relativeBasicPath : allRelativeBasicDir) {
             composeCSVResult(relativeBasicPath, Constant.columnBeanArray, fileNameArray);
@@ -97,7 +96,7 @@ public class CombineSubDatasetResult {
     }
 
     public static void composeAllExtendedRepeatForKLDivergence() throws ClassNotFoundException, InvocationTargetException, NoSuchMethodException, IllegalAccessException, InstantiationException {
-        String[] allRelativeBasicDir = ArraysUtils.combineArray(new String[][]{Constant.extendedOutputCrimeDirArray, Constant.extendedOutputNYCDirArray, new String[]{Constant.extendedOutputNormalDir}, new String[]{Constant.extendedOutputZipfDir}, new String[]{Constant.extendedOutputMultiNormalDir}});
+        String[] allRelativeBasicDir = BasicArrayUtil.combineArray(new String[][]{Constant.extendedOutputCrimeDirArray, Constant.extendedOutputNYCDirArray, new String[]{Constant.extendedOutputNormalDir}, new String[]{Constant.extendedOutputZipfDir}, new String[]{Constant.extendedOutputMultiNormalDir}});
         String[] fileNameArray = StringUtil.concatGiveString(Constant.extendedAlterKeyArray, ".csv");
         for (String relativeBasicPath : allRelativeBasicDir) {
             composeCSVResult(relativeBasicPath, Constant.columnBeanArrayForKLDivergence, fileNameArray);
@@ -105,14 +104,14 @@ public class CombineSubDatasetResult {
     }
 
     public static void combineAllBasicPart() {
-        String[] toBeCombinedBasicDir = ArraysUtils.combineArray(new String[][]{new String[]{Constant.basicRelativeParentCrimeDir}, new String[]{Constant.basicRelativeParentNYCDir}});
+        String[] toBeCombinedBasicDir = BasicArrayUtil.combineArray(new String[][]{new String[]{Constant.basicRelativeParentCrimeDir}, new String[]{Constant.basicRelativeParentNYCDir}});
         String[] fileNameArray = StringUtil.concatGiveString(Constant.basicAlterKeyArray, ".csv");
         for (String relativeBasicPath : toBeCombinedBasicDir) {
             combineCSVResult(relativeBasicPath, fileNameArray);
         }
     }
     public static void combineAllExtendedPart() {
-        String[] toBeCombinedBasicDir = ArraysUtils.combineArray(new String[][]{new String[]{Constant.extendedRelativeParentCrimeDir}, new String[]{Constant.extendedRelativeParentNYCDir}});
+        String[] toBeCombinedBasicDir = BasicArrayUtil.combineArray(new String[][]{new String[]{Constant.extendedRelativeParentCrimeDir}, new String[]{Constant.extendedRelativeParentNYCDir}});
         String[] fileNameArray = StringUtil.concatGiveString(Constant.extendedAlterKeyArray, ".csv");
         for (String relativeBasicPath : toBeCombinedBasicDir) {
             combineCSVResult(relativeBasicPath, fileNameArray);

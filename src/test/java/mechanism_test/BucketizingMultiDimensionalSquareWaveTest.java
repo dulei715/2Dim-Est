@@ -1,7 +1,5 @@
 package mechanism_test;
 
-import cn.edu.ecnu.struct.point.TwoDimensionalIntegerPoint;
-import ecnu.dll.construction.comparedscheme.msw_hdg.discretization.BucketizingMultiDimensionalSquareWave;
 import org.junit.Test;
 
 public class BucketizingMultiDimensionalSquareWaveTest {

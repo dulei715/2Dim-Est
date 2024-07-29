@@ -1,12 +1,12 @@
 package mechanism_test;
 
-import cn.edu.ecnu.collection.ListUtils;
-import cn.edu.ecnu.io.print.MyPrint;
-import cn.edu.ecnu.io.read.TwoDimensionalPointRead;
-import cn.edu.ecnu.io.write.PointWrite;
-import cn.edu.ecnu.statistic.StatisticTool;
-import cn.edu.ecnu.struct.point.TwoDimensionalDoublePoint;
-import cn.edu.ecnu.struct.point.TwoDimensionalIntegerPoint;
+import cn.edu.dll.collection.ListUtils;
+import cn.edu.dll.io.print.MyPrint;
+import cn.edu.dll.io.read.TwoDimensionalPointRead;
+import cn.edu.dll.io.write.PointWrite;
+import cn.edu.dll.statistic.StatisticTool;
+import cn.edu.dll.struct.point.TwoDimensionalDoublePoint;
+import cn.edu.dll.struct.point.TwoDimensionalIntegerPoint;
 import ecnu.dll.construction._config.Constant;
 import ecnu.dll.construction.newscheme.discretization.DiscretizedHybridUniformExponentialScheme;
 import org.junit.Test;
@@ -45,9 +45,9 @@ public class DiscretizedHybridUniformExponentialSchemeTest {
         DiscretizedHybridUniformExponentialScheme scheme = new DiscretizedHybridUniformExponentialScheme(epsilon, gridLength, constB, inputLength, kParameter, xLeft, yLeft);
         scheme.initialize();
 
-        String inputPath = Constant.datasetPath + "\\test\\synthetic_dataset\\two_uniform_dataset.txt";
-        String outputCenterPath = Constant.datasetPath + "\\test\\synthetic_dataset\\output_test\\two_uniform_dataset_center.txt";
-        String outputRandomCenterPath = Constant.datasetPath + "\\test\\synthetic_dataset\\output_test\\two_uniform_dataset_random_center.txt";
+        String inputPath = Constant.basicDatasetPath + "\\test\\synthetic_dataset\\two_uniform_dataset.txt";
+        String outputCenterPath = Constant.basicDatasetPath + "\\test\\synthetic_dataset\\output_test\\two_uniform_dataset_center.txt";
+        String outputRandomCenterPath = Constant.basicDatasetPath + "\\test\\synthetic_dataset\\output_test\\two_uniform_dataset_random_center.txt";
         List<TwoDimensionalDoublePoint> pointList = TwoDimensionalPointRead.readPointWithFirstLineCount(inputPath);
 //        MyPrint.showList(pointList, ConstantValues.LINE_SPLIT);
 
@@ -67,8 +67,8 @@ public class DiscretizedHybridUniformExponentialSchemeTest {
 
     @Test
     public void fun3() {
-        String inputCenterPath = Constant.datasetPath + "\\test\\synthetic_dataset\\output_test\\two_uniform_dataset_center.txt";
-        String outputPath = Constant.datasetPath + "\\test\\synthetic_dataset\\output_test\\two_uniform_dataset_center_count.txt";
+        String inputCenterPath = Constant.basicDatasetPath + "\\test\\synthetic_dataset\\output_test\\two_uniform_dataset_center.txt";
+        String outputPath = Constant.basicDatasetPath + "\\test\\synthetic_dataset\\output_test\\two_uniform_dataset_center_count.txt";
         List<TwoDimensionalDoublePoint> pointList = TwoDimensionalPointRead.readPointWithFirstLineCount(inputCenterPath);
         Map<TwoDimensionalDoublePoint, Integer> countMap = StatisticTool.countHistogramNumber(pointList);
         PointWrite pointWrite = new PointWrite();
@@ -79,7 +79,7 @@ public class DiscretizedHybridUniformExponentialSchemeTest {
 
     @Test
     public void fun4() {
-        String outputPath = Constant.datasetPath + "\\test\\synthetic_dataset\\test2\\single_point_test.txt";
+        String outputPath = Constant.basicDatasetPath + "\\test\\synthetic_dataset\\test2\\single_point_test.txt";
         double epsilon = 0.5;
         double gridLength = 0.2;
         double constB = 1.6;
@@ -105,7 +105,7 @@ public class DiscretizedHybridUniformExponentialSchemeTest {
 
     @Test
     public void fun5() {
-        String outputPath = Constant.datasetPath + "\\test\\synthetic_dataset\\test2\\single_point_center_test.txt";
+        String outputPath = Constant.basicDatasetPath + "\\test\\synthetic_dataset\\test2\\single_point_center_test.txt";
         double epsilon = 0.5;
         double gridLength = 0.2;
         double constB = 1.6;
@@ -133,7 +133,7 @@ public class DiscretizedHybridUniformExponentialSchemeTest {
 
     @Test
     public void fun6() {
-        String outputPath = Constant.datasetPath + "\\test\\synthetic_dataset\\test2\\single_point_test2.txt";
+        String outputPath = Constant.basicDatasetPath + "\\test\\synthetic_dataset\\test2\\single_point_test2.txt";
         double epsilon = 1;
         double gridLength = 0.2;
         double constB = 1.6;
@@ -159,7 +159,7 @@ public class DiscretizedHybridUniformExponentialSchemeTest {
 
     @Test
     public void fun7() {
-        String outputPath = Constant.datasetPath + "\\test\\synthetic_dataset\\test2\\single_point_center_test2.txt";
+        String outputPath = Constant.basicDatasetPath + "\\test\\synthetic_dataset\\test2\\single_point_center_test2.txt";
         double epsilon = 1;
         double gridLength = 0.2;
         double constB = 1.6;

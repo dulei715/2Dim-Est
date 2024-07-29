@@ -1,12 +1,12 @@
 package ecnu.dll.construction.run._1_total_run.main_process.b_comparision_run.extended;
 
-import cn.edu.ecnu.io.print.MyPrint;
-import cn.edu.ecnu.io.read.TwoDimensionalPointRead;
-import cn.edu.ecnu.result.ExperimentResult;
-import cn.edu.ecnu.statistic.StatisticTool;
-import cn.edu.ecnu.struct.grid.Grid;
-import cn.edu.ecnu.struct.point.TwoDimensionalDoublePoint;
-import cn.edu.ecnu.struct.point.TwoDimensionalIntegerPoint;
+import cn.edu.dll.io.print.MyPrint;
+import cn.edu.dll.io.read.TwoDimensionalPointRead;
+import cn.edu.dll.result.ExperimentResult;
+import cn.edu.dll.statistic.StatisticTool;
+import cn.edu.dll.struct.grid.Grid;
+import cn.edu.dll.struct.point.TwoDimensionalDoublePoint;
+import cn.edu.dll.struct.point.TwoDimensionalIntegerPoint;
 import ecnu.dll.construction._config.Constant;
 import ecnu.dll.construction._config.Initialized;
 import ecnu.dll.construction.dataset.struct.DataSetAreaInfo;

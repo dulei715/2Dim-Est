@@ -1,10 +1,10 @@
 package ecnu.dll.construction.run._1_total_run.main_process.b_comparision_run.basic;
 
-import cn.edu.ecnu.result.ExperimentResult;
-import cn.edu.ecnu.statistic.StatisticTool;
-import cn.edu.ecnu.struct.grid.Grid;
-import cn.edu.ecnu.struct.point.TwoDimensionalDoublePoint;
-import cn.edu.ecnu.struct.point.TwoDimensionalIntegerPoint;
+import cn.edu.dll.result.ExperimentResult;
+import cn.edu.dll.statistic.StatisticTool;
+import cn.edu.dll.struct.grid.Grid;
+import cn.edu.dll.struct.point.TwoDimensionalDoublePoint;
+import cn.edu.dll.struct.point.TwoDimensionalIntegerPoint;
 import ecnu.dll.construction._config.Constant;
 import ecnu.dll.construction._config.Initialized;
 import ecnu.dll.construction.analysis.e_to_lp.abstract_class.DAMLocalPrivacy;
@@ -70,9 +70,9 @@ public class AlterParameterGRun {
         String subsetGeoITwoNorm = Constant.subsetGeoITwoNormSchemeKey, mdsw = Constant.multiDimensionalSquareWaveSchemeKey, hue = Constant.hybridUniformExponentialSchemeKey;
         ExperimentResult tempRhombusExperimentResult;
         ExperimentResult tempDiskExperimentResult, tempDiskNonShrinkExperimentResult;
-        ExperimentResult tempSubsetGeoIOneNormExperimentResult;
+//        ExperimentResult tempSubsetGeoIOneNormExperimentResult;
         ExperimentResult tempSubsetGeoITwoNormExperimentResult, tempMdswExperimentResult, tempHUEMExperimentResult;
-        List<ExperimentResult> rhombusExperimentResultList = new ArrayList<>();
+//        List<ExperimentResult> rhombusExperimentResultList = new ArrayList<>();
         List<ExperimentResult> diskExperimentResultList = new ArrayList<>(), diskNonShrinkExperimentResultList = new ArrayList<>();
         List<ExperimentResult> subsetGeoIOneNormExperimentResultList = new ArrayList<>();
         List<ExperimentResult> subsetGeoITwoNormExperimentResultList = new ArrayList<>(), mdswExperimentResultList = new ArrayList<>(), huemExperimentResultList = new ArrayList<>();
@@ -81,7 +81,7 @@ public class AlterParameterGRun {
 
         ExperimentResultAndScheme tempRhombusExperimentResultAndScheme;
         ExperimentResultAndScheme tempDiskExperimentResultAndScheme;
-        DiscretizedRhombusScheme tempRhombusScheme;
+//        DiscretizedRhombusScheme tempRhombusScheme;
         DiscretizedDiskScheme tempDiskScheme, tempDiskNonShrinkScheme;
         DiscretizedSubsetExponentialGeoI tempGeoIScheme;
         RAMLocalPrivacy ramLocalPrivacy;
@@ -110,11 +110,11 @@ public class AlterParameterGRun {
 
             // for RAM (没啥用，数据占位)
 //            tempRhombusExperimentResultAndScheme = RAMRun.runEnhanced(integerPointList, rawDataStatistic, gridLengthArray[i], inputSideLength, alterRhombusOptimalSizeB[i]*gridLengthArray[i], epsilon, kParameterForRAM, xBound, yBound);
-            tempRhombusExperimentResultAndScheme = RAMRun.generateDefaultEnhancedResultAndScheme();
-            tempRhombusExperimentResult = tempRhombusExperimentResultAndScheme.getExperimentResult();
-            tempRhombusScheme = (DiscretizedRhombusScheme)tempRhombusExperimentResultAndScheme.getAbstractDiscretizedScheme();
-            tempRhombusExperimentResult.addPair(1, Constant.areaLengthKey, String.valueOf(inputSideLength));
-            rhombusExperimentResultList.add(tempRhombusExperimentResult);
+//            tempRhombusExperimentResultAndScheme = RAMRun.generateDefaultEnhancedResultAndScheme();
+//            tempRhombusExperimentResult = tempRhombusExperimentResultAndScheme.getExperimentResult();
+//            tempRhombusScheme = (DiscretizedRhombusScheme)tempRhombusExperimentResultAndScheme.getAbstractDiscretizedScheme();
+//            tempRhombusExperimentResult.addPair(1, Constant.areaLengthKey, String.valueOf(inputSideLength));
+//            rhombusExperimentResultList.add(tempRhombusExperimentResult);
 
             // for DAM-non-Shrink
             tempDiskNonShrinkExperimentResult = DAMNonShrinkRun.run(integerPointList, rawDataStatistic, gridLengthArray[i], inputSideLength, alterDiskOptimalSizeB[i]*gridLengthArray[i], epsilon, kParameter, xBound, yBound);
@@ -136,9 +136,9 @@ public class AlterParameterGRun {
 //            geoITransformEpsilonNorm1 = new SubsetGeoITransformEpsilon(Constant.FINE_GRIT_PRIVACY_BUDGET_ARRAY, tempGeoIScheme, SubsetGeoITransformEpsilon.Local_Privacy_Distance_Norm_One);
 //            transformedEpsilon = geoITransformEpsilonNorm1.getEpsilonByLocalPrivacy(tempLocalPrivacy);
 //            tempSubsetGeoIOneNormExperimentResult = SubsetGeoIOneNormRun.run(integerPointList, rawDataStatistic, gridLengthArray[i], inputSideLength, transformedEpsilon, xBound, yBound);
-            tempSubsetGeoIOneNormExperimentResult = SubsetGeoIOneNormRun.generateDefaultRunResult();
-            tempSubsetGeoIOneNormExperimentResult.addPair(1, Constant.areaLengthKey, String.valueOf(inputSideLength));
-            subsetGeoIOneNormExperimentResultList.add(tempSubsetGeoIOneNormExperimentResult);
+//            tempSubsetGeoIOneNormExperimentResult = SubsetGeoIOneNormRun.generateDefaultRunResult();
+//            tempSubsetGeoIOneNormExperimentResult.addPair(1, Constant.areaLengthKey, String.valueOf(inputSideLength));
+//            subsetGeoIOneNormExperimentResultList.add(tempSubsetGeoIOneNormExperimentResult);
 
 
             // for Subset-Geo-I-norm2 todo: 这里修改为直接查表
@@ -169,9 +169,9 @@ public class AlterParameterGRun {
 
 
         alterParameterMap.put(mdsw, mdswExperimentResultList);
-        alterParameterMap.put(subsetGeoIOneNorm, subsetGeoIOneNormExperimentResultList);
+//        alterParameterMap.put(subsetGeoIOneNorm, subsetGeoIOneNormExperimentResultList);
         alterParameterMap.put(subsetGeoITwoNorm, subsetGeoITwoNormExperimentResultList);
-        alterParameterMap.put(rhombusKey, rhombusExperimentResultList);
+//        alterParameterMap.put(rhombusKey, rhombusExperimentResultList);
         alterParameterMap.put(diskNonShrinkKey, diskNonShrinkExperimentResultList);
         alterParameterMap.put(diskKey, diskExperimentResultList);
         alterParameterMap.put(hue, huemExperimentResultList);

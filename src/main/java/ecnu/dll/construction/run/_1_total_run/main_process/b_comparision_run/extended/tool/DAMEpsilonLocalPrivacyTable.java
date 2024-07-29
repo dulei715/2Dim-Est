@@ -1,7 +1,7 @@
 package ecnu.dll.construction.run._1_total_run.main_process.b_comparision_run.extended.tool;
 
-import cn.edu.ecnu.collection.ArraysUtils;
-import cn.edu.ecnu.io.read.BasicRead;
+import cn.edu.dll.basic.BasicArrayUtil;
+import cn.edu.dll.io.read.BasicRead;
 import ecnu.dll.construction._config.Constant;
 import ecnu.dll.construction.analysis.e_to_lp.Norm2DAMLocalPrivacy;
 import ecnu.dll.construction.newscheme.discretization.DiscretizedDiskScheme;
@@ -100,7 +100,7 @@ public class DAMEpsilonLocalPrivacyTable extends LocalPrivacyTable {
             }
             System.out.println("finish sizeD: " + sizeDArray[i] + " and all budgets for DAM");
             System.out.println();
-            appendTableLineToFile(outputPath, ArraysUtils.toDoubleArray(this.lPTable[i]));
+            appendTableLineToFile(outputPath, BasicArrayUtil.toDoubleArray(this.lPTable[i]));
         }
     }
 

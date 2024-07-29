@@ -1,9 +1,9 @@
 package dataset_test_important;
 
-import cn.edu.ecnu.basic.RandomUtil;
-import cn.edu.ecnu.io.write.PointWrite;
-import cn.edu.ecnu.statistic.DistributionUtil;
-import cn.edu.ecnu.struct.point.TwoDimensionalDoublePoint;
+import cn.edu.dll.basic.RandomUtil;
+import cn.edu.dll.io.write.PointWrite;
+import cn.edu.dll.statistic.DistributionUtil;
+import cn.edu.dll.struct.point.TwoDimensionalDoublePoint;
 import ecnu.dll.construction._config.Constant;
 import org.junit.Test;
 
@@ -14,7 +14,7 @@ public class GenerateDatasetTest {
     @Test
     public void generateZipf() {
 //        String outputPath = "F:\\dataset\\test\\synthetic_dataset\\two_zipf_dataset.txt";
-        String outputPath = Constant.datasetPath + "\\0_dataset\\2_synthetic\\2_two_zipf\\two_zipf_point_part.txt";
+        String outputPath = Constant.basicDatasetPath + "\\0_dataset\\2_synthetic\\2_two_zipf\\two_zipf_point_part.txt";
         int size = 100000;
         double randomValueX, randomValueY;
         double[] doubleArrX, doubleArrY;
@@ -42,7 +42,7 @@ public class GenerateDatasetTest {
     @Deprecated
     @Test
     public void generateUniform() {
-        String outputPath = Constant.datasetPath + "\\test\\synthetic_dataset\\two_uniform_dataset.txt";
+        String outputPath = Constant.basicDatasetPath + "\\test\\synthetic_dataset\\two_uniform_dataset.txt";
         int size = 10000;
         double randomValueX, randomValueY;
         TwoDimensionalDoublePoint point;
@@ -75,7 +75,7 @@ public class GenerateDatasetTest {
 
     @Test
     public void generateNormWithMultipleCenter() {
-        String outputPath = Constant.datasetPath + "\\0_dataset\\2_synthetic\\3_two_normal_multiple\\two_normal_multiple_point.txt";
+        String outputPath = Constant.basicDatasetPath + "\\0_dataset\\2_synthetic\\3_two_normal_multiple\\two_normal_multiple_point.txt";
     }
 
 }

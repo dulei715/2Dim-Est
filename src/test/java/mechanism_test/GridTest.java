@@ -1,8 +1,8 @@
 package mechanism_test;
 
-import cn.edu.ecnu.io.print.MyPrint;
-import cn.edu.ecnu.io.read.TwoDimensionalPointRead;
-import cn.edu.ecnu.struct.point.TwoDimensionalDoublePoint;
+import cn.edu.dll.io.print.MyPrint;
+import cn.edu.dll.io.read.TwoDimensionalPointRead;
+import cn.edu.dll.struct.point.TwoDimensionalDoublePoint;
 import ecnu.dll.construction._config.Constant;
 import ecnu.dll.construction.dataset.struct.DataSetAreaInfo;
 import org.junit.Test;

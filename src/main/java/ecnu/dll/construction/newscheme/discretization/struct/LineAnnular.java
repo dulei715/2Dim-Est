@@ -1,6 +1,7 @@
 package ecnu.dll.construction.newscheme.discretization.struct;
 
-import cn.edu.ecnu.struct.point.TwoDimensionalIntegerPoint;
+
+import cn.edu.dll.struct.point.TwoDimensionalIntegerPoint;
 
 import java.util.List;
 import java.util.TreeMap;

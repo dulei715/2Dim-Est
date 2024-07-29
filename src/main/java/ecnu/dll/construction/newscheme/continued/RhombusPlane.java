@@ -1,16 +1,16 @@
 package ecnu.dll.construction.newscheme.continued;
 
 
-import cn.edu.ecnu.basic.BasicCalculation;
-import cn.edu.ecnu.basic.RandomUtil;
-import cn.edu.ecnu.io.write.PointWrite;
-import cn.edu.ecnu.struct.point.DoublePoint;
-import cn.edu.ecnu.struct.point.Point;
-import cn.edu.ecnu.struct.point.TwoDimensionalDoublePoint;
+
+import cn.edu.dll.basic.BasicCalculation;
+import cn.edu.dll.basic.RandomUtil;
+import cn.edu.dll.io.write.PointWrite;
+import cn.edu.dll.struct.point.DoublePoint;
+import cn.edu.dll.struct.point.TwoDimensionalDoublePoint;
 
 import java.util.ArrayList;
 import java.util.List;
-
+@Deprecated
 public class RhombusPlane {
     protected Double epsilon = null;
     protected Double constB = null;

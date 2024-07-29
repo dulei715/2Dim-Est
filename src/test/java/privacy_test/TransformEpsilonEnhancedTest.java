@@ -1,11 +1,11 @@
 package privacy_test;
 
-import cn.edu.ecnu.collection.ArraysUtils;
-import cn.edu.ecnu.constant_values.ConstantValues;
-import cn.edu.ecnu.io.print.MyPrint;
-import cn.edu.ecnu.io.read.TwoDimensionalPointRead;
-import cn.edu.ecnu.struct.point.TwoDimensionalDoublePoint;
-import cn.edu.ecnu.struct.point.TwoDimensionalDoublePointUtils;
+import cn.edu.dll.basic.BasicArrayUtil;
+import cn.edu.dll.constant_values.ConstantValues;
+import cn.edu.dll.io.print.MyPrint;
+import cn.edu.dll.io.read.TwoDimensionalPointRead;
+import cn.edu.dll.struct.point.TwoDimensionalDoublePoint;
+import cn.edu.dll.struct.point.TwoDimensionalDoublePointUtils;
 import ecnu.dll.construction.analysis.lp_to_e.version_1.TransformEpsilonEnhanced;
 import org.junit.Test;
 
@@ -21,8 +21,8 @@ public class TransformEpsilonEnhancedTest {
         List<Double> yIndexList = TwoDimensionalDoublePointUtils.getYIndexList(pointList);
 //        MyPrint.showList(xIndexList, ConstantValues.LINE_SPLIT);
 //        MyPrint.showList(yIndexList, ConstantValues.LINE_SPLIT);
-        double[] privacyBudgetArray = ArraysUtils.toBasicDoubleArray(xIndexList);
-        double[] localPrivacyArray = ArraysUtils.toBasicDoubleArray(yIndexList);
+        double[] privacyBudgetArray = BasicArrayUtil.toBasicDoubleArray(xIndexList);
+        double[] localPrivacyArray = BasicArrayUtil.toBasicDoubleArray(yIndexList);
         TransformEpsilonEnhanced transformEpsilonEnhanced = new TransformEpsilonEnhanced(privacyBudgetArray, localPrivacyArray);
         List<TwoDimensionalDoublePoint> effectivePoint = transformEpsilonEnhanced.getEffectivePoint();
         MyPrint.showList(effectivePoint, ConstantValues.LINE_SPLIT);

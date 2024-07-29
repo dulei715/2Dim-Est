@@ -1,10 +1,9 @@
 package ecnu.dll.construction.run._1_total_run.main_process.a_single_scheme_run;
 
-import cn.edu.ecnu.differential_privacy.accuracy.metrics.distance_quantities.KLDivergence;
-import cn.edu.ecnu.differential_privacy.accuracy.metrics.distance_quantities.TwoDimensionalWassersteinDistance;
-import cn.edu.ecnu.result.ExperimentResult;
-import cn.edu.ecnu.struct.pair.BasicPair;
-import cn.edu.ecnu.struct.point.TwoDimensionalIntegerPoint;
+import cn.edu.dll.differential_privacy.accuracy.metrics.distance_quantities.KLDivergence;
+import cn.edu.dll.result.ExperimentResult;
+import cn.edu.dll.struct.pair.BasicPair;
+import cn.edu.dll.struct.point.TwoDimensionalIntegerPoint;
 import ecnu.dll.construction._config.Constant;
 import ecnu.dll.construction.comparedscheme.msw_hdg.discretization.BucketizingMultiDimensionalSquareWave;
 import edu.ecnu.dll.cpl.expection.CPLException;
@@ -32,32 +31,28 @@ public class MDSWRun {
 //        System.out.println(BasicCalculation.getValueSum(estimationResult));
 
         ExperimentResult experimentResult = null;
-        try {
-//            Double wassersteinDistance1 = TwoDimensionalWassersteinDistance.getWassersteinDistanceByCPlex(rawDataStatistic, estimationResult, 1);
-            Double wassersteinDistance1 = 0D;
+        //            Double wassersteinDistance1 = TwoDimensionalWassersteinDistance.getWassersteinDistanceByCPlex(rawDataStatistic, estimationResult, 1);
+        Double wassersteinDistance1 = 0D;
 //            Double wassersteinDistance2 = TwoDimensionalWassersteinDistance.getWassersteinDistanceBySinkhorn(rawDataStatistic, estimationResult, 2, Constant.SINKHORN_LAMBDA, Constant.SINKHORN_LOWER_BOUND);
-            Double wassersteinDistance2 = Sinkhorn.getWassersteinDistanceBySinkhorn(estimationResult, rawDataStatistic, 2, Constant.SINKHORN_LAMBDA, Constant.SINKHORN_LOWER_BOUND, Constant.SINKHORN_ITERATOR_UPPERBOUND);
-            Double klDivergence = KLDivergence.getKLDivergence(rawDataStatistic, estimationResult, Constant.DEFAULT_MINIMAL_DENOMINATOR);
+        Double wassersteinDistance2 = Sinkhorn.getWassersteinDistanceBySinkhorn(estimationResult, rawDataStatistic, 2, Constant.SINKHORN_LAMBDA, Constant.SINKHORN_LOWER_BOUND, Constant.SINKHORN_ITERATOR_UPPERBOUND);
+        Double klDivergence = KLDivergence.getKLDivergence(rawDataStatistic, estimationResult, Constant.DEFAULT_MINIMAL_DENOMINATOR);
 //            Double meanDistance = Distance.getAbsMeanDifference(rawDataStatistic, estimationResult);
 //            Double varianceDistance = Distance.getAbsVarianceDifference(rawDataStatistic, estimationResult);
-            experimentResult = new ExperimentResult();
-            experimentResult.addPair(Constant.dataPointSizeKey, String.valueOf(integerPointList.size()));
-            experimentResult.addPair(Constant.schemeNameKey, Constant.multiDimensionalSquareWaveSchemeKey);
-            experimentResult.addPair(Constant.postProcessTimeKey, String.valueOf(postProcessTime));
-            experimentResult.addPair(Constant.gridUnitSizeKey, String.valueOf(cellLength));
-            experimentResult.addPair(Constant.dataTypeSizeKey, String.valueOf(scheme.getRawIntegerPointTypeList().size()));
-            experimentResult.addPair(Constant.sizeDKey, String.valueOf(scheme.getSizeD()));
-            experimentResult.addPair(Constant.sizeBKey, String.valueOf(scheme.getSizeB()));
-            experimentResult.addPair(Constant.privacyBudgetKey, String.valueOf(epsilon));
-            experimentResult.addPair(Constant.contributionKKey, String.valueOf(Constant.invalidValue));
-            experimentResult.addPair(Constant.wassersteinDistance1Key, String.valueOf(wassersteinDistance1));
-            experimentResult.addPair(Constant.wassersteinDistance2Key, String.valueOf(wassersteinDistance2));
-            experimentResult.addPair(Constant.klDivergenceKey, String.valueOf(klDivergence));
+        experimentResult = new ExperimentResult();
+        experimentResult.addPair(Constant.dataPointSizeKey, String.valueOf(integerPointList.size()));
+        experimentResult.addPair(Constant.schemeNameKey, Constant.multiDimensionalSquareWaveSchemeKey);
+        experimentResult.addPair(Constant.postProcessTimeKey, String.valueOf(postProcessTime));
+        experimentResult.addPair(Constant.gridUnitSizeKey, String.valueOf(cellLength));
+        experimentResult.addPair(Constant.dataTypeSizeKey, String.valueOf(scheme.getRawIntegerPointTypeList().size()));
+        experimentResult.addPair(Constant.sizeDKey, String.valueOf(scheme.getSizeD()));
+        experimentResult.addPair(Constant.sizeBKey, String.valueOf(scheme.getSizeB()));
+        experimentResult.addPair(Constant.privacyBudgetKey, String.valueOf(epsilon));
+        experimentResult.addPair(Constant.contributionKKey, String.valueOf(Constant.invalidValue));
+        experimentResult.addPair(Constant.wassersteinDistance1Key, String.valueOf(wassersteinDistance1));
+        experimentResult.addPair(Constant.wassersteinDistance2Key, String.valueOf(wassersteinDistance2));
+        experimentResult.addPair(Constant.klDivergenceKey, String.valueOf(klDivergence));
 //            experimentResult.addPair(Constant.meanDistanceKey, String.valueOf(meanDistance));
 //            experimentResult.addPair(Constant.varianceDistanceKey, String.valueOf(varianceDistance));
-        } catch (CPLException e) {
-            e.printStackTrace();
-        }
 
         return experimentResult;
 

@@ -1,13 +1,12 @@
 package ecnu.dll.construction.run._1_total_run.main_process.b_comparision_run.basic;
 
-import cn.edu.ecnu.result.ExperimentResult;
-import cn.edu.ecnu.struct.point.TwoDimensionalIntegerPoint;
+import cn.edu.dll.result.ExperimentResult;
+import cn.edu.dll.struct.point.TwoDimensionalIntegerPoint;
 import ecnu.dll.construction._config.Constant;
 import ecnu.dll.construction.newscheme.discretization.tool.DiscretizedDiskSchemeTool;
 import ecnu.dll.construction.newscheme.discretization.tool.DiscretizedRhombusSchemeTool;
 import ecnu.dll.construction.run._1_total_run.main_process.a_single_scheme_run.DAMRun;
 import ecnu.dll.construction.run._1_total_run.main_process.a_single_scheme_run.HUEMSRun;
-import ecnu.dll.construction.run._1_total_run.main_process.a_single_scheme_run.RAMRun;
 
 import java.util.*;
 
@@ -48,14 +47,10 @@ public class AlterParameterKRun {
             针对Rhombus, Disk, HUEM 分别计算对应grid下的估计并返回相应的wasserstein距离
          */
         Map<String, List<ExperimentResult>> alterParameterMap = new HashMap<>();
-        String rhombusKey = Constant.rhombusSchemeKey, diskKey = Constant.diskSchemeKey, hue = Constant.hybridUniformExponentialSchemeKey;
-        ExperimentResult tempRhombusExperimentResult;
+        String diskKey = Constant.diskSchemeKey, hue = Constant.hybridUniformExponentialSchemeKey;
         ExperimentResult tempDiskExperimentResult, tempHUEMExperimentResult;
-        List<ExperimentResult> rhombusExperimentResultList = new ArrayList<>();
         List<ExperimentResult> diskExperimentResultList = new ArrayList<>(), huemExperimentResultList = new ArrayList<>();
         for (int i = 0; i < arraySize; i++) {
-            tempRhombusExperimentResult = RAMRun.run(integerPointList, rawDataStatistic, gridLength, inputSideLength, rhombusOptimalSizeB*gridLength, epsilon, kParameterArray[i], xBound, yBound);
-            rhombusExperimentResultList.add(tempRhombusExperimentResult);
             tempDiskExperimentResult = DAMRun.run(integerPointList, rawDataStatistic, gridLength, inputSideLength, diskOptimalSizeB*gridLength, epsilon, kParameterArray[i], xBound, yBound);
             diskExperimentResultList.add(tempDiskExperimentResult);
             if (diskOptimalSizeB <= 0) {
@@ -66,8 +61,6 @@ public class AlterParameterKRun {
             }
             huemExperimentResultList.add(tempHUEMExperimentResult);
         }
-        // todo: 不计算ram相关的了，用dam替换，保证输出结构的一致性 (没修改)
-        alterParameterMap.put(rhombusKey, rhombusExperimentResultList);
         alterParameterMap.put(diskKey, diskExperimentResultList);
         alterParameterMap.put(hue, huemExperimentResultList);
         return alterParameterMap;

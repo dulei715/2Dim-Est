@@ -1,7 +1,7 @@
 package ecnu.dll.construction.run._1_total_run.main_process.b_comparision_run.extended.tool;
 
-import cn.edu.ecnu.differential_privacy.cdp.basic_struct.impl.TwoNormTwoDimensionalIntegerPointDistanceTor;
-import cn.edu.ecnu.io.read.BasicRead;
+import cn.edu.dll.differential_privacy.cdp.basic_struct.impl.TwoNormTwoDimensionalIntegerPointDistanceTor;
+import cn.edu.dll.io.read.BasicRead;
 import ecnu.dll.construction.analysis.e_to_lp.Norm2GeoILocalPrivacy;
 import ecnu.dll.construction.comparedscheme.sem_geo_i.discretization.DiscretizedSubsetExponentialGeoI;
 
