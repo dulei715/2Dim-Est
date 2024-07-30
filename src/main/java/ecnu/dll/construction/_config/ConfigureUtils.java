@@ -31,10 +31,16 @@ public class ConfigureUtils {
         throw new RuntimeException("No valid data set path!");
     }
 
-    public static String getDatasetFileName(String tagName) {
+    public static String[] getDatasetFileNameWithDir(String tagName) {
         Document document = Constant.xmlConfigure.getDocument();
         Element element = (Element)document.selectNodes("//datasets/fileName[@name='" + tagName + "']").get(0);
-        return element.getTextTrim();
+        String[] names = element.getTextTrim().split(";");
+        return names;
+    }
+
+    public static String getDatasetFileName(String tagName) {
+        String[] names = getDatasetFileNameWithDir(tagName);
+        return StringUtil.join(ConstantValues.FILE_SPLIT, names);
     }
 
 }

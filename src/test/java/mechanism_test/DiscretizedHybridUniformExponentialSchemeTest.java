@@ -174,7 +174,7 @@ public class DiscretizedHybridUniformExponentialSchemeTest {
         scheme.initialize();
 
         TwoDimensionalIntegerPoint originalPoint = new TwoDimensionalIntegerPoint(0, 0);
-        List<TwoDimensionalIntegerPoint> pointList = ListUtils.copyToListGivenElement(originalPoint, 50000);
+        List<TwoDimensionalIntegerPoint> pointList = ListUtils.copyToListGivenElement(originalPoint, 500000);
 
 
         List<TwoDimensionalIntegerPoint> noiseValue = scheme.getNoiseValueList(pointList);

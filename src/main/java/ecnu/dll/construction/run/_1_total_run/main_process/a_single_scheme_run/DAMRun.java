@@ -34,17 +34,6 @@ public class DAMRun {
         long postProcessTime = endTime - startTime;
         System.out.println("Statistic time is " + postProcessTime);
 
-        // for test
-//        System.out.println(BasicCalculation.getValueSum(rawDataStatistic));
-//        System.out.println(BasicCalculation.getValueSum(estimationResult));
-
-        // todo: for test
-//        String outputPathIn = StringUtil.join(ConstantValues.FILE_SPLIT, "E:", "1.学习", "4.数据集", "2.dataset_for_spatial_estimation", "test_dataset", "test_for_crime2_data_original_dam.txt");
-//        TestTool.writeDistribution(rawDataStatistic, outputPathIn);
-//        String outputPathEst = StringUtil.join(ConstantValues.FILE_SPLIT, "E:", "1.学习", "4.数据集", "2.dataset_for_spatial_estimation", "test_dataset", "test_for_crime2_data_estimation_dam.txt");
-//        TestTool.writeDistribution(estimationResult, outputPathEst);
-
-
 
         ExperimentResult experimentResult = null;
         //            Double wassersteinDistance1 = TwoDimensionalWassersteinDistance.getWassersteinDistanceByCPlex(rawDataStatistic, estimationResult, 1);
@@ -79,6 +68,7 @@ public class DAMRun {
         return experimentResult;
 
     }
+    @Deprecated
     public static ExperimentResult runWithoutWassersteinDistance(final List<TwoDimensionalIntegerPoint> integerPointList, final TreeMap<TwoDimensionalIntegerPoint, Double> rawDataStatistic, double cellLength, double inputLength, double bLength, double epsilon, double kParameter, double xBound, double yBound) {
         DiscretizedDiskScheme scheme;
         if (bLength > 0) {

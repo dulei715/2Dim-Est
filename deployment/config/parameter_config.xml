@@ -12,7 +12,7 @@
         <fileName name="nyc">2_nyc</fileName>
         <fileName name="norm_2">1_two_normal</fileName>
         <fileName name="zip_f_2">2_two_zip_f</fileName>
-        <fileName name="norm_multiple_center_2">3_two_normal_multiple_center</fileName>
+        <fileName name="norm_multiple_center_2">3_two_normal_multiple_center;two_normal_point_multiple_centers_extract.txt</fileName>
     </datasets>
     <output>
         <datasetRelativePath name="basic_result_path">output</datasetRelativePath>
