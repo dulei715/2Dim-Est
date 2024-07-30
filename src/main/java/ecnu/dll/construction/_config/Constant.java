@@ -27,18 +27,18 @@ public class Constant {
     public static String configPath;
     public static XMLConfigure xmlConfigure;
 
-    public static String crimeFileName;
-    public static String nycFileName;
+    public static List<String> crimeFileNameList;
+    public static List<String> nycFileNameList;
     public static String twoNormalFileName;
     public static String twoZipFFileName;
     public static String twoNormalMultipleCenterFileName;
 
     public static String basicDatasetPath;
-    public static String crimeFilePath;
-    public static String nycFilePath;
-    public static String twoNormalFilePath;
-    public static String twoZipFFilePath;
-    public static String twoNormalMultipleCenterFilePath;
+//    public static List<String> crimeFilePathList;
+//    public static List<String> nycFilePathList;
+//    public static String twoNormalFilePath;
+//    public static String twoZipFFilePath;
+//    public static String twoNormalMultipleCenterFilePath;
 
 
 
@@ -150,10 +150,12 @@ public class Constant {
                 throw new RuntimeException(stringBuilder.toString());
             }
         }
-        propertyPath = StringUtil.join(ConstantValues.FILE_SPLIT, projectPath, "config", "parameter.properties");
+        xmlConfigure = new XMLConfigure(configPath);
+        String propertyFileName = ConfigureUtils.getPropertyName();
+        propertyPath = StringUtil.join(ConstantValues.FILE_SPLIT, projectPath, "config", propertyFileName);
         configFile = new File(propertyPath);
         if (!configFile.exists()) {
-            propertyPath = StringUtil.join(ConstantValues.FILE_SPLIT, projectPath, "deployment", "config", "parameter.properties");
+            propertyPath = StringUtil.join(ConstantValues.FILE_SPLIT, projectPath, "deployment", "config", propertyFileName);
             configFile = new File(propertyPath);
             if (!configFile.exists()) {
                 StringBuilder stringBuilder = new StringBuilder();
@@ -161,7 +163,7 @@ public class Constant {
                 throw new RuntimeException(stringBuilder.toString());
             }
         }
-        xmlConfigure = new XMLConfigure(configPath);
+
         Properties properties = new Properties();
         try {
             properties.load(new FileInputStream(propertyPath));
@@ -186,30 +188,32 @@ public class Constant {
         // 实验路径
         basicDatasetPath = ConfigureUtils.getDatasetBasicPath();
 
-        crimeFileName = ConfigureUtils.getDatasetFileName("crime");
-        nycFileName = ConfigureUtils.getDatasetFileName("nyc");
-        twoNormalFileName = ConfigureUtils.getDatasetFileName("norm_2");
-        twoZipFFileName = ConfigureUtils.getDatasetFileName("zip_f_2");
-        twoNormalMultipleCenterFileName = ConfigureUtils.getDatasetFileName("norm_multiple_center_2");
-
-        crimeFilePath = StringUtil.join(ConstantValues.FILE_SPLIT, basicDatasetPath, "1_real", crimeFileName);
-        nycFilePath = StringUtil.join(ConstantValues.FILE_SPLIT, basicDatasetPath, "1_real", nycFileName);
-        twoNormalFilePath = StringUtil.join(ConstantValues.FILE_SPLIT, basicDatasetPath, "2_synthetic", twoNormalFileName);
-        twoZipFFilePath = StringUtil.join(ConstantValues.FILE_SPLIT, basicDatasetPath, "2_synthetic", twoZipFFileName);
-        twoNormalMultipleCenterFilePath = StringUtil.join(ConstantValues.FILE_SPLIT, basicDatasetPath, "2_synthetic", twoNormalMultipleCenterFileName);
+//        crimeFileNameList = ConfigureUtils.getDatasetSimpleFileNameList("crime");
+//        nycFileNameList = ConfigureUtils.getDatasetSimpleFileNameList("nyc");
+//        twoNormalFileName = ConfigureUtils.getDatasetSimpleFileNameList("norm_2").get(0);
+//        twoZipFFileName = ConfigureUtils.getDatasetSimpleFileNameList("zip_f_2").get(0);
+//        twoNormalMultipleCenterFileName = ConfigureUtils.getDatasetSimpleFileNameList("norm_multiple_center_2").get(0);
+//
+//        crimeFilePathList = ConfigureUtils.getDatasetRelativeFilePathList("crime");
+//        nycFilePathList = ConfigureUtils.getDatasetRelativeFilePathList("nyc");
+//        twoNormalFilePath = ConfigureUtils.getDatasetRelativeFilePathList("norm_2").get(0);
+//        twoZipFFilePath = ConfigureUtils.getDatasetRelativeFilePathList("zip_f_2").get(0);
+//        twoNormalMultipleCenterFilePath = ConfigureUtils.getDatasetRelativeFilePathList("norm_multiple_center_2").get(0);
 
 
         // 实验相对路径
         basicResultPath = StringUtil.join(ConstantValues.FILE_SPLIT, projectPath, "result");
         extendedResultPath = StringUtil.join(ConstantValues.FILE_SPLIT, projectPath, "result_extended");
-        damBudgetLPTableGeneratedTotalPath = StringUtil.join(ConstantValues.FILE_SPLIT, projectPath, "budgetLPTable", "damBudgetLPTable.txt");
-        damBudgetLPTableGeneratedPathOnlyForBasic = StringUtil.join(ConstantValues.FILE_SPLIT, projectPath, "budgetLPTable", "damBudgetLPTable_basic.txt");
-        damBudgetLPTableGeneratedPathOnlyForExtended = StringUtil.join(ConstantValues.FILE_SPLIT, projectPath, "budgetLPTable", "damBudgetLPTable_extended.txt");
-        damBudgetLPTableGeneratedPathOnlyForKLDivergence = StringUtil.join(ConstantValues.FILE_SPLIT, projectPath, "budgetLPTable", "damBudgetLPTable2.txt");
-        subsetGeoIBudgetLPTableGeneratedTotalPath = StringUtil.join(ConstantValues.FILE_SPLIT, projectPath, "budgetLPTable", "geoIBudgetLPTable.txt");
-        subsetGeoIBudgetLPTableGeneratedPathOnlyForBasic = StringUtil.join(ConstantValues.FILE_SPLIT, projectPath, "budgetLPTable", "geoIBudgetLPTable_basic.txt");
-        subsetGeoIBudgetLPTableGeneratedPathOnlyForExtended = StringUtil.join(ConstantValues.FILE_SPLIT, projectPath, "budgetLPTable", "geoIBudgetLPTable_extended.txt");
-        subsetGeoIBudgetLPTableGeneratedPathOnlyForKLDivergence = StringUtil.join(ConstantValues.FILE_SPLIT, projectPath, "budgetLPTable", "geoIBudgetLPTable2.txt");
+
+
+        damBudgetLPTableGeneratedTotalPath = StringUtil.join(ConstantValues.FILE_SPLIT, basicDatasetPath, "budgetLPTable", "damBudgetLPTable.txt");
+        damBudgetLPTableGeneratedPathOnlyForBasic = StringUtil.join(ConstantValues.FILE_SPLIT, basicDatasetPath, "budgetLPTable", "damBudgetLPTable_basic.txt");
+        damBudgetLPTableGeneratedPathOnlyForExtended = StringUtil.join(ConstantValues.FILE_SPLIT, basicDatasetPath, "budgetLPTable", "damBudgetLPTable_extended.txt");
+        damBudgetLPTableGeneratedPathOnlyForKLDivergence = StringUtil.join(ConstantValues.FILE_SPLIT, basicDatasetPath, "budgetLPTable", "damBudgetLPTable2.txt");
+        subsetGeoIBudgetLPTableGeneratedTotalPath = StringUtil.join(ConstantValues.FILE_SPLIT, basicDatasetPath, "budgetLPTable", "geoIBudgetLPTable.txt");
+        subsetGeoIBudgetLPTableGeneratedPathOnlyForBasic = StringUtil.join(ConstantValues.FILE_SPLIT, basicDatasetPath, "budgetLPTable", "geoIBudgetLPTable_basic.txt");
+        subsetGeoIBudgetLPTableGeneratedPathOnlyForExtended = StringUtil.join(ConstantValues.FILE_SPLIT, basicDatasetPath, "budgetLPTable", "geoIBudgetLPTable_extended.txt");
+        subsetGeoIBudgetLPTableGeneratedPathOnlyForKLDivergence = StringUtil.join(ConstantValues.FILE_SPLIT, basicDatasetPath, "budgetLPTable", "geoIBudgetLPTable2.txt");
     }
 
 
@@ -286,19 +290,19 @@ public class Constant {
 //    public static final String chicagoAPath = StringUtil.join(ConstantValues.FILE_SPLIT, datasetPath, "1_real", "1_crime", "chicago_point_A.txt");
 //    public static final String chicagoBPath = StringUtil.join(ConstantValues.FILE_SPLIT, datasetPath, "1_real", "1_crime", "chicago_point_B.txt");
 //    public static final String chicagoCPath = StringUtil.join(ConstantValues.FILE_SPLIT, datasetPath, "1_real", "1_crime", "chicago_point_C.txt");
-    public static final String chicagoPath = StringUtil.join(ConstantValues.FILE_SPLIT, basicDatasetPath, "1_real", "1_crime", "chicago_point.txt");
+//    public static final String chicagoPath = StringUtil.join(ConstantValues.FILE_SPLIT, basicDatasetPath, "1_real", "1_crime", "chicago_point.txt");
 
 //    public static final String nycAPath = StringUtil.join(ConstantValues.FILE_SPLIT, datasetPath, "1_real", "2_nyc", "nyc_point_A.txt");
 //    public static final String nycBPath = StringUtil.join(ConstantValues.FILE_SPLIT, datasetPath, "1_real", "2_nyc", "nyc_point_B.txt");
 //    public static final String nycCPath = StringUtil.join(ConstantValues.FILE_SPLIT, datasetPath, "1_real", "2_nyc", "nyc_point_C.txt");
-    public static final String nycPath = StringUtil.join(ConstantValues.FILE_SPLIT, basicDatasetPath, "1_real", "2_nyc", "nyc_point.txt");
+//    public static final String nycPath = StringUtil.join(ConstantValues.FILE_SPLIT, basicDatasetPath, "1_real", "2_nyc", "nyc_point.txt");
 
 //    public static final String normalPath = StringUtil.join(ConstantValues.FILE_SPLIT, datasetPath, "2_synthetic", "1_two_normal", "two_normal_point_extract.txt");
-    public static final String normalPath = StringUtil.join(ConstantValues.FILE_SPLIT, basicDatasetPath, "2_synthetic", "1_two_normal", "two_normal_point.txt");
-    public static final String zipfPath = StringUtil.join(ConstantValues.FILE_SPLIT, basicDatasetPath, "2_synthetic", "2_two_zipf", "two_zipf_point.txt");
+//    public static final String normalPath = StringUtil.join(ConstantValues.FILE_SPLIT, basicDatasetPath, "2_synthetic", "1_two_normal", "two_normal_point.txt");
+//    public static final String zipfPath = StringUtil.join(ConstantValues.FILE_SPLIT, basicDatasetPath, "2_synthetic", "2_two_zipf", "two_zipf_point.txt");
 
 //    public static final String multiNormalPath = StringUtil.join(ConstantValues.FILE_SPLIT, datasetPath, "2_synthetic", "3_two_normal_multiple_center", "two_normal_point_multiple_centers_extract.txt");
-    public static final String multiNormalPath = StringUtil.join(ConstantValues.FILE_SPLIT, basicDatasetPath, "2_synthetic", "3_two_normal_multiple_center", "two_normal_point_multiple_centers.txt");
+//    public static final String multiNormalPath = StringUtil.join(ConstantValues.FILE_SPLIT, basicDatasetPath, "2_synthetic", "3_two_normal_multiple_center", "two_normal_point_multiple_centers.txt");
 
     // 记录被分割的dataset输出父路径的父路径
     public static final String basicRelativeParentCrimeDir = StringUtil.join(ConstantValues.FILE_SPLIT, basicResultPath, "crime");
@@ -424,30 +428,33 @@ public class Constant {
      * The leftBottom must no greater than real left and bottom point
      * The sum of leftBottom and length is strictly greater than the real right and top point
      */
+    public static final DataSetAreaInfo[] crimeDataSetArray = ConfigureUtils.getDatasetInfoArray(basicDatasetPath, "crime");
 //    public static final DataSetAreaInfo[] crimeDataSetArray = new DataSetAreaInfo[]{
 //            new DataSetAreaInfo(chicagoAPath, chicagoAKey, 41.72, -87.68, 0.09),
 //            new DataSetAreaInfo(chicagoBPath, chicagoBKey, 41.82, -87.73, 0.09),
 //            new DataSetAreaInfo(chicagoCPath, chicagoCKey, 41.92, -87.77,0.07)
 //    };
-    public static final DataSetAreaInfo[] crimeDataSetArray = new DataSetAreaInfo[]{
-            new DataSetAreaInfo(chicagoPath, chicagoKey, 41.64459516, -87.93973294,0.416)
-    };
+//    public static final DataSetAreaInfo[] crimeDataSetArray = new DataSetAreaInfo[]{
+//            new DataSetAreaInfo(chicagoPath, chicagoKey, 41.64459516, -87.93973294,0.416)
+//    };
 //    public static final DataSetAreaInfo[] nycDataSetArray = new DataSetAreaInfo[]{
 //            new DataSetAreaInfo(nycAPath, nycAKey, 40.65, -73.84, 0.10),
 //            new DataSetAreaInfo(nycBPath, nycBKey, 40.65, -73.95, 0.09),
 //            new DataSetAreaInfo(nycCPath, nycCKey, 40.82, -73.90,0.07)
 //    };
-    public static final DataSetAreaInfo[] nycDataSetArray = new DataSetAreaInfo[]{
-            new DataSetAreaInfo(nycPath, nycKey, 0.0, -75.1675,75.1676)
-    };
+    public static final DataSetAreaInfo[] nycDataSetArray = ConfigureUtils.getDatasetInfoArray(basicDatasetPath, "nyc");
+//    public static final DataSetAreaInfo[] nycDataSetArray = new DataSetAreaInfo[]{
+//            new DataSetAreaInfo(nycPath, nycKey, 0.0, -75.1675,75.1676)
+//    };
 
-//    public static final DataSetAreaInfo twoDimNormalDataSet = new DataSetAreaInfo(normalPath, normalKey, -1.5, -1.5, 3.0);
-    public static final DataSetAreaInfo twoDimNormalDataSet = new DataSetAreaInfo(normalPath, normalKey, -4.44, -4.87, 9.45);
-    public static final DataSetAreaInfo twoDimZipfDataSet = new DataSetAreaInfo(zipfPath, zipfKey, 0.0, 0.0, 1.0);
-//    public static final DataSetAreaInfo twoDimMultipleCenterNormalDataSet = new DataSetAreaInfo(multiNormalPath, multiNormalKey, -1.5, -2.0, 5.0);
-    public static final DataSetAreaInfo twoDimMultipleCenterNormalDataSet = new DataSetAreaInfo(multiNormalPath, multiNormalKey, -4.25, -4.32, 10.76);
+    public static final DataSetAreaInfo twoDimNormalDataSet = ConfigureUtils.getDatasetInfoArray(basicDatasetPath, "norm_2")[0];
+//    public static final DataSetAreaInfo twoDimNormalDataSet = new DataSetAreaInfo(normalPath, normalKey, -4.44, -4.87, 9.45);
+    public static final DataSetAreaInfo twoDimZipfDataSet = ConfigureUtils.getDatasetInfoArray(basicDatasetPath, "zip_f_2")[0];
+//    public static final DataSetAreaInfo twoDimZipfDataSet = new DataSetAreaInfo(zipfPath, zipfKey, 0.0, 0.0, 1.0);
+    public static final DataSetAreaInfo twoDimMultipleCenterNormalDataSet = ConfigureUtils.getDatasetInfoArray(basicDatasetPath, "norm_multiple_center_2")[0];
+//    public static final DataSetAreaInfo twoDimMultipleCenterNormalDataSet = new DataSetAreaInfo(multiNormalPath, multiNormalKey, -4.25, -4.32, 10.76);
 
-    public static void main(String[] args) {
+    public static void main0(String[] args) {
         System.out.println(projectPath);
         System.out.println(propertyPath);
         MyPrint.showSplitLine("*", 150);
@@ -472,6 +479,11 @@ public class Constant {
 
 
 
+    }
+
+    public static void main(String[] args) {
+        String propertyPath = Constant.propertyPath;
+        System.out.println(propertyPath);
     }
 
 

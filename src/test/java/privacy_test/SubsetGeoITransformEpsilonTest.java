@@ -3,8 +3,9 @@ package privacy_test;
 import cn.edu.dll.differential_privacy.cdp.basic_struct.DistanceTor;
 import cn.edu.dll.differential_privacy.cdp.basic_struct.impl.TwoNormTwoDimensionalIntegerPointDistanceTor;
 import cn.edu.dll.struct.point.TwoDimensionalIntegerPoint;
+import ecnu.dll.construction._config.Initialized;
 import ecnu.dll.construction.analysis.lp_to_e.version_1.SubsetGeoITransformEpsilon;
-import ecnu.dll.construction.comparedscheme.sem_geo_i.discretization.DiscretizedSubsetExponentialGeoI;
+import ecnu.dll.construction.other_schemes.compared_schemes.sem_geo_i.discretization.DiscretizedSubsetExponentialGeoI;
 import org.junit.Test;
 
 public class SubsetGeoITransformEpsilonTest {
@@ -31,6 +32,37 @@ public class SubsetGeoITransformEpsilonTest {
         System.out.println(epsilon);
         DiscretizedSubsetExponentialGeoI scheme = geoITransformEpsilon.getSubsetGeoISchemeByNewEpsilon(epsilon);
         System.out.println(scheme);
+    }
+
+    @Test
+    public void fun2() {
+//        Double epsilon = 0.7;
+        Double epsilon = 5D;
+        Double[] sizeDArray = new Double[]{
+                1D, 5D, 10D, 15D, 20D
+        };
+        Double sizeD;
+        for (int i = 0; i < sizeDArray.length; i++) {
+            sizeD = sizeDArray[i];
+            double tempLocalPrivacy = Initialized.damELPExtendedTable.getLowerBoundLocalPrivacyByEpsilon(sizeD, epsilon);
+            double transformedEpsilon = Initialized.subGeoIELPExtendedTable.getEpsilonByUpperBoundLocalPrivacy(sizeD, tempLocalPrivacy);
+            System.out.println(transformedEpsilon);
+        }
+    }
+    @Test
+    public void fun3() {
+//        Double epsilon = 0.7;
+        Double[] epsilonArray = new Double[]{
+                0.7, 1.4, 2.1, 2.8, 3.5
+        };
+        Double epsilon;
+        Double sizeD = 10D;
+        for (int i = 0; i < epsilonArray.length; i++) {
+            epsilon = epsilonArray[i];
+            double tempLocalPrivacy = Initialized.damELPExtendedTable.getLowerBoundLocalPrivacyByEpsilon(sizeD, epsilon);
+            double transformedEpsilon = Initialized.subGeoIELPExtendedTable.getEpsilonByUpperBoundLocalPrivacy(sizeD, tempLocalPrivacy);
+            System.out.println(transformedEpsilon);
+        }
     }
 
 

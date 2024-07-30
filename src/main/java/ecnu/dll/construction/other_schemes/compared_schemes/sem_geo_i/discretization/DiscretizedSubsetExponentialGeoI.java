@@ -1,4 +1,4 @@
-package ecnu.dll.construction.comparedscheme.sem_geo_i.discretization;
+package ecnu.dll.construction.other_schemes.compared_schemes.sem_geo_i.discretization;
 
 import cn.edu.dll.DecimalTool;
 import cn.edu.dll.comparator.TwoDimensionalIntegerPointComparator;
@@ -7,7 +7,7 @@ import cn.edu.dll.statistic.StatisticTool;
 import cn.edu.dll.struct.grid.Grid;
 import cn.edu.dll.struct.point.TwoDimensionalIntegerPoint;
 import ecnu.dll.construction._config.Constant;
-import ecnu.dll.construction.comparedscheme.sem_geo_i.SubsetExponentialGeoI;
+import ecnu.dll.construction.other_schemes.compared_schemes.sem_geo_i.SubsetExponentialGeoI;
 
 import java.util.*;
 

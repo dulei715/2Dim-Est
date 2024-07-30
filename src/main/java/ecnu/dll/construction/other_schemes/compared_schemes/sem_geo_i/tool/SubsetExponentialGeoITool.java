@@ -1,4 +1,4 @@
-package ecnu.dll.construction.comparedscheme.sem_geo_i.tool;
+package ecnu.dll.construction.other_schemes.compared_schemes.sem_geo_i.tool;
 
 
 import cn.edu.dll.struct.grid.Grid;

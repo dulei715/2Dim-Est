@@ -1,17 +1,14 @@
 package ecnu.dll.construction.run._1_total_run.main_process.b_comparision_run.basic;
 
-import cn.edu.dll.differential_privacy.cdp.basic_struct.impl.OneNormTwoDimensionalIntegerPointDistanceTor;
 import cn.edu.dll.differential_privacy.cdp.basic_struct.impl.TwoNormTwoDimensionalIntegerPointDistanceTor;
 import cn.edu.dll.result.ExperimentResult;
 import cn.edu.dll.struct.point.TwoDimensionalIntegerPoint;
 import ecnu.dll.construction._config.Constant;
 import ecnu.dll.construction._config.Initialized;
-import ecnu.dll.construction.analysis.e_to_lp.Norm1RAMLocalPrivacy;
 import ecnu.dll.construction.analysis.e_to_lp.Norm2DAMLocalPrivacy;
 import ecnu.dll.construction.analysis.e_to_lp.abstract_class.DAMLocalPrivacy;
-import ecnu.dll.construction.analysis.e_to_lp.abstract_class.RAMLocalPrivacy;
 import ecnu.dll.construction.analysis.lp_to_e.version_1.SubsetGeoITransformEpsilon;
-import ecnu.dll.construction.comparedscheme.sem_geo_i.discretization.DiscretizedSubsetExponentialGeoI;
+import ecnu.dll.construction.other_schemes.compared_schemes.sem_geo_i.discretization.DiscretizedSubsetExponentialGeoI;
 import ecnu.dll.construction.newscheme.discretization.DiscretizedDiskNonShrinkScheme;
 import ecnu.dll.construction.newscheme.discretization.DiscretizedDiskScheme;
 import ecnu.dll.construction.newscheme.discretization.DiscretizedRhombusScheme;

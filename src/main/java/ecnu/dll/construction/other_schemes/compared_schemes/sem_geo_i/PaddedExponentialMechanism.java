@@ -1,4 +1,4 @@
-package ecnu.dll.construction.comparedscheme.sem_geo_i;
+package ecnu.dll.construction.other_schemes.compared_schemes.sem_geo_i;
 
 
 import cn.edu.dll.basic.BasicArrayUtil;

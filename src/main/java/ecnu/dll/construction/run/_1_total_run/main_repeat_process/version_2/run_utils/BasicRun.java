@@ -1,23 +1,24 @@
-package ecnu.dll.construction.run._1_total_run.main_repeat_process.version_2;
+package ecnu.dll.construction.run._1_total_run.main_repeat_process.version_2.run_utils;
 
 import cn.edu.dll.basic.StringUtil;
-import cn.edu.dll.collection.ListUtils;
 import cn.edu.dll.constant_values.ConstantValues;
 import cn.edu.dll.io.read.TwoDimensionalPointRead;
 import cn.edu.dll.io.write.ExperimentResultWrite;
 import cn.edu.dll.result.ExperimentResult;
+import cn.edu.dll.signal.CatchSignal;
 import cn.edu.dll.statistic.StatisticTool;
 import cn.edu.dll.struct.grid.Grid;
 import cn.edu.dll.struct.point.TwoDimensionalDoublePoint;
 import cn.edu.dll.struct.point.TwoDimensionalIntegerPoint;
 import ecnu.dll.construction._config.Constant;
 import ecnu.dll.construction._config.Initialized;
+import ecnu.dll.construction.dataset.struct.DataSetAreaInfo;
 import ecnu.dll.construction.newscheme.discretization.tool.DiscretizedDiskSchemeTool;
 import ecnu.dll.construction.newscheme.discretization.tool.DiscretizedSchemeTool;
 import ecnu.dll.construction.run._1_total_run.main_process.a_single_scheme_run.*;
-import ecnu.dll.construction.run._1_total_run.main_repeat_process.version_2.utils.FileNameUtils;
 
 import java.util.*;
+import java.util.concurrent.CountDownLatch;
 
 public class BasicRun implements Runnable {
 
@@ -30,8 +31,9 @@ public class BasicRun implements Runnable {
     private double xBound;
     private double yBound;
     private String outputDirPath;
+    private CountDownLatch latch;
 
-    public BasicRun(String datasetName, List<TwoDimensionalIntegerPoint> integerPointList, double inputSideLength, TreeMap<TwoDimensionalIntegerPoint, Double> rawDataStatistic, Double epsilon, Double sizeD, double xBound, double yBound, String outputDirPath) {
+    public BasicRun(String datasetName, List<TwoDimensionalIntegerPoint> integerPointList, double inputSideLength, TreeMap<TwoDimensionalIntegerPoint, Double> rawDataStatistic, Double epsilon, Double sizeD, double xBound, double yBound, String outputDirPath, CountDownLatch latch) {
         this.datasetName = datasetName;
         this.integerPointList = integerPointList;
         this.inputSideLength = inputSideLength;
@@ -41,6 +43,7 @@ public class BasicRun implements Runnable {
         this.xBound = xBound;
         this.yBound = yBound;
         this.outputDirPath = outputDirPath;
+        this.latch = latch;
     }
 
     public void getResult() throws CloneNotSupportedException {
@@ -80,26 +83,34 @@ public class BasicRun implements Runnable {
 
 
         // for MDSW
+        System.out.println("Start MDSW...");
         tempMdswExperimentResult = MDSWRun.run(integerPointList, rawDataStatistic, gridLength, inputSideLength, epsilon, xBound, yBound);
         mdswExperimentResultList.add(tempMdswExperimentResult);
-
+        System.out.println("Finish MDSW!");
 
         // for DAM-non-shrink
+        System.out.println("Start DAM-non-shrink...");
         tempDiskNonShrinkExperimentResult = DAMNonShrinkRun.run(integerPointList, rawDataStatistic, gridLength, inputSideLength, diskOptimalSizeB*gridLength, epsilon, kParameter, xBound, yBound);
         diskNonShrinkExperimentResultList.add(tempDiskNonShrinkExperimentResult);
+        System.out.println("Finish DAM-non-shrink!");
 
         // for DAM
+        System.out.println("Start DAM...");
         tempDiskExperimentResult = DAMRun.run(integerPointList, rawDataStatistic, gridLength, inputSideLength, diskOptimalSizeB*gridLength, epsilon, kParameter, xBound, yBound);
         diskExperimentResultList.add(tempDiskExperimentResult);
+        System.out.println("Finish DAM!");
 
 
         // for Subset-Geo-I-norm2
-        tempLocalPrivacy = Initialized.damELPBasicTable.getLowerBoundLocalPrivacyByEpsilon(sizeD, epsilon);
-        transformedEpsilon = Initialized.subGeoIELPBasicTable.getEpsilonByUpperBoundLocalPrivacy(sizeD, tempLocalPrivacy);
+        System.out.println("Start SubsetGeoI...");
+        tempLocalPrivacy = Initialized.damELPExtendedTable.getLowerBoundLocalPrivacyByEpsilon(sizeD, epsilon);
+        transformedEpsilon = Initialized.subGeoIELPExtendedTable.getEpsilonByUpperBoundLocalPrivacy(sizeD, tempLocalPrivacy);
         tempSubsetGeoITwoNormExperimentResult = SubsetGeoITwoNormRun.run(integerPointList, rawDataStatistic, gridLength, inputSideLength, transformedEpsilon, xBound, yBound);
         subsetGeoITwoNormExperimentResultList.add(tempSubsetGeoITwoNormExperimentResult);
+        System.out.println("Finish SubsetGeoI!");
 
         // for HUEM
+        System.out.println("Start HUEM...");
         if (diskOptimalSizeB < 1) {
             tempHUEMExperimentResult = (ExperimentResult) tempDiskExperimentResult.clone();
             tempHUEMExperimentResult.setPair(Constant.schemeNameKey, Constant.hybridUniformExponentialSchemeKey);
@@ -107,6 +118,7 @@ public class BasicRun implements Runnable {
             tempHUEMExperimentResult = HUEMSRun.run(integerPointList, rawDataStatistic, gridLength, inputSideLength, diskOptimalSizeB*gridLength, epsilon, kParameter, xBound, yBound);
         }
         huemExperimentResultList.add(tempHUEMExperimentResult);
+        System.out.println("Finish HUEM!");
 
 
         runningResultMap.put(mdsw, mdswExperimentResultList);
@@ -118,6 +130,7 @@ public class BasicRun implements Runnable {
         ExperimentResult.addPair(runningResultMap, 1, Constant.areaLengthKey, String.valueOf(inputSideLength));
         ExperimentResult.addPair(runningResultMap, 0, Constant.dataSetNameKey, datasetName);
         String outputFilePath = StringUtil.join(ConstantValues.FILE_SPLIT, outputDirPath, FileNameUtils.getFileNameByBudgetAndSizeD(epsilon, sizeDInteger).concat(".csv"));
+        System.out.println(outputFilePath);
         ExperimentResultWrite.write(outputFilePath, ExperimentResult.getCombineResultList(runningResultMap));
 
     }
@@ -128,20 +141,27 @@ public class BasicRun implements Runnable {
             getResult();
         } catch (CloneNotSupportedException e) {
             throw new RuntimeException(e);
+        } finally {
+            this.latch.countDown();
         }
     }
 
     public static void main(String[] args) {
-        String datasetName = "test_dataset";
-        double epsilon = 1;
-        double gridLength = 0.2;
+        CatchSignal catchSignal = new CatchSignal();
+        catchSignal.startCatch();
+        DataSetAreaInfo datasetInfo = Constant.twoDimMultipleCenterNormalDataSet;
+        String datasetName = datasetInfo.getDataSetName();
+        double epsilon = 5;
+//        double gridLength = 0.4;
+        double gridLength = 0.75;
 //        double constB = 1.6;
 //        double constB = 1.6;
 //        Double inputLength = 1.0;
-        Double inputLength = 10.0;
-        Double kParameter = 0.2;
-        Double xLeft = 0.0;
-        Double yLeft = 0.0;
+        Double kParameter = Constant.DEFAULT_K_PARAMETER;
+        Double inputLength = datasetInfo.getLength();
+        Double xLeft = datasetInfo.getxBound();
+        Double yLeft = datasetInfo.getyBound();
+
 
         Double sizeD = Math.ceil(inputLength / gridLength);
 
@@ -149,7 +169,7 @@ public class BasicRun implements Runnable {
 //        TwoDimensionalIntegerPoint originalPoint = new TwoDimensionalIntegerPoint(0, 0);
 //        List<TwoDimensionalIntegerPoint> pointList = ListUtils.copyToListGivenElement(originalPoint, 500000);
 
-        String dataSetPath = Constant.twoNormalMultipleCenterFilePath;
+        String dataSetPath = datasetInfo.getDataSetPath();
         TwoDimensionalPointRead pointRead = new TwoDimensionalPointRead(dataSetPath);
         pointRead.readPointWithFirstLineCount();
         List<TwoDimensionalDoublePoint> doublePointList = pointRead.getPointList();
@@ -158,8 +178,8 @@ public class BasicRun implements Runnable {
         List<TwoDimensionalIntegerPoint> integerPointTypeList = DiscretizedSchemeTool.getRawTwoDimensionalIntegerPointTypeList((int) Math.ceil(sizeD));
         TreeMap<TwoDimensionalIntegerPoint, Double> rawStatisticMap = StatisticTool.countHistogramRatioMap(integerPointTypeList, integerPointList);
 
-
-        Runnable runnable = new BasicRun(datasetName, integerPointList, inputLength, rawStatisticMap, epsilon, sizeD, xLeft, yLeft, outputDir);
+        CountDownLatch latch = new CountDownLatch(1);
+        Runnable runnable = new BasicRun(datasetName, integerPointList, inputLength, rawStatisticMap, epsilon, sizeD, xLeft, yLeft, outputDir, latch);
         Thread thread = new Thread(runnable);
         thread.start();
     }

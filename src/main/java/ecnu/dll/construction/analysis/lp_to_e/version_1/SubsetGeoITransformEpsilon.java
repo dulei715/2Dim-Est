@@ -5,7 +5,7 @@ import ecnu.dll.construction._config.Constant;
 import ecnu.dll.construction.analysis.e_to_lp.Norm1GeoILocalPrivacy;
 import ecnu.dll.construction.analysis.e_to_lp.Norm2GeoILocalPrivacy;
 import ecnu.dll.construction.analysis.e_to_lp.abstract_class.GeoILocalPrivacy;
-import ecnu.dll.construction.comparedscheme.sem_geo_i.discretization.DiscretizedSubsetExponentialGeoI;
+import ecnu.dll.construction.other_schemes.compared_schemes.sem_geo_i.discretization.DiscretizedSubsetExponentialGeoI;
 
 public class SubsetGeoITransformEpsilon {
     private Double beginEpsilon = null;

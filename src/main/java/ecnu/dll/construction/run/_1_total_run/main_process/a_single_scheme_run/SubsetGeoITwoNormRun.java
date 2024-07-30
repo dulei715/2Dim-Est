@@ -5,7 +5,7 @@ import cn.edu.dll.differential_privacy.cdp.basic_struct.impl.TwoNormTwoDimension
 import cn.edu.dll.result.ExperimentResult;
 import cn.edu.dll.struct.point.TwoDimensionalIntegerPoint;
 import ecnu.dll.construction._config.Constant;
-import ecnu.dll.construction.comparedscheme.sem_geo_i.discretization.DiscretizedSubsetExponentialGeoI;
+import ecnu.dll.construction.other_schemes.compared_schemes.sem_geo_i.discretization.DiscretizedSubsetExponentialGeoI;
 import tools.others.Sinkhorn;
 
 import java.util.List;
@@ -32,21 +32,11 @@ public class SubsetGeoITwoNormRun {
             long postProcessTime = endTime - startTime;
 
 
-            // todo: for test
-//            String outputPathIn = StringUtil.join(ConstantValues.FILE_SPLIT, "E:", "1.学习", "4.数据集", "2.dataset_for_spatial_estimation", "test_dataset", "test_for_crime2_data_original_subGeoI.txt");
-//            TestTool.writeDistribution(rawDataStatistic, outputPathIn);
-//            String outputPathEst = StringUtil.join(ConstantValues.FILE_SPLIT, "E:", "1.学习", "4.数据集", "2.dataset_for_spatial_estimation", "test_dataset",  "test_for_crime2_data_estimation_subGeoI.txt");
-//            TestTool.writeDistribution(estimationResult, outputPathEst);
 
 
-            //                Double wassersteinDistance1 = TwoDimensionalWassersteinDistance.getWassersteinDistanceByCPlex(rawDataStatistic, estimationResult, 1);
             Double wassersteinDistance1 = 0D;
-//                Double wassersteinDistance2 = TwoDimensionalWassersteinDistance.getWassersteinDistanceBySinkhorn(rawDataStatistic, estimationResult, 2, Constant.SINKHORN_LAMBDA, Constant.SINKHORN_LOWER_BOUND);
             Double wassersteinDistance2 = Sinkhorn.getWassersteinDistanceBySinkhorn(estimationResult, rawDataStatistic, 2, Constant.SINKHORN_LAMBDA, Constant.SINKHORN_LOWER_BOUND, Constant.SINKHORN_ITERATOR_UPPERBOUND);
-//                Double klDivergence = KLDivergence.getKLDivergence(rawDataStatistic, estimationResult, Constant.DEFAULT_MINIMAL_DENOMINATOR);
             Double klDivergence = 0D;
-//                Double meanDistance = Distance.getAbsMeanDifference(rawDataStatistic, estimationResult);
-//                Double varianceDistance = Distance.getAbsVarianceDifference(rawDataStatistic, estimationResult);
             experimentResult = new ExperimentResult();
             experimentResult.addPair(Constant.dataPointSizeKey, String.valueOf(integerPointList.size()));
             experimentResult.addPair(Constant.schemeNameKey, Constant.subsetGeoITwoNormSchemeKey);

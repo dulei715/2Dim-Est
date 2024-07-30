@@ -6,7 +6,7 @@ import cn.edu.dll.struct.point.TwoDimensionalIntegerPoint;
 import ecnu.dll.construction.analysis.e_to_lp.Norm2DAMLocalPrivacy;
 import ecnu.dll.construction.analysis.e_to_lp.Norm2GeoILocalPrivacy;
 import ecnu.dll.construction.analysis.e_to_lp.Norm2RAMLocalPrivacy;
-import ecnu.dll.construction.comparedscheme.sem_geo_i.discretization.DiscretizedSubsetExponentialGeoI;
+import ecnu.dll.construction.other_schemes.compared_schemes.sem_geo_i.discretization.DiscretizedSubsetExponentialGeoI;
 import ecnu.dll.construction.newscheme.discretization.DiscretizedDiskScheme;
 import ecnu.dll.construction.newscheme.discretization.DiscretizedRhombusScheme;
 import org.junit.Test;

@@ -5,8 +5,7 @@ import cn.edu.dll.result.ExperimentResult;
 import cn.edu.dll.struct.pair.BasicPair;
 import cn.edu.dll.struct.point.TwoDimensionalIntegerPoint;
 import ecnu.dll.construction._config.Constant;
-import ecnu.dll.construction.comparedscheme.msw_hdg.discretization.BucketizingMultiDimensionalSquareWave;
-import edu.ecnu.dll.cpl.expection.CPLException;
+import ecnu.dll.construction.other_schemes.compared_schemes.msw_hdg.discretization.BucketizingMultiDimensionalSquareWave;
 import tools.others.Sinkhorn;
 
 import java.util.List;

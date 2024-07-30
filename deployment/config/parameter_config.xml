@@ -4,15 +4,88 @@
     or <Project Path>/deployment/config/parameter_config.xml
  -->
 <root id="rootName">
+    <properties>
+        <using>version_2</using>
+        <property name="version_1">parameter.properties</property>
+        <property name="version_2">parameter_version_2.properties</property>
+    </properties>
     <datasets>
         <basicPath type="relative">..;0_dataset</basicPath>
         <basicPath type="absolute" name="mac-book">;Users;admin;MainFiles;1.Research;dataset;2_two_dim_LDP;0_dataset</basicPath>
         <basicPath type="absolute" name="Huawei-book">E:;dataset;2.dataset_for_spatial_estimation;0_dataset</basicPath>
-        <fileName name="crime">1_crime</fileName>
-        <fileName name="nyc">2_nyc</fileName>
-        <fileName name="norm_2">1_two_normal</fileName>
-        <fileName name="zip_f_2">2_two_zip_f</fileName>
-        <fileName name="norm_multiple_center_2">3_two_normal_multiple_center;two_normal_point_multiple_centers_extract.txt</fileName>
+        <dataset name="crime">
+            <relativeDir>1_real;1_crime</relativeDir>
+            <subset name="partA">
+                <titleName>ChicagoA</titleName>
+                <fileName>chicago_point_A.txt</fileName>
+                <bound>41.72;-87.68</bound>
+                <areaLength>0.09</areaLength>
+            </subset>
+            <subset name="partB">
+                <titleName>ChicagoB</titleName>
+                <fileName>chicago_point_B.txt</fileName>
+                <bound>41.82;-87.73</bound>
+                <areaLength>0.09</areaLength>
+            </subset>
+            <subset name="partC">
+                <titleName>ChicagoC</titleName>
+                <fileName>chicago_point_C.txt</fileName>
+                <bound>41.92;-87.77</bound>
+                <areaLength>0.07</areaLength>
+            </subset>
+        </dataset>
+        <dataset name="nyc">
+            <relativeDir>1_real;2_nyc</relativeDir>
+            <subset name="partA">
+                <titleName>NYCA</titleName>
+                <fileName>nyc_point_A.txt</fileName>
+                <bound>40.65;-73.84</bound>
+                <areaLength>0.1</areaLength>
+            </subset>
+            <subset name="partB">
+                <titleName>NYCB</titleName>
+                <fileName>nyc_point_B.txt</fileName>
+                <bound>40.65;-73.95</bound>
+                <areaLength>0.09</areaLength>
+            </subset>
+            <subset name="partC">
+                <titleName>NYCC</titleName>
+                <fileName>nyc_point_C.txt</fileName>
+                <bound>40.82;-73.90</bound>
+                <areaLength>0.07</areaLength>
+            </subset>
+        </dataset>
+        <dataset name="norm_2">
+            <relativeDir>2_synthetic;1_two_normal</relativeDir>
+            <subset>
+                <titleName>TwoDimNormal</titleName>
+                <fileName>two_normal_point_extract.txt</fileName>
+                <bound>-4.44;-4.87</bound>
+                <areaLength>9.45</areaLength>
+            </subset>
+        </dataset>
+        <dataset name="zip_f_2">
+            <relativeDir>2_synthetic;2_two_zipf</relativeDir>
+            <subset>
+                <titleName>TwoDimZipf</titleName>
+                <fileName>two_zipf_point.txt</fileName>
+                <bound>0.0;0.0</bound>
+                <areaLength>1.0</areaLength>
+            </subset>
+        </dataset>
+        <dataset name="norm_multiple_center_2">
+            <relativeDir>2_synthetic;3_two_normal_multiple_center</relativeDir>
+            <subset>
+                <titleName>TwoDimMultiCenterNormal</titleName>
+                <fileName>two_normal_point_multiple_centers_extract.txt</fileName>
+                <bound>-4.25;-4.32</bound>
+                <areaLength>10.76</areaLength>
+            </subset>
+        </dataset>
+<!--        <paramTable>-->
+<!--            <basicRelativeDir>budgetLPTable</basicRelativeDir>-->
+<!--            <table name=""></table>-->
+<!--        </paramTable>-->
     </datasets>
     <output>
         <datasetRelativePath name="basic_result_path">output</datasetRelativePath>

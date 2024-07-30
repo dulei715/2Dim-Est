@@ -4,7 +4,7 @@ import cn.edu.dll.differential_privacy.cdp.basic_struct.DistanceTor;
 import cn.edu.dll.differential_privacy.cdp.basic_struct.impl.OneNormTwoDimensionalIntegerPointDistanceTor;
 import cn.edu.dll.struct.point.TwoDimensionalIntegerPoint;
 import ecnu.dll.construction.analysis.e_to_lp.abstract_class.GeoILocalPrivacy;
-import ecnu.dll.construction.comparedscheme.sem_geo_i.discretization.DiscretizedSubsetExponentialGeoI;
+import ecnu.dll.construction.other_schemes.compared_schemes.sem_geo_i.discretization.DiscretizedSubsetExponentialGeoI;
 
 import java.util.List;
 

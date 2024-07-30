@@ -1,4 +1,4 @@
-package ecnu.dll.construction.comparedscheme.msw_hdg.discretization;
+package ecnu.dll.construction.other_schemes.compared_schemes.msw_hdg.discretization;
 
 import cn.edu.dll.DecimalTool;
 import cn.edu.dll.statistic.StatisticTool;
@@ -7,7 +7,7 @@ import cn.edu.dll.struct.pair.BasicPair;
 import cn.edu.dll.struct.point.TwoDimensionalIntegerPoint;
 import ecnu.dll.construction._config.Constant;
 import ecnu.dll.construction.basicscheme.square_wave.discretization.BucketizingOptimalSquareWave;
-import ecnu.dll.construction.comparedscheme.msw_hdg.IndexFlag;
+import ecnu.dll.construction.other_schemes.compared_schemes.msw_hdg.IndexFlag;
 
 import java.util.*;
 

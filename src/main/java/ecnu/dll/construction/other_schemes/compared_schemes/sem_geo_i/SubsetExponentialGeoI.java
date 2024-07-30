@@ -1,4 +1,4 @@
-package ecnu.dll.construction.comparedscheme.sem_geo_i;
+package ecnu.dll.construction.other_schemes.compared_schemes.sem_geo_i;
 
 import Jama.Matrix;
 import cn.edu.dll.basic.BasicArrayUtil;
@@ -11,7 +11,7 @@ import cn.edu.dll.collection.SetUtils;
 import cn.edu.dll.differential_privacy.cdp.basic_struct.DistanceTor;
 import cn.edu.dll.differential_privacy.ldp.consistent.Normalization;
 import cn.edu.dll.math.MathUtils;
-import ecnu.dll.construction.comparedscheme.sem_geo_i.tool.SubsetExponentialGeoITool;
+import ecnu.dll.construction.other_schemes.compared_schemes.sem_geo_i.tool.SubsetExponentialGeoITool;
 
 import java.util.*;
 
