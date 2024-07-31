@@ -39,4 +39,12 @@ public class AttributeIndexPair {
     public int hashCode() {
         return Objects.hash(indexA, indexB);
     }
+
+    @Override
+    public String toString() {
+        return "AttributeIndexPair{" +
+                "indexA=" + indexA +
+                ", indexB=" + indexB +
+                '}';
+    }
 }

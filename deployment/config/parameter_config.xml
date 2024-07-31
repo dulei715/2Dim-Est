@@ -87,6 +87,14 @@
 <!--            <table name=""></table>-->
 <!--        </paramTable>-->
     </datasets>
+    <mechanisms>
+        <mechanism name="HDG">
+            <params>
+                <param name="alpha1">0.7</param>
+                <param name="alpha2">0.03</param>
+            </params>
+        </mechanism>
+    </mechanisms>
     <output>
         <datasetRelativePath name="basic_result_path">output</datasetRelativePath>
         <datasetRelativePath name="extend_result_path">output_extend</datasetRelativePath>
