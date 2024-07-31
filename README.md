@@ -22,6 +22,7 @@ Set the value of `depoyment/config/parameter_config.xml/xpath{root/properites/us
 
 ## For Wasserstein Distance 
 Run: `ecnu.dll.construction.run._1_total_run.main_repeat_process.version_1.RepeatMainMainRun$main` to get the basic result of all mechanisms' Wasserstein Distances.
+
 Run: `ecnu.dll.construction.run._1_total_run.main_repeat_process.version_1.RepeatMainExtendedRun$main` to get the further result of Subset-GeoI and RAM 's Wasserstein Distances.
 
 [//]: # (## For KL Divergence )
