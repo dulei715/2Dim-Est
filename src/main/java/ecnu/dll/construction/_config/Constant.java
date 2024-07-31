@@ -27,6 +27,7 @@ public class Constant {
     public static String configPath;
     public static XMLConfigure xmlConfigure;
 
+
     public static List<String> crimeFileNameList;
     public static List<String> nycFileNameList;
     public static String twoNormalFileName;

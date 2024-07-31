@@ -24,7 +24,7 @@ public class HDG<T> {
         Double[] alphaParameterArray = HDGUtils.getAlphaParameterArray();
         this.alpha1 = alphaParameterArray[0];
         this.alpha2 = alphaParameterArray[1];
-        Double[] optimalGOneAndGTwo = HDGUtils.getOptimalGOneAndGTwo(this.userSize, this.epsilon, oneDimAttributeGroupMap.size(), twoDimAttributeGroupMap.size(), this.alpha1, this.alpha2);
+        Double[] optimalGOneAndGTwo = HDGUtils.getOptimalGOneAndGTwo(this.userSize, this.epsilon, oneDimAttributeGroupMap.size(), this.alpha1, this.alpha2);
         this.g1 = optimalGOneAndGTwo[0];
         this.g2 = optimalGOneAndGTwo[1];
     }

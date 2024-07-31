@@ -37,28 +37,29 @@ public class HDGUtils {
      * 根据HDG论文的实现，保证每个维度用户相同
      * @param userSize
      * @param oneDimAttributeSize
-     * @param twoDimAttributePairSize
      * @return
      */
-    protected static Integer[] getUserSizeOfDifferentDim(int userSize, int oneDimAttributeSize, int twoDimAttributePairSize) {
+    protected static Integer[] getUserSizeOfDifferentDim(int userSize, int oneDimAttributeSize) {
+        int twoDimAttributePairSize = oneDimAttributeSize * (oneDimAttributeSize - 1) / 2;
         int groupSize = oneDimAttributeSize + twoDimAttributePairSize;
         int n1 = (int) Math.round(userSize * 1.0 / groupSize * oneDimAttributeSize);
         int n2 = userSize - n1;
         return new Integer[]{n1, n2};
     }
 
-    public static Double[] getOptimalGOneAndGTwo(int userSize, double epsilon, int oneDimAttributeSize, int twoDimAttributePairSize, double alphaOne, double alphaTwo) {
-        Integer[] userSizeArray = getUserSizeOfDifferentDim(userSize, oneDimAttributeSize, twoDimAttributePairSize);
+    public static Double[] getOptimalGOneAndGTwo(int userSize, double epsilon, int oneDimAttributeSize, double alphaOne, double alphaTwo) {
+        int twoDimAttributePairSize = oneDimAttributeSize * (oneDimAttributeSize - 1) / 2;
+        Integer[] userSizeArray = getUserSizeOfDifferentDim(userSize, oneDimAttributeSize);
         Double gridOne = getGridOne(userSizeArray[0], epsilon, alphaOne, oneDimAttributeSize);
         Double gridTwo = getGridTwo(userSizeArray[1], epsilon, alphaTwo, twoDimAttributePairSize);
         return new Double[]{gridOne, gridTwo};
     }
 
-    //todo: error
+
     public static AttributeIndexPair toAttributePair(Integer index, Integer squareSizeLength) {
         int colSize = squareSizeLength - 1;
         int xIndex = 0;
-        while (index > colSize && colSize > 0) {
+        while (index >= colSize && colSize > 0) {
             ++xIndex;
             index -= colSize;
             --colSize;
@@ -66,34 +67,39 @@ public class HDGUtils {
         if (colSize == 0) {
             throw new RuntimeException("index out of bound!!!");
         }
-        return new AttributeIndexPair(xIndex, xIndex+index);
+        return new AttributeIndexPair(xIndex, xIndex+1+index);
     }
 
     /**
      *
      * @param userSize
      * @param oneDimAttributeSize
-     * @param twoDimAttributePairSize
      * @return TreeMap<UserIndex, OneDimAttributeIndex or TwoDimAttributeIndexPair>
      */
-    public TreeMap<Integer, Object> sampleGridsForUsers(int userSize, int oneDimAttributeSize, int twoDimAttributePairSize) {
-        Integer[] userSizeArray = getUserSizeOfDifferentDim(userSize, oneDimAttributeSize, twoDimAttributePairSize);
+    public TreeMap<Integer, Object> sampleGridsForUsers(int userSize, int oneDimAttributeSize) {
+        int twoDimAttributePairSize = oneDimAttributeSize * (oneDimAttributeSize - 1) / 2;
+        Integer[] userSizeArray = getUserSizeOfDifferentDim(userSize, oneDimAttributeSize);
         Integer groupSize = oneDimAttributeSize + twoDimAttributePairSize;
         TreeMap<Integer, Object> resultMap = new TreeMap<>();
-        Integer tempGroup;
+        Integer tempGroup, tempIndex;
+        Object objIndex;
         for (int userIndex = 0; userIndex < userSize; userIndex++) {
             tempGroup = RandomUtil.getRandomInteger(1, groupSize);
             if (tempGroup <= oneDimAttributeSize) {
-
+                // choose 1 dim
+                objIndex = RandomUtil.getRandomInteger(0, oneDimAttributeSize - 1);
             } else {
-
+                // choose 2 dim
+                tempIndex = RandomUtil.getRandomInteger(0, twoDimAttributePairSize - 1);
+                objIndex = toAttributePair(tempIndex, oneDimAttributeSize);
             }
+            resultMap.put(userIndex, objIndex);
         }
         return resultMap;
     }
 
     public static void main(String[] args) {
-        int index = 0;
+        int index = 44;
         Integer squareSideLength = 10;
         AttributeIndexPair attributePair = toAttributePair(index, squareSideLength);
         System.out.println(attributePair);
