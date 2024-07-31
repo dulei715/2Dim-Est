@@ -3,8 +3,8 @@ package mechanism_test;
 import cn.edu.dll.basic.BasicArrayUtil;
 import cn.edu.dll.struct.point.TwoDimensionalIntegerPoint;
 import ecnu.dll.construction._config.Constant;
-import ecnu.dll.construction.basicscheme.geo_i.DiscretizationGeoI;
-import ecnu.dll.construction.other_schemes.compared_schemes.sem_geo_i.tool.SubsetExponentialGeoITool;
+import ecnu.dll.construction.schemes.basic_schemes.geo_i.DiscretizationGeoI;
+import ecnu.dll.construction.schemes.compared_schemes.sem_geo_i.tool.SubsetExponentialGeoITool;
 import org.junit.Test;
 
 public class GeoITest {

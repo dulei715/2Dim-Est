@@ -5,7 +5,7 @@ import cn.edu.dll.differential_privacy.cdp.basic_struct.impl.TwoNormTwoDimension
 import cn.edu.dll.result.ExperimentResult;
 import cn.edu.dll.struct.point.TwoDimensionalIntegerPoint;
 import ecnu.dll.construction._config.Constant;
-import ecnu.dll.construction.other_schemes.compared_schemes.sem_geo_i.discretization.DiscretizedSubsetExponentialGeoI;
+import ecnu.dll.construction.schemes.compared_schemes.sem_geo_i.discretization.DiscretizedSubsetExponentialGeoI;
 import tools.others.Sinkhorn;
 
 import java.util.List;

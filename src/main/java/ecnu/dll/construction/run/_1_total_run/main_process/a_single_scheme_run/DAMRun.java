@@ -4,9 +4,8 @@ import cn.edu.dll.differential_privacy.accuracy.metrics.distance_quantities.KLDi
 import cn.edu.dll.result.ExperimentResult;
 import cn.edu.dll.struct.point.TwoDimensionalIntegerPoint;
 import ecnu.dll.construction._config.Constant;
-import ecnu.dll.construction.newscheme.discretization.DiscretizedDiskScheme;
+import ecnu.dll.construction.schemes.new_scheme.discretization.DiscretizedDiskScheme;
 import ecnu.dll.construction.run._0_base_run._struct.ExperimentResultAndScheme;
-import edu.ecnu.dll.cpl.expection.CPLException;
 import tools.others.Sinkhorn;
 
 import java.util.List;

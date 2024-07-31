@@ -17,18 +17,21 @@ Run: `src/test/java/dataset_test_important/ExtractDatasetTest.java$extractNormDa
 
 Run: `src/test/java/dataset_test_important/ExtractDatasetTest.java$extractNormalDatasetWithMultipleCenters()` to extract the multi-center normal data.
 
-# Run Process
-## For Wasserstein Distance
-Run: `src/main/java/ecnu/dll/construction/run/main_repeat_process/RepeatMainExtendedRun.java` to get the result under Wasserstein Distance.
+# Run Process (version_1)
+Set the value of `depoyment/config/parameter_config.xml/xpath{root/properites/using}` as `version_1`
 
-## For KL Divergence 
-Run: `src/main/java/ecnu/dll/construction/run/basic_preprocess/SubsetGeoIEpsilonLPTableGeneration.java` to generate LP table for SEM-Geo-I.
+## For Wasserstein Distance 
+Run: `ecnu.dll.construction.run._1_total_run.main_repeat_process.version_1$RepeatMainMainRun.java` to get the basic result of all mechanisms' Wasserstein Distances.
+Run: `ecnu.dll.construction.run._1_total_run.main_repeat_process.version_1$RepeatMainExtendedRun.java` to get the further result of Subset-GeoI and RAM 's Wasserstein Distances.
 
-Run: `src/main/java/ecnu/dll/construction/run/basic_preprocess/DAMEpsilonLPTableGeneration.java` to generate LP table for DAM.
-
-Run: `src/main/java/ecnu/dll/construction/run/main_repeat_process/RepeatExtendedExtendedForKLDivergenceOnlyRun.java` to get the result under KL divergence.
+[//]: # (## For KL Divergence )
+[//]: # (Run: `src/main/java/ecnu/dll/construction/run/basic_preprocess/SubsetGeoIEpsilonLPTableGeneration.java` to generate LP table for SEM-Geo-I.)
+[//]: # ()
+[//]: # (Run: `src/main/java/ecnu/dll/construction/run/basic_preprocess/DAMEpsilonLPTableGeneration.java` to generate LP table for DAM.)
+[//]: # ()
+[//]: # (Run: `src/main/java/ecnu/dll/construction/run/main_repeat_process/RepeatExtendedExtendedForKLDivergenceOnlyRun.java` to get the result under KL divergence.)
 
 
 ## Combine
-Run `src/main/java/ecnu/dll/construction/run/basic_postprocess/CombineSubDatasetResult.java` to combine the result in different parts and different times to get the final result.
+Run `ecnu.dll.construction.run._0_base_run.basic_postprocess$CombineSubDatasetResult.java` to combine the result in different parts and different times to get the final result.
 

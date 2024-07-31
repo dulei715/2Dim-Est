@@ -1,13 +1,9 @@
 package ecnu.dll.construction.run._1_total_run.main_process.a_single_scheme_run;
 
-import cn.edu.dll.differential_privacy.accuracy.metrics.distance_quantities.KLDivergence;
-import cn.edu.dll.io.read.TwoDimensionalPointRead;
 import cn.edu.dll.result.ExperimentResult;
-import cn.edu.dll.struct.point.TwoDimensionalDoublePoint;
 import cn.edu.dll.struct.point.TwoDimensionalIntegerPoint;
 import ecnu.dll.construction._config.Constant;
-import ecnu.dll.construction.newscheme.discretization.DiscretizedHybridUniformExponentialScheme;
-import edu.ecnu.dll.cpl.expection.CPLException;
+import ecnu.dll.construction.schemes.new_scheme.discretization.DiscretizedHybridUniformExponentialScheme;
 import tools.others.Sinkhorn;
 
 import java.util.List;
@@ -33,7 +29,8 @@ public class HUEMSRun {
         ExperimentResult experimentResult = null;
         Double wassersteinDistance1 = 0D;
         Double wassersteinDistance2 = Sinkhorn.getWassersteinDistanceBySinkhorn(estimationResult, rawDataStatistic, 2, Constant.SINKHORN_LAMBDA, Constant.SINKHORN_LOWER_BOUND, Constant.SINKHORN_ITERATOR_UPPERBOUND);
-        Double klDivergence = KLDivergence.getKLDivergence(rawDataStatistic, estimationResult, Constant.DEFAULT_MINIMAL_DENOMINATOR);
+//        Double klDivergence = KLDivergence.getKLDivergence(rawDataStatistic, estimationResult, Constant.DEFAULT_MINIMAL_DENOMINATOR);
+        Double klDivergence = 0D;
 //            Double meanDistance = Distance.getAbsMeanDifference(rawDataStatistic, estimationResult);
 //            Double varianceDistance = Distance.getAbsVarianceDifference(rawDataStatistic, estimationResult);
         experimentResult = new ExperimentResult();

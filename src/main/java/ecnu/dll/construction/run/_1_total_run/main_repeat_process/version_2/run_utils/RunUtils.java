@@ -9,7 +9,7 @@ import cn.edu.dll.struct.point.TwoDimensionalIntegerPoint;
 import ecnu.dll.construction._config.ConfigureUtils;
 import ecnu.dll.construction._config.Constant;
 import ecnu.dll.construction.dataset.struct.DataSetAreaInfo;
-import ecnu.dll.construction.newscheme.discretization.tool.DiscretizedSchemeTool;
+import ecnu.dll.construction.schemes.new_scheme.discretization.tool.DiscretizedSchemeTool;
 
 import java.util.List;
 import java.util.TreeMap;

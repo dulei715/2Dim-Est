@@ -4,9 +4,9 @@ import cn.edu.dll.differential_privacy.cdp.basic_struct.DistanceTor;
 import cn.edu.dll.struct.point.TwoDimensionalIntegerPoint;
 import ecnu.dll.construction.analysis.e_to_lp.basic.TransformLocalPrivacy;
 import ecnu.dll.construction.analysis.e_to_lp.tools.CellDistanceTool;
-import ecnu.dll.construction.newscheme.discretization.DiscretizedDiskScheme;
-import ecnu.dll.construction.newscheme.discretization.struct.ThreePartsStruct;
-import ecnu.dll.construction.newscheme.discretization.tool.DiscretizedDiskSchemeTool;
+import ecnu.dll.construction.schemes.new_scheme.discretization.DiscretizedDiskScheme;
+import ecnu.dll.construction.schemes.new_scheme.discretization.struct.ThreePartsStruct;
+import ecnu.dll.construction.schemes.new_scheme.discretization.tool.DiscretizedDiskSchemeTool;
 
 import java.util.Collection;
 import java.util.List;

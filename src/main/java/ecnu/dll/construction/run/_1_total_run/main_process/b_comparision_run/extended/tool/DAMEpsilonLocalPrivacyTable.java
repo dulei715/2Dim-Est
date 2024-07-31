@@ -4,7 +4,7 @@ import cn.edu.dll.basic.BasicArrayUtil;
 import cn.edu.dll.io.read.BasicRead;
 import ecnu.dll.construction._config.Constant;
 import ecnu.dll.construction.analysis.e_to_lp.Norm2DAMLocalPrivacy;
-import ecnu.dll.construction.newscheme.discretization.DiscretizedDiskScheme;
+import ecnu.dll.construction.schemes.new_scheme.discretization.DiscretizedDiskScheme;
 
 import java.util.*;
 

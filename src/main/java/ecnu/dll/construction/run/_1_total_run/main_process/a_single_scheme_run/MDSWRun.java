@@ -1,11 +1,10 @@
 package ecnu.dll.construction.run._1_total_run.main_process.a_single_scheme_run;
 
-import cn.edu.dll.differential_privacy.accuracy.metrics.distance_quantities.KLDivergence;
 import cn.edu.dll.result.ExperimentResult;
 import cn.edu.dll.struct.pair.BasicPair;
 import cn.edu.dll.struct.point.TwoDimensionalIntegerPoint;
 import ecnu.dll.construction._config.Constant;
-import ecnu.dll.construction.other_schemes.compared_schemes.msw_hdg.discretization.BucketizingMultiDimensionalSquareWave;
+import ecnu.dll.construction.schemes.compared_schemes.msw.discretization.BucketizingMultiDimensionalSquareWave;
 import tools.others.Sinkhorn;
 
 import java.util.List;
@@ -34,7 +33,8 @@ public class MDSWRun {
         Double wassersteinDistance1 = 0D;
 //            Double wassersteinDistance2 = TwoDimensionalWassersteinDistance.getWassersteinDistanceBySinkhorn(rawDataStatistic, estimationResult, 2, Constant.SINKHORN_LAMBDA, Constant.SINKHORN_LOWER_BOUND);
         Double wassersteinDistance2 = Sinkhorn.getWassersteinDistanceBySinkhorn(estimationResult, rawDataStatistic, 2, Constant.SINKHORN_LAMBDA, Constant.SINKHORN_LOWER_BOUND, Constant.SINKHORN_ITERATOR_UPPERBOUND);
-        Double klDivergence = KLDivergence.getKLDivergence(rawDataStatistic, estimationResult, Constant.DEFAULT_MINIMAL_DENOMINATOR);
+//        Double klDivergence = KLDivergence.getKLDivergence(rawDataStatistic, estimationResult, Constant.DEFAULT_MINIMAL_DENOMINATOR);
+        Double klDivergence = 0D;
 //            Double meanDistance = Distance.getAbsMeanDifference(rawDataStatistic, estimationResult);
 //            Double varianceDistance = Distance.getAbsVarianceDifference(rawDataStatistic, estimationResult);
         experimentResult = new ExperimentResult();

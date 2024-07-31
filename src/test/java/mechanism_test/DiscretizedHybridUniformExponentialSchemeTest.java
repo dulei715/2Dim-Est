@@ -8,7 +8,7 @@ import cn.edu.dll.statistic.StatisticTool;
 import cn.edu.dll.struct.point.TwoDimensionalDoublePoint;
 import cn.edu.dll.struct.point.TwoDimensionalIntegerPoint;
 import ecnu.dll.construction._config.Constant;
-import ecnu.dll.construction.newscheme.discretization.DiscretizedHybridUniformExponentialScheme;
+import ecnu.dll.construction.schemes.new_scheme.discretization.DiscretizedHybridUniformExponentialScheme;
 import org.junit.Test;
 
 import java.util.List;

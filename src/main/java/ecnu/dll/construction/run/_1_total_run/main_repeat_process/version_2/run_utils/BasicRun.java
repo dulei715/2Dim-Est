@@ -13,8 +13,8 @@ import cn.edu.dll.struct.point.TwoDimensionalIntegerPoint;
 import ecnu.dll.construction._config.Constant;
 import ecnu.dll.construction._config.Initialized;
 import ecnu.dll.construction.dataset.struct.DataSetAreaInfo;
-import ecnu.dll.construction.newscheme.discretization.tool.DiscretizedDiskSchemeTool;
-import ecnu.dll.construction.newscheme.discretization.tool.DiscretizedSchemeTool;
+import ecnu.dll.construction.schemes.new_scheme.discretization.tool.DiscretizedDiskSchemeTool;
+import ecnu.dll.construction.schemes.new_scheme.discretization.tool.DiscretizedSchemeTool;
 import ecnu.dll.construction.run._1_total_run.main_process.a_single_scheme_run.*;
 
 import java.util.*;

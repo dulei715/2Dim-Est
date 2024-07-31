@@ -8,12 +8,12 @@ import ecnu.dll.construction._config.Initialized;
 import ecnu.dll.construction.analysis.e_to_lp.Norm2DAMLocalPrivacy;
 import ecnu.dll.construction.analysis.e_to_lp.abstract_class.DAMLocalPrivacy;
 import ecnu.dll.construction.analysis.lp_to_e.version_1.SubsetGeoITransformEpsilon;
-import ecnu.dll.construction.other_schemes.compared_schemes.sem_geo_i.discretization.DiscretizedSubsetExponentialGeoI;
-import ecnu.dll.construction.newscheme.discretization.DiscretizedDiskNonShrinkScheme;
-import ecnu.dll.construction.newscheme.discretization.DiscretizedDiskScheme;
-import ecnu.dll.construction.newscheme.discretization.DiscretizedRhombusScheme;
-import ecnu.dll.construction.newscheme.discretization.tool.DiscretizedDiskSchemeTool;
-import ecnu.dll.construction.newscheme.discretization.tool.DiscretizedRhombusSchemeTool;
+import ecnu.dll.construction.schemes.compared_schemes.sem_geo_i.discretization.DiscretizedSubsetExponentialGeoI;
+import ecnu.dll.construction.schemes.new_scheme.discretization.DiscretizedDiskNonShrinkScheme;
+import ecnu.dll.construction.schemes.new_scheme.discretization.DiscretizedDiskScheme;
+import ecnu.dll.construction.schemes.new_scheme.discretization.DiscretizedRhombusScheme;
+import ecnu.dll.construction.schemes.new_scheme.discretization.tool.DiscretizedDiskSchemeTool;
+import ecnu.dll.construction.schemes.new_scheme.discretization.tool.DiscretizedRhombusSchemeTool;
 import ecnu.dll.construction.run._0_base_run._struct.ExperimentResultAndScheme;
 import ecnu.dll.construction.run._1_total_run.main_process.a_single_scheme_run.*;
 

@@ -7,8 +7,8 @@ import cn.edu.dll.statistic.StatisticTool;
 import cn.edu.dll.struct.point.TwoDimensionalDoublePoint;
 import cn.edu.dll.struct.point.TwoDimensionalIntegerPoint;
 import ecnu.dll.construction._config.Constant;
-import ecnu.dll.construction.newscheme.discretization.DiscretizedDiskScheme;
-import ecnu.dll.construction.newscheme.discretization.tool.DiscretizedDiskSchemeTool;
+import ecnu.dll.construction.schemes.new_scheme.discretization.DiscretizedDiskScheme;
+import ecnu.dll.construction.schemes.new_scheme.discretization.tool.DiscretizedDiskSchemeTool;
 import org.junit.Test;
 
 import java.util.List;

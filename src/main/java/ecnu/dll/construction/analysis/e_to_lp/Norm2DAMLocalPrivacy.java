@@ -4,7 +4,7 @@ import cn.edu.dll.differential_privacy.cdp.basic_struct.DistanceTor;
 import cn.edu.dll.differential_privacy.cdp.basic_struct.impl.TwoNormTwoDimensionalIntegerPointDistanceTor;
 import cn.edu.dll.struct.point.TwoDimensionalIntegerPoint;
 import ecnu.dll.construction.analysis.e_to_lp.abstract_class.DAMLocalPrivacy;
-import ecnu.dll.construction.newscheme.discretization.DiscretizedDiskScheme;
+import ecnu.dll.construction.schemes.new_scheme.discretization.DiscretizedDiskScheme;
 
 import java.util.List;
 

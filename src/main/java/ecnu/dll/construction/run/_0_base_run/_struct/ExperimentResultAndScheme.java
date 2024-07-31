@@ -1,7 +1,7 @@
 package ecnu.dll.construction.run._0_base_run._struct;
 
 import cn.edu.dll.result.ExperimentResult;
-import ecnu.dll.construction.newscheme.discretization.AbstractDiscretizedScheme;
+import ecnu.dll.construction.schemes.new_scheme.discretization.AbstractDiscretizedScheme;
 
 public class ExperimentResultAndScheme {
     private ExperimentResult experimentResult;

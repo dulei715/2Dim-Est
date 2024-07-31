@@ -9,7 +9,7 @@ import cn.edu.dll.struct.grid.Grid;
 import cn.edu.dll.struct.point.TwoDimensionalDoublePoint;
 import cn.edu.dll.struct.point.TwoDimensionalIntegerPoint;
 import ecnu.dll.construction._config.Constant;
-import ecnu.dll.construction.newscheme.discretization.tool.DiscretizedSchemeTool;
+import ecnu.dll.construction.schemes.new_scheme.discretization.tool.DiscretizedSchemeTool;
 import ecnu.dll.construction.run._1_total_run.main_process.b_comparision_run.extended.AlterParameterBudgetExtendedRun;
 import ecnu.dll.construction.run._1_total_run.main_process.b_comparision_run.extended.AlterParameterGExtendedRun;
 
