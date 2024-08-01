@@ -1,12 +1,19 @@
 package ecnu.dll.construction.schemes.add_schemes.hdg;
 
 import cn.edu.dll.basic.BasicArrayUtil;
+import cn.edu.dll.basic.NumberUtil;
+import cn.edu.dll.basic.RandomUtil;
+import cn.edu.dll.constant_values.ConstantValues;
 import cn.edu.dll.differential_privacy.ldp.frequency_oracle.basic_struct.HashFunctionResponsePair;
 import cn.edu.dll.differential_privacy.ldp.frequency_oracle.foImp.OptimizedIntegerLocalHashing;
+import cn.edu.dll.io.print.MyPrint;
+import cn.edu.dll.statistic.StatisticTool;
 import cn.edu.dll.struct.pair.BasicPair;
 import cn.edu.dll.struct.pair.PureTriple;
+import ecnu.dll.construction.extend_tools.StatisticUtil;
 import ecnu.dll.construction.structs.AttributeIndexPair;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,14 +21,13 @@ import java.util.Map;
 public class HDG<T> {
 
     protected Double epsilon;
-    // 这里List中的每个元素是一个三元组(属性标识，最小取值，最大取值)
+    // 这里List中的每个元素是一个三元组(属性标识，最小取值，最大取值)表示一个属性
     protected List<PureTriple<T, Double, Double>> dataDomainList;
 //    protected Double gridCellLength;
     protected Integer userSize;
 
-
-
     protected Integer hashFunctionArraySize;
+
     protected Integer oneDimSize, twoDimSize;
     protected Double alpha1, alpha2;
     protected Integer g1, g2;
@@ -33,11 +39,17 @@ public class HDG<T> {
     protected HashMap<AttributeIndexPair, Integer> twoDimAttributeUserSizeMap;
     protected HashMap<AttributeIndexPair, List<HashFunctionResponsePair<Integer>>> twoDimResponseMap;
     protected HashMap<AttributeIndexPair, List<Double>> twoDimAttributeStatisticMap;
-
     protected OptimizedIntegerLocalHashing oneDimFO;
+
     protected OptimizedIntegerLocalHashing twoDimFO;
     protected Map<Integer, Object> userToGroupMap;
 
+    public HDG(Double epsilon, List<PureTriple<T, Double, Double>> dataDomainList, Integer userSize) {
+        this.epsilon = epsilon;
+        this.dataDomainList = dataDomainList;
+        this.userSize = userSize;
+        initialize();
+    }
     protected void initialize() {
         this.hashFunctionArraySize = HDGUtils.getHashFunctionSizeFromConfig();
         this.oneDimSize = this.dataDomainList.size();
@@ -49,8 +61,8 @@ public class HDG<T> {
         HashMap[] countMapArray = HDGUtils.countUserForEachGroup(this.userToGroupMap);
         this.oneDimAttributeUserSizeMap = countMapArray[0];
         this.twoDimAttributeUserSizeMap = countMapArray[1];
-        this.oneDimResponseRecordMap = new HashMap<>();
-        this.twoDimResponseMap = new HashMap<>();
+        this.oneDimResponseRecordMap = HDGUtils.getOneDimInitializedResponseMap(this.oneDimSize);
+        this.twoDimResponseMap = HDGUtils.getTwoDimInitializedResponseMap(this.oneDimSize);
     }
 
 
@@ -59,8 +71,13 @@ public class HDG<T> {
         return this.userToGroupMap.get(userID);
     }
 
-
-    protected void constructGrid() {
+    /**
+     *  Phase 1: Constructing Grids
+     *      (1) initializeGrid: 计算最优grid大小，初始化一维和二维FO
+     *      (2) perturbAndRecord: 记录每个用户的记录，并将其扰动
+     *      (3) 统计每个组经过OLH后的无偏结果
+     */
+    protected void initializeGrid() {
         Double[] optimalGOneAndGTwo = HDGUtils.getOptimalGOneAndGTwo(this.userSize, this.epsilon, this.dataDomainList.size(), this.alpha1, this.alpha2);
         this.g1 = (int) Math.round(optimalGOneAndGTwo[0]);
         this.g2 = (int) Math.round(optimalGOneAndGTwo[1]);
@@ -73,13 +90,13 @@ public class HDG<T> {
     }
 
 
-    public void perturbAndRecord(Integer userID, List<Double> rawUserData, final List<Double> leftBoundList, final List<Double> rightBoundList) {
+    public void perturbAndRecord(Integer userID, List<Double> rawUserData) {
         Object groupIndex = this.getGroupIndex(userID);
         if (groupIndex instanceof Integer) {
             Integer oneDimGroupIndex = (Integer) groupIndex;
             Double userEffectiveData = rawUserData.get(oneDimGroupIndex);
-            Double leftBound = leftBoundList.get(oneDimGroupIndex);
-            Double rightBound = rightBoundList.get(oneDimGroupIndex);
+            Double leftBound = this.dataDomainList.get(oneDimGroupIndex).getValue();
+            Double rightBound = this.dataDomainList.get(oneDimGroupIndex).getTag();
             Double gridLength = (rightBound - leftBound) / this.g1;
             int realIndex = HDGUtils.getGridIndex(userEffectiveData, leftBound, gridLength);
             HashFunctionResponsePair<Integer> perturbElement = this.oneDimFO.perturb(realIndex);
@@ -92,10 +109,10 @@ public class HDG<T> {
                     rawUserData.get(indexA),
                     rawUserData.get(indexB)
             };
-            Double[] leftBoundArray = new Double[] {leftBoundList.get(indexA), leftBoundList.get(indexB)};
+            Double[] leftBoundArray = new Double[] {this.dataDomainList.get(indexA).getValue(), this.dataDomainList.get(indexB).getValue()};
             Double[] gridLengthArray = new Double[] {
-                    (rightBoundList.get(indexA) - leftBoundArray[0]) / this.g2,
-                    (rightBoundList.get(indexB) - leftBoundArray[1]) / this.g2
+                    (this.dataDomainList.get(indexA).getTag() - leftBoundArray[0]) / this.g2,
+                    (this.dataDomainList.get(indexB).getTag() - leftBoundArray[1]) / this.g2
             };
             BasicPair<Integer, Integer> realIndex = HDGUtils.getGridIndex(userEffectiveDataArray, leftBoundArray, gridLengthArray);
             Integer transformedOneDimIndex = HDGUtils.toOneDimGridIndex(realIndex, this.g2);
@@ -130,6 +147,37 @@ public class HDG<T> {
             this.twoDimAttributeStatisticMap.put(twoDimAttributeIndex, tempStatisticList);
         }
     }
+
+    public static void main(String[] args) {
+        Double epsilon = 0.5;
+        List<PureTriple<String, Double, Double>> dataDomainList = new ArrayList<>();
+        Integer userSize = 100;
+
+        dataDomainList.add(new PureTriple<>("loc_a", 0.1, 1.0));
+        dataDomainList.add(new PureTriple<>("loc_b", 0.5, 1.4));
+
+        List<List<Double>> userDataList = new ArrayList<>();
+        List<Double> tempUserData;
+        for (int i = 0; i < userSize; i++) {
+            tempUserData = new ArrayList<>();
+            tempUserData.add(NumberUtil.roundFormat(RandomUtil.getRandomDouble(0.1, 1.0), 3));
+            tempUserData.add(NumberUtil.roundFormat(RandomUtil.getRandomDouble(0.5, 1.4), 3));
+            userDataList.add(tempUserData);
+        }
+
+        MyPrint.showList(userDataList, ConstantValues.LINE_SPLIT);
+
+
+        HDG hdg = new HDG(epsilon, dataDomainList, userSize);
+        hdg.initializeGrid();
+        for (int userID = 0; userID < userSize; userID++) {
+            hdg.perturbAndRecord(userID, userDataList.get(userID));
+        }
+        hdg.statisticEachGroup();
+
+    }
+
+
 
 
 }

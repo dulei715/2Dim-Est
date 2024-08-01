@@ -1,6 +1,7 @@
 package ecnu.dll.construction.schemes.add_schemes.hdg;
 
 import cn.edu.dll.basic.RandomUtil;
+import cn.edu.dll.differential_privacy.ldp.frequency_oracle.basic_struct.HashFunctionResponsePair;
 import cn.edu.dll.io.print.MyPrint;
 import cn.edu.dll.struct.pair.BasicPair;
 import ecnu.dll.construction._config.Constant;
@@ -8,7 +9,9 @@ import ecnu.dll.construction.structs.AttributeIndexPair;
 import org.dom4j.Document;
 import org.dom4j.Element;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class HDGUtils {
@@ -89,6 +92,23 @@ public class HDGUtils {
         Integer xIndex = index / gridSizeWithSideLength;
         Integer yIndex = index % gridSizeWithSideLength;
         return new BasicPair<>(xIndex, yIndex);
+    }
+
+    public static HashMap<Integer, List<HashFunctionResponsePair<Integer>>> getOneDimInitializedResponseMap(Integer dimSize) {
+        HashMap<Integer, List<HashFunctionResponsePair<Integer>>>  result = new HashMap();
+        for (int i = 0; i < dimSize; i++) {
+            result.put(i, new ArrayList<>());
+        }
+        return result;
+    }
+
+    public static HashMap<AttributeIndexPair, List<HashFunctionResponsePair<Integer>>> getTwoDimInitializedResponseMap(Integer oneDimSize) {
+        Integer twoDimSize = oneDimSize * (oneDimSize - 1) / 2;
+        HashMap<AttributeIndexPair, List<HashFunctionResponsePair<Integer>>> result = new HashMap<>();
+        for (int i = 0; i < twoDimSize; i++) {
+            result.put(toTwoDimAttributeIndex(i, oneDimSize), new ArrayList<>());
+        }
+        return result;
     }
 
 
