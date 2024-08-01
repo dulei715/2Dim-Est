@@ -6,9 +6,9 @@ public class AttributeIndexPair {
     private Integer indexA;
     private Integer indexB;
 
-    public AttributeIndexPair(Integer indexA, Integer indexB) {
-        this.indexA = indexA;
-        this.indexB = indexB;
+    public AttributeIndexPair(Integer... indexes) {
+        this.indexA = indexes[0];
+        this.indexB = indexes[1];
     }
 
     public Integer getIndexA() {

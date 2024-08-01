@@ -99,4 +99,7 @@
         <datasetRelativePath name="basic_result_path">output</datasetRelativePath>
         <datasetRelativePath name="extend_result_path">output_extend</datasetRelativePath>
     </output>
+    <parameters>
+        <parameter name="hash_function_size">10</parameter>
+    </parameters>
 </root>
