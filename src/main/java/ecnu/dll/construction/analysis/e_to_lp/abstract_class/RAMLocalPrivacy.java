@@ -11,6 +11,7 @@ import org.apache.commons.collections.CollectionUtils;
 import java.util.Collection;
 import java.util.List;
 
+@Deprecated
 public abstract class RAMLocalPrivacy extends TransformLocalPrivacy<TwoDimensionalIntegerPoint, TwoDimensionalIntegerPoint> {
 
     protected DiscretizedRhombusScheme ramScheme = null;
