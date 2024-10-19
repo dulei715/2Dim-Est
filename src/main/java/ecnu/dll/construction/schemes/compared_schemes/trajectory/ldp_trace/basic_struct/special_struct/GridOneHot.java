@@ -1,5 +1,7 @@
 package ecnu.dll.construction.schemes.compared_schemes.trajectory.ldp_trace.basic_struct.special_struct;
 
+import cn.edu.dll.constant_values.ConstantValues;
+import cn.edu.dll.io.print.MyPrint;
 import cn.edu.dll.struct.one_hot.OneHot;
 import cn.edu.dll.struct.point.TwoDimensionalIntegerPoint;
 import ecnu.dll.construction.schemes.compared_schemes.trajectory.ldp_trace.basic_struct.special_one_hot.CellNeighboring;
@@ -56,7 +58,7 @@ public class GridOneHot extends OneHot<CellNeighboring> {
         int[] oneHotIndex = new int[2];
         int xIndex = cellValue.getXIndex();
         int yIndex = cellValue.getYIndex();
-        int bias = 0;
+        int bias;
         switch (type) {
             case CellNeighboring.Angle:
                 oneHotIndex[0] = (xIndex == 0 ? 0 : 1) * 6 + (yIndex == 0 ? 0 : 1) * 3;
@@ -83,15 +85,95 @@ public class GridOneHot extends OneHot<CellNeighboring> {
         }
         return oneHotIndex;
     }
+
+    protected static int getBias(CellNeighboring cellNeighboring) {
+        TwoDimensionalIntegerPoint[][] cellNeighboringIndex = cellNeighboring.getCellNeighboringIndex();
+        int[] directNeighboringInnerIndex = cellNeighboring.getDirectNeighboringInnerIndex();
+        int k = 0;
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                if (i == 1 && j == 1 || cellNeighboringIndex[i][j] == null) {
+                    continue;
+                }
+                if (directNeighboringInnerIndex[0] == i && directNeighboringInnerIndex[1] == j) {
+                    return k;
+                }
+                ++k;
+            }
+        }
+        throw new RuntimeException("Not found right direct neighboring!");
+    }
+
     @Override
     public void setElement(CellNeighboring cellNeighboring) {
         int[] oneHotDataIndex = this.toOneHotDataIndex(cellNeighboring);
-        for (int i = oneHotDataIndex[0]; i <= oneHotDataIndex[1]; i++) {
-            this.data[i] = ONE;
+//        for (int i = oneHotDataIndex[0]; i <= oneHotDataIndex[1]; i++) {
+//            this.data[i] = ONE;
+//        }
+        int bias = getBias(cellNeighboring);
+        this.data[oneHotDataIndex[0]+bias] = ONE;
+    }
+
+    public String toClassifiedString() {
+        StringBuilder stringBuilder = new StringBuilder();
+
+        int k = 0;
+        for (int i = 0; i < 4; i++) {
+            stringBuilder.append("(");
+            for (int j = 0; j < 3; j++) {
+                stringBuilder.append(this.data[k++] ? "1" : "0").append(j < 2 ? ", " : ")");
+            }
+            stringBuilder.append(", ");
+            if (i == 3) {
+                stringBuilder.append(ConstantValues.LINE_SPLIT);
+            }
         }
+        int tempCellSize = 2 * (this.rowSize + this.colSize) - 8;
+        for (int i = 0; i < tempCellSize; i++) {
+            if (i % (this.colSize - 2) == 0) {
+                stringBuilder.append("[");
+            }
+            stringBuilder.append("(");
+            for (int j = 0; j < 5; j++) {
+                stringBuilder.append(this.data[k++] ? "1" : "0").append(j < 4 ? ", " : ")");
+            }
+            if (i % (this.colSize - 2) == this.colSize - 3) {
+                stringBuilder.append("]");
+            }
+            stringBuilder.append(", ");
+            if (i == tempCellSize - 1) {
+                stringBuilder.append(ConstantValues.LINE_SPLIT);
+            }
+        }
+        tempCellSize = (this.rowSize - 2) * (this.colSize - 2);
+        for (int i = 0; i < tempCellSize; i++) {
+            if (i % (this.colSize - 2) == 0) {
+                stringBuilder.append("[");
+            }
+            stringBuilder.append("(");
+            for (int j = 0; j < 8; j++) {
+                stringBuilder.append(this.data[k++] ? "1" : "0").append(j < 7 ? ", " : ")");
+            }
+            if (i % (this.colSize - 2) == this.colSize - 3) {
+                stringBuilder.append("]");
+            }
+            if (i < tempCellSize - 1) {
+                stringBuilder.append(", ");
+            }
+        }
+        return stringBuilder.toString();
     }
 
     public static void main(String[] args) {
-        GridOneHot gridOneHot = new GridOneHot(5, 5);
+        int rowSize = 5;
+        int colSize = 5;
+        GridOneHot gridOneHot = new GridOneHot(rowSize, colSize);
+        System.out.println(gridOneHot);
+        MyPrint.showSplitLine("*", 150);
+
+        int[] directNeighboring = CellNeighboring.Bottom;
+        CellNeighboring cellNeighboring = new CellNeighboring(rowSize, colSize, 1, 1, directNeighboring);
+        gridOneHot.setElement(cellNeighboring);
+        System.out.println(gridOneHot.toClassifiedString());
     }
 }

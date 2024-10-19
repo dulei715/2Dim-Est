@@ -7,7 +7,7 @@ public class CellNeighboringFactory {
         this.rowSize = rowSize;
         this.colSize = colSize;
     }
-    public CellNeighboring generateCellNeighboringObject(int rowIndex, int colIndex) {
-        return new CellNeighboring(this.rowSize, this.colSize, rowIndex, colIndex);
+    public CellNeighboring generateCellNeighboringObject(int rowIndex, int colIndex, int[] directNeighboring) {
+        return new CellNeighboring(this.rowSize, this.colSize, rowIndex, colIndex, directNeighboring);
     }
 }
