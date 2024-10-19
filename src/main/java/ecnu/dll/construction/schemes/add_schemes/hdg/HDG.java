@@ -18,6 +18,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@Deprecated
 public class HDG<T> {
 
     protected Double epsilon;
@@ -123,30 +124,30 @@ public class HDG<T> {
         }
     }
 
-    public void statisticEachGroup() {
-        Integer oneDimAttributeIndex;
-        AttributeIndexPair twoDimAttributeIndex;
-        List<HashFunctionResponsePair<Integer>> tempResponsePairList;
-        List<Integer> tempNoiseCountList;
-        List<Double> tempStatisticList;
-
-        this.oneDimAttributeStatisticMap = new HashMap<>();
-        for (Map.Entry<Integer, List<HashFunctionResponsePair<Integer>>> record : this.oneDimResponseRecordMap.entrySet()) {
-            oneDimAttributeIndex = record.getKey();
-            tempResponsePairList = record.getValue();
-            tempNoiseCountList = this.oneDimFO.countNoiseCountOfAllRawValues(tempResponsePairList);
-            tempStatisticList = this.oneDimFO.aggregateTotal(tempNoiseCountList, this.oneDimAttributeUserSizeMap.get(oneDimAttributeIndex));
-            this.oneDimAttributeStatisticMap.put(oneDimAttributeIndex, tempStatisticList);
-        }
-        this.twoDimAttributeStatisticMap = new HashMap<>();
-        for (Map.Entry<AttributeIndexPair, List<HashFunctionResponsePair<Integer>>> record : this.twoDimResponseMap.entrySet()) {
-            twoDimAttributeIndex = record.getKey();
-            tempResponsePairList = record.getValue();
-            tempNoiseCountList = this.twoDimFO.countNoiseCountOfAllRawValues(tempResponsePairList);
-            tempStatisticList = this.twoDimFO.aggregateTotal(tempNoiseCountList, this.twoDimAttributeUserSizeMap.get(twoDimAttributeIndex));
-            this.twoDimAttributeStatisticMap.put(twoDimAttributeIndex, tempStatisticList);
-        }
-    }
+//    public void statisticEachGroup() {
+//        Integer oneDimAttributeIndex;
+//        AttributeIndexPair twoDimAttributeIndex;
+//        List<HashFunctionResponsePair<Integer>> tempResponsePairList;
+//        List<Integer> tempNoiseCountList;
+//        List<Double> tempStatisticList;
+//
+//        this.oneDimAttributeStatisticMap = new HashMap<>();
+//        for (Map.Entry<Integer, List<HashFunctionResponsePair<Integer>>> record : this.oneDimResponseRecordMap.entrySet()) {
+//            oneDimAttributeIndex = record.getKey();
+//            tempResponsePairList = record.getValue();
+//            tempNoiseCountList = this.oneDimFO.countNoiseCountOfAllRawValues(tempResponsePairList);
+//            tempStatisticList = this.oneDimFO.aggregateTotal(tempNoiseCountList, this.oneDimAttributeUserSizeMap.get(oneDimAttributeIndex));
+//            this.oneDimAttributeStatisticMap.put(oneDimAttributeIndex, tempStatisticList);
+//        }
+//        this.twoDimAttributeStatisticMap = new HashMap<>();
+//        for (Map.Entry<AttributeIndexPair, List<HashFunctionResponsePair<Integer>>> record : this.twoDimResponseMap.entrySet()) {
+//            twoDimAttributeIndex = record.getKey();
+//            tempResponsePairList = record.getValue();
+//            tempNoiseCountList = this.twoDimFO.countNoiseCountOfAllRawValues(tempResponsePairList);
+//            tempStatisticList = this.twoDimFO.aggregateTotal(tempNoiseCountList, this.twoDimAttributeUserSizeMap.get(twoDimAttributeIndex));
+//            this.twoDimAttributeStatisticMap.put(twoDimAttributeIndex, tempStatisticList);
+//        }
+//    }
 
     public static void main(String[] args) {
         Double epsilon = 0.5;
@@ -173,7 +174,7 @@ public class HDG<T> {
         for (int userID = 0; userID < userSize; userID++) {
             hdg.perturbAndRecord(userID, userDataList.get(userID));
         }
-        hdg.statisticEachGroup();
+//        hdg.statisticEachGroup();
 
     }
 

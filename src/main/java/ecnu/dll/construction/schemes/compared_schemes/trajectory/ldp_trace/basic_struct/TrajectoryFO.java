@@ -4,10 +4,10 @@ import cn.edu.dll.differential_privacy.ldp.frequency_oracle.foImp.OptimizedUnary
 import ecnu.dll.construction.schemes.compared_schemes.trajectory.ldp_trace.utils.TrajectoryFOUtils;
 
 public class TrajectoryFO {
-    private double totalPrivacyBudget;
-    private OptimizedUnaryEncoding<Integer> lengthOUE;
-    private OptimizedUnaryEncoding<Integer> innerPointOUE;
-    private OptimizedUnaryEncoding<Integer> startEndPointOUE;
+    public double totalPrivacyBudget;
+    public OptimizedUnaryEncoding<Integer> lengthOUE;
+    public OptimizedUnaryEncoding<Integer> innerPointOUE;
+    public OptimizedUnaryEncoding<Integer> startEndPointOUE;
     public TrajectoryFO (double totalPrivacyBudget, int lengthAreaSize, int innerPointAreaSize, int startEndPointAreaSize) {
         this.totalPrivacyBudget = totalPrivacyBudget;
         double[] privacyBudgetSplitArray = TrajectoryFOUtils.getSplitPrivacyBudget(this.totalPrivacyBudget);
@@ -15,4 +15,5 @@ public class TrajectoryFO {
         this.innerPointOUE = new OptimizedUnaryEncoding<>(privacyBudgetSplitArray[1]);
         this.startEndPointOUE = new OptimizedUnaryEncoding<>(privacyBudgetSplitArray[2]);
     }
+
 }
