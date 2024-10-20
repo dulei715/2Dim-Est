@@ -12,6 +12,9 @@ import ecnu.dll.construction.schemes.compared_schemes.trajectory.ldp_trace.basic
 import ecnu.dll.construction.schemes.compared_schemes.trajectory.ldp_trace.basic_struct.special_struct.TrajectoryLengthOneHot;
 import ecnu.dll.construction.schemes.compared_schemes.trajectory.ldp_trace.utils.TrajectoryFOUtils;
 
+import java.util.Collection;
+import java.util.TreeMap;
+
 public class TrajectoryFO implements FrequencyOracle<UserTrajectoryOriginalStruct, UserTrajectoryOneHotStruct> {
     private double totalPrivacyBudget;
     private int maxTrajectoryLength;
@@ -69,7 +72,36 @@ public class TrajectoryFO implements FrequencyOracle<UserTrajectoryOriginalStruc
         /**
          * 需要写三个函数用于对perturb之后的
          */
-        throw new RuntimeException("You are not use this function, use ");
+        throw new RuntimeException("You are not use this function, use other aggregating function instead!");
     }
+
+    public double[] aggregateTrajectoryLength(Collection<OneHot<Integer>> trajectoryLengthDataCollection) {
+        int userSize = trajectoryLengthDataCollection.size();
+        int[] trajectoryLengthCount = OptimizedUnaryEncoding.count(trajectoryLengthDataCollection);
+        double[] estimationResult = this.trajectoryLengthOUE.unbias(trajectoryLengthCount, userSize);
+        return estimationResult;
+    }
+//    public double[]
+
+    public double[] aggregateCellNeighboring(Collection<OneHot<CellNeighboring>> cellNeighboringDataCollection) {
+        int userSize = cellNeighboringDataCollection.size();
+        int[] cellNeighboringCount = OptimizedUnaryEncoding.count(cellNeighboringDataCollection);
+        double[] estimationResult = this.innerPointOUE.unbias(cellNeighboringCount, userSize);
+        return estimationResult;
+    }
+
+    public double[] aggregateStartCell(Collection<OneHot<TwoDimensionalIntegerPoint>> cellStartDataCollection) {
+        int userSize = cellStartDataCollection.size();
+        int[] cellStartCount = OptimizedUnaryEncoding.count(cellStartDataCollection);
+        double[] estimationResult = this.startPointOUE.unbias(cellStartCount, userSize);
+        return estimationResult;
+    }
+    public double[] aggregateEndCell(Collection<OneHot<TwoDimensionalIntegerPoint>> cellEndDataCollection) {
+        int userSize = cellEndDataCollection.size();
+        int[] cellEndCount = OptimizedUnaryEncoding.count(cellEndDataCollection);
+        double[] estimationResult = this.endPointOUE.unbias(cellEndCount, userSize);
+        return estimationResult;
+    }
+
 
 }
