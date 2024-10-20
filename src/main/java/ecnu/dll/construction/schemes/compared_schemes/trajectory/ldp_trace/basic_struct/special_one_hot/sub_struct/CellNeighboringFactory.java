@@ -1,4 +1,4 @@
-package ecnu.dll.construction.schemes.compared_schemes.trajectory.ldp_trace.basic_struct.special_one_hot;
+package ecnu.dll.construction.schemes.compared_schemes.trajectory.ldp_trace.basic_struct.special_one_hot.sub_struct;
 
 public class CellNeighboringFactory {
     private int rowSize;

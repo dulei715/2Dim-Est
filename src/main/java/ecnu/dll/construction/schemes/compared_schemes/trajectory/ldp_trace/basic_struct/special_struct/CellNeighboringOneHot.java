@@ -4,27 +4,30 @@ import cn.edu.dll.constant_values.ConstantValues;
 import cn.edu.dll.io.print.MyPrint;
 import cn.edu.dll.struct.one_hot.OneHot;
 import cn.edu.dll.struct.point.TwoDimensionalIntegerPoint;
-import ecnu.dll.construction.schemes.compared_schemes.trajectory.ldp_trace.basic_struct.special_one_hot.CellNeighboring;
+import ecnu.dll.construction.schemes.compared_schemes.trajectory.ldp_trace.basic_struct.special_one_hot.sub_struct.CellNeighboring;
 
-public class GridOneHot extends OneHot<CellNeighboring> {
+public class CellNeighboringOneHot extends OneHot<CellNeighboring> {
 
     protected int rowSize;
     protected int colSize;
 
-    public GridOneHot(int rowSize, int colSize) {
+    public CellNeighboringOneHot(int rowSize, int colSize) {
         // 8ab-6a-6b+4个单元
         super(8*rowSize*colSize-6*(rowSize+colSize)+4);
         this.rowSize = rowSize;
         this.colSize = colSize;
     }
 
-    protected GridOneHot(boolean... booleans) {
+    protected CellNeighboringOneHot(boolean... booleans) {
         super(booleans);
     }
 
     @Override
     public OneHot<CellNeighboring> getInstance(boolean... booleans) {
-        return new GridOneHot(booleans);
+        CellNeighboringOneHot newInstance =  new CellNeighboringOneHot(booleans);
+        newInstance.rowSize = this.rowSize;
+        newInstance.colSize = this.colSize;
+        return newInstance;
     }
 
     /*
@@ -52,34 +55,39 @@ public class GridOneHot extends OneHot<CellNeighboring> {
 
      */
 
+    /**
+     * 这里的xIndex为rowIndex，x周向下，y轴向右
+     * @param cellNeighboring
+     * @return
+     */
     protected int[] toOneHotDataIndex(CellNeighboring cellNeighboring) {
         int type = cellNeighboring.getType();
         TwoDimensionalIntegerPoint cellValue = cellNeighboring.getCellIndex();
         int[] oneHotIndex = new int[2];
-        int xIndex = cellValue.getXIndex();
-        int yIndex = cellValue.getYIndex();
+        int rowIndex = cellValue.getXIndex();
+        int colIndex = cellValue.getYIndex();
         int bias;
         switch (type) {
             case CellNeighboring.Angle:
-                oneHotIndex[0] = (xIndex == 0 ? 0 : 1) * 6 + (yIndex == 0 ? 0 : 1) * 3;
+                oneHotIndex[0] = (rowIndex == 0 ? 0 : 1) * 6 + (colIndex == 0 ? 0 : 1) * 3;
                 oneHotIndex[1] = oneHotIndex[0] + 2;
                 break;
             case CellNeighboring.Edge:
                 bias = 12;
-                if (xIndex == 0) {
-                    oneHotIndex[0] = bias + (yIndex - 1) * 5;
-                } else if (yIndex == 0) {
-                    oneHotIndex[0] = bias + (this.colSize-2) * 5 + (xIndex - 1) * 5;
-                } else if (yIndex > 0) {
-                    oneHotIndex[0] = bias + (this.colSize + this.rowSize - 4) * 5 + (xIndex - 1) * 5;
+                if (rowIndex == 0) {
+                    oneHotIndex[0] = bias + (colIndex - 1) * 5;
+                } else if (colIndex == 0) {
+                    oneHotIndex[0] = bias + (this.colSize-2) * 5 + (rowIndex - 1) * 5;
+                } else if (colIndex > 0) {
+                    oneHotIndex[0] = bias + (this.colSize + this.rowSize - 4) * 5 + (rowIndex - 1) * 5;
                 } else {
-                    oneHotIndex[0] = bias + (this.colSize + this.rowSize * 2 - 6) * 5 + (yIndex - 1) * 5;
+                    oneHotIndex[0] = bias + (this.colSize + this.rowSize * 2 - 6) * 5 + (colIndex - 1) * 5;
                 }
                 oneHotIndex[1] = oneHotIndex[0] + 4;
                 break;
             case CellNeighboring.Inner:
                 bias = (this.rowSize + this.colSize) * 10 - 28;
-                oneHotIndex[0] = bias + (xIndex - 1) * (this.colSize - 2) * 8 + (yIndex - 1) * 8;
+                oneHotIndex[0] = bias + (rowIndex - 1) * (this.colSize - 2) * 8 + (colIndex - 1) * 8;
                 oneHotIndex[1] = oneHotIndex[0] + 7;
                 break;
         }
@@ -167,13 +175,13 @@ public class GridOneHot extends OneHot<CellNeighboring> {
     public static void main(String[] args) {
         int rowSize = 5;
         int colSize = 5;
-        GridOneHot gridOneHot = new GridOneHot(rowSize, colSize);
-        System.out.println(gridOneHot);
+        CellNeighboringOneHot cellNeighboringOneHot = new CellNeighboringOneHot(rowSize, colSize);
+        System.out.println(cellNeighboringOneHot);
         MyPrint.showSplitLine("*", 150);
 
         int[] directNeighboring = CellNeighboring.Bottom;
         CellNeighboring cellNeighboring = new CellNeighboring(rowSize, colSize, 1, 1, directNeighboring);
-        gridOneHot.setElement(cellNeighboring);
-        System.out.println(gridOneHot.toClassifiedString());
+        cellNeighboringOneHot.setElement(cellNeighboring);
+        System.out.println(cellNeighboringOneHot.toClassifiedString());
     }
 }
