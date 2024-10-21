@@ -75,31 +75,31 @@ public class TrajectoryFO implements FrequencyOracle<UserTrajectoryOriginalStruc
         throw new RuntimeException("You are not use this function, use other aggregating function instead!");
     }
 
-    public double[] aggregateTrajectoryLength(Collection<OneHot<Integer>> trajectoryLengthDataCollection) {
+    public Double[] aggregateTrajectoryLength(Collection<OneHot<Integer>> trajectoryLengthDataCollection) {
         int userSize = trajectoryLengthDataCollection.size();
-        int[] trajectoryLengthCount = OptimizedUnaryEncoding.count(trajectoryLengthDataCollection);
-        double[] estimationResult = this.trajectoryLengthOUE.unbias(trajectoryLengthCount, userSize);
+        Integer[] trajectoryLengthCount = OptimizedUnaryEncoding.count(trajectoryLengthDataCollection);
+        Double[] estimationResult = this.trajectoryLengthOUE.unbias(trajectoryLengthCount, userSize);
         return estimationResult;
     }
 //    public double[]
 
-    public double[] aggregateCellNeighboring(Collection<OneHot<CellNeighboring>> cellNeighboringDataCollection) {
+    public Double[] aggregateCellNeighboring(Collection<OneHot<CellNeighboring>> cellNeighboringDataCollection) {
         int userSize = cellNeighboringDataCollection.size();
-        int[] cellNeighboringCount = OptimizedUnaryEncoding.count(cellNeighboringDataCollection);
-        double[] estimationResult = this.innerPointOUE.unbias(cellNeighboringCount, userSize);
+        Integer[] cellNeighboringCount = OptimizedUnaryEncoding.count(cellNeighboringDataCollection);
+        Double[] estimationResult = this.innerPointOUE.unbias(cellNeighboringCount, userSize);
         return estimationResult;
     }
 
-    public double[] aggregateStartCell(Collection<OneHot<TwoDimensionalIntegerPoint>> cellStartDataCollection) {
+    public Double[] aggregateStartCell(Collection<OneHot<TwoDimensionalIntegerPoint>> cellStartDataCollection) {
         int userSize = cellStartDataCollection.size();
-        int[] cellStartCount = OptimizedUnaryEncoding.count(cellStartDataCollection);
-        double[] estimationResult = this.startPointOUE.unbias(cellStartCount, userSize);
+        Integer[] cellStartCount = OptimizedUnaryEncoding.count(cellStartDataCollection);
+        Double[] estimationResult = this.startPointOUE.unbias(cellStartCount, userSize);
         return estimationResult;
     }
-    public double[] aggregateEndCell(Collection<OneHot<TwoDimensionalIntegerPoint>> cellEndDataCollection) {
+    public Double[] aggregateEndCell(Collection<OneHot<TwoDimensionalIntegerPoint>> cellEndDataCollection) {
         int userSize = cellEndDataCollection.size();
-        int[] cellEndCount = OptimizedUnaryEncoding.count(cellEndDataCollection);
-        double[] estimationResult = this.endPointOUE.unbias(cellEndCount, userSize);
+        Integer[] cellEndCount = OptimizedUnaryEncoding.count(cellEndDataCollection);
+        Double[] estimationResult = this.endPointOUE.unbias(cellEndCount, userSize);
         return estimationResult;
     }
 

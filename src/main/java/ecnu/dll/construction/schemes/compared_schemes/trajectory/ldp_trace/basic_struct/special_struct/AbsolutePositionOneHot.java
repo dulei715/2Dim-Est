@@ -2,6 +2,7 @@ package ecnu.dll.construction.schemes.compared_schemes.trajectory.ldp_trace.basi
 
 import cn.edu.dll.struct.one_hot.OneHot;
 import cn.edu.dll.struct.point.TwoDimensionalIntegerPoint;
+import ecnu.dll.construction.schemes.compared_schemes.trajectory.ldp_trace.basic_struct.special_struct.struct_utils.AbsolutePositionOneHotUtils;
 
 /**
  * 用来记录起始点或终止点的 one hot 编码
@@ -18,7 +19,7 @@ public class AbsolutePositionOneHot extends OneHot<TwoDimensionalIntegerPoint> {
     }
     @Override
     public void setElement(TwoDimensionalIntegerPoint point) {
-        int index = toOneHotDataIndex(point);
+        int index = AbsolutePositionOneHotUtils.toOneHotDataIndex(point, this.colSize);
         this.data[index] = ONE;
     }
 
@@ -30,7 +31,5 @@ public class AbsolutePositionOneHot extends OneHot<TwoDimensionalIntegerPoint> {
         return newInstance;
     }
 
-    protected int toOneHotDataIndex(TwoDimensionalIntegerPoint point) {
-        return point.getXIndex() * this.colSize + point.getYIndex();
-    }
+
 }
