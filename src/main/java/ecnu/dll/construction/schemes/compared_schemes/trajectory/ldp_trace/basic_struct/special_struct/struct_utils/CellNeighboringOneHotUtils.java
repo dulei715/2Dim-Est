@@ -4,6 +4,16 @@ import cn.edu.dll.struct.point.TwoDimensionalIntegerPoint;
 import ecnu.dll.construction.schemes.compared_schemes.trajectory.ldp_trace.basic_struct.special_one_hot.sub_struct.CellNeighboring;
 
 public class CellNeighboringOneHotUtils {
+    private static final TwoDimensionalIntegerPoint nullPoint = new TwoDimensionalIntegerPoint(-1, -1);
+    public static TwoDimensionalIntegerPoint getNullNeighboringPoint() {
+        return nullPoint;
+    }
+    public static boolean isNullPoint(TwoDimensionalIntegerPoint point) {
+        if (point == null || (point.getXIndex() == -1 && point.getYIndex() == -1)) {
+            return true;
+        }
+        return false;
+    }
     /*
         当 a = b = n 时
         CellNeighboring 可以分为三类：
@@ -69,6 +79,38 @@ public class CellNeighboringOneHotUtils {
         }
         return oneHotIndex;
     }
+    public static int[] toOneHotDataIndexRange(TwoDimensionalIntegerPoint cellValue, int rowSize, int colSize) {
+        int type = CellNeighboringUtils.getType(rowSize, colSize, cellValue.getXIndex(), cellValue.getYIndex());
+        int[] oneHotIndex = new int[2];
+        int rowIndex = cellValue.getXIndex();
+        int colIndex = cellValue.getYIndex();
+        int bias;
+        switch (type) {
+            case CellNeighboring.Angle:
+                oneHotIndex[0] = (rowIndex == 0 ? 0 : 1) * 6 + (colIndex == 0 ? 0 : 1) * 3;
+                oneHotIndex[1] = oneHotIndex[0] + 2;
+                break;
+            case CellNeighboring.Edge:
+                bias = 12;
+                if (rowIndex == 0) {
+                    oneHotIndex[0] = bias + (colIndex - 1) * 5;
+                } else if (colIndex == 0) {
+                    oneHotIndex[0] = bias + (colSize-2) * 5 + (rowIndex - 1) * 5;
+                } else if (colIndex > 0) {
+                    oneHotIndex[0] = bias + (colSize + rowSize - 4) * 5 + (rowIndex - 1) * 5;
+                } else {
+                    oneHotIndex[0] = bias + (colSize + rowSize * 2 - 6) * 5 + (colIndex - 1) * 5;
+                }
+                oneHotIndex[1] = oneHotIndex[0] + 4;
+                break;
+            case CellNeighboring.Inner:
+                bias = (rowSize + colSize) * 10 - 28;
+                oneHotIndex[0] = bias + (rowIndex - 1) * (colSize - 2) * 8 + (colIndex - 1) * 8;
+                oneHotIndex[1] = oneHotIndex[0] + 7;
+                break;
+        }
+        return oneHotIndex;
+    }
 
     protected static int getBias(CellNeighboring cellNeighboring) {
         TwoDimensionalIntegerPoint[][] cellNeighboringIndex = cellNeighboring.getCellNeighboringIndex();
@@ -94,9 +136,104 @@ public class CellNeighboringOneHotUtils {
         return oneHotDataIndex[0] + bias;
     }
 
+    public static int[] getTwoDimensionalIndexByBias(CellNeighboring cellNeighboring, int bias) {
+        TwoDimensionalIntegerPoint[][] cellNeighboringIndex = cellNeighboring.getCellNeighboringIndex();
+        for (int i = 0; i < 3; ++i) {
+            for (int j = 0; j < 3; ++j) {
+                if (i == 1 && j == 1 || cellNeighboringIndex[i][j] == null) {
+                    continue;
+                }
+                if (bias == 0) {
+                    return new int[]{i, j};
+                }
+                --bias;
+            }
+        }
+        throw new RuntimeException("Not found right bias!");
+    }
+    public static int[] getTwoDimensionalIndexByBias(int rowSize, int colSize, int rowIndex, int colIndex, int bias) {
+        TwoDimensionalIntegerPoint[][] cellNeighboringIndex = CellNeighboringUtils.getCellNeighboringIndex(rowSize, colSize, rowIndex, colIndex);
+        for (int i = 0; i < 3; ++i) {
+            for (int j = 0; j < 3; ++j) {
+                if (i == 1 && j == 1 || cellNeighboringIndex[i][j] == null) {
+                    continue;
+                }
+                if (bias == 0) {
+                    return new int[]{i, j};
+                }
+                --bias;
+            }
+        }
+        throw new RuntimeException("Not found right bias!");
+    }
 
 
-    public static CellNeighboring toOriginalData(int index) {
+
+    public static CellNeighboring toOriginalData(int index, int rowSize, int colSize) {
+        int valueXIndex, valueYIndex, bias, typeBias;
+        if (index < 12) {
+            typeBias = index;
+            valueXIndex = typeBias / 6 == 0 ? 0 : rowSize - 1;
+            valueYIndex = typeBias % 6 < 3 ? 0 : colSize - 1;
+            bias = typeBias % 3;
+        } else if (index < 10*rowSize+10*colSize-28) {
+            typeBias = index - 12;
+            if (typeBias < (colSize - 2) * 5) {
+                valueXIndex = 0;
+                valueYIndex = 1 + typeBias / 5;
+            } else if (typeBias < (colSize + rowSize - 4) * 5) {
+                valueXIndex = 1 + typeBias / 5 - (colSize - 2);
+                valueYIndex = 0;
+            } else if (typeBias < (colSize + 2*rowSize - 6) * 5) {
+                valueXIndex = 1 + typeBias / 5 - (colSize + rowSize - 4);
+                valueYIndex = colSize - 1;
+            } else {
+                valueXIndex = rowSize - 1;
+                valueYIndex = 1 + typeBias / 5 - (colSize + 2*rowSize - 6);
+            }
+            bias = typeBias % 5;
+        } else {
+            typeBias = index - 10*rowSize-10*colSize+28;
+            valueXIndex = 1 + typeBias / 8 / colSize;
+            valueYIndex = 1 + typeBias / 8 % colSize;
+            bias = typeBias % 8;
+        }
+        return new CellNeighboring(rowSize, colSize, valueXIndex, valueYIndex, bias);
+    }
+    public static TwoDimensionalIntegerPoint toOriginalNeighboringData(int index, int rowSize, int colSize) {
+        int valueXIndex, valueYIndex, bias, typeBias;
+        if (index < 12) {
+            typeBias = index;
+            valueXIndex = typeBias / 6 == 0 ? 0 : rowSize - 1;
+            valueYIndex = typeBias % 6 < 3 ? 0 : colSize - 1;
+            bias = typeBias % 3;
+        } else if (index < 10*rowSize+10*colSize-28) {
+            typeBias = index - 12;
+            if (typeBias < (colSize - 2) * 5) {
+                valueXIndex = 0;
+                valueYIndex = 1 + typeBias / 5;
+            } else if (typeBias < (colSize + rowSize - 4) * 5) {
+                valueXIndex = 1 + typeBias / 5 - (colSize - 2);
+                valueYIndex = 0;
+            } else if (typeBias < (colSize + 2*rowSize - 6) * 5) {
+                valueXIndex = 1 + typeBias / 5 - (colSize + rowSize - 4);
+                valueYIndex = colSize - 1;
+            } else {
+                valueXIndex = rowSize - 1;
+                valueYIndex = 1 + typeBias / 5 - (colSize + 2*rowSize - 6);
+            }
+            bias = typeBias % 5;
+        } else {
+            typeBias = index - 10*rowSize-10*colSize+28;
+            valueXIndex = 1 + typeBias / 8 / colSize;
+            valueYIndex = 1 + typeBias / 8 % colSize;
+            bias = typeBias % 8;
+        }
+        int[] directInnerIndex = getTwoDimensionalIndexByBias(rowSize, colSize, valueXIndex, valueYIndex, bias);
+        return new TwoDimensionalIntegerPoint(valueXIndex + directInnerIndex[0] - 1, valueYIndex + directInnerIndex[1] - 1);
+    }
+
+    public static void main(String[] args) {
 
     }
 }

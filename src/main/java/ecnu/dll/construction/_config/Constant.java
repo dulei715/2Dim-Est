@@ -455,6 +455,10 @@ public class Constant {
     public static final DataSetAreaInfo twoDimMultipleCenterNormalDataSet = ConfigureUtils.getDatasetInfoArray(basicDatasetPath, "norm_multiple_center_2")[0];
 //    public static final DataSetAreaInfo twoDimMultipleCenterNormalDataSet = new DataSetAreaInfo(multiNormalPath, multiNormalKey, -4.25, -4.32, 10.76);
 
+    public static final double LDPTraceAlpha = 0.3;
+    public static final double LDPTraceBeta = 0.2;
+    public static final double LDPTraceLambda = 2.5;
+
     public static void main0(String[] args) {
         System.out.println(projectPath);
         System.out.println(propertyPath);

@@ -55,22 +55,63 @@ public class CellNeighboringOneHot extends OneHot<CellNeighboring> {
             }
         }
         int tempCellSize = 2 * (this.rowSize + this.colSize) - 8;
-        for (int i = 0; i < tempCellSize; i++) {
-            if (i % (this.colSize - 2) == 0) {
+        stringBuilder.append("[");
+        for (int i = 0; i < this.colSize-2; ++i) {
+            stringBuilder.append("(");
+            for (int j = 0; j < 5; ++j) {
+                stringBuilder.append(this.data[k++] ? "1" : "0").append(j < 4 ? ", " : ")");
+            }
+            if (i < this.colSize-3) {
+                stringBuilder.append(", ");
+            }
+        }
+        stringBuilder.append("], ");
+
+        for (int i = 0; i < this.rowSize * 2 - 4; ++i) {
+            if (i % (this.rowSize - 2) == 0) {
                 stringBuilder.append("[");
             }
             stringBuilder.append("(");
-            for (int j = 0; j < 5; j++) {
+            for (int j = 0; j < 5; ++j) {
                 stringBuilder.append(this.data[k++] ? "1" : "0").append(j < 4 ? ", " : ")");
             }
-            if (i % (this.colSize - 2) == this.colSize - 3) {
-                stringBuilder.append("]");
-            }
-            stringBuilder.append(", ");
-            if (i == tempCellSize - 1) {
-                stringBuilder.append(ConstantValues.LINE_SPLIT);
+
+            if ((i+1)%(this.rowSize-2)==0) {
+                stringBuilder.append("], ");
+            } else {
+                stringBuilder.append(", ");
             }
         }
+
+        stringBuilder.append("[");
+        for (int i = 0; i < this.colSize-2; ++i) {
+            stringBuilder.append("(");
+            for (int j = 0; j < 5; ++j) {
+                stringBuilder.append(this.data[k++] ? "1" : "0").append(j < 4 ? ", " : ")");
+            }
+            if (i < this.colSize-3) {
+                stringBuilder.append(", ");
+            }
+        }
+        stringBuilder.append("], ");
+        stringBuilder.append(ConstantValues.LINE_SPLIT);
+
+//        for (int i = 0; i < tempCellSize; i++) {
+//            if (i % (this.colSize - 2) == 0) {
+//                stringBuilder.append("[");
+//            }
+//            stringBuilder.append("(");
+//            for (int j = 0; j < 5; j++) {
+//                stringBuilder.append(this.data[k++] ? "1" : "0").append(j < 4 ? ", " : ")");
+//            }
+//            if (i % (this.colSize - 2) == this.colSize - 3) {
+//                stringBuilder.append("]");
+//            }
+//            stringBuilder.append(", ");
+//            if (i == tempCellSize - 1) {
+//                stringBuilder.append(ConstantValues.LINE_SPLIT);
+//            }
+//        }
         tempCellSize = (this.rowSize - 2) * (this.colSize - 2);
         for (int i = 0; i < tempCellSize; i++) {
             if (i % (this.colSize - 2) == 0) {

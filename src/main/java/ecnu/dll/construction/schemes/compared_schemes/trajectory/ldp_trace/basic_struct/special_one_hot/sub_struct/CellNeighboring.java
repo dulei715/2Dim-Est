@@ -2,6 +2,8 @@ package ecnu.dll.construction.schemes.compared_schemes.trajectory.ldp_trace.basi
 
 import cn.edu.dll.constant_values.ConstantValues;
 import cn.edu.dll.struct.point.TwoDimensionalIntegerPoint;
+import ecnu.dll.construction.schemes.compared_schemes.trajectory.ldp_trace.basic_struct.special_struct.struct_utils.CellNeighboringOneHotUtils;
+import ecnu.dll.construction.schemes.compared_schemes.trajectory.ldp_trace.basic_struct.special_struct.struct_utils.CellNeighboringUtils;
 
 public class CellNeighboring {
     public static final int Angle = 0;
@@ -16,61 +18,74 @@ public class CellNeighboring {
     public static final int[] Bottom = new int[]{2, 1};
     public static final int[] RightBottom = new int[]{2, 2};
 
-    private final int type;
-    private final int rowSize;
-    private final int colSize;
-    private final TwoDimensionalIntegerPoint[][] cellNeighboringIndex;
+    private int type;
+    private int rowSize;
+    private int colSize;
+    private TwoDimensionalIntegerPoint[][] cellNeighboringIndex;
 
     private int[] directNeighboringInnerIndex;
 
-    public CellNeighboring(int rowSize, int colSize, int rowIndex, int colIndex, int[] directNeighboringInnerIndex) {
+    private CellNeighboring() {}
+
+    private static final CellNeighboring nullCell;
+    static {
+        nullCell = new CellNeighboring();
+        nullCell.rowSize = -1;
+        nullCell.colSize = -1;
+        nullCell.type = -1;
+        nullCell.cellNeighboringIndex = null;
+        nullCell.directNeighboringInnerIndex = null;
+    }
+
+    private CellNeighboring(int rowSize, int colSize, int rowIndex, int colIndex) {
         if (rowIndex < 0 || rowIndex >= rowSize || colIndex < 0 || colIndex >= colSize) {
             throw new RuntimeException("Initializing error: out of bound!");
         }
         this.rowSize = rowSize;
         this.colSize = colSize;
-        this.cellNeighboringIndex = new TwoDimensionalIntegerPoint[3][3];
-        this.cellNeighboringIndex[1][1] = new TwoDimensionalIntegerPoint(rowIndex, colIndex);
 
-        if ((rowIndex == 0 || rowIndex == rowSize-1) && (colIndex == 0 || colIndex == colSize-1)) {
-            this.type = Angle;
-        } else if (rowIndex == 0 || rowIndex == rowSize-1 || colIndex == 0 || colIndex == colSize-1) {
-            this.type = Edge;
-        } else {
-            this.type = Inner;
-        }
+        this.type = CellNeighboringUtils.getType(rowSize, colSize, rowIndex, colIndex);
 
-        if (rowIndex - 1 >= 0) {
-            this.cellNeighboringIndex[0][1] = new TwoDimensionalIntegerPoint(rowIndex-1, colIndex);
-            if (colIndex - 1 >= 0) {
-                this.cellNeighboringIndex[0][0] = new TwoDimensionalIntegerPoint(rowIndex-1, colIndex-1);
-            }
-            if (colIndex + 1 < colSize) {
-                this.cellNeighboringIndex[0][2] = new TwoDimensionalIntegerPoint(rowIndex-1, colIndex+1);
-            }
-        }
-        if (rowIndex + 1 < rowSize) {
-            this.cellNeighboringIndex[2][1] = new TwoDimensionalIntegerPoint(rowIndex+1, colIndex);
-            if (colIndex - 1 >= 0) {
-                this.cellNeighboringIndex[2][0] = new TwoDimensionalIntegerPoint(rowIndex+1, colIndex-1);
-            }
-            if (colIndex + 1 < colSize) {
-                this.cellNeighboringIndex[2][2] = new TwoDimensionalIntegerPoint(rowIndex+1, colIndex+1);
-            }
-        }
+        this.cellNeighboringIndex = CellNeighboringUtils.getCellNeighboringIndex(rowSize, colSize, rowIndex, colIndex);
 
-        if (colIndex - 1 >= 0) {
-            this.cellNeighboringIndex[1][0] = new TwoDimensionalIntegerPoint(rowIndex, colIndex-1);
-        }
-        if (colIndex + 1 < colSize) {
-            this.cellNeighboringIndex[1][2] = new TwoDimensionalIntegerPoint(rowIndex, colIndex+1);
-        }
+    }
 
+
+
+
+    public CellNeighboring(int rowSize, int colSize, int rowIndex, int colIndex, int[] directNeighboringInnerIndex) {
+        this(rowSize, colSize, rowIndex, colIndex);
+        this.directNeighboringInnerIndex = directNeighboringInnerIndex;
         if (this.cellNeighboringIndex[directNeighboringInnerIndex[0]][directNeighboringInnerIndex[1]] == null) {
             throw new RuntimeException("The given neighboring is error!");
         }
-        this.directNeighboringInnerIndex = directNeighboringInnerIndex;
+    }
 
+    public CellNeighboring(int rowSize, int colSize, int rowIndex, int colIndex, int bias) {
+        this(rowSize, colSize, rowIndex, colIndex);
+        this.directNeighboringInnerIndex = CellNeighboringOneHotUtils.getTwoDimensionalIndexByBias(this, bias);
+        if (this.cellNeighboringIndex[directNeighboringInnerIndex[0]][directNeighboringInnerIndex[1]] == null) {
+            throw new RuntimeException("The given neighboring is error!");
+        }
+    }
+
+    public static CellNeighboring getNullCell() {
+        return nullCell;
+    }
+
+    public static boolean isNullCell(CellNeighboring cellNeighboring) {
+        /*
+            nullCell = new CellNeighboring();
+            nullCell.rowSize = -1;
+            nullCell.colSize = -1;
+            nullCell.type = -1;
+            nullCell.cellNeighboringIndex = null;
+            nullCell.directNeighboringInnerIndex = null;
+         */
+        if (cellNeighboring == nullCell || (cellNeighboring.rowSize == -1 && cellNeighboring.colSize == -1 && cellNeighboring.type == -1)) {
+            return true;
+        }
+        return false;
     }
 
     public int getRowSize() {
