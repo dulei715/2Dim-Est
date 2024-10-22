@@ -29,12 +29,24 @@ public class AnchorBasedPivotSamplingUtils {
 
 
 
-    public static Set<TwoDimensionalDoublePoint> getPointSet(Set<TwoDimensionalDoublePoint> totalPointSet, TwoDimensionalDoublePoint pivotPoint, TwoDimensionalDoublePoint targetPoint, int sectorSize) {
+    public static Set<TwoDimensionalDoublePoint> getPointSet(List<TwoDimensionalDoublePoint> totalPointSet, TwoDimensionalDoublePoint pivotPoint, TwoDimensionalDoublePoint targetPoint, int sectorSize, int perturbedAreaIndex) {
         SectorAreas sectorAreas = new SectorAreas(pivotPoint, targetPoint, sectorSize);
-        int targetPointAreaIndex = sectorAreas.getTargetPointExistingAreaIndex();
+//        int targetPointAreaIndex = sectorAreas.getTargetPointExistingAreaIndex();
         Set<TwoDimensionalDoublePoint> resultSet = new HashSet<>();
         for (TwoDimensionalDoublePoint point : totalPointSet) {
-            if (SectorAreasUtils.isInArea(sectorAreas, targetPointAreaIndex, point)) {
+            if (SectorAreasUtils.isInArea(sectorAreas, perturbedAreaIndex, point)) {
+                resultSet.add(point);
+            }
+        }
+        return resultSet;
+    }
+    public static Set<TwoDimensionalDoublePoint> getPointIntersectionSet(List<TwoDimensionalDoublePoint> totalPointSet, TwoDimensionalDoublePoint pivotPointA, TwoDimensionalDoublePoint pivotPointB, TwoDimensionalDoublePoint targetPoint, int sectorSize, int perturbedAreaIndexA, int perturbedAreaIndexB) {
+        SectorAreas sectorAreasA = new SectorAreas(pivotPointA, targetPoint, sectorSize);
+        SectorAreas sectorAreasB = new SectorAreas(pivotPointB, targetPoint, sectorSize);
+//        int targetPointAreaIndex = sectorAreas.getTargetPointExistingAreaIndex();
+        Set<TwoDimensionalDoublePoint> resultSet = new HashSet<>();
+        for (TwoDimensionalDoublePoint point : totalPointSet) {
+            if (SectorAreasUtils.isInArea(sectorAreasA, perturbedAreaIndexA, point) && SectorAreasUtils.isInArea(sectorAreasB, perturbedAreaIndexB, point)) {
                 resultSet.add(point);
             }
         }
