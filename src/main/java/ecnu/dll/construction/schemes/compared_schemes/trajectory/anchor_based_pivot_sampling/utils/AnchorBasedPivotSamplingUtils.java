@@ -7,10 +7,7 @@ import cn.edu.dll.struct.point.TwoDimensionalDoublePoint;
 import cn.edu.dll.struct.point.TwoDimensionalDoublePointUtils;
 import ecnu.dll.construction.schemes.compared_schemes.trajectory.anchor_based_pivot_sampling.basic_struct.SectorAreas;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class AnchorBasedPivotSamplingUtils {
 
@@ -30,64 +27,17 @@ public class AnchorBasedPivotSamplingUtils {
         return new Line[]{lowBoundLine, highBoundLine};
     }
 
-    public static List<Line> getSeparateSortedSectorList(TwoDimensionalDoublePoint pivotPoint, TwoDimensionalDoublePoint targetPoint, int sectorSize) {
-        Line[] resultLineArray = new Line[sectorSize];
-        double pivotPointX = pivotPoint.getXIndex(), pivotPointY = pivotPoint.getYIndex();
-        double targetPointX = targetPoint.getXIndex(), targetPointY = targetPoint.getYIndex();
-        Line basicLine = new Line(pivotPointX, pivotPointY, targetPointX, targetPointY);
-        double angle = 2 * Math.PI / sectorSize;
-        Line tempLine = LineUtils.getRoll(basicLine, pivotPointX, pivotPointY, angle / 2);
-        resultLineArray[0] = tempLine;
-        for (int i = 1; i < sectorSize / 2; ++i) {
-            tempLine = LineUtils.getRoll(tempLine, pivotPointX, pivotPointY, angle);
-            resultLineArray[i] = tempLine;
+
+
+    public static Set<TwoDimensionalDoublePoint> getPointSet(Set<TwoDimensionalDoublePoint> totalPointSet, TwoDimensionalDoublePoint pivotPoint, TwoDimensionalDoublePoint targetPoint, int sectorSize) {
+        SectorAreas sectorAreas = new SectorAreas(pivotPoint, targetPoint, sectorSize);
+        int targetPointAreaIndex = sectorAreas.getTargetPointExistingAreaIndex();
+        Set<TwoDimensionalDoublePoint> resultSet = new HashSet<>();
+        for (TwoDimensionalDoublePoint point : totalPointSet) {
+            if (SectorAreasUtils.isInArea(sectorAreas, targetPointAreaIndex, point)) {
+                resultSet.add(point);
+            }
         }
-        Arrays.sort(resultLineArray);
-        return Arrays.asList(resultLineArray);
-    }
-
-    /**
-     * 针对排序好的直线组，返回其排序区域的直线一般式的值
-     * @param lineSize
-     * @return
-     */
-    public static List<BasicPair<Integer,Integer>> getSortedSeparateAreaStatusList(int lineSize) {
-        List<BasicPair<Integer, Integer>> resultList = new ArrayList<>(lineSize * 2);
-        // 处理第四象限到第一象限的区域
-        // 处理一二象限
-        resultList.add(new BasicPair<>(1, 1));
-        for (int i = 1; i < lineSize; ++i) {
-            resultList.add(new BasicPair<>(-1, 1));
-        }
-        // 处理第二象限到第三象限
-        resultList.add(new BasicPair<>(-1, -1));
-        for (int i = 1; i < lineSize; ++i) {
-            resultList.add(new BasicPair<>(1, -1));
-        }
-        return resultList;
-    }
-
-    /**
-     * 判断所给的点point是否在sectorAreas的第areaIndex区域内
-     * @param sectorAreas
-     * @param areaIndex
-     * @param point
-     * @return
-     */
-    public static boolean isInArea(SectorAreas sectorAreas, int areaIndex, TwoDimensionalDoublePoint point) {
-        TwoDimensionalDoublePoint pivotPoint = sectorAreas.getPivotPoint();
-        double pointX = point.getXIndex();
-        double pointY = point.getYIndex();
-        List<Line> sortedBorderLineList = sectorAreas.getSectorBorderSortedLineList();
-        BasicPair<Integer, Integer> areaStatus = sectorAreas.getAreaList().get(areaIndex);
-        int[] lineIndexes = SectorAreasUtils.fromAreaIndexToLineIndexes(areaIndex, sortedBorderLineList.size());
-        Line lineLeft = sortedBorderLineList.get(lineIndexes[0]);
-        Line lineRight = sortedBorderLineList.get(lineIndexes[1]);
-        lineLeft.getLineValue()
-        if (lineLeft.getLineValue())
-    }
-
-    public static Set<TwoDimensionalDoublePoint> getPointSet(TwoDimensionalDoublePoint pivotPoint, TwoDimensionalDoublePoint targetPoint, int directSize) {
-
+        return resultSet;
     }
 }
