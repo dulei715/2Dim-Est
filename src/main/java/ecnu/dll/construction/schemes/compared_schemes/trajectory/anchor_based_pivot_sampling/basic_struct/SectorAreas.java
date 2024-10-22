@@ -11,7 +11,7 @@ public class SectorAreas {
     private TwoDimensionalDoublePoint pivotPoint;
     private TwoDimensionalDoublePoint targetPoint;
     private Integer sectorSize;
-    private List<Line> sectorBorderLineList;
+    private List<Line> sectorBorderSortedLineList;
     private List<BasicPair<Integer, Integer>> areaList;
 
     public SectorAreas(TwoDimensionalDoublePoint pivotPoint, TwoDimensionalDoublePoint targetPoint, Integer sectorSize) {
@@ -19,7 +19,7 @@ public class SectorAreas {
         this.targetPoint = targetPoint;
         this.sectorSize = sectorSize;
         // 要求line从targetPoint所在上边界开始按照方位角大小排序，到最大后下一个回到最小
-        this.sectorBorderLineList = AnchorBasedPivotSamplingUtils.getSeparateSortedSectorList(pivotPoint, targetPoint, sectorSize);
+        this.sectorBorderSortedLineList = AnchorBasedPivotSamplingUtils.getSeparateSortedSectorList(pivotPoint, targetPoint, sectorSize);
 
     }
 
@@ -37,7 +37,11 @@ public class SectorAreas {
         return sectorSize;
     }
 
-    public List<Line> getSectorBorderLineList() {
-        return sectorBorderLineList;
+    public List<Line> getSectorBorderSortedLineList() {
+        return sectorBorderSortedLineList;
+    }
+
+    public List<BasicPair<Integer, Integer>> getAreaList() {
+        return areaList;
     }
 }

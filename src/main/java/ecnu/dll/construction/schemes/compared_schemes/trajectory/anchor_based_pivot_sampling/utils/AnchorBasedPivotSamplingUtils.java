@@ -75,11 +75,16 @@ public class AnchorBasedPivotSamplingUtils {
      * @return
      */
     public static boolean isInArea(SectorAreas sectorAreas, int areaIndex, TwoDimensionalDoublePoint point) {
-        double pointDirectAngle = TwoDimensionalDoublePointUtils.getDirectAngle(point, sectorAreas.getPivotPoint());
-        List<Line> sectorBorderLineList = sectorAreas.getSectorBorderLineList();
-        for (int i = 0; i < sectorBorderLineList.size(); ++i) {
-
-        }
+        TwoDimensionalDoublePoint pivotPoint = sectorAreas.getPivotPoint();
+        double pointX = point.getXIndex();
+        double pointY = point.getYIndex();
+        List<Line> sortedBorderLineList = sectorAreas.getSectorBorderSortedLineList();
+        BasicPair<Integer, Integer> areaStatus = sectorAreas.getAreaList().get(areaIndex);
+        int[] lineIndexes = SectorAreasUtils.fromAreaIndexToLineIndexes(areaIndex, sortedBorderLineList.size());
+        Line lineLeft = sortedBorderLineList.get(lineIndexes[0]);
+        Line lineRight = sortedBorderLineList.get(lineIndexes[1]);
+        lineLeft.getLineValue()
+        if (lineLeft.getLineValue())
     }
 
     public static Set<TwoDimensionalDoublePoint> getPointSet(TwoDimensionalDoublePoint pivotPoint, TwoDimensionalDoublePoint targetPoint, int directSize) {
