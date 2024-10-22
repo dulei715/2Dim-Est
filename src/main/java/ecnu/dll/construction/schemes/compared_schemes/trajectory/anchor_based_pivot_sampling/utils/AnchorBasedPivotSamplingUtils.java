@@ -5,9 +5,6 @@ import cn.edu.dll.geometry.LineUtils;
 import cn.edu.dll.struct.pair.BasicPair;
 import cn.edu.dll.struct.point.TwoDimensionalDoublePoint;
 import cn.edu.dll.struct.point.TwoDimensionalDoublePointUtils;
-import cn.edu.dll.struct.point.TwoDimensionalIntegerPoint;
-import com.google.common.collect.Lists;
-import ecnu.dll.construction._config.Constant;
 import ecnu.dll.construction.schemes.compared_schemes.trajectory.anchor_based_pivot_sampling.basic_struct.SectorAreas;
 
 import java.util.ArrayList;
@@ -33,7 +30,7 @@ public class AnchorBasedPivotSamplingUtils {
         return new Line[]{lowBoundLine, highBoundLine};
     }
 
-    public static List<Line> getSortedSeparateSectorList(TwoDimensionalDoublePoint pivotPoint, TwoDimensionalDoublePoint targetPoint, int sectorSize) {
+    public static List<Line> getSeparateSortedSectorList(TwoDimensionalDoublePoint pivotPoint, TwoDimensionalDoublePoint targetPoint, int sectorSize) {
         Line[] resultLineArray = new Line[sectorSize];
         double pivotPointX = pivotPoint.getXIndex(), pivotPointY = pivotPoint.getYIndex();
         double targetPointX = targetPoint.getXIndex(), targetPointY = targetPoint.getYIndex();
@@ -48,8 +45,26 @@ public class AnchorBasedPivotSamplingUtils {
         Arrays.sort(resultLineArray);
         return Arrays.asList(resultLineArray);
     }
-    public static List<BasicPair<Integer,Integer>> getSortedSeparateAreaStatusList(TwoDimensionalDoublePoint pivotPoint, TwoDimensionalDoublePoint targetPoint, List<Line> sortedLine) {
 
+    /**
+     * 针对排序好的直线组，返回其排序区域的直线一般式的值
+     * @param lineSize
+     * @return
+     */
+    public static List<BasicPair<Integer,Integer>> getSortedSeparateAreaStatusList(int lineSize) {
+        List<BasicPair<Integer, Integer>> resultList = new ArrayList<>(lineSize * 2);
+        // 处理第四象限到第一象限的区域
+        // 处理一二象限
+        resultList.add(new BasicPair<>(1, 1));
+        for (int i = 1; i < lineSize; ++i) {
+            resultList.add(new BasicPair<>(-1, 1));
+        }
+        // 处理第二象限到第三象限
+        resultList.add(new BasicPair<>(-1, -1));
+        for (int i = 1; i < lineSize; ++i) {
+            resultList.add(new BasicPair<>(1, -1));
+        }
+        return resultList;
     }
 
     /**

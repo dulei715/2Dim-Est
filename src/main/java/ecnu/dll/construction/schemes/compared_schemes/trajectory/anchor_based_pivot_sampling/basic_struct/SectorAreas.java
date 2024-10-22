@@ -19,7 +19,7 @@ public class SectorAreas {
         this.targetPoint = targetPoint;
         this.sectorSize = sectorSize;
         // 要求line从targetPoint所在上边界开始按照方位角大小排序，到最大后下一个回到最小
-        this.sectorBorderLineList = AnchorBasedPivotSamplingUtils.getSeparateSectorList(pivotPoint, targetPoint, sectorSize);
+        this.sectorBorderLineList = AnchorBasedPivotSamplingUtils.getSeparateSortedSectorList(pivotPoint, targetPoint, sectorSize);
 
     }
 
