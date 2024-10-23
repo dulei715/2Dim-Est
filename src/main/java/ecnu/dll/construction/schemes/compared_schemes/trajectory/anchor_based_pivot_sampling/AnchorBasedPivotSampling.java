@@ -142,14 +142,14 @@ public class AnchorBasedPivotSampling {
         List<Integer> perturbedDirectionList = new ArrayList<>();
         List<SectorAreas> sectorAreasList = new ArrayList<>();
         List<SectorAreas> tempSectorAreasList;
-        List<TwoDimensionalDoublePoint> pivotPointList = new ArrayList<>();
+        List<TwoDimensionalDoublePoint> disturbedPivotPointList = new ArrayList<>();
         List<TwoDimensionalDoublePoint> restPointList = new ArrayList<>();
-        List<TwoDimensionalDoublePoint> disturbRestPointList = new ArrayList<>();
+        List<TwoDimensionalDoublePoint> disturbedRestPointList = new ArrayList<>();
         Double epsilonD = 0.75 * privacyBudget;
         Double epsilonInd = (privacyBudget - epsilonD) / 2;
         Double epsilonRest = epsilonInd;
         int trajectorySize = trajectory.size();
-        List<TwoDimensionalDoublePoint> disturbTrajectory = new ArrayList<>(trajectorySize);
+        List<TwoDimensionalDoublePoint> disturbedTrajectory = new ArrayList<>(trajectorySize);
         TrajectoryExponentialMechanism trajectoryEM = new TrajectoryExponentialMechanism(epsilonInd / trajectorySize, this.totalTrajectoryPointList);
         TrajectoryExponentialMechanism tempEM;
         Integer[] sectorDomainArray = BasicArrayUtil.getIncreaseIntegerNumberArray(0, 1, this.sectorSize - 1);
@@ -158,7 +158,7 @@ public class AnchorBasedPivotSampling {
             currentPoint = trajectory.get(i);
             if (i % 2 == flag) {
                 tempDisturbPoint = trajectoryEM.disturb(currentPoint);
-                pivotPointList.add(tempDisturbPoint);
+                disturbedPivotPointList.add(tempDisturbPoint);
             } else {
                 restPointList.add(currentPoint);
             }
@@ -176,9 +176,21 @@ public class AnchorBasedPivotSampling {
             Set<TwoDimensionalDoublePoint> tempPointDomain = getPointDomain(currentPoint, i, trajectory, sectorAreasList, perturbedDirectionList, flag);
             tempEM = new TrajectoryExponentialMechanism(epsilonRest / trajectorySize, new ArrayList<>(tempPointDomain));
             tempDisturbPoint = tempEM.disturb(currentPoint);
-            disturbRestPointList.add(tempDisturbPoint);
+            disturbedRestPointList.add(tempDisturbPoint);
         }
-        
+        for (int i = 0, j = 0, k = 0; i < trajectorySize; ++i) {
+            if (i % 2 == flag) {
+                disturbedTrajectory.add(disturbedPivotPointList.get(j++));
+            } else {
+                disturbedTrajectory.add(disturbedRestPointList.get(k++));
+            }
+        }
+        return disturbedTrajectory;
+    }
+
+    List<TwoDimensionalDoublePoint> getOptimalPerturbedTrajectory(List<TwoDimensionalDoublePoint> disturbedTrajectoryA, List<TwoDimensionalDoublePoint> disturbedTrajectoryB) {
+        // todo: 考虑解决遍历整个点域的问题
+        return null;
     }
 
 

@@ -1,5 +1,8 @@
 package ecnu.dll.construction.schemes.compared_schemes.trajectory.anchor_based_pivot_sampling.utils;
 
+import cn.edu.dll.basic.BasicArrayUtil;
+import cn.edu.dll.basic.BasicCalculation;
+import cn.edu.dll.differential_privacy.ldp.frequency_oracle.foImp.GeneralizedRandomizedResponse;
 import cn.edu.dll.geometry.Line;
 import cn.edu.dll.geometry.LineUtils;
 import cn.edu.dll.struct.pair.BasicPair;
@@ -74,5 +77,50 @@ public class AnchorBasedPivotSamplingUtils {
             }
         }
         return resultSet;
+    }
+
+    private static Double getPhiValue(Integer dI, Double thetaJ, Integer g) {
+        double unitAngle = Math.PI / g;
+        double[] dInterval = new double[]{(2 * dI - 1) * unitAngle, (2 * dI + 1) * unitAngle};
+        double[] thetaJInterval = new double[]{-thetaJ, thetaJ};
+        double[] intervalIntersection = BasicCalculation.getIntervalIntersection(dInterval, thetaJInterval);
+        if (intervalIntersection == null) {
+            return 0D;
+        }
+        return Math.abs(intervalIntersection[1] - intervalIntersection[0]) / (2 * Math.PI / g);
+    }
+
+    private static Double getLambdaValue(Integer dI, Integer d, Double epsilon, Integer g) {
+        double tempValue = Math.exp(epsilon);
+        if (dI.equals(d)) {
+            return tempValue / (g - 1 + tempValue);
+        }
+        return 1.0 / (g - 1 + tempValue);
+    }
+
+    public static Double getOptimalSectorSize(Collection<Integer> candidateSectorSizeCollection, Double privacyBudget, Integer realDirectIndex) {
+        GeneralizedRandomizedResponse<Integer> gRR;
+        Integer[] tempDIArray;
+        Double result = -1D, goalValue = -1D, tempGoalValue;
+        Integer resultG = null;
+        Collection<Double> bigTheta = new HashSet<>();
+        for (Integer g : candidateSectorSizeCollection) {
+            bigTheta.add(Math.PI / g);
+        }
+        Integer bigThetaSize = bigTheta.size();
+        for (Integer g : candidateSectorSizeCollection) {
+            tempDIArray = BasicArrayUtil.getIncreaseIntegerNumberArray(0, 1, g - 1);
+            tempGoalValue = 0D;
+            for (Double thetaJ : bigTheta) {
+                for (Integer dI : tempDIArray) {
+                    tempGoalValue += getPhiValue(dI, thetaJ, g) * getLambdaValue(dI, realDirectIndex, privacyBudget, g) / bigThetaSize;
+                }
+            }
+            if (tempGoalValue > goalValue) {
+                resultG = g;
+                goalValue = tempGoalValue;
+            }
+        }
+        return result;
     }
 }
