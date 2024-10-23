@@ -28,8 +28,8 @@ public class AnchorBasedPivotSamplingUtils {
     }
 
 
-
-    public static Set<TwoDimensionalDoublePoint> getPointSet(List<TwoDimensionalDoublePoint> totalPointSet, TwoDimensionalDoublePoint pivotPoint, TwoDimensionalDoublePoint targetPoint, int sectorSize, int perturbedAreaIndex) {
+    @Deprecated
+    public static Set<TwoDimensionalDoublePoint> getPointSet_before(List<TwoDimensionalDoublePoint> totalPointSet, TwoDimensionalDoublePoint pivotPoint, TwoDimensionalDoublePoint targetPoint, int sectorSize, int perturbedAreaIndex) {
         SectorAreas sectorAreas = new SectorAreas(pivotPoint, targetPoint, sectorSize);
 //        int targetPointAreaIndex = sectorAreas.getTargetPointExistingAreaIndex();
         Set<TwoDimensionalDoublePoint> resultSet = new HashSet<>();
@@ -40,10 +40,33 @@ public class AnchorBasedPivotSamplingUtils {
         }
         return resultSet;
     }
+
+    public static Set<TwoDimensionalDoublePoint> getPointSet(List<TwoDimensionalDoublePoint> totalPointSet, SectorAreas sectorAreas, int perturbedAreaIndex) {
+        Set<TwoDimensionalDoublePoint> resultSet = new HashSet<>();
+        for (TwoDimensionalDoublePoint point : totalPointSet) {
+            if (SectorAreasUtils.isInArea(sectorAreas, perturbedAreaIndex, point)) {
+                resultSet.add(point);
+            }
+        }
+        return resultSet;
+    }
+
+
+    @Deprecated
     public static Set<TwoDimensionalDoublePoint> getPointIntersectionSet(List<TwoDimensionalDoublePoint> totalPointSet, TwoDimensionalDoublePoint pivotPointA, TwoDimensionalDoublePoint pivotPointB, TwoDimensionalDoublePoint targetPoint, int sectorSize, int perturbedAreaIndexA, int perturbedAreaIndexB) {
         SectorAreas sectorAreasA = new SectorAreas(pivotPointA, targetPoint, sectorSize);
         SectorAreas sectorAreasB = new SectorAreas(pivotPointB, targetPoint, sectorSize);
 //        int targetPointAreaIndex = sectorAreas.getTargetPointExistingAreaIndex();
+        Set<TwoDimensionalDoublePoint> resultSet = new HashSet<>();
+        for (TwoDimensionalDoublePoint point : totalPointSet) {
+            if (SectorAreasUtils.isInArea(sectorAreasA, perturbedAreaIndexA, point) && SectorAreasUtils.isInArea(sectorAreasB, perturbedAreaIndexB, point)) {
+                resultSet.add(point);
+            }
+        }
+        return resultSet;
+    }
+
+    public static Set<TwoDimensionalDoublePoint> getPointIntersectionSet(List<TwoDimensionalDoublePoint> totalPointSet, SectorAreas sectorAreasA, SectorAreas sectorAreasB, int perturbedAreaIndexA, int perturbedAreaIndexB) {
         Set<TwoDimensionalDoublePoint> resultSet = new HashSet<>();
         for (TwoDimensionalDoublePoint point : totalPointSet) {
             if (SectorAreasUtils.isInArea(sectorAreasA, perturbedAreaIndexA, point) && SectorAreasUtils.isInArea(sectorAreasB, perturbedAreaIndexB, point)) {
