@@ -1,22 +1,22 @@
 package ecnu.dll.construction.schemes.basic_schemes.square_wave.continued;
 
-import ecnu.dll.construction.schemes.basic_schemes.square_wave.basic.GeneralWave;
+import ecnu.dll.construction.schemes.basic_schemes.square_wave.basic.IntegerGeneralWave;
 
 import java.util.List;
 import java.util.TreeMap;
 
-public abstract class SquareWave<T extends Comparable> extends GeneralWave {
+public abstract class IntegerSquareWave<T extends Comparable<T>> extends IntegerGeneralWave {
 
     protected Double constP = null;
 
     // 将范围扩展2b(e^\epsilon-1)，使得可以通过均匀选择选出满足条件的随机值
     private Double extendedMaxValue = null;
 
-    public SquareWave(Double epsilon) {
+    public IntegerSquareWave(Double epsilon) {
         super(epsilon);
     }
 
-    public SquareWave(Double epsilon, Integer b) {
+    public IntegerSquareWave(Double epsilon, Integer b) {
         super(epsilon);
         this.b = b;
         this.constP = Math.exp(this.epsilon) / (2*this.b*Math.exp(this.epsilon) + 1);

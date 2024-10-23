@@ -16,6 +16,8 @@ import java.io.File;
 import java.io.FileFilter;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
 
@@ -455,9 +457,13 @@ public class Constant {
     public static final DataSetAreaInfo twoDimMultipleCenterNormalDataSet = ConfigureUtils.getDatasetInfoArray(basicDatasetPath, "norm_multiple_center_2")[0];
 //    public static final DataSetAreaInfo twoDimMultipleCenterNormalDataSet = new DataSetAreaInfo(multiNormalPath, multiNormalKey, -4.25, -4.32, 10.76);
 
+    // for LDPTrace
     public static final double LDPTraceAlpha = 0.3;
     public static final double LDPTraceBeta = 0.2;
     public static final double LDPTraceLambda = 2.5;
+
+    // for ATP
+    public static final List<Integer> CandidateSectorSizeList = Arrays.asList(2, 4, 6, 8, 12);
 
 
 

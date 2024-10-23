@@ -2,7 +2,7 @@ package mechanism_test;
 
 import org.junit.Test;
 
-public class BucketizingMultiDimensionalSquareWaveTest {
+public class BucketizingMultiDimensionalIntegerSquareWaveTest {
     @Test
     public void fun1() {
 //        int xInputSize = 10;

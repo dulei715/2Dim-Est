@@ -6,7 +6,7 @@ import cn.edu.dll.struct.grid.Grid;
 import cn.edu.dll.struct.pair.BasicPair;
 import cn.edu.dll.struct.point.TwoDimensionalIntegerPoint;
 import ecnu.dll.construction._config.Constant;
-import ecnu.dll.construction.schemes.basic_schemes.square_wave.discretization.BucketizingOptimalSquareWave;
+import ecnu.dll.construction.schemes.basic_schemes.square_wave.discretization.BucketizingOptimalSquareWaveInteger;
 import ecnu.dll.construction.schemes.compared_schemes.msw.IndexFlag;
 
 import java.util.*;
@@ -25,8 +25,8 @@ public class BucketizingMultiDimensionalSquareWave {
 
     private List<TwoDimensionalIntegerPoint> rawIntegerPointTypeList = null;
 
-    private BucketizingOptimalSquareWave xSquareWave = null;
-    private BucketizingOptimalSquareWave ySquareWave = null;
+    private BucketizingOptimalSquareWaveInteger xSquareWave = null;
+    private BucketizingOptimalSquareWaveInteger ySquareWave = null;
 
 //    public BucketizingMultiDimensionalSquareWave(BucketizingOptimalSquareWave xSquareWave, BucketizingOptimalSquareWave ySquareWave) {
 //        this.xSquareWave = xSquareWave;
@@ -42,8 +42,8 @@ public class BucketizingMultiDimensionalSquareWave {
         this.leftBorderArray[1] = yLeft;
 //        Integer xInputSize, yInputSize;
         this.sizeD = (int)Math.ceil(DecimalTool.round(inputLength / gridLength, Constant.eliminateDoubleErrorIndexSize));
-        this.xSquareWave = new BucketizingOptimalSquareWave(epsilon, this.sizeD);
-        this.ySquareWave = new BucketizingOptimalSquareWave(epsilon, this.sizeD);
+        this.xSquareWave = new BucketizingOptimalSquareWaveInteger(epsilon, this.sizeD);
+        this.ySquareWave = new BucketizingOptimalSquareWaveInteger(epsilon, this.sizeD);
         this.rawIntegerPointTypeList = Grid.generateTwoDimensionalIntegerPoint(this.sizeD, 0, 0);
     }
 

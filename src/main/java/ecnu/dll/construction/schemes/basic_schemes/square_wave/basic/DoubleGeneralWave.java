@@ -1,16 +1,16 @@
 package ecnu.dll.construction.schemes.basic_schemes.square_wave.basic;
 
-public abstract class GeneralWave {
+public abstract class DoubleGeneralWave {
 
-    protected Integer b = null;
+    protected Double b = null;
     protected Double constQ = null;
     protected Double epsilon = null;
 
-    public GeneralWave(Double epsilon) {
+    public DoubleGeneralWave(Double epsilon) {
         this.epsilon = epsilon;
     }
 
-    public GeneralWave(Integer b, Double constQ, Double epsilon) {
+    public DoubleGeneralWave(Double b, Double constQ, Double epsilon) {
         this.b = b;
         this.constQ = constQ;
         this.epsilon = epsilon;
@@ -29,7 +29,7 @@ public abstract class GeneralWave {
         return getWaveValue(realValue - sanitizedValue);
     }
 
-    public Integer getB() {
+    public Double getB() {
         return b;
     }
 

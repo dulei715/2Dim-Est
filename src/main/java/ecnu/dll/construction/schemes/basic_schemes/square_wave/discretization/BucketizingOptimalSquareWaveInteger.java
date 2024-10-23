@@ -4,13 +4,13 @@ import cn.edu.dll.basic.BasicArrayUtil;
 import cn.edu.dll.basic.RandomUtil;
 import cn.edu.dll.statistic.StatisticTool;
 import ecnu.dll.construction._config.Constant;
-import ecnu.dll.construction.schemes.basic_schemes.square_wave.continued.SquareWave;
+import ecnu.dll.construction.schemes.basic_schemes.square_wave.continued.IntegerSquareWave;
 
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
-public class BucketizingOptimalSquareWave extends SquareWave<Integer> {
+public class BucketizingOptimalSquareWaveInteger extends IntegerSquareWave<Integer> {
     private Integer inputSize = null;
     private Integer outputSize = null;
 
@@ -24,7 +24,7 @@ public class BucketizingOptimalSquareWave extends SquareWave<Integer> {
     private Double[] initAverageRatio = null;
 
 
-    public BucketizingOptimalSquareWave(Double epsilon, Integer inputSize) {
+    public BucketizingOptimalSquareWaveInteger(Double epsilon, Integer inputSize) {
         super(epsilon);
         this.inputSize = inputSize;
         this.b = (int)Math.floor(((this.epsilon - 1)*Math.exp(this.epsilon) + 1)*this.inputSize/(2 * Math.exp(this.epsilon) * (Math.exp(this.epsilon) - 1 - this.epsilon)));
@@ -93,7 +93,7 @@ public class BucketizingOptimalSquareWave extends SquareWave<Integer> {
     public static void main(String[] args) {
         int inputSize = 10;
         double epsilon = 0.5;
-        BucketizingOptimalSquareWave bucketizingOptimalSquareWave = new BucketizingOptimalSquareWave(epsilon, inputSize);
+        BucketizingOptimalSquareWaveInteger bucketizingOptimalSquareWave = new BucketizingOptimalSquareWaveInteger(epsilon, inputSize);
         for (int i = 0; i < 10; i++) {
             System.out.println(bucketizingOptimalSquareWave.getNoiseIndex(0));
         }

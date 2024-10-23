@@ -12,7 +12,7 @@ import ecnu.dll.construction.schemes.compared_schemes.trajectory.anchor_based_pi
 
 import java.util.*;
 
-public class AnchorBasedPivotSamplingUtils {
+public class PivotSamplingUtils {
 
     /**
      * 给定枢轴点，目标点和一个角度，返回以枢轴点与目标点所在直线为角平分线的该角度的两个边所在直线
@@ -98,29 +98,75 @@ public class AnchorBasedPivotSamplingUtils {
         return 1.0 / (g - 1 + tempValue);
     }
 
-    public static Double getOptimalSectorSize(Collection<Integer> candidateSectorSizeCollection, Double privacyBudget, Integer realDirectIndex) {
-        GeneralizedRandomizedResponse<Integer> gRR;
-        Integer[] tempDIArray;
-        Double result = -1D, goalValue = -1D, tempGoalValue;
-        Integer resultG = null;
+    /**
+     *
+     * @param candidateSectorSizeList
+     * @param privacyBudget
+     * @param realDirectIndexList 其中每个元素对应candidateSectorSizeList中相应分区大小下的真实方向索引
+     * @return
+     */
+    @Deprecated
+    public static Integer getSingleDirectionOptimalSectorSize(List<Integer> candidateSectorSizeList, Double privacyBudget, List<Integer> realDirectIndexList) {
+        Double goalValue = -1D, tempGoalValue;
+        Integer resultG = null, tempG, tempDirectIndex;
         Collection<Double> bigTheta = new HashSet<>();
-        for (Integer g : candidateSectorSizeCollection) {
+        for (Integer g : candidateSectorSizeList) {
             bigTheta.add(Math.PI / g);
         }
-        Integer bigThetaSize = bigTheta.size();
-        for (Integer g : candidateSectorSizeCollection) {
-            tempDIArray = BasicArrayUtil.getIncreaseIntegerNumberArray(0, 1, g - 1);
-            tempGoalValue = 0D;
-            for (Double thetaJ : bigTheta) {
-                for (Integer dI : tempDIArray) {
-                    tempGoalValue += getPhiValue(dI, thetaJ, g) * getLambdaValue(dI, realDirectIndex, privacyBudget, g) / bigThetaSize;
-                }
-            }
+        for (int i = 0; i < candidateSectorSizeList.size(); ++i) {
+            tempG = candidateSectorSizeList.get(i);
+            tempDirectIndex = realDirectIndexList.get(i);
+            tempGoalValue = getDirectionKeepValue(privacyBudget, tempG, tempDirectIndex, bigTheta);
             if (tempGoalValue > goalValue) {
-                resultG = g;
+                resultG = tempG;
                 goalValue = tempGoalValue;
             }
         }
-        return result;
+        return resultG;
     }
+
+    private static Double getDirectionKeepValue(Double privacyBudget, Integer sectorSize, Integer realDirectIndex, Collection<Double> bigTheta) {
+        Double tempGoalValue;
+        Integer[] tempDIArray;
+        Integer bigThetaSize = bigTheta.size();
+        Double result = -1D, goalValue = -1D;
+        tempDIArray = BasicArrayUtil.getIncreaseIntegerNumberArray(0, 1, sectorSize - 1);
+        tempGoalValue = 0D;
+        for (Double thetaJ : bigTheta) {
+            for (Integer dI : tempDIArray) {
+                tempGoalValue += getPhiValue(dI, thetaJ, sectorSize) * getLambdaValue(dI, realDirectIndex, privacyBudget, sectorSize) / bigThetaSize;
+            }
+        }
+        return tempGoalValue;
+    }
+
+    public static Integer getOptimalSectorSize(List<Integer> candidateSectorSizeList, Double privacyBudget, List<TwoDimensionalDoublePoint> trajectory) {
+        // 获取每个力度下的轨迹中每个方向的真实方向下标
+        int candidateSize = candidateSectorSizeList.size();
+        int directSize = trajectory.size() - 1;
+        Double tempTrajectoryDirectionKeepValue, goalValue = -1D;
+        SectorAreas tempSectorAreas;
+        Integer tempSectorSize, resultSectorSize = null, tempRealDirectIndex;
+        Collection<Double> bigTheta = new HashSet<>();
+        for (Integer g : candidateSectorSizeList) {
+            bigTheta.add(Math.PI / g);
+        }
+        for (int i = 0; i < candidateSize; ++i) {
+            tempSectorSize  = candidateSectorSizeList.get(i);
+            tempTrajectoryDirectionKeepValue = 0D;
+            for (int j = 0; j < directSize; ++j) {
+                tempSectorAreas = new SectorAreas(trajectory.get(j), trajectory.get(j+1), tempSectorSize);
+                tempRealDirectIndex = tempSectorAreas.getTargetPointExistingAreaIndex();
+                tempTrajectoryDirectionKeepValue += getDirectionKeepValue(privacyBudget, tempSectorSize, tempRealDirectIndex, bigTheta);
+            }
+            // 这里取轨迹的所有方向的平均值为最终方向保持值
+            tempTrajectoryDirectionKeepValue /= directSize;
+            if (tempTrajectoryDirectionKeepValue > goalValue) {
+                goalValue = tempTrajectoryDirectionKeepValue;
+                resultSectorSize = tempSectorSize;
+            }
+        }
+        return resultSectorSize;
+    }
+
 }
