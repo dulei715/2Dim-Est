@@ -12,17 +12,21 @@ import ecnu.dll.construction.schemes.compared_schemes.trajectory.anchor_based_pi
 import java.util.*;
 
 public class PivotSampling {
-    protected final List<TwoDimensionalDoublePoint> totalTrajectoryPointList;
     public static final Integer FlagFirstPivot = 0;
     public static final Integer FlagFirstTarget = 1;
-    protected static List<Integer> candidateSectorSizeList = Constant.CandidateSectorSizeList;
+    protected static List<Integer> candidateSectorSizeList = Constant.CandidateSectorSizeListForNYC;
 
     protected Integer sectorSize;
 
-    public PivotSampling(final List<TwoDimensionalDoublePoint> totalTrajectoryPointList, Integer sectorSize) {
-        this.totalTrajectoryPointList = totalTrajectoryPointList;
-        this.sectorSize = sectorSize;
+    public PivotSampling() {
+
     }
+
+//    @Deprecated
+//    public PivotSampling(final List<TwoDimensionalDoublePoint> pointCircleDomain, Integer sectorSize) {
+//        this.poinCircletDomain = pointCircleDomain;
+//        this.sectorSize = sectorSize;
+//    }
 
     /**
      * 1、如果 perturbedPointList 从 trajectory 的第1个元素开始（那targetList从trajectory的第0个开始），
@@ -48,20 +52,20 @@ public class PivotSampling {
      * @return
      */
     @Deprecated
-    public Set<TwoDimensionalDoublePoint> getPointDomain_before(TwoDimensionalDoublePoint targetPoint, final List<TwoDimensionalDoublePoint> trajectory, final List<TwoDimensionalDoublePoint> perturbedPointList, Integer targetPointIndex, final List<Integer> perturbedDirectionList, int firstTargetStartIndex) {
+    public Set<TwoDimensionalDoublePoint> getPointDomain_before(TwoDimensionalDoublePoint targetPoint, List<TwoDimensionalDoublePoint> pointCircleDomain, final List<TwoDimensionalDoublePoint> trajectory, final List<TwoDimensionalDoublePoint> perturbedPointList, Integer targetPointIndex, final List<Integer> perturbedDirectionList, int firstTargetStartIndex) {
         Set<TwoDimensionalDoublePoint> pointDomain = new HashSet<>();
         int remain = trajectory.size() % 2;
         if (firstTargetStartIndex == 0) {   // 对应第1种情况
             if (targetPointIndex == 0) { // target为trajectory的第0个
-                pointDomain.addAll(PivotSamplingUtils.getPointSet_before(this.totalTrajectoryPointList, perturbedPointList.get(targetPointIndex), targetPoint, this.sectorSize, perturbedDirectionList.get(targetPointIndex)));
+                pointDomain.addAll(PivotSamplingUtils.getPointSet_before(pointCircleDomain, perturbedPointList.get(targetPointIndex), targetPoint, this.sectorSize, perturbedDirectionList.get(targetPointIndex)));
                 pointDomain.add(targetPoint);
             } else if (remain == 1 && targetPointIndex == (trajectory.size() - 1) / 2 ) {  // 判断targetPointIndex是否为最后一个
-                pointDomain.addAll(PivotSamplingUtils.getPointSet_before(this.totalTrajectoryPointList, perturbedPointList.get(targetPointIndex - 1), targetPoint, this.sectorSize, perturbedDirectionList.get(2 * targetPointIndex - 1)));
+                pointDomain.addAll(PivotSamplingUtils.getPointSet_before(pointCircleDomain, perturbedPointList.get(targetPointIndex - 1), targetPoint, this.sectorSize, perturbedDirectionList.get(2 * targetPointIndex - 1)));
                 pointDomain.add(targetPoint);
             } else {
-                Set<TwoDimensionalDoublePoint> tempSet = PivotSamplingUtils.getPointIntersectionSet(this.totalTrajectoryPointList, perturbedPointList.get(targetPointIndex - 1), perturbedPointList.get(targetPointIndex), targetPoint, this.sectorSize, perturbedDirectionList.get(2 * targetPointIndex - 1), perturbedDirectionList.get(2 * targetPointIndex));
+                Set<TwoDimensionalDoublePoint> tempSet = PivotSamplingUtils.getPointIntersectionSet(pointCircleDomain, perturbedPointList.get(targetPointIndex - 1), perturbedPointList.get(targetPointIndex), targetPoint, this.sectorSize, perturbedDirectionList.get(2 * targetPointIndex - 1), perturbedDirectionList.get(2 * targetPointIndex));
                 if (tempSet.isEmpty()) {
-                    pointDomain.addAll(this.totalTrajectoryPointList);
+                    pointDomain.addAll(pointCircleDomain);
                 } else {
                     pointDomain.addAll(tempSet);
                 }
@@ -69,12 +73,12 @@ public class PivotSampling {
 
         } else {    // 对应第2种情况
             if (remain == 0 && targetPointIndex == (trajectory.size() - 2) / 2) { // 判断targetPointIndex是否为最后一个
-                pointDomain.addAll(PivotSamplingUtils.getPointSet_before(this.totalTrajectoryPointList, perturbedPointList.get(targetPointIndex), targetPoint, this.sectorSize, perturbedDirectionList.get(2 * targetPointIndex)));
+                pointDomain.addAll(PivotSamplingUtils.getPointSet_before(pointCircleDomain, perturbedPointList.get(targetPointIndex), targetPoint, this.sectorSize, perturbedDirectionList.get(2 * targetPointIndex)));
                 pointDomain.add(targetPoint);
             } else {
-                Set<TwoDimensionalDoublePoint> tempSet = PivotSamplingUtils.getPointIntersectionSet(this.totalTrajectoryPointList, perturbedPointList.get(targetPointIndex), perturbedPointList.get(targetPointIndex + 1), targetPoint, this.sectorSize, perturbedDirectionList.get(2 * targetPointIndex), perturbedDirectionList.get(2 * targetPointIndex + 1));
+                Set<TwoDimensionalDoublePoint> tempSet = PivotSamplingUtils.getPointIntersectionSet(pointCircleDomain, perturbedPointList.get(targetPointIndex), perturbedPointList.get(targetPointIndex + 1), targetPoint, this.sectorSize, perturbedDirectionList.get(2 * targetPointIndex), perturbedDirectionList.get(2 * targetPointIndex + 1));
                 if (tempSet.isEmpty()) {
-                    pointDomain.addAll(this.totalTrajectoryPointList);
+                    pointDomain.addAll(pointCircleDomain);
                 } else {
                     pointDomain.addAll(tempSet);
                 }
@@ -94,20 +98,20 @@ public class PivotSampling {
      * @param flag
      * @return
      */
-    public Set<TwoDimensionalDoublePoint> getPointDomain(TwoDimensionalDoublePoint targetPoint, Integer targetPointInResListIndex, List<TwoDimensionalDoublePoint> trajectory, final List<SectorAreas> sectorAreasList, final List<Integer> perturbedDirectionList, int flag) {
+    public Set<TwoDimensionalDoublePoint> getPointDomain(TwoDimensionalDoublePoint targetPoint, List<TwoDimensionalDoublePoint> pointCircleDomain, Integer targetPointInResListIndex, List<TwoDimensionalDoublePoint> trajectory, final List<SectorAreas> sectorAreasList, final List<Integer> perturbedDirectionList, int flag) {
         Set<TwoDimensionalDoublePoint> pointDomain = new HashSet<>();
         int remain = trajectory.size() % 2;
         if (flag == FlagFirstTarget) {   // 对应第1种情况
             if (targetPointInResListIndex == 0) { // target为trajectory的第0个
-                pointDomain.addAll(PivotSamplingUtils.getPointSet(this.totalTrajectoryPointList, sectorAreasList.get(targetPointInResListIndex), perturbedDirectionList.get(targetPointInResListIndex)));
+                pointDomain.addAll(PivotSamplingUtils.getPointSet(pointCircleDomain, sectorAreasList.get(targetPointInResListIndex), perturbedDirectionList.get(targetPointInResListIndex)));
                 pointDomain.add(targetPoint);
             } else if (remain == 1 && targetPointInResListIndex == (trajectory.size() - 1) / 2 ) {  // 判断targetPointIndex是否为最后一个
-                pointDomain.addAll(PivotSamplingUtils.getPointSet(this.totalTrajectoryPointList, sectorAreasList.get(2 * targetPointInResListIndex - 1), perturbedDirectionList.get(2 * targetPointInResListIndex - 1)));
+                pointDomain.addAll(PivotSamplingUtils.getPointSet(pointCircleDomain, sectorAreasList.get(2 * targetPointInResListIndex - 1), perturbedDirectionList.get(2 * targetPointInResListIndex - 1)));
                 pointDomain.add(targetPoint);
             } else {
-                Set<TwoDimensionalDoublePoint> tempSet = PivotSamplingUtils.getPointIntersectionSet(this.totalTrajectoryPointList, sectorAreasList.get(2 * targetPointInResListIndex - 1), sectorAreasList.get(2 * targetPointInResListIndex), perturbedDirectionList.get(2 * targetPointInResListIndex - 1), perturbedDirectionList.get(2 * targetPointInResListIndex));
+                Set<TwoDimensionalDoublePoint> tempSet = PivotSamplingUtils.getPointIntersectionSet(pointCircleDomain, sectorAreasList.get(2 * targetPointInResListIndex - 1), sectorAreasList.get(2 * targetPointInResListIndex), perturbedDirectionList.get(2 * targetPointInResListIndex - 1), perturbedDirectionList.get(2 * targetPointInResListIndex));
                 if (tempSet.isEmpty()) {
-                    pointDomain.addAll(this.totalTrajectoryPointList);
+                    pointDomain.addAll(pointCircleDomain);
                 } else {
                     pointDomain.addAll(tempSet);
                 }
@@ -115,12 +119,12 @@ public class PivotSampling {
 
         } else {    // 对应第2种情况
             if (remain == 0 && targetPointInResListIndex == (trajectory.size() - 2) / 2) { // 判断targetPointIndex是否为最后一个
-                pointDomain.addAll(PivotSamplingUtils.getPointSet(this.totalTrajectoryPointList, sectorAreasList.get(2 * targetPointInResListIndex), perturbedDirectionList.get(2 * targetPointInResListIndex)));
+                pointDomain.addAll(PivotSamplingUtils.getPointSet(pointCircleDomain, sectorAreasList.get(2 * targetPointInResListIndex), perturbedDirectionList.get(2 * targetPointInResListIndex)));
                 pointDomain.add(targetPoint);
             } else {
-                Set<TwoDimensionalDoublePoint> tempSet = PivotSamplingUtils.getPointIntersectionSet(this.totalTrajectoryPointList, sectorAreasList.get(2 * targetPointInResListIndex), sectorAreasList.get(2 * targetPointInResListIndex + 1), perturbedDirectionList.get(2 * targetPointInResListIndex), perturbedDirectionList.get(2 * targetPointInResListIndex + 1));
+                Set<TwoDimensionalDoublePoint> tempSet = PivotSamplingUtils.getPointIntersectionSet(pointCircleDomain, sectorAreasList.get(2 * targetPointInResListIndex), sectorAreasList.get(2 * targetPointInResListIndex + 1), perturbedDirectionList.get(2 * targetPointInResListIndex), perturbedDirectionList.get(2 * targetPointInResListIndex + 1));
                 if (tempSet.isEmpty()) {
-                    pointDomain.addAll(this.totalTrajectoryPointList);
+                    pointDomain.addAll(pointCircleDomain);
                 } else {
                     pointDomain.addAll(tempSet);
                 }
@@ -140,7 +144,7 @@ public class PivotSampling {
      * @param flag
      * @return
      */
-    public List<TwoDimensionalDoublePoint> independentAndPivotPerturbation(final List<TwoDimensionalDoublePoint> trajectory, Double privacyBudget, final Map<TwoDimensionalDoublePoint, List<SectorAreas>> discreteDirectionMap, Integer flag) {
+    public List<TwoDimensionalDoublePoint> independentAndPivotPerturbation(final List<TwoDimensionalDoublePoint> trajectory, List<TwoDimensionalDoublePoint> pointCircleDomain, Double privacyBudget, final Map<TwoDimensionalDoublePoint, List<SectorAreas>> discreteDirectionMap, Integer flag) {
         TwoDimensionalDoublePoint currentPoint, tempDisturbPoint;
         List<Integer> perturbedDirectionList = new ArrayList<>();
         List<SectorAreas> sectorAreasList = new ArrayList<>();
@@ -153,7 +157,7 @@ public class PivotSampling {
         Double epsilonRest = epsilonInd;
         int trajectorySize = trajectory.size();
         List<TwoDimensionalDoublePoint> disturbedTrajectory = new ArrayList<>(trajectorySize);
-        TrajectoryExponentialMechanism trajectoryEM = new TrajectoryExponentialMechanism(epsilonInd / trajectorySize, this.totalTrajectoryPointList);
+        TrajectoryExponentialMechanism trajectoryEM = new TrajectoryExponentialMechanism(epsilonInd / trajectorySize, pointCircleDomain);
         TrajectoryExponentialMechanism tempEM;
         Integer[] sectorDomainArray = BasicArrayUtil.getIncreaseIntegerNumberArray(0, 1, this.sectorSize - 1);
         GeneralizedRandomizedResponse<Integer> sectorKRR = new GeneralizedRandomizedResponse<>(epsilonD / (2 * (trajectorySize - 1)), sectorDomainArray);
@@ -176,7 +180,7 @@ public class PivotSampling {
                 tempDisturbedAreaIndex = sectorKRR.perturb(tempOriginalAreaIndex);
                 perturbedDirectionList.add(tempDisturbedAreaIndex);
             }
-            Set<TwoDimensionalDoublePoint> tempPointDomain = getPointDomain(currentPoint, i, trajectory, sectorAreasList, perturbedDirectionList, flag);
+            Set<TwoDimensionalDoublePoint> tempPointDomain = getPointDomain(currentPoint, pointCircleDomain, i, trajectory, sectorAreasList, perturbedDirectionList, flag);
             tempEM = new TrajectoryExponentialMechanism(epsilonRest / trajectorySize, new ArrayList<>(tempPointDomain));
             tempDisturbPoint = tempEM.disturb(currentPoint);
             disturbedRestPointList.add(tempDisturbPoint);
@@ -199,7 +203,7 @@ public class PivotSampling {
      * @param pointB
      * @return
      */
-    private static TwoDimensionalDoublePoint getPointWithMinimalDistanceSum(List<TwoDimensionalDoublePoint> candidatePointList, TwoDimensionalDoublePoint pointA, TwoDimensionalDoublePoint pointB) {
+    private static TwoDimensionalDoublePoint getPointWithMinimalDistanceSum(Collection<TwoDimensionalDoublePoint> candidatePointList, TwoDimensionalDoublePoint pointA, TwoDimensionalDoublePoint pointB) {
         Double minimalDistance = Double.MAX_VALUE, tempDistance;
         TwoDimensionalDoublePoint resultPoint = null;
         for (TwoDimensionalDoublePoint currentPoint : candidatePointList) {
@@ -212,65 +216,38 @@ public class PivotSampling {
         return resultPoint;
     }
 
-    private List<TwoDimensionalDoublePoint> getCandidatePointList(List<TwoDimensionalDoublePoint> disturbedTrajectoryA, List<TwoDimensionalDoublePoint> disturbedTrajectoryB) {
-        // todo: 考虑解决遍历整个点域的问题，这里暂时以所有节点代替
-        return this.totalTrajectoryPointList;
-    }
+//    private List<TwoDimensionalDoublePoint> getCandidatePointList(List<TwoDimensionalDoublePoint> disturbedTrajectoryA, List<TwoDimensionalDoublePoint> disturbedTrajectoryB) {
+//        // todo: 考虑解决遍历整个点域的问题，这里暂时以所有节点代替
+//        return this.pointCircleDomain;
+//    }
 
-    public List<TwoDimensionalDoublePoint> getOptimalPerturbedTrajectory(List<TwoDimensionalDoublePoint> disturbedTrajectoryA, List<TwoDimensionalDoublePoint> disturbedTrajectoryB) {
+    public List<TwoDimensionalDoublePoint> getOptimalPerturbedTrajectory(List<TwoDimensionalDoublePoint> disturbedTrajectoryA, List<TwoDimensionalDoublePoint> disturbedTrajectoryB, Collection<TwoDimensionalDoublePoint> pointCircleDomain) {
         int trajectorySize = disturbedTrajectoryA.size();
-        List<TwoDimensionalDoublePoint> candidatePointList = getCandidatePointList(disturbedTrajectoryA, disturbedTrajectoryB);
+//        List<TwoDimensionalDoublePoint> candidatePointList = getCandidatePointList(disturbedTrajectoryA, disturbedTrajectoryB);
         List<TwoDimensionalDoublePoint> resultList = new ArrayList<>(trajectorySize);
         TwoDimensionalDoublePoint tempPointA, tempPointB, singleOptimalPoint;
         for (int i = 0; i < trajectorySize; ++i) {
             tempPointA = disturbedTrajectoryA.get(i);
             tempPointB = disturbedTrajectoryB.get(i);
-            singleOptimalPoint = getPointWithMinimalDistanceSum(candidatePointList, tempPointA, tempPointB);
+            singleOptimalPoint = getPointWithMinimalDistanceSum(pointCircleDomain, tempPointA, tempPointB);
             resultList.add(singleOptimalPoint);
         }
         return resultList;
     }
 
 
-    public List<TwoDimensionalDoublePoint> execute(final List<TwoDimensionalDoublePoint> trajectory, Double privacyBudget) {
-        Integer optimalSectorSize = PivotSamplingUtils.getOptimalSectorSize(candidateSectorSizeList, privacyBudget, trajectory);
-        int trajectorySize = trajectory.size();
+    public List<TwoDimensionalDoublePoint> execute(final List<TwoDimensionalDoublePoint> trajectory, List<TwoDimensionalDoublePoint> pointCircleDomain, Double privacyBudget) {
         double halfBudget = privacyBudget / 2;
         // 构建每个节点到相邻轨迹节点的sectorArea信息（包含方向）
-        Map<TwoDimensionalDoublePoint, List<SectorAreas>> neighboringMap = new HashMap<>();
-        List<SectorAreas> tempNeighboringList;
-        TwoDimensionalDoublePoint currentPoint;
-        for (int i = 0; i < trajectorySize; ++i) {
-            currentPoint = trajectory.get(i);
-            if (i == 0) {
-                tempNeighboringList = new ArrayList<>(1);
-                tempNeighboringList.add(new SectorAreas(currentPoint, trajectory.get(i + 1), optimalSectorSize));
+        Integer optimalSectorSize = PivotSamplingUtils.getOptimalSectorSize(this.candidateSectorSizeList, privacyBudget, trajectory);
+        this.sectorSize = optimalSectorSize;
+        Map<TwoDimensionalDoublePoint, List<SectorAreas>> neighboringMap = PivotSamplingUtils.getNeighboringMap(trajectory, optimalSectorSize);
 
-            } else if (i == trajectorySize - 1) {
-                tempNeighboringList = new ArrayList<>(1);
-                tempNeighboringList.add(new SectorAreas(currentPoint, trajectory.get(i - 1), optimalSectorSize));
-            } else {
-                tempNeighboringList = new ArrayList<>(2);
-                tempNeighboringList.add(new SectorAreas(currentPoint, trajectory.get(i - 1), optimalSectorSize));
-                tempNeighboringList.add(new SectorAreas(currentPoint, trajectory.get(i + 1), optimalSectorSize));
-            }
-            neighboringMap.put(currentPoint, tempNeighboringList);
-        }
-
-        List<TwoDimensionalDoublePoint> perturbedTrajectoryA = independentAndPivotPerturbation(trajectory, halfBudget, neighboringMap, FlagFirstPivot);
-        List<TwoDimensionalDoublePoint> perturbedTrajectoryB = independentAndPivotPerturbation(trajectory, halfBudget, neighboringMap, FlagFirstTarget);
-        List<TwoDimensionalDoublePoint> optimalPerturbedTrajectory = getOptimalPerturbedTrajectory(perturbedTrajectoryA, perturbedTrajectoryB);
+        List<TwoDimensionalDoublePoint> perturbedTrajectoryA = independentAndPivotPerturbation(trajectory, pointCircleDomain, halfBudget, neighboringMap, FlagFirstPivot);
+        List<TwoDimensionalDoublePoint> perturbedTrajectoryB = independentAndPivotPerturbation(trajectory, pointCircleDomain, halfBudget, neighboringMap, FlagFirstTarget);
+        List<TwoDimensionalDoublePoint> optimalPerturbedTrajectory = getOptimalPerturbedTrajectory(perturbedTrajectoryA, perturbedTrajectoryB, pointCircleDomain);
         return optimalPerturbedTrajectory;
     }
-
-
-
-
-
-
-
-
-
 
 
 

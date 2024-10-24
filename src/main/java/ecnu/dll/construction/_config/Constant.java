@@ -16,7 +16,6 @@ import java.io.File;
 import java.io.FileFilter;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
@@ -463,7 +462,8 @@ public class Constant {
     public static final double LDPTraceLambda = 2.5;
 
     // for ATP
-    public static final List<Integer> CandidateSectorSizeList = Arrays.asList(2, 4, 6, 8, 12);
+    public static final List<Integer> CandidateSectorSizeListForNYC = Arrays.asList(5, 10, 15, 20);
+    public static final List<Integer> CandidateSectorSizeListForCLE = Arrays.asList(2, 4, 6, 8);
 
 
 

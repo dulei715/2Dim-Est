@@ -169,4 +169,28 @@ public class PivotSamplingUtils {
         return resultSectorSize;
     }
 
+    public static Map<TwoDimensionalDoublePoint, List<SectorAreas>> getNeighboringMap(List<TwoDimensionalDoublePoint> trajectory, Integer optimalSectorSize) {
+        TwoDimensionalDoublePoint currentPoint;
+        List<SectorAreas> tempNeighboringList;
+        int trajectorySize = trajectory.size();
+        Map<TwoDimensionalDoublePoint, List<SectorAreas>> neighboringMap = new HashMap<>();
+        for (int i = 0; i < trajectorySize; ++i) {
+            currentPoint = trajectory.get(i);
+            if (i == 0) {
+                tempNeighboringList = new ArrayList<>(1);
+                tempNeighboringList.add(new SectorAreas(currentPoint, trajectory.get(i + 1), optimalSectorSize));
+
+            } else if (i == trajectorySize - 1) {
+                tempNeighboringList = new ArrayList<>(1);
+                tempNeighboringList.add(new SectorAreas(currentPoint, trajectory.get(i - 1), optimalSectorSize));
+            } else {
+                tempNeighboringList = new ArrayList<>(2);
+                tempNeighboringList.add(new SectorAreas(currentPoint, trajectory.get(i - 1), optimalSectorSize));
+                tempNeighboringList.add(new SectorAreas(currentPoint, trajectory.get(i + 1), optimalSectorSize));
+            }
+            neighboringMap.put(currentPoint, tempNeighboringList);
+        }
+        return neighboringMap;
+    }
+
 }
