@@ -13,11 +13,13 @@ Run: `src/main/resources/matlabcode/generateWriteTwoDimNormPointWithMultiCenter.
 ## Data set preprocess
 
 [//]: # (Run:`dataset_test_important.DatasetMessageTest$preHandleData` to extract the Chicago Crime data set and the NYC data set.)
-Run: `ecnu.dll.construction.dataset.Preprocess` to to extract the Chicago Crime data set and the NYC data set.
+Run: `ecnu.dll.construction.dataset.Preprocess` to extract the Chicago Crime data set and the NYC data set.
 
-Run: `dataset_test_important.ExtractDatasetTest$extractNormDataset` to extract the normal data.
+[//]: # (Run: `dataset_test_important.ExtractDatasetTest$extractNormDataset` to extract the normal data.)
 
-Run: `dataset_test_important.ExtractDatasetTest$extractNormalDatasetWithMultipleCenters` to extract the multi-center normal data.
+[//]: # (Run: `dataset_test_important.ExtractDatasetTest$extractNormalDatasetWithMultipleCenters` to extract the multi-center normal data.)
+
+Run: `dataset_test_important.DatasetMessageEnhancedTest.testDatasetBorder` to get the borders of both normal and multiple-center normal data.
 
 # Run Process (version_1)
 Set the value of `depoyment/config/parameter_config.xml/xpath{root/properites/using}` as `version_1`
