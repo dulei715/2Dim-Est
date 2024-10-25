@@ -431,6 +431,7 @@ public class Constant {
      * The sum of leftBottom and length is strictly greater than the real right and top point
      */
     public static final DataSetAreaInfo[] crimeDataSetArray = ConfigureUtils.getDatasetInfoArray(basicDatasetPath, "crime");
+    public static final DataSetAreaInfo crimeDataSet = ConfigureUtils.getDatasetInfoArray(basicDatasetPath, "crime2")[0];
 //    public static final DataSetAreaInfo[] crimeDataSetArray = new DataSetAreaInfo[]{
 //            new DataSetAreaInfo(chicagoAPath, chicagoAKey, 41.72, -87.68, 0.09),
 //            new DataSetAreaInfo(chicagoBPath, chicagoBKey, 41.82, -87.73, 0.09),
@@ -445,6 +446,7 @@ public class Constant {
 //            new DataSetAreaInfo(nycCPath, nycCKey, 40.82, -73.90,0.07)
 //    };
     public static final DataSetAreaInfo[] nycDataSetArray = ConfigureUtils.getDatasetInfoArray(basicDatasetPath, "nyc");
+    public static final DataSetAreaInfo nycDataSet = ConfigureUtils.getDatasetInfoArray(basicDatasetPath, "nyc2")[0];
 //    public static final DataSetAreaInfo[] nycDataSetArray = new DataSetAreaInfo[]{
 //            new DataSetAreaInfo(nycPath, nycKey, 0.0, -75.1675,75.1676)
 //    };

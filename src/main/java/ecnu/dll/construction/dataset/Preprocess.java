@@ -58,7 +58,7 @@ public class Preprocess {
             valueLongitude = Double.parseDouble(valueLongitudeStr);
             // chicago
 //            pointList.add(new TwoDimensionalDoublePoint(valueLatitude, valueLongitude));
-            if (valueLatitude >= 40 && valueLatitude <=42 && valueLongitude >= -87.9 && valueLongitude <= -87.5) {
+            if (valueLatitude >= 40 && valueLatitude <=42 && valueLongitude >= -87.9 && valueLongitude <= -87.54) {
                 pointList.add(new TwoDimensionalDoublePoint(valueLatitude, valueLongitude));
             }
 
@@ -92,7 +92,7 @@ public class Preprocess {
             valueLatitude = Double.parseDouble(valueLatitudeStr);
             valueLongitude = Double.parseDouble(valueLongitudeStr);
             // nyc
-            if (valueLatitude >= 40.55 && valueLatitude <=40.95 && valueLongitude >= -74.05 && valueLongitude <= -73.73) {
+            if (valueLatitude >= 40.55 && valueLatitude <=40.88 && valueLongitude >= -74.05 && valueLongitude <= -73.73) {
                 pointList.add(new TwoDimensionalDoublePoint(valueLatitude, valueLongitude));
             }
 
@@ -125,13 +125,13 @@ public class Preprocess {
         readAndOutputDataForChicago(inputPathSyn, outputPathSyn, Preprocess.keyLatitudeNyc, Preprocess.keyLongitudeNyc);
     }
     public static void main(String[] args) throws IOException {
-        String inputPathChicago = StringUtil.join(ConstantValues.FILE_SPLIT, Constant.basicDatasetPath, "1_real", "1_crime", "Chicago_Crimes_2022_01_06.csv");
-        String outputPathChicago = StringUtil.join(ConstantValues.FILE_SPLIT, Constant.basicDatasetPath, "1_real", "1_crime", "chicago_point_part.txt");
-        readAndOutputDataForChicago(inputPathChicago, outputPathChicago, Preprocess.keyLatitudeCrime, Preprocess.keyLongitudeCrime);
+//        String inputPathChicago = StringUtil.join(ConstantValues.FILE_SPLIT, Constant.basicDatasetPath, "1_real", "1_crime", "Chicago_Crimes_2022_01_06.csv");
+//        String outputPathChicago = StringUtil.join(ConstantValues.FILE_SPLIT, Constant.basicDatasetPath, "1_real", "1_crime", "chicago_point_part.txt");
+//        readAndOutputDataForChicago(inputPathChicago, outputPathChicago, Preprocess.keyLatitudeCrime, Preprocess.keyLongitudeCrime);
 
-//        String inputPathSyn = StringUtil.join(ConstantValues.FILE_SPLIT, Constant.basicDatasetPath, "1_real", "2_nyc", "2016_green_taxi_trip_data.csv");
-//        String outputPathSyn = StringUtil.join(ConstantValues.FILE_SPLIT, Constant.basicDatasetPath, "1_real", "2_nyc", "nyc_point_part.txt");
-//        readAndOutputDataForNYC(inputPathSyn, outputPathSyn, Preprocess.keyLatitudeNyc, Preprocess.keyLongitudeNyc);
+        String inputPathSyn = StringUtil.join(ConstantValues.FILE_SPLIT, Constant.basicDatasetPath, "1_real", "2_nyc", "2016_green_taxi_trip_data.csv");
+        String outputPathSyn = StringUtil.join(ConstantValues.FILE_SPLIT, Constant.basicDatasetPath, "1_real", "2_nyc", "nyc_point_part.txt");
+        readAndOutputDataForNYC(inputPathSyn, outputPathSyn, Preprocess.keyLatitudeNyc, Preprocess.keyLongitudeNyc);
     }
 
 

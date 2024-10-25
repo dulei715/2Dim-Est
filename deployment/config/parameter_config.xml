@@ -5,7 +5,7 @@
  -->
 <root id="rootName">
     <properties>
-        <using>version_2</using>
+        <using>version_1</using>
         <property name="version_1">parameter.properties</property>
         <property name="version_2">parameter_version_2.properties</property>
     </properties>
@@ -34,6 +34,15 @@
                 <areaLength>0.07</areaLength>
             </subset>
         </dataset>
+        <dataset name="crime2">
+            <relativeDir>1_real;1_crime</relativeDir>
+            <subset>
+                <titleName>Chicago</titleName>
+                <fileName>chicago_point_part.txt</fileName>
+                <bound>41.64;-87.90</bound>
+                <areaLength>0.36</areaLength>
+            </subset>
+        </dataset>
         <dataset name="nyc">
             <relativeDir>1_real;2_nyc</relativeDir>
             <subset name="partA">
@@ -53,6 +62,15 @@
                 <fileName>nyc_point_C.txt</fileName>
                 <bound>40.82;-73.90</bound>
                 <areaLength>0.07</areaLength>
+            </subset>
+        </dataset>
+        <dataset name="nyc2">
+            <relativeDir>1_real;2_nyc</relativeDir>
+            <subset>
+                <titleName>NYC</titleName>
+                <fileName>nyc_point_part.txt</fileName>
+                <bound>40.56;-47.05</bound>
+                <areaLength>0.32</areaLength>
             </subset>
         </dataset>
         <dataset name="norm_2">

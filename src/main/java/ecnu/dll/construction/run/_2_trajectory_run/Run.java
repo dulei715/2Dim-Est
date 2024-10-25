@@ -1,4 +1,4 @@
-package ecnu.dll.construction.run._2_query_run;
+package ecnu.dll.construction.run._2_trajectory_run;
 
 public class Run {
     /**

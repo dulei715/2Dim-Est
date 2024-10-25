@@ -24,6 +24,8 @@ import java.util.List;
 public class DatasetMessageEnhancedTest {
     @Test
     public void testDatasetBorder() {
+//        String datasetPath = StringUtil.join(ConstantValues.FILE_SPLIT, Constant.basicDatasetPath, "1_real", "1_crime", "chicago_point_part.txt");
+//        String datasetPath = StringUtil.join(ConstantValues.FILE_SPLIT, Constant.basicDatasetPath, "1_real", "2_nyc", "nyc_point_part.txt");
 //        String datasetPath = StringUtil.join(ConstantValues.FILE_SPLIT, Constant.basicDatasetPath, "2_synthetic", "1_two_normal", "two_normal_point.txt");
 //        String datasetPath = StringUtil.join(ConstantValues.FILE_SPLIT, Constant.basicDatasetPath, "2_synthetic", "2_two_zipf", "two_zipf_point.txt");
         String datasetPath = StringUtil.join(ConstantValues.FILE_SPLIT, Constant.basicDatasetPath, "2_synthetic", "3_two_normal_multiple_center", "two_normal_point_multiple_centers.txt");
@@ -39,6 +41,11 @@ public class DatasetMessageEnhancedTest {
         System.out.printf("x: [%f, %f]", minimalXValue, maximalXValue);
         System.out.println();
         System.out.printf("y: [%f, %f]", minimalYValue, maximalYValue);
+        System.out.println();
+        MyPrint.showSplitLine("*", 150);
+        System.out.printf("x: [%.2f, %.2f, %.2f]", Math.floor(minimalXValue * 100) / 100, Math.ceil(maximalXValue * 100) / 100, Math.ceil(maximalXValue * 100) / 100 - Math.floor(minimalXValue * 100) / 100);
+        System.out.println();
+        System.out.printf("y: [%.2f, %.2f, %.2f]", Math.floor(minimalYValue * 100) / 100, Math.ceil(maximalYValue * 100) / 100, Math.ceil(maximalYValue * 100) / 100 - Math.floor(minimalYValue * 100) / 100);
         System.out.println();
 
     }
