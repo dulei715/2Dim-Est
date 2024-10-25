@@ -223,7 +223,7 @@ public class SubsetExponentialGeoI<X> {
      */
     public Set<Integer> sampler(int i) {
         Double r = RandomUtil.getRandomDouble(0.0, 1.0);
-        if (r >= this.massArray[i] / this.omega) {
+        if (i < 0 || r >= this.massArray[i] / this.omega) {
             return null;
         }
         Set<Integer> resultSet = new HashSet<>();

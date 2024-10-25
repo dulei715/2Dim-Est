@@ -1,14 +1,16 @@
 package ecnu.dll.construction.schemes.basic_schemes.square_wave.discretization;
 
 import cn.edu.dll.basic.BasicArrayUtil;
+import cn.edu.dll.basic.BasicCalculation;
 import cn.edu.dll.basic.RandomUtil;
+import cn.edu.dll.collection.ListUtils;
 import cn.edu.dll.statistic.StatisticTool;
 import ecnu.dll.construction._config.Constant;
 import ecnu.dll.construction.schemes.basic_schemes.square_wave.continued.IntegerSquareWave;
+import org.apache.commons.collections.CollectionUtils;
+import org.checkerframework.checker.units.qual.A;
 
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.*;
 
 public class BucketizingOptimalSquareWaveInteger extends IntegerSquareWave<Integer> {
     private Integer inputSize = null;
@@ -76,9 +78,21 @@ public class BucketizingOptimalSquareWaveInteger extends IntegerSquareWave<Integ
         // 获取的是扰动后的位置的统计量（没有平移b个单位！）
         Map<Integer, Integer> histogramCount = StatisticTool.countHistogramNumber(valueList);
         Integer[] noiseValueCountArray = new Integer[this.outputSize];
+
+        // ===> 这里对bug做增强
+        Set<Integer> keySet = histogramCount.keySet();
+        List<Integer> keyList = new ArrayList<>(keySet);
+        Integer minimalIntegerValue = ListUtils.getMinimalIntegerValue(keyList);
+        Integer maximalIntegerValue = ListUtils.getMaximalIntegerValue(keyList);
+        // <===
         for (Map.Entry<Integer, Integer> entry : histogramCount.entrySet()) {
             // 记录在noiseValueArray中的扰动位置统计量需要平移b个单位
-            noiseValueCountArray[entry.getKey()+this.b] = entry.getValue();
+
+//            noiseValueCountArray[entry.getKey()+this.b] = entry.getValue();
+            // ===> 这里对bug做增强
+            int newIndex = (int)Math.round(BasicArrayUtil.getLinearTransformValue(minimalIntegerValue, maximalIntegerValue, entry.getKey(), 0, this.outputSize - 1));
+            noiseValueCountArray[newIndex] = entry.getValue();
+            // <===
         }
         Double[] resultRatio = StatisticTool.getExpectationMaximizationSmooth(this.transformMatrix, noiseValueCountArray, Constant.DEFAULT_STOP_VALUE_TAO, Constant.DEFAULT_ONE_DIMENSIONAL_COEFFICIENTS, this.initAverageRatio);
         TreeMap<Integer, Double> resultMap = new TreeMap<>();

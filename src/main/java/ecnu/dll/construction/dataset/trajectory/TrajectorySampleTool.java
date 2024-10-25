@@ -8,12 +8,18 @@ import cn.edu.dll.statistic.StatisticTool;
 import cn.edu.dll.struct.point.TwoDimensionalDoublePoint;
 import cn.edu.dll.struct.point.TwoDimensionalDoublePointUtils;
 import cn.edu.dll.struct.point.TwoDimensionalIntegerPoint;
+import ecnu.dll.construction._config.Constant;
 
 import java.util.*;
 
-public class TrajectorySample {
-    // 表示将平面划分成 100 * 100 的网格
-    private static Integer sampleGridSizeLength = 100;
+public class TrajectorySampleTool {
+    // 表示将平面划分成 sampleGridSizeLength * sampleGridSizeLength 的网格
+    private Integer sampleGridSizeLength;
+
+    public TrajectorySampleTool(Integer sampleGridSizeLength) {
+        this.sampleGridSizeLength = sampleGridSizeLength;
+    }
+
     /**
      *      这里的轨迹长度是指轨迹中关键节点的个数
      *      步骤
@@ -43,13 +49,14 @@ public class TrajectorySample {
 
         // 5. 随机选取起点(在gridList中的位置)网格和长度
         List<Integer> trajectoryLengthList = Arrays.asList(RandomUtil.getRandomIntegerArray(trajectoryLengthLowerBound, trajectoryLengthUpperBound, sampleSize));
-        List<Integer> startIndexList = Arrays.asList(RandomUtil.getRandomIntegerArray(0, gridList.size(), sampleSize));
+//        List<Integer> startIndexList = Arrays.asList(RandomUtil.getRandomIntegerArray(0, gridList.size(), sampleSize));
 //        int startIndex = RandomUtil.getRandomInteger(0, gridList.size() - 1);
+        List<TwoDimensionalIntegerPoint> startPointList = generateRandomNotNullCell(sampleSize, gridList, gridToPointMap);
         TwoDimensionalIntegerPoint startCell;
 
         List<TwoDimensionalDoublePoint> tempTrajectory;
         for (int i = 0; i < sampleSize; ++i) {
-            startCell = gridList.get(startIndexList.get(i));
+            startCell = startPointList.get(i);
             // 6. 根据长度和起点，不断地根据邻居节点的密度随机选择邻居节点
             tempTrajectory = generateTrajectory(startCell, trajectoryLengthList.get(i), gridToPointMap, sampleGridSizeLength, sampleGridSizeLength);
             result.add(tempTrajectory);
@@ -79,7 +86,10 @@ public class TrajectorySample {
                 tempNeighboring = currentNeighboringList.get(j);
                 neighboringCountArray[j] = gridToPointMap.get(tempNeighboring).size();
             }
-            Integer chosenNeighboringInnerIndex = RandomUtil.getRandomIndexGivenStatisticPoint(neighboringCountArray);
+            Integer chosenNeighboringInnerIndex;
+            do {
+                chosenNeighboringInnerIndex = RandomUtil.getRandomIndexGivenStatisticPoint(neighboringCountArray);
+            } while (chosenNeighboringInnerIndex >= currentNeighboringList.size());
             currentCell = currentNeighboringList.get(chosenNeighboringInnerIndex);
         }
         return result;
@@ -98,6 +108,20 @@ public class TrajectorySample {
             }
         }
         return neighboringList;
+    }
+
+    // 5. 随机选起始cell，要求所选cell中的点不能是空
+    List<TwoDimensionalIntegerPoint> generateRandomNotNullCell(Integer sampleSize, List<TwoDimensionalIntegerPoint> gridList, Map<TwoDimensionalIntegerPoint, List<TwoDimensionalDoublePoint>> gridToPointMap) {
+        List<TwoDimensionalIntegerPoint> result = new ArrayList<>();
+        Integer totalCellSize = gridList.size();
+        Integer chosenIndex;
+        for (int i = 0; i < sampleSize; ++i) {
+            do {
+                chosenIndex = RandomUtil.getRandomInteger(0, totalCellSize - 1);
+            } while (gridToPointMap.get(gridList.get(chosenIndex)).size() == 0);
+            result.add(gridList.get(chosenIndex));
+        }
+        return result;
     }
 
     // 4. 建立网格ID到所在点的映射
