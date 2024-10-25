@@ -59,6 +59,7 @@ public class DatasetMessageTest {
             }
             valueLatitude = Double.parseDouble(valueLatitudeStr);
             valueLongitude = Double.parseDouble(valueLongitudeStr);
+
             // chicago
             if (valueLatitude >= 41.72 && valueLatitude <= 41.81 && valueLongitude >= -87.68 && valueLongitude <= -87.59) {
                 this.pointList[0].add(new TwoDimensionalDoublePoint(valueLatitude, valueLongitude));

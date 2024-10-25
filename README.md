@@ -11,7 +11,9 @@ Run: `src/main/resources/matlabcode/generateWriteTwoDimNormPoint.m` to generate 
 Run: `src/main/resources/matlabcode/generateWriteTwoDimNormPointWithMultiCenter.m` to generate the multi-center normal data set.
  
 ## Data set preprocess
-Run:`dataset_test_important.DatasetMessageTest$preHandleData` to extract the Chicago Crime data set and the NYC data set.
+
+[//]: # (Run:`dataset_test_important.DatasetMessageTest$preHandleData` to extract the Chicago Crime data set and the NYC data set.)
+Run: `ecnu.dll.construction.dataset.Preprocess` to to extract the Chicago Crime data set and the NYC data set.
 
 Run: `dataset_test_important.ExtractDatasetTest$extractNormDataset` to extract the normal data.
 

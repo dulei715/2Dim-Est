@@ -1,5 +1,7 @@
 package ecnu.dll.construction.dataset;
 
+import cn.edu.dll.basic.StringUtil;
+import cn.edu.dll.constant_values.ConstantValues;
 import cn.edu.dll.io.write.PointWrite;
 import cn.edu.dll.struct.point.TwoDimensionalDoublePoint;
 import com.csvreader.CsvReader;
@@ -33,7 +35,7 @@ public class Preprocess {
 //            "F:\\dataset\\test\\nyc_point_C.txt"
 //    };
 
-    public static void readAndOutputData(String inputPath, String outputPath, String keyLatitude, String keyLongitude) throws IOException {
+    public static void readAndOutputDataForChicago(String inputPath, String outputPath, String keyLatitude, String keyLongitude) throws IOException {
 
 
         List<TwoDimensionalDoublePoint> pointList = new ArrayList<>();
@@ -49,28 +51,17 @@ public class Preprocess {
         while (csvReader.readRecord()) {
             valueLatitudeStr = csvReader.get(keyLatitude);
             valueLongitudeStr = csvReader.get(keyLongitude);
-//            ++k;
-//            if (k==46) {
-//                System.out.println("46");
-//            }
             if (valueLatitudeStr.isEmpty() || valueLongitudeStr.isEmpty()) {
                 continue;
             }
             valueLatitude = Double.parseDouble(valueLatitudeStr);
             valueLongitude = Double.parseDouble(valueLongitudeStr);
             // chicago
-            pointList.add(new TwoDimensionalDoublePoint(valueLatitude, valueLongitude));
+//            pointList.add(new TwoDimensionalDoublePoint(valueLatitude, valueLongitude));
+            if (valueLatitude >= 40 && valueLatitude <=42 && valueLongitude >= -87.9 && valueLongitude <= -87.5) {
+                pointList.add(new TwoDimensionalDoublePoint(valueLatitude, valueLongitude));
+            }
 
-            // syn
-//            if (valueLatitude >= 40.65 && valueLatitude <= 40.75 && valueLongitude >= -73.84 && valueLongitude <= -73.74) {
-//                this.pointList[0].add(new TwoDimensionalDoublePoint(valueLatitude, valueLongitude));
-//            }
-//            if (valueLatitude >= 40.65 && valueLatitude <= 40.74 && valueLongitude >= -73.95 && valueLongitude <= -73.86) {
-//                this.pointList[1].add(new TwoDimensionalDoublePoint(valueLatitude, valueLongitude));
-//            }
-//            if (valueLatitude >= 40.82 && valueLatitude <= 40.89 && valueLongitude >= -73.90 && valueLongitude <= -73.83) {
-//                this.pointList[2].add(new TwoDimensionalDoublePoint(valueLatitude, valueLongitude));
-//            }
         }
         PointWrite pointWrite = new PointWrite();
         pointWrite.startWriting(outputPath);
@@ -131,12 +122,16 @@ public class Preprocess {
 //        readAndOutputData(inputPathChicago, outputPathChicago, Preprocess.keyLatitudeCrime, Preprocess.keyLongitudeCrime);
         String inputPathSyn = Constant.basicDatasetPath + "\\1_real\\2_nyc\\2016_green_taxi_trip_data.csv";
         String outputPathSyn = Constant.basicDatasetPath + "\\1_real\\2_nyc\\nyc_point.txt";
-        readAndOutputData(inputPathSyn, outputPathSyn, Preprocess.keyLatitudeNyc, Preprocess.keyLongitudeNyc);
+        readAndOutputDataForChicago(inputPathSyn, outputPathSyn, Preprocess.keyLatitudeNyc, Preprocess.keyLongitudeNyc);
     }
     public static void main(String[] args) throws IOException {
-        String inputPathSyn = Constant.basicDatasetPath + "\\1_real\\2_nyc\\2016_green_taxi_trip_data.csv";
-        String outputPathSyn = Constant.basicDatasetPath + "\\1_real\\2_nyc\\nyc_point_part.txt";
-        readAndOutputDataForNYC(inputPathSyn, outputPathSyn, Preprocess.keyLatitudeNyc, Preprocess.keyLongitudeNyc);
+        String inputPathChicago = StringUtil.join(ConstantValues.FILE_SPLIT, Constant.basicDatasetPath, "1_real", "1_crime", "Chicago_Crimes_2022_01_06.csv");
+        String outputPathChicago = StringUtil.join(ConstantValues.FILE_SPLIT, Constant.basicDatasetPath, "1_real", "1_crime", "chicago_point_part.txt");
+        readAndOutputDataForChicago(inputPathChicago, outputPathChicago, Preprocess.keyLatitudeCrime, Preprocess.keyLongitudeCrime);
+
+//        String inputPathSyn = StringUtil.join(ConstantValues.FILE_SPLIT, Constant.basicDatasetPath, "1_real", "2_nyc", "2016_green_taxi_trip_data.csv");
+//        String outputPathSyn = StringUtil.join(ConstantValues.FILE_SPLIT, Constant.basicDatasetPath, "1_real", "2_nyc", "nyc_point_part.txt");
+//        readAndOutputDataForNYC(inputPathSyn, outputPathSyn, Preprocess.keyLatitudeNyc, Preprocess.keyLongitudeNyc);
     }
 
 
