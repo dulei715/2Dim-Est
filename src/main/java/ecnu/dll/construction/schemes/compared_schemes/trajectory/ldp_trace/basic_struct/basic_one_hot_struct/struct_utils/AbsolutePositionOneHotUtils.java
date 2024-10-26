@@ -1,4 +1,4 @@
-package ecnu.dll.construction.schemes.compared_schemes.trajectory.ldp_trace.basic_struct.special_struct.struct_utils;
+package ecnu.dll.construction.schemes.compared_schemes.trajectory.ldp_trace.basic_struct.basic_one_hot_struct.struct_utils;
 
 import cn.edu.dll.struct.point.TwoDimensionalIntegerPoint;
 

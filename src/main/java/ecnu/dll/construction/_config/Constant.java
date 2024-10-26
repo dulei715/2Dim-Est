@@ -249,6 +249,8 @@ public class Constant {
      */
     public static final String rhombusSchemeKey = "rhombus";
     public static final String diskSchemeKey = "disk";
+    public static final String ldpTraceSchemeKey = "ldpTrace";
+    public static final String pivotTraceSchemeKey = "pivotTrace";
     public static final String diskNonShrinkSchemeKey = "diskNonShrink";
     public static final String hybridUniformExponentialSchemeKey = "hue";
     public static final String multiDimensionalSquareWaveSchemeKey = "mdsw";
@@ -458,21 +460,28 @@ public class Constant {
     public static final DataSetAreaInfo twoDimMultipleCenterNormalDataSet = ConfigureUtils.getDatasetInfoArray(basicDatasetPath, "norm_multiple_center_2")[0];
 //    public static final DataSetAreaInfo twoDimMultipleCenterNormalDataSet = new DataSetAreaInfo(multiNormalPath, multiNormalKey, -4.25, -4.32, 10.76);
 
+
+
+    // for trajectory
+    public static final Integer SampleTrajectoryGridSideLength = 300;
+    public static final Integer TrajectorySamplingSize = 10000;
+    // 这里的轨迹长度是指轨迹中关注点的数量
+    public static final Integer TrajectorySamplingLengthLowerBound = 2;
+    public static final Integer TrajectorySamplingLengthUpperBound = 200;
+
+
     // for LDPTrace
     public static final double LDPTraceAlpha = 0.3;
     public static final double LDPTraceBeta = 0.2;
     public static final double LDPTraceLambda = 2.5;
+    public static final Integer generatingTrajectorySizeFromSynthetic = TrajectorySamplingSize;
 
     // for ATP
     public static final List<Integer> CandidateSectorSizeListForNYC = Arrays.asList(5, 10, 15, 20);
     public static final List<Integer> CandidateSectorSizeListForCLE = Arrays.asList(2, 4, 6, 8);
 
 
-    public static final Integer SampleTrajectoryGridSideLength = 300;
-    public static final Integer TrajectorySamplingSize = 10000;
-    // 这里的轨迹长度是指轨迹中关注点的数量
-    public static final Integer TrajectorySamplingLengthLowerBound = 2;
-    public static final Integer TrajectorySamplingLengthUpperBound = 200;
+
 
 
 

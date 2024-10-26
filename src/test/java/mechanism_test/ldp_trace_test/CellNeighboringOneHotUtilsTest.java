@@ -1,10 +1,9 @@
 package mechanism_test.ldp_trace_test;
 
 import cn.edu.dll.io.print.MyPrint;
-import cn.edu.dll.struct.one_hot.OneHot;
-import ecnu.dll.construction.schemes.compared_schemes.trajectory.ldp_trace.basic_struct.special_one_hot.sub_struct.CellNeighboring;
-import ecnu.dll.construction.schemes.compared_schemes.trajectory.ldp_trace.basic_struct.special_struct.CellNeighboringOneHot;
-import ecnu.dll.construction.schemes.compared_schemes.trajectory.ldp_trace.basic_struct.special_struct.struct_utils.CellNeighboringOneHotUtils;
+import ecnu.dll.construction.schemes.compared_schemes.trajectory.ldp_trace.basic_struct.special_Collect_struct.sub_struct.CellNeighboring;
+import ecnu.dll.construction.schemes.compared_schemes.trajectory.ldp_trace.basic_struct.basic_one_hot_struct.CellNeighboringOneHot;
+import ecnu.dll.construction.schemes.compared_schemes.trajectory.ldp_trace.basic_struct.basic_one_hot_struct.struct_utils.CellNeighboringOneHotUtils;
 import org.junit.Test;
 
 public class CellNeighboringOneHotUtilsTest {

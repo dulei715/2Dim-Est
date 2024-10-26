@@ -4,12 +4,12 @@ import cn.edu.dll.differential_privacy.ldp.frequency_oracle.FrequencyOracle;
 import cn.edu.dll.differential_privacy.ldp.frequency_oracle.foImp.OptimizedUnaryEncoding;
 import cn.edu.dll.struct.one_hot.OneHot;
 import cn.edu.dll.struct.point.TwoDimensionalIntegerPoint;
-import ecnu.dll.construction.schemes.compared_schemes.trajectory.ldp_trace.basic_struct.special_one_hot.UserTrajectoryOneHotStruct;
-import ecnu.dll.construction.schemes.compared_schemes.trajectory.ldp_trace.basic_struct.special_one_hot.UserTrajectoryOriginalStruct;
-import ecnu.dll.construction.schemes.compared_schemes.trajectory.ldp_trace.basic_struct.special_one_hot.sub_struct.CellNeighboring;
-import ecnu.dll.construction.schemes.compared_schemes.trajectory.ldp_trace.basic_struct.special_struct.AbsolutePositionOneHot;
-import ecnu.dll.construction.schemes.compared_schemes.trajectory.ldp_trace.basic_struct.special_struct.CellNeighboringOneHot;
-import ecnu.dll.construction.schemes.compared_schemes.trajectory.ldp_trace.basic_struct.special_struct.TrajectoryLengthOneHot;
+import ecnu.dll.construction.schemes.compared_schemes.trajectory.ldp_trace.basic_struct.special_Collect_struct.UserTrajectoryOneHotStruct;
+import ecnu.dll.construction.schemes.compared_schemes.trajectory.ldp_trace.basic_struct.special_Collect_struct.UserTrajectoryOriginalStruct;
+import ecnu.dll.construction.schemes.compared_schemes.trajectory.ldp_trace.basic_struct.special_Collect_struct.sub_struct.CellNeighboring;
+import ecnu.dll.construction.schemes.compared_schemes.trajectory.ldp_trace.basic_struct.basic_one_hot_struct.AbsolutePositionOneHot;
+import ecnu.dll.construction.schemes.compared_schemes.trajectory.ldp_trace.basic_struct.basic_one_hot_struct.CellNeighboringOneHot;
+import ecnu.dll.construction.schemes.compared_schemes.trajectory.ldp_trace.basic_struct.basic_one_hot_struct.TrajectoryLengthOneHot;
 import ecnu.dll.construction.schemes.compared_schemes.trajectory.ldp_trace.utils.TrajectoryFOUtils;
 
 import java.util.ArrayList;
@@ -47,7 +47,6 @@ public class TrajectoryFO implements FrequencyOracle<UserTrajectoryOriginalStruc
         OneHot<Integer> trajectoryLengthOneHot = new TrajectoryLengthOneHot(this.maxTrajectoryLength);
         int cellNeighboringListSize = userTrajectoryOriginalStruct.cellNeighboringList.size();
         List<OneHot<CellNeighboring>> cellNeighboringOneHotList = new ArrayList<>(cellNeighboringListSize);
-//        OneHot<CellNeighboring> cellNeighboringOneHot = new CellNeighboringOneHot(this.gridRowSize, this.gridColSize);
         OneHot<CellNeighboring> tempCellNeighboringOneHot;
         OneHot<TwoDimensionalIntegerPoint> startCellOneHot = new AbsolutePositionOneHot(this.gridRowSize, this.gridColSize);
         OneHot<TwoDimensionalIntegerPoint> endCellOneHot = new AbsolutePositionOneHot(this.gridRowSize, this.gridColSize);
@@ -59,18 +58,20 @@ public class TrajectoryFO implements FrequencyOracle<UserTrajectoryOriginalStruc
             cellNeighboringOneHotList.add(tempCellNeighboringOneHot);
         }
 
-//        cellNeighboringOneHot.setElement(userTrajectoryOriginalStruct.cellNeighboringList);
         startCellOneHot.setElement(userTrajectoryOriginalStruct.startIndex);
         endCellOneHot.setElement(userTrajectoryOriginalStruct.endIndex);
 
         OneHot<Integer> newTrajectoryOneHot = this.trajectoryLengthOUE.perturb(trajectoryLengthOneHot);
         List<OneHot<CellNeighboring>> newCellNeighboringOneHotList = new ArrayList<>(cellNeighboringListSize);
         OneHot<CellNeighboring> tempNewCellNeighboringOneHot;
+        Double totalInnerPointPrivacyBudget = this.innerPointOUE.getQ();
+        Double eachPartPrivacyBudget = totalInnerPointPrivacyBudget / cellNeighboringListSize;
+        this.innerPointOUE.resetEpsilon(eachPartPrivacyBudget);
         for (int i = 0; i < cellNeighboringListSize; ++i) {
             tempNewCellNeighboringOneHot = this.innerPointOUE.perturb(cellNeighboringOneHotList.get(i));
             newCellNeighboringOneHotList.add(tempNewCellNeighboringOneHot);
         }
-//        OneHot<CellNeighboring> newCellNeighboringOneHot = this.innerPointOUE.perturb(cellNeighboringOneHot);
+        this.innerPointOUE.resetEpsilon(totalInnerPointPrivacyBudget);
         OneHot<TwoDimensionalIntegerPoint> newStartOneHot = this.startPointOUE.perturb(startCellOneHot);
         OneHot<TwoDimensionalIntegerPoint> newEndOneHot = this.startPointOUE.perturb(endCellOneHot);
 
@@ -96,11 +97,16 @@ public class TrajectoryFO implements FrequencyOracle<UserTrajectoryOriginalStruc
         Double[] estimationResult = this.trajectoryLengthOUE.unbias(trajectoryLengthCount, userSize);
         return estimationResult;
     }
-//    public double[]
 
-    public Double[] aggregateCellNeighboring(Collection<OneHot<CellNeighboring>> cellNeighboringDataCollection) {
-        int userSize = cellNeighboringDataCollection.size();
-        Integer[] cellNeighboringCount = OptimizedUnaryEncoding.count(cellNeighboringDataCollection);
+//    public Double[] aggregateCellNeighboring(Collection<OneHot<CellNeighboring>> cellNeighboringDataCollection) {
+//        int userSize = cellNeighboringDataCollection.size();
+//        Integer[] cellNeighboringCount = OptimizedUnaryEncoding.count(cellNeighboringDataCollection);
+//        Double[] estimationResult = this.innerPointOUE.unbias(cellNeighboringCount, userSize);
+//        return estimationResult;
+//    }
+    public Double[] aggregateCellNeighboring(Collection<List<OneHot<CellNeighboring>>> cellNeighboringDataListCollection) {
+        int userSize = cellNeighboringDataListCollection.size();
+        Integer[] cellNeighboringCount = OptimizedUnaryEncoding.countMultiple(cellNeighboringDataListCollection);
         Double[] estimationResult = this.innerPointOUE.unbias(cellNeighboringCount, userSize);
         return estimationResult;
     }

@@ -1,4 +1,4 @@
-package ecnu.dll.construction.schemes.compared_schemes.trajectory.ldp_trace.basic_struct.special_struct;
+package ecnu.dll.construction.schemes.compared_schemes.trajectory.ldp_trace.basic_struct.basic_one_hot_struct;
 
 import cn.edu.dll.struct.one_hot.OneHot;
 

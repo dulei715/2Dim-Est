@@ -18,7 +18,7 @@ import java.util.Set;
 
 public class AnchorBasedPivotSampling extends PivotSampling{
     protected final List<TwoDimensionalDoublePoint> totalBasicPointList;
-    public AnchorBasedPivotSampling(List<TwoDimensionalDoublePoint> totalTrajectoryPointList, Integer sectorSize) {
+    public AnchorBasedPivotSampling(List<TwoDimensionalDoublePoint> totalTrajectoryPointList) {
         super();
         this.totalBasicPointList = totalTrajectoryPointList;
     }
@@ -129,7 +129,11 @@ public class AnchorBasedPivotSampling extends PivotSampling{
     }
 
     @Override
-    public List<TwoDimensionalDoublePoint> execute(List<TwoDimensionalDoublePoint> trajectory, List<TwoDimensionalDoublePoint> totalBasicPointList, Double privacyBudget) {
+    public List<TwoDimensionalDoublePoint> execute(List<TwoDimensionalDoublePoint> trajectory, List<TwoDimensionalDoublePoint> pointCircleDomain, Double privacyBudget) {
+        throw new RuntimeException("Please use another function with the same name!");
+    }
+
+    public List<TwoDimensionalDoublePoint> execute(List<TwoDimensionalDoublePoint> trajectory, Double privacyBudget) {
         Integer optimalSectorSize = PivotSamplingUtils.getOptimalSectorSize(this.candidateSectorSizeList, privacyBudget, trajectory);
         this.sectorSize = optimalSectorSize;
         Double epsilonRegion = 0.25 * privacyBudget;
@@ -147,4 +151,5 @@ public class AnchorBasedPivotSampling extends PivotSampling{
         List<TwoDimensionalDoublePoint> optimalPerturbedTrajectory = getOptimalPerturbedTrajectory(perturbedTrajectoryA, perturbedTrajectoryB, regionSet);
         return optimalPerturbedTrajectory;
     }
+
 }

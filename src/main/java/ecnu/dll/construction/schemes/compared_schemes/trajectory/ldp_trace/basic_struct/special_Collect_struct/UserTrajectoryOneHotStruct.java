@@ -1,8 +1,8 @@
-package ecnu.dll.construction.schemes.compared_schemes.trajectory.ldp_trace.basic_struct.special_one_hot;
+package ecnu.dll.construction.schemes.compared_schemes.trajectory.ldp_trace.basic_struct.special_Collect_struct;
 
 import cn.edu.dll.struct.one_hot.OneHot;
 import cn.edu.dll.struct.point.TwoDimensionalIntegerPoint;
-import ecnu.dll.construction.schemes.compared_schemes.trajectory.ldp_trace.basic_struct.special_one_hot.sub_struct.CellNeighboring;
+import ecnu.dll.construction.schemes.compared_schemes.trajectory.ldp_trace.basic_struct.special_Collect_struct.sub_struct.CellNeighboring;
 
 import java.util.List;
 
