@@ -61,6 +61,8 @@ public class CellNeighboring {
         }
     }
 
+
+
     public CellNeighboring(int rowSize, int colSize, int rowIndex, int colIndex, int bias) {
         this(rowSize, colSize, rowIndex, colIndex);
         this.directNeighboringInnerIndex = CellNeighboringOneHotUtils.getTwoDimensionalIndexByBias(this, bias);

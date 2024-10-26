@@ -48,4 +48,22 @@ public class CellNeighboringUtils {
         }
         return type;
     }
+
+    /**
+     * 返回相邻两点的相置位置
+     * @param nextPoint
+     * @return
+     */
+    public static int[] getDirectNeighboringInnerIndex(TwoDimensionalIntegerPoint originalPoint, TwoDimensionalIntegerPoint nextPoint) {
+        Integer xIndexDiffer = nextPoint.getXIndex() - originalPoint.getXIndex();
+        if (Math.abs(xIndexDiffer) > 1) {
+            return null;
+        }
+        Integer yIndexDiffer = nextPoint.getYIndex() - originalPoint.getYIndex();
+        if (Math.abs(yIndexDiffer) > 1) {
+            return null;
+        }
+        // 这个结果可能返回(0,0)，代表重合
+        return new int[]{xIndexDiffer, yIndexDiffer};
+    }
 }

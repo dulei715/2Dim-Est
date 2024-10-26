@@ -12,19 +12,41 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class LDPTrace {
-    private Integer maxTravelDistance;
-    private Double totalPrivacyBudget;
     private int rowSize;
     private int colSize;
-
+    private Double totalPrivacyBudget;
+    private Integer maxTravelDistance;
     private double alpha = Constant.LDPTraceAlpha;
     private double beta = Constant.LDPTraceBeta;
 
     private TrajectoryFO trajectoryFO;
 
-    public LDPTrace(int gridRowSize, int gridColSize) {
+    public LDPTrace(int gridRowSize, int gridColSize, Double totalPrivacyBudget, Integer maxTravelDistance) {
         this.rowSize = gridRowSize;
         this.colSize = gridColSize;
+        this.totalPrivacyBudget = totalPrivacyBudget;
+        this.maxTravelDistance = maxTravelDistance;
+        this.trajectoryFO = new TrajectoryFO(totalPrivacyBudget, maxTravelDistance, gridRowSize, gridColSize);
+    }
+
+    public int getRowSize() {
+        return rowSize;
+    }
+
+    public int getColSize() {
+        return colSize;
+    }
+
+    public Double getTotalPrivacyBudget() {
+        return totalPrivacyBudget;
+    }
+
+    public Integer getMaxTravelDistance() {
+        return maxTravelDistance;
+    }
+
+    public TrajectoryFO getTrajectoryFO() {
+        return trajectoryFO;
     }
 
     protected int sampleLength(Double[] lengthEstimationData) {
@@ -65,4 +87,7 @@ public class LDPTrace {
         }
         return resultList;
     }
+
+
+
 }

@@ -468,8 +468,8 @@ public class Constant {
     public static final List<Integer> CandidateSectorSizeListForCLE = Arrays.asList(2, 4, 6, 8);
 
 
-    public static final Integer SampleTrajectoryGridSideLength = 50;
-    public static final Integer TrajectorySamplingSize = 1000;
+    public static final Integer SampleTrajectoryGridSideLength = 300;
+    public static final Integer TrajectorySamplingSize = 10000;
     // 这里的轨迹长度是指轨迹中关注点的数量
     public static final Integer TrajectorySamplingLengthLowerBound = 2;
     public static final Integer TrajectorySamplingLengthUpperBound = 200;

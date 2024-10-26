@@ -12,8 +12,9 @@ import ecnu.dll.construction.schemes.compared_schemes.trajectory.ldp_trace.basic
 import ecnu.dll.construction.schemes.compared_schemes.trajectory.ldp_trace.basic_struct.special_struct.TrajectoryLengthOneHot;
 import ecnu.dll.construction.schemes.compared_schemes.trajectory.ldp_trace.utils.TrajectoryFOUtils;
 
+import java.util.ArrayList;
 import java.util.Collection;
-import java.util.TreeMap;
+import java.util.List;
 
 public class TrajectoryFO implements FrequencyOracle<UserTrajectoryOriginalStruct, UserTrajectoryOneHotStruct> {
     private double totalPrivacyBudget;
@@ -44,22 +45,36 @@ public class TrajectoryFO implements FrequencyOracle<UserTrajectoryOriginalStruc
     @Override
     public UserTrajectoryOneHotStruct perturb(UserTrajectoryOriginalStruct userTrajectoryOriginalStruct) {
         OneHot<Integer> trajectoryLengthOneHot = new TrajectoryLengthOneHot(this.maxTrajectoryLength);
-        OneHot<CellNeighboring> cellNeighboringOneHot = new CellNeighboringOneHot(this.gridRowSize, this.gridColSize);
+        int cellNeighboringListSize = userTrajectoryOriginalStruct.cellNeighboringList.size();
+        List<OneHot<CellNeighboring>> cellNeighboringOneHotList = new ArrayList<>(cellNeighboringListSize);
+//        OneHot<CellNeighboring> cellNeighboringOneHot = new CellNeighboringOneHot(this.gridRowSize, this.gridColSize);
+        OneHot<CellNeighboring> tempCellNeighboringOneHot;
         OneHot<TwoDimensionalIntegerPoint> startCellOneHot = new AbsolutePositionOneHot(this.gridRowSize, this.gridColSize);
         OneHot<TwoDimensionalIntegerPoint> endCellOneHot = new AbsolutePositionOneHot(this.gridRowSize, this.gridColSize);
 
         trajectoryLengthOneHot.setElement(userTrajectoryOriginalStruct.trajectoryLength);
-        cellNeighboringOneHot.setElement(userTrajectoryOriginalStruct.cellNeighboring);
+        for (int i = 0; i < cellNeighboringListSize; ++i) {
+            tempCellNeighboringOneHot = new CellNeighboringOneHot(this.gridRowSize, this.gridColSize);
+            tempCellNeighboringOneHot.setElement(userTrajectoryOriginalStruct.cellNeighboringList.get(i));
+            cellNeighboringOneHotList.add(tempCellNeighboringOneHot);
+        }
+
+//        cellNeighboringOneHot.setElement(userTrajectoryOriginalStruct.cellNeighboringList);
         startCellOneHot.setElement(userTrajectoryOriginalStruct.startIndex);
         endCellOneHot.setElement(userTrajectoryOriginalStruct.endIndex);
 
         OneHot<Integer> newTrajectoryOneHot = this.trajectoryLengthOUE.perturb(trajectoryLengthOneHot);
-        OneHot<CellNeighboring> newCellNeighboringOneHot = this.innerPointOUE.perturb(cellNeighboringOneHot);
+        List<OneHot<CellNeighboring>> newCellNeighboringOneHotList = new ArrayList<>(cellNeighboringListSize);
+        OneHot<CellNeighboring> tempNewCellNeighboringOneHot;
+        for (int i = 0; i < cellNeighboringListSize; ++i) {
+            tempNewCellNeighboringOneHot = this.innerPointOUE.perturb(cellNeighboringOneHotList.get(i));
+            newCellNeighboringOneHotList.add(tempNewCellNeighboringOneHot);
+        }
+//        OneHot<CellNeighboring> newCellNeighboringOneHot = this.innerPointOUE.perturb(cellNeighboringOneHot);
         OneHot<TwoDimensionalIntegerPoint> newStartOneHot = this.startPointOUE.perturb(startCellOneHot);
         OneHot<TwoDimensionalIntegerPoint> newEndOneHot = this.startPointOUE.perturb(endCellOneHot);
 
-        UserTrajectoryOneHotStruct newTrajectoryStruct = new UserTrajectoryOneHotStruct(newTrajectoryOneHot, newCellNeighboringOneHot, newStartOneHot, newEndOneHot);
-        return newTrajectoryStruct;
+        return new UserTrajectoryOneHotStruct(newTrajectoryOneHot, newCellNeighboringOneHotList, newStartOneHot, newEndOneHot);
     }
 
     @Deprecated

@@ -1,8 +1,7 @@
-package ecnu.dll.construction.run._2_trajectory_run.pre_handle;
+package ecnu.dll.construction.run._2_trajectory_run._0_pre_handle;
 
 import cn.edu.dll.basic.StringUtil;
 import cn.edu.dll.constant_values.ConstantValues;
-import cn.edu.dll.io.print.MyPrint;
 import cn.edu.dll.io.read.TwoDimensionalPointRead;
 import cn.edu.dll.struct.point.TwoDimensionalDoublePoint;
 import ecnu.dll.construction._config.Constant;
@@ -13,13 +12,18 @@ import ecnu.dll.construction.extend_tools.trajectory_io.TrajectoryWrite;
 import java.util.List;
 
 public class SampleAndWriteTrajectory {
-    public static void main(String[] args) {
+
+
+
+    private static void sampleAndWriteTrajectoryWithGivenBuffer(Integer bufferSize) {
         DataSetAreaInfo datasetInfo = Constant.nycDataSet;
 
         Integer trajectorySamplingLengthLowerBound = Constant.TrajectorySamplingLengthLowerBound;
         Integer trajectorySamplingLengthUpperBound = Constant.TrajectorySamplingLengthUpperBound;
+        // 这里的值为1000
         Integer trajectorySamplingSize = Constant.TrajectorySamplingSize;
 //        Integer trajectorySamplingSize = 20;
+        // 这里的值为50
         Integer sampleGridSideLength = Constant.SampleTrajectoryGridSideLength;
 //        Integer sampleGridSideLength = 100;
 
@@ -32,13 +36,34 @@ public class SampleAndWriteTrajectory {
         pointRead.readPointWithFirstLineCount();
         List<TwoDimensionalDoublePoint> pointList = pointRead.getPointList();
 
-        List<List<TwoDimensionalDoublePoint>> trajectoryList = trajectorySampleTool.sampleTrajectory(pointList, trajectorySamplingLengthLowerBound, trajectorySamplingLengthUpperBound, trajectorySamplingSize);
-//        MyPrint.show2DimensionArray(trajectoryList, "; ", ConstantValues.LINE_SPLIT);
 
         TrajectoryWrite trajectoryWrite = new TrajectoryWrite();
         trajectoryWrite.startWriting(outputPath);
-        trajectoryWrite.writeTrajectoryAndSize(trajectoryList);
+
+        trajectoryWrite.writeDataSize(trajectorySamplingSize);
+
+        List<List<TwoDimensionalDoublePoint>> trajectoryList;
+
+//        int k = 0;
+
+        for (int i = trajectorySamplingSize; i > 0; i -= bufferSize) {
+            if (i > bufferSize) {
+                trajectoryList= trajectorySampleTool.sampleTrajectory(pointList, trajectorySamplingLengthLowerBound, trajectorySamplingLengthUpperBound, bufferSize);
+            } else {
+                trajectoryList= trajectorySampleTool.sampleTrajectory(pointList, trajectorySamplingLengthLowerBound, trajectorySamplingLengthUpperBound, i);
+            }
+            trajectoryWrite.writeTrajectoryListWithoutWritingDataSize(trajectoryList);
+//            System.out.println("Finish batch " + (k++) + " with size " + bufferSize);
+
+//            trajectoryList = null;
+//            System.gc();
+        }
+
         trajectoryWrite.endWriting();
+    }
+
+    public static void main(String[] args) {
+        sampleAndWriteTrajectoryWithGivenBuffer(10);
 
     }
 }

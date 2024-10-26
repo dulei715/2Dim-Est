@@ -1,5 +1,7 @@
 package ecnu.dll.construction.dataset.trajectory;
 
+import cn.edu.dll.basic.BasicArrayUtil;
+import cn.edu.dll.basic.BasicCalculation;
 import cn.edu.dll.basic.RandomUtil;
 import cn.edu.dll.collection.ListUtils;
 import cn.edu.dll.constant_values.ConstantValues;
@@ -9,6 +11,7 @@ import cn.edu.dll.struct.point.TwoDimensionalDoublePoint;
 import cn.edu.dll.struct.point.TwoDimensionalDoublePointUtils;
 import cn.edu.dll.struct.point.TwoDimensionalIntegerPoint;
 import ecnu.dll.construction._config.Constant;
+import ecnu.dll.construction.common_tools.GridTools;
 
 import java.util.*;
 
@@ -62,6 +65,8 @@ public class TrajectorySampleTool {
             result.add(tempTrajectory);
         }
 
+
+
         return result;
     }
 
@@ -82,16 +87,30 @@ public class TrajectorySampleTool {
             // 接下来按照邻居点的密度概率选邻居
             currentNeighboringList = getNeighboring(currentCell, xGridLength, yGridLength);
             Integer[] neighboringCountArray = new Integer[currentNeighboringList.size()];
+
+            // for test
+            int checkSize = 0;
+
             for (int j = 0; j < currentNeighboringList.size(); ++j) {
                 tempNeighboring = currentNeighboringList.get(j);
                 neighboringCountArray[j] = gridToPointMap.get(tempNeighboring).size();
+                // for test
+                checkSize += neighboringCountArray[j];
             }
+//            System.out.println("checkSize: " + checkSize);
+            if (checkSize <= 0 && currentCell == startCell) {
+                System.out.println("This start cell is an isolated point, the trajectory is reduced to 0 dimensions!");
+                break;
+            }
+
             Integer chosenNeighboringInnerIndex;
             do {
                 chosenNeighboringInnerIndex = RandomUtil.getRandomIndexGivenStatisticPoint(neighboringCountArray);
             } while (chosenNeighboringInnerIndex >= currentNeighboringList.size());
             currentCell = currentNeighboringList.get(chosenNeighboringInnerIndex);
         }
+        //todo: for test
+        System.out.printf("The (expectation, real) trajectory length: (%d, %d)" + ConstantValues.LINE_SPLIT, trajectoryLength, result.size());
         return result;
     }
 
@@ -135,34 +154,14 @@ public class TrajectorySampleTool {
         Double tempX, tempY;
         TwoDimensionalIntegerPoint tempKey;
         for (TwoDimensionalDoublePoint point : totalPoint) {
-            int[] indexes = getIndex(point, gridSideLength, leftBorderPoint, rightTopPoint);
+            int[] indexes = GridTools.getIndex(point, gridSideLength, leftBorderPoint, rightTopPoint);
             tempKey = new TwoDimensionalIntegerPoint(indexes);
             result.get(tempKey).add(point);
         }
         return result;
     }
 
-    public static int[] getIndex(TwoDimensionalDoublePoint point, Integer gridSideLength, TwoDimensionalDoublePoint leftBottomPoint, TwoDimensionalDoublePoint rightTopPoint) {
-        Double leftBottomXIndex = leftBottomPoint.getXIndex();
-        Double leftBottomYIndex = leftBottomPoint.getYIndex();
-        double xUnit, yUnit;
-        Double xSideLength = rightTopPoint.getXIndex() - leftBottomXIndex;
-        xUnit = xSideLength / gridSideLength;
-        Double ySizeLength = rightTopPoint.getYIndex() - leftBottomYIndex;
-        yUnit = ySizeLength / gridSideLength;
-        Double xDiffer = point.getXIndex() - leftBottomXIndex;
-        Double yDiffer = point.getYIndex() - leftBottomYIndex;
-        int xResultIndex = (int) Math.floor(xDiffer / xUnit);
-        if (xResultIndex >= gridSideLength) {
-            // 专门处理右边或上边边界情况
-            xResultIndex = gridSideLength - 1;
-        }
-        int yResultIndex = (int) Math.floor(yDiffer / yUnit);
-        if (yResultIndex >= gridSideLength) {
-            yResultIndex = gridSideLength - 1;
-        }
-        return new int[]{xResultIndex, yResultIndex};
-    }
+
 
 
     // 步骤3
