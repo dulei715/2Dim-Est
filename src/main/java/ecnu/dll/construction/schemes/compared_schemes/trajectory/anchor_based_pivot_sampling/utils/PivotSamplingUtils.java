@@ -2,6 +2,7 @@ package ecnu.dll.construction.schemes.compared_schemes.trajectory.anchor_based_p
 
 import cn.edu.dll.basic.BasicArrayUtil;
 import cn.edu.dll.basic.BasicCalculation;
+import cn.edu.dll.basic.RandomUtil;
 import cn.edu.dll.differential_privacy.ldp.frequency_oracle.foImp.GeneralizedRandomizedResponse;
 import cn.edu.dll.geometry.Line;
 import cn.edu.dll.geometry.LineUtils;
@@ -143,37 +144,59 @@ public class PivotSamplingUtils {
     public static Integer getOptimalSectorSize(List<Integer> candidateSectorSizeList, Double privacyBudget, List<TwoDimensionalDoublePoint> trajectory) {
         // 获取每个力度下的轨迹中每个方向的真实方向下标
         int candidateSize = candidateSectorSizeList.size();
-        int directSize = trajectory.size() - 1;
+        int directSize = trajectory.size() - 1, effectiveSize;
         Double tempTrajectoryDirectionKeepValue, goalValue = -1D;
         SectorAreas tempSectorAreas;
         Integer tempSectorSize, resultSectorSize = null, tempRealDirectIndex;
         Collection<Double> bigTheta = new HashSet<>();
+        TwoDimensionalDoublePoint currentPoint, nextPoint;
         for (Integer g : candidateSectorSizeList) {
             bigTheta.add(Math.PI / g);
         }
         for (int i = 0; i < candidateSize; ++i) {
             tempSectorSize  = candidateSectorSizeList.get(i);
+            /**
+             * 这里做了优化，过滤掉了那些没方向的两点（即两点重合）
+             */
             tempTrajectoryDirectionKeepValue = 0D;
+            effectiveSize = 0;
             for (int j = 0; j < directSize; ++j) {
+                currentPoint = trajectory.get(j);
+                nextPoint = trajectory.get(j+1);
+                if (currentPoint.equals(nextPoint)) {
+                    continue;
+                }
+                ++effectiveSize;
                 tempSectorAreas = new SectorAreas(trajectory.get(j), trajectory.get(j+1), tempSectorSize);
                 tempRealDirectIndex = tempSectorAreas.getTargetPointExistingAreaIndex();
                 tempTrajectoryDirectionKeepValue += getDirectionKeepValue(privacyBudget, tempSectorSize, tempRealDirectIndex, bigTheta);
             }
             // 这里取轨迹的所有方向的平均值为最终方向保持值
-            tempTrajectoryDirectionKeepValue /= directSize;
+            if (effectiveSize > 0) {
+                tempTrajectoryDirectionKeepValue /= effectiveSize;
+            } else {
+                // 如果所有的点都是同一个点，这里顶一个它的value为无效且最小值-1
+                tempTrajectoryDirectionKeepValue = -1D;
+            }
+
             if (tempTrajectoryDirectionKeepValue > goalValue) {
                 goalValue = tempTrajectoryDirectionKeepValue;
                 resultSectorSize = tempSectorSize;
             }
         }
+        if (goalValue < 0) {
+            // 所有的点都是孤立点，没构成轨迹。此时方向就随机选取
+            return candidateSectorSizeList.get(RandomUtil.getRandomInteger(0, candidateSectorSizeList.size() - 1));
+        }
         return resultSectorSize;
     }
 
-    public static Map<TwoDimensionalDoublePoint, List<SectorAreas>> getNeighboringMap(List<TwoDimensionalDoublePoint> trajectory, Integer optimalSectorSize) {
+    public static List<List<SectorAreas>> getNeighboringList(List<TwoDimensionalDoublePoint> trajectory, Integer optimalSectorSize) {
         TwoDimensionalDoublePoint currentPoint;
         List<SectorAreas> tempNeighboringList;
         int trajectorySize = trajectory.size();
-        Map<TwoDimensionalDoublePoint, List<SectorAreas>> neighboringMap = new HashMap<>();
+        // 外层List每个位置对应trajectory上的一个点，内层List要么是一个元素要么是两个元素
+        List<List<SectorAreas>> neighboringList = new ArrayList<>();
         for (int i = 0; i < trajectorySize; ++i) {
             currentPoint = trajectory.get(i);
             if (i == 0) {
@@ -188,9 +211,9 @@ public class PivotSamplingUtils {
                 tempNeighboringList.add(new SectorAreas(currentPoint, trajectory.get(i - 1), optimalSectorSize));
                 tempNeighboringList.add(new SectorAreas(currentPoint, trajectory.get(i + 1), optimalSectorSize));
             }
-            neighboringMap.put(currentPoint, tempNeighboringList);
+            neighboringList.add(tempNeighboringList);
         }
-        return neighboringMap;
+        return neighboringList;
     }
 
 }

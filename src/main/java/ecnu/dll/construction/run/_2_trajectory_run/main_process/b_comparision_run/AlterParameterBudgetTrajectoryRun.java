@@ -70,13 +70,13 @@ public class AlterParameterBudgetTrajectoryRun {
 
             System.out.println("Privacy Budget is " + epsilonArray[i] + ", Input Length Size is " + inputLengthSize);
 
-            // for ldpTrace
-            tempLDPTraceExperimentResult = LDPTraceRun.run(integerTrajectoryData, rawDataStatistic, gridLength, inputSideLength, epsilonArray[i]);
-            ldpTraceExperimentResultList.add(tempLDPTraceExperimentResult);
-
             // for pivotTrace
             tempPivotTraceExperimentResult = PivotTraceRun.run(integerTrajectoryData, rawDataStatistic, gridLength, inputSideLength, epsilonArray[i]);
             pivotTraceExperimentResultList.add(tempPivotTraceExperimentResult);
+
+            // for ldpTrace
+            tempLDPTraceExperimentResult = LDPTraceRun.run(integerTrajectoryData, rawDataStatistic, gridLength, inputSideLength, epsilonArray[i]);
+            ldpTraceExperimentResultList.add(tempLDPTraceExperimentResult);
 
             // for DAM
             tempDiskExperimentResult = DAMRun.run(integerPointList, rawDataStatistic, gridLength, inputSideLength, alterDiskOptimalSizeB[i]*gridLength, epsilonArray[i], kParameter, xBound, yBound);

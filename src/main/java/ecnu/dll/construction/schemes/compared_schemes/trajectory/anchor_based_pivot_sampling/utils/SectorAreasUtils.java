@@ -1,5 +1,6 @@
 package ecnu.dll.construction.schemes.compared_schemes.trajectory.anchor_based_pivot_sampling.utils;
 
+import cn.edu.dll.basic.RandomUtil;
 import cn.edu.dll.geometry.Line;
 import cn.edu.dll.geometry.LineUtils;
 import cn.edu.dll.struct.pair.BasicPair;
@@ -61,6 +62,11 @@ public class SectorAreasUtils {
         double pointX = point.getXIndex();
         double pointY = point.getYIndex();
         List<Line> sortedBorderLineList = sectorAreas.getSectorBorderSortedLineList();
+
+//        if (areaIndex >= sectorAreas.getAreaList().size()) {
+//            System.out.println("haha");
+//        }
+
         BasicPair<Integer, Integer> areaStatus = sectorAreas.getAreaList().get(areaIndex);
         int[] lineIndexes = SectorAreasUtils.fromAreaIndexToLineIndexes(areaIndex, sortedBorderLineList.size());
         Line lineLeft = sortedBorderLineList.get(lineIndexes[0]);
@@ -72,6 +78,7 @@ public class SectorAreasUtils {
             /*
                 保证line value 和 对应的区间状态同号
                 两直线所夹区域规定含左线不含右线
+                中心点始终返回false（pivot和target重合或point和pivot重合）
              */
             return true;
         }
@@ -92,7 +99,12 @@ public class SectorAreasUtils {
                 return i;
             }
         }
-        throw new RuntimeException("Not found area index! It's impossible!");
+        /**
+         * 接下来这种情况下target point和pivot point重合致使直线表达式为(0,0)或point和pivot point重合，导致不在任何区域
+         * 这种情况下随机返回
+         */
+//        throw new RuntimeException("Not found area index! It's impossible!");
+        return RandomUtil.getRandomInteger(0, areaSize - 1);
     }
 
 

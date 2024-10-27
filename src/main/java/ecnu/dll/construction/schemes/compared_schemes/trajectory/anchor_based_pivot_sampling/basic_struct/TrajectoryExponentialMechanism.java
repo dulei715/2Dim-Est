@@ -1,5 +1,6 @@
 package ecnu.dll.construction.schemes.compared_schemes.trajectory.anchor_based_pivot_sampling.basic_struct;
 
+import cn.edu.dll.basic.RandomUtil;
 import cn.edu.dll.differential_privacy.cdp.exponential_mechanism.ExponentialMechanism;
 import cn.edu.dll.differential_privacy.cdp.exponential_mechanism.utility.UtilityFunction;
 import cn.edu.dll.struct.point.TwoDimensionalDoublePoint;
@@ -32,6 +33,22 @@ public class TrajectoryExponentialMechanism extends ExponentialMechanism<TwoDime
                 }
             }
         }
+    }
+
+    public List<TwoDimensionalDoublePoint> getInputDomain() {
+        return this.inputList;
+    }
+
+    public List<TwoDimensionalDoublePoint> getOutputDomain() {
+        return this.outputList;
+    }
+
+    @Override
+    public TwoDimensionalDoublePoint disturb(TwoDimensionalDoublePoint inputElement) {
+        if (!this.inputList.contains(inputElement)) {
+            return this.inputList.get(RandomUtil.getRandomInteger(0, this.inputList.size() - 1));
+        }
+        return super.disturb(inputElement);
     }
 
     @Override

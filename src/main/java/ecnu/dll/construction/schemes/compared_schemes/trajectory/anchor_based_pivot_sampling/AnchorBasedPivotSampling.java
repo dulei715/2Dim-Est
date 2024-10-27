@@ -37,7 +37,7 @@ public class AnchorBasedPivotSampling extends PivotSampling{
         return new TwoDimensionalDoublePoint(averageX, averageY);
     }
 
-    protected TwoDimensionalDoublePoint toExitNearestPoint(TwoDimensionalDoublePoint originalAnchor) {
+    protected TwoDimensionalDoublePoint toExistNearestPoint(TwoDimensionalDoublePoint originalAnchor) {
         // todo: 暂时用遍历所有点的方法
         return TwoDimensionalDoublePointUtils.getNearest2NormDistancePointInGivenCollection(originalAnchor, this.totalBasicPointList).getKey();
     }
@@ -77,6 +77,14 @@ public class AnchorBasedPivotSampling extends PivotSampling{
         return (innerWeightedSum + outerWeightedSum) / (q * innerPointSize + (1 - q) * outerPointSize);
     }
 
+    protected Double getEta(List<TwoDimensionalDoublePoint> totalPoint, TwoDimensionalDoublePoint disturbedAnchor) {
+        Double result = 0D;
+        for (TwoDimensionalDoublePoint tempPoint : totalPoint) {
+            result += TwoDimensionalDoublePointUtils.get2NormDistance(tempPoint, disturbedAnchor);
+        }
+        return result /= totalPoint.size();
+    }
+
     /**
      *
      * @param estimatedLongestDistance
@@ -98,9 +106,13 @@ public class AnchorBasedPivotSampling extends PivotSampling{
                 valueRegion.add(vk);
             }
         }
-        leftRightValue = CollectionTools.getMinimalAndMaximalValue(valueRegion);
-        pointRange = TwoDimensionalDoublePointUtils.getPointSubCollectionInGiven2NormDistanceRange(this.totalBasicPointList, perturbedAnchor, (2 * squareWaveB + 1) / maxDistance, 0D, leftRightValue[0], leftRightValue[1]);
-        eta = getEta(pointRange, calibrateEpsilon, perturbedAnchor, squareWaveB);
+        if (valueRegion.isEmpty()) {
+            eta = getEta(totalBasicPointList, perturbedAnchor);
+        } else {
+            leftRightValue = CollectionTools.getMinimalAndMaximalValue(valueRegion);
+            pointRange = TwoDimensionalDoublePointUtils.getPointSubCollectionInGiven2NormDistanceRange(this.totalBasicPointList, perturbedAnchor, (2 * squareWaveB + 1) / maxDistance, 0D, leftRightValue[0], leftRightValue[1]);
+            eta = getEta(pointRange, calibrateEpsilon, perturbedAnchor, squareWaveB);
+        }
         if (estimatedLongestDistance <= eta) {
             beta = (eta - estimatedLongestDistance) / eta;
         } else {
@@ -116,7 +128,7 @@ public class AnchorBasedPivotSampling extends PivotSampling{
         Double longestDistanceBudget = regionPrivacyBudget - anchorBudget;
         Double squareWaveB = SquareWaveUtils.getOptimalB(longestDistanceBudget);
         // 根据轨迹获取原始anchor，并将原始anchor映射为最邻近的基本点（给定的所有点），称为 anchorPoint
-        TwoDimensionalDoublePoint anchorPoint = toExitNearestPoint(getAnchor(trajectory));
+        TwoDimensionalDoublePoint anchorPoint = toExistNearestPoint(getAnchor(trajectory));
         // 对 anchorPoint 进行扰动，获得 perturbedAnchor
         TwoDimensionalDoublePoint perturbedAnchor = getPerturbAnchor(anchorPoint, anchorBudget);
 
@@ -125,6 +137,10 @@ public class AnchorBasedPivotSampling extends PivotSampling{
         Double maximalDistance =  TwoDimensionalDoublePointUtils.getLongestDistance(perturbedAnchor, this.totalBasicPointList).getValue();
         Double estimatedLongestDistance = getEstimatedLongestDistance(trajectoryLongestDistance, longestDistanceBudget, maximalDistance, squareWaveB);
         Double finalRadius = getCalibratedRadius(perturbedAnchor, estimatedLongestDistance, squareWaveB, maximalDistance, longestDistanceBudget);
+        if (finalRadius <= 0) {
+            // 处理非正半径的情况。直接选所有
+            return this.totalBasicPointList;
+        }
         return TwoDimensionalDoublePointUtils.getPointSubCollectionInGiven2NormDistanceRange(this.totalBasicPointList, perturbedAnchor, 1.0, 0.0, 0.0, finalRadius);
     }
 
@@ -139,12 +155,12 @@ public class AnchorBasedPivotSampling extends PivotSampling{
         Double epsilonRegion = 0.25 * privacyBudget;
         Double epsilonPivot = privacyBudget - epsilonRegion;
 
-        Map<TwoDimensionalDoublePoint, List<SectorAreas>> neighboringMap = PivotSamplingUtils.getNeighboringMap(trajectory, optimalSectorSize);
+        List<List<SectorAreas>> neighboringList = PivotSamplingUtils.getNeighboringList(trajectory, optimalSectorSize);
 
         List<TwoDimensionalDoublePoint> regionA = restrictTrajectoryRegion(trajectory, epsilonRegion / 2);
         List<TwoDimensionalDoublePoint> regionB = restrictTrajectoryRegion(trajectory, epsilonRegion / 2);
-        List<TwoDimensionalDoublePoint> perturbedTrajectoryA = super.independentAndPivotPerturbation(trajectory, regionA, epsilonPivot / 2, neighboringMap, FlagFirstPivot);
-        List<TwoDimensionalDoublePoint> perturbedTrajectoryB = super.independentAndPivotPerturbation(trajectory, regionB, epsilonPivot / 2, neighboringMap, FlagFirstTarget);
+        List<TwoDimensionalDoublePoint> perturbedTrajectoryA = super.independentAndPivotPerturbation(trajectory, regionA, epsilonPivot / 2, neighboringList, FlagFirstPivot);
+        List<TwoDimensionalDoublePoint> perturbedTrajectoryB = super.independentAndPivotPerturbation(trajectory, regionB, epsilonPivot / 2, neighboringList, FlagFirstTarget);
         Set<TwoDimensionalDoublePoint> regionSet = new HashSet<>();
         regionSet.addAll(regionA);
         regionSet.addAll(regionB);
