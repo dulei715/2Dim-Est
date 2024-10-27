@@ -1,10 +1,6 @@
 package ecnu.dll.construction.schemes.compared_schemes.trajectory;
 
-import cn.edu.dll.basic.BasicArrayUtil;
-import cn.edu.dll.statistic.StatisticTool;
-import cn.edu.dll.struct.point.TwoDimensionalDoublePoint;
 import cn.edu.dll.struct.point.TwoDimensionalIntegerPoint;
-import ecnu.dll.construction._config.Constant;
 
 import java.util.*;
 
@@ -26,7 +22,7 @@ public class TrajectoryCommonTool {
 //        return result;
 //    }
 
-    public static List<TwoDimensionalIntegerPoint> toPointList(List<List<TwoDimensionalIntegerPoint>> trajectoryList) {
+    public static List<TwoDimensionalIntegerPoint> fromTrajectoryListToPointList(List<List<TwoDimensionalIntegerPoint>> trajectoryList) {
         List<TwoDimensionalIntegerPoint> result = new ArrayList<>();
         for (List<TwoDimensionalIntegerPoint> trajectory : trajectoryList) {
             for (TwoDimensionalIntegerPoint point : trajectory) {

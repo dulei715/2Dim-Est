@@ -112,6 +112,11 @@ public class CellNeighboringOneHotUtils {
         return oneHotIndex;
     }
 
+    /**
+     * 返回邻居在数组中的位置，如果没找(邻居为自己，或者邻居越界)到返回-1()
+     * @param cellNeighboring
+     * @return
+     */
     protected static int getBias(CellNeighboring cellNeighboring) {
         TwoDimensionalIntegerPoint[][] cellNeighboringIndex = cellNeighboring.getCellNeighboringIndex();
         int[] directNeighboringInnerIndex = cellNeighboring.getDirectNeighboringInnerIndex();
@@ -121,18 +126,22 @@ public class CellNeighboringOneHotUtils {
                 if (i == 1 && j == 1 || cellNeighboringIndex[i][j] == null) {
                     continue;
                 }
-                if (directNeighboringInnerIndex[0] == i && directNeighboringInnerIndex[1] == j) {
+                if (1 + directNeighboringInnerIndex[0] == i && 1 + directNeighboringInnerIndex[1] == j) {
                     return k;
                 }
                 ++k;
             }
         }
-        throw new RuntimeException("Not found right direct neighboring!");
+        return -1;
     }
 
     public static int toOneHotIndex(CellNeighboring cellNeighboring) {
         int[] oneHotDataIndex = toOneHotDataIndexRange(cellNeighboring);
         int bias = getBias(cellNeighboring);
+        if (bias < 0) {
+            // 非法的便宜（没在neighboring记录，比如：自身节点）
+            return -1;
+        }
         return oneHotDataIndex[0] + bias;
     }
 
@@ -225,10 +234,13 @@ public class CellNeighboringOneHotUtils {
             bias = typeBias % 5;
         } else {
             typeBias = index - 10*rowSize-10*colSize+28;
-            valueXIndex = 1 + typeBias / 8 / colSize;
-            valueYIndex = 1 + typeBias / 8 % colSize;
+            valueXIndex = 1 + typeBias / 8 / (colSize - 2);
+            valueYIndex = 1 + typeBias / 8 % (colSize - 2);
             bias = typeBias % 8;
         }
+//        if (valueYIndex == colSize || valueXIndex == rowSize) {
+//            System.out.println("haha");
+//        }
         int[] directInnerIndex = getTwoDimensionalIndexByBias(rowSize, colSize, valueXIndex, valueYIndex, bias);
         return new TwoDimensionalIntegerPoint(valueXIndex + directInnerIndex[0] - 1, valueYIndex + directInnerIndex[1] - 1);
     }

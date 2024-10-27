@@ -69,7 +69,16 @@
             <subset>
                 <titleName>NYC</titleName>
                 <fileName>nyc_point_part.txt</fileName>
-                <bound>40.56;-47.05</bound>
+                <bound>40.56;-74.05</bound>
+                <areaLength>0.32</areaLength>
+            </subset>
+        </dataset>
+        <dataset name="nyc3">
+            <relativeDir>1_real;2_nyc</relativeDir>
+            <subset>
+                <titleName>NYC</titleName>
+                <fileName>nyc_trajectory.txt</fileName>
+                <bound>40.56;-74.05</bound>
                 <areaLength>0.32</areaLength>
             </subset>
         </dataset>

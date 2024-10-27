@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.TreeMap;
 
 public class PivotTraceRun {
-    public ExperimentResult run(List<List<TwoDimensionalIntegerPoint>> trajectoryDataSet, final TreeMap<TwoDimensionalIntegerPoint, Double> rawDataStatistic, double cellLength, double inputLength, Integer gridSideLength, Double epsilon, TwoDimensionalDoublePoint leftBottomPoint, TwoDimensionalDoublePoint rightTopPoint) {
+    public static ExperimentResult run(List<List<TwoDimensionalIntegerPoint>> trajectoryDataSet, final TreeMap<TwoDimensionalIntegerPoint, Double> rawDataStatistic, double cellLength, double inputLength, Double epsilon) {
         List<List<TwoDimensionalIntegerPoint>> estimationTrajectoryList = new ArrayList<>(trajectoryDataSet.size());
         List<TwoDimensionalDoublePoint> tempDoubleTrajectory;
         List<TwoDimensionalIntegerPoint> basicIntegerPointList = new ArrayList<>(rawDataStatistic.keySet());

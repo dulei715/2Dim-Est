@@ -20,7 +20,7 @@ public class SampleAndWriteTrajectory {
 
         Integer trajectorySamplingLengthLowerBound = Constant.TrajectorySamplingLengthLowerBound;
         Integer trajectorySamplingLengthUpperBound = Constant.TrajectorySamplingLengthUpperBound;
-        // 这里的值为1000
+        // 这里的值为10000
         Integer trajectorySamplingSize = Constant.TrajectorySamplingSize;
 //        Integer trajectorySamplingSize = 20;
         // 这里的值为50

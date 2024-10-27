@@ -9,10 +9,14 @@ import cn.edu.dll.struct.point.TwoDimensionalDoublePoint;
 import cn.edu.dll.struct.point.TwoDimensionalIntegerPoint;
 import ecnu.dll.construction._config.Constant;
 import ecnu.dll.construction._config.Initialized;
+import ecnu.dll.construction.common_tools.GridTools;
 import ecnu.dll.construction.dataset.struct.DataSetAreaInfo;
 import ecnu.dll.construction.run._0_base_run._struct.ExperimentResultAndScheme;
 import ecnu.dll.construction.run._1_total_run.main_process.a_single_scheme_run.DAMRun;
 import ecnu.dll.construction.run._1_total_run.main_process.a_single_scheme_run.SubsetGeoITwoNormRun;
+import ecnu.dll.construction.run._2_trajectory_run.main_process.a_single_scheme_run.LDPTraceRun;
+import ecnu.dll.construction.run._2_trajectory_run.main_process.a_single_scheme_run.PivotTraceRun;
+import ecnu.dll.construction.schemes.compared_schemes.trajectory.TrajectoryCommonTool;
 import ecnu.dll.construction.schemes.new_scheme.discretization.tool.DiscretizedDiskSchemeTool;
 import ecnu.dll.construction.schemes.new_scheme.discretization.tool.DiscretizedSchemeTool;
 
@@ -20,17 +24,18 @@ import java.util.*;
 
 
 public class AlterParameterGTrajectoryRun {
-    public static Map<String, List<ExperimentResult>> run(final List<TwoDimensionalDoublePoint> doublePointList, double inputSideLength, double xBound, double yBound) throws InstantiationException, IllegalAccessException, CloneNotSupportedException {
+    public static Map<String, List<ExperimentResult>> run(final List<List<TwoDimensionalDoublePoint>> doubleTrajectoryData, double inputSideLength, double xBound, double yBound) throws InstantiationException, IllegalAccessException, CloneNotSupportedException {
 
         int arraySize = Constant.ALTER_SIDE_LENGTH_NUMBER_SIZE_for_DAM_and_SubsetGeoI_Comparison.length;
 
         /*
             1. 设置cell大小的变化参数（同时也是设置整数input的边长大小）
          */
-        double[] inputLengthSizeNumberArray = Constant.ALTER_SIDE_LENGTH_NUMBER_SIZE_for_DAM_and_SubsetGeoI_Comparison;
-        double[] gridLengthArray = new double[arraySize];
-        for (int i = 0; i < gridLengthArray.length; i++) {
-            gridLengthArray[i] = inputSideLength / inputLengthSizeNumberArray[i];
+        double[] cellQuantityInSideLength = Constant.ALTER_SIDE_LENGTH_NUMBER_SIZE_for_DAM_and_SubsetGeoI_Comparison;
+        double[] unitCellLength = new double[arraySize];
+        for (int i = 0; i < unitCellLength.length; i++) {
+            // 记录每种参数下一个网格的cell的具体长度
+            unitCellLength[i] = inputSideLength / cellQuantityInSideLength[i];
         }
 
         /*
@@ -44,7 +49,7 @@ public class AlterParameterGTrajectoryRun {
         int[] sizeDArray = new int[arraySize];
         int[] alterDiskOptimalSizeB = new int[arraySize];
         for (int i = 0; i < arraySize; i++) {
-            sizeDArray[i] = (int)Math.ceil(inputLengthSizeNumberArray[i]);
+            sizeDArray[i] = (int)Math.ceil(cellQuantityInSideLength[i]);
             alterDiskOptimalSizeB[i] = DiscretizedDiskSchemeTool.getOptimalSizeBOfDiskScheme(epsilon, sizeDArray[i]);
         }
 
@@ -55,125 +60,65 @@ public class AlterParameterGTrajectoryRun {
 
 
         /*
-            针对SubsetGeoI, MSW, Rhombus, Disk, Disk-non-Shrink, HUEM 分别计算对应grid下的估计并返回相应的wasserstein距离
+            针对Disk, LDPTrace, PivotTrace 分别计算对应grid下的估计并返回相应的wasserstein距离
          */
         Map<String, List<ExperimentResult>> alterParameterMap = new HashMap<>();
-        String diskKey = Constant.diskSchemeKey, subsetGeoITwoNorm = Constant.subsetGeoITwoNormSchemeKey;
-        ExperimentResult tempDiskExperimentResult, tempSubsetGeoITwoNormExperimentResult;
-        List<ExperimentResult> diskExperimentResultList = new ArrayList<>(), subsetGeoITwoNormExperimentResultList = new ArrayList<>();
+        String diskKey = Constant.diskSchemeKey;
+        String ldpTraceKey = Constant.ldpTraceSchemeKey;
+        String pivotTraceKey = Constant.pivotTraceSchemeKey;
+        ExperimentResult tempDiskExperimentResult, tempLDPTraceExperimentResult, tempPivotTraceExperimentResult;
+        List<ExperimentResult> diskExperimentResultList = new ArrayList<>();
+        List<ExperimentResult> ldpTraceExperimentResultList = new ArrayList<>();
+        List<ExperimentResult> pivotTraceExperimentResultList = new ArrayList<>();
+        List<List<TwoDimensionalIntegerPoint>> integerTrajectoryData;
         List<TwoDimensionalIntegerPoint> integerPointList, integerPointTypeList;
         TreeMap<TwoDimensionalIntegerPoint, Double> rawDataStatistic;
 
-        ExperimentResultAndScheme tempDiskExperimentResultAndScheme;
-        double tempLocalPrivacy, transformedEpsilon;
+
+        TwoDimensionalDoublePoint leftBottomPoint = new TwoDimensionalDoublePoint(xBound, yBound);
+        TwoDimensionalDoublePoint rightTopPoint = new TwoDimensionalDoublePoint(xBound+inputSideLength, yBound + inputSideLength);
 
         for (int i = 0; i < arraySize; i++) {
 
-            System.out.println("Privacy Budget is " + epsilon + ", Input Length Size is " + inputLengthSizeNumberArray[i]);
+            System.out.println("Privacy Budget is " + epsilon + ", Input Length Size is " + cellQuantityInSideLength[i]);
 
-            // 计算不同的gridLength对应的不同的integerPointList
-            integerPointList = Grid.toIntegerPoint(doublePointList, new Double[]{xBound, yBound}, gridLengthArray[i]);
+            // 计算不同的gridLength对应的不同的integerTrajectory
+            integerTrajectoryData = GridTools.fromDoubleTrajectoryListToGridTrajectoryList(doubleTrajectoryData, sizeDArray[i], leftBottomPoint, rightTopPoint);
+//            integerPointList = Grid.toIntegerPoint(doubleTrajectoryData, new Double[]{xBound, yBound}, gridLengthArray[i]);
+            integerPointList = TrajectoryCommonTool.fromTrajectoryListToPointList(integerTrajectoryData);
+
 
             // 计算不同的gridLength对应的不同的rawStatistic
             integerPointTypeList = DiscretizedSchemeTool.getRawTwoDimensionalIntegerPointTypeList(sizeDArray[i]);
             rawDataStatistic = StatisticTool.countHistogramRatioMap(integerPointTypeList, integerPointList);
 
             // for DMA
-            tempDiskExperimentResult = DAMRun.run(integerPointList, rawDataStatistic, gridLengthArray[i], inputSideLength, alterDiskOptimalSizeB[i]*gridLengthArray[i], epsilon, kParameter, xBound, yBound);
+            tempDiskExperimentResult = DAMRun.run(integerPointList, rawDataStatistic, unitCellLength[i], inputSideLength, alterDiskOptimalSizeB[i]*unitCellLength[i], epsilon, kParameter, xBound, yBound);
 //            tempDiskExperimentResult = tempDiskExperimentResultAndScheme.getExperimentResult();
             tempDiskExperimentResult.addPair(1, Constant.areaLengthKey, String.valueOf(inputSideLength));
             diskExperimentResultList.add(tempDiskExperimentResult);
 
 
-            // for Subset-Geo-I-norm2
-            // 根据相应的DAM，计算出对应的LP
-//            tempLocalPrivacy = Initialized.damELPTable.getLocalPrivacyByEpsilon(inputLengthSizeNumberArray[i], epsilon);
-            tempLocalPrivacy = Initialized.damELPExtendedTable.getLowerBoundLocalPrivacyByEpsilon(inputLengthSizeNumberArray[i], epsilon);
-//            transformedEpsilon = Initialized.subGeoIELPTable.getEpsilonByLocalPrivacy(inputLengthSizeNumberArray[i], tempLocalPrivacy);
-            transformedEpsilon = Initialized.subGeoIELPExtendedTable.getEpsilonByUpperBoundLocalPrivacy(inputLengthSizeNumberArray[i], tempLocalPrivacy);
-            tempSubsetGeoITwoNormExperimentResult = SubsetGeoITwoNormRun.run(integerPointList, rawDataStatistic, gridLengthArray[i], inputSideLength, transformedEpsilon, xBound, yBound);
-            tempSubsetGeoITwoNormExperimentResult.addPair(1, Constant.areaLengthKey, String.valueOf(inputSideLength));
-            subsetGeoITwoNormExperimentResultList.add(tempSubsetGeoITwoNormExperimentResult);
+            // for ldpTrace, pivotTrace
+            tempLDPTraceExperimentResult = LDPTraceRun.run(integerTrajectoryData, rawDataStatistic, unitCellLength[i], inputSideLength, epsilon);
+            tempLDPTraceExperimentResult.addPair(1, Constant.areaLengthKey, String.valueOf(inputSideLength));
+            ldpTraceExperimentResultList.add(tempLDPTraceExperimentResult);
+
+            tempPivotTraceExperimentResult = PivotTraceRun.run(integerTrajectoryData, rawDataStatistic, unitCellLength[i], inputSideLength, epsilon);
+            tempPivotTraceExperimentResult.addPair(1, Constant.areaLengthKey, String.valueOf(inputSideLength));
+            pivotTraceExperimentResultList.add(tempPivotTraceExperimentResult);
 
 
         }
 
 
-        alterParameterMap.put(subsetGeoITwoNorm, subsetGeoITwoNormExperimentResultList);
+        alterParameterMap.put(ldpTraceKey, ldpTraceExperimentResultList);
+        alterParameterMap.put(pivotTraceKey, pivotTraceExperimentResultList);
         alterParameterMap.put(diskKey, diskExperimentResultList);
 
         return alterParameterMap;
 
     }
 
-    public static void main(String[] args) throws InstantiationException, IllegalAccessException, CloneNotSupportedException {
-//        DataSetAreaInfo dataSetInfo = Constant.nycDataSetArray[0];
-        DataSetAreaInfo dataSetInfo = Constant.crimeDataSetArray[1];
-        String dataSetPath = dataSetInfo.getDataSetPath();
-        String dataSetName = dataSetInfo.getDataSetName();
-        Double xBound = dataSetInfo.getxBound();
-        Double yBound = dataSetInfo.getyBound();
-        Double inputSideLength = dataSetInfo.getLength();
-        TwoDimensionalPointRead pointRead = new TwoDimensionalPointRead(dataSetPath);
-        pointRead.readPointWithFirstLineCount();
-        List<TwoDimensionalDoublePoint> doublePointList = pointRead.getPointList();
-//        Map<String, List<ExperimentResult>> alteringGResult = AlterParameterGExtendedRun.run(doublePointList, length, xBound, yBound);
-
-
-        int arraySize = Constant.ALTER_SIDE_LENGTH_NUMBER_SIZE_for_DAM_and_SubsetGeoI_Comparison.length;
-        double[] inputLengthSizeNumberArray = Constant.ALTER_SIDE_LENGTH_NUMBER_SIZE_for_DAM_and_SubsetGeoI_Comparison;
-        double[] gridLengthArray = new double[arraySize];
-        for (int i = 0; i < gridLengthArray.length; i++) {
-            gridLengthArray[i] = inputSideLength / inputLengthSizeNumberArray[i];
-        }
-        double epsilon = Constant.DEFAULT_PRIVACY_BUDGET_for_DAM_and_SubsetGeoI_Comparison;
-        int[] sizeDArray = new int[arraySize];
-        int[] alterDiskOptimalSizeB = new int[arraySize];
-        for (int i = 0; i < arraySize; i++) {
-            sizeDArray[i] = (int)Math.ceil(inputLengthSizeNumberArray[i]);
-            alterDiskOptimalSizeB[i] = DiscretizedDiskSchemeTool.getOptimalSizeBOfDiskScheme(epsilon, sizeDArray[i]);
-        }
-        double kParameter = Constant.DEFAULT_K_PARAMETER;
-        Map<String, List<ExperimentResult>> alteringGResult = new HashMap<>();
-        String diskKey = Constant.diskSchemeKey, subsetGeoITwoNorm = Constant.subsetGeoITwoNormSchemeKey;
-        ExperimentResult tempDiskExperimentResult, tempSubsetGeoITwoNormExperimentResult;
-        List<ExperimentResult> diskExperimentResultList = new ArrayList<>(), subsetGeoITwoNormExperimentResultList = new ArrayList<>();
-        List<TwoDimensionalIntegerPoint> integerPointList, integerPointTypeList;
-        TreeMap<TwoDimensionalIntegerPoint, Double> rawDataStatistic;
-
-        ExperimentResultAndScheme tempDiskExperimentResultAndScheme;
-        double tempLocalPrivacy, transformedEpsilon;
-        int i = 4;
-        System.out.println("Privacy Budget is " + epsilon + ", Input Length Size is " + inputLengthSizeNumberArray[i]);
-
-        // 计算不同的gridLength对应的不同的integerPointList
-        integerPointList = Grid.toIntegerPoint(doublePointList, new Double[]{xBound, yBound}, gridLengthArray[i]);
-
-        // 计算不同的gridLength对应的不同的rawStatistic
-        integerPointTypeList = DiscretizedSchemeTool.getRawTwoDimensionalIntegerPointTypeList(sizeDArray[i]);
-        rawDataStatistic = StatisticTool.countHistogramRatioMap(integerPointTypeList, integerPointList);
-
-        // for DMA
-        tempDiskExperimentResult = DAMRun.run(integerPointList, rawDataStatistic, gridLengthArray[i], inputSideLength, alterDiskOptimalSizeB[i]*gridLengthArray[i], epsilon, kParameter, xBound, yBound);
-        tempDiskExperimentResult.addPair(1, Constant.areaLengthKey, String.valueOf(inputSideLength));
-        diskExperimentResultList.add(tempDiskExperimentResult);
-        alteringGResult.put(diskKey, diskExperimentResultList);
-
-
-        // for Subset-Geo-I-norm2
-        // 根据相应的DAM，计算出对应的LP
-//        tempLocalPrivacy = Initialized.damELPExtendedTable.getLowerBoundLocalPrivacyByEpsilon(inputLengthSizeNumberArray[i], epsilon);
-//        transformedEpsilon = Initialized.subGeoIELPExtendedTable.getEpsilonByUpperBoundLocalPrivacy(inputLengthSizeNumberArray[i], tempLocalPrivacy);
-//        tempSubsetGeoITwoNormExperimentResult = SubsetGeoITwoNormRun.run(integerPointList, rawDataStatistic, gridLengthArray[i], inputSideLength, transformedEpsilon, xBound, yBound);
-//        tempSubsetGeoITwoNormExperimentResult.addPair(1, Constant.areaLengthKey, String.valueOf(inputSideLength));
-//        subsetGeoITwoNormExperimentResultList.add(tempSubsetGeoITwoNormExperimentResult);
-//        alteringGResult.put(subsetGeoITwoNorm, subsetGeoITwoNormExperimentResultList);
-
-
-
-        ExperimentResult.addPair(alteringGResult, 0, Constant.dataSetNameKey, dataSetName);
-        MyPrint.showMap(alteringGResult);
-//        System.out.println(diskExperimentResultList.get(diskExperimentResultList.size()-2));
-    }
 
 }

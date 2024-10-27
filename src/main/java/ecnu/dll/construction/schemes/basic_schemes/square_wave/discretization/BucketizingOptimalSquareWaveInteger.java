@@ -78,21 +78,25 @@ public class BucketizingOptimalSquareWaveInteger extends IntegerSquareWave<Integ
         // 获取的是扰动后的位置的统计量（没有平移b个单位！）
         Map<Integer, Integer> histogramCount = StatisticTool.countHistogramNumber(valueList);
         Integer[] noiseValueCountArray = new Integer[this.outputSize];
-
+/*
         // ===> 这里对bug做增强
         Set<Integer> keySet = histogramCount.keySet();
         List<Integer> keyList = new ArrayList<>(keySet);
         Integer minimalIntegerValue = ListUtils.getMinimalIntegerValue(keyList);
         Integer maximalIntegerValue = ListUtils.getMaximalIntegerValue(keyList);
         // <===
+
+ */
         for (Map.Entry<Integer, Integer> entry : histogramCount.entrySet()) {
             // 记录在noiseValueArray中的扰动位置统计量需要平移b个单位
 
-//            noiseValueCountArray[entry.getKey()+this.b] = entry.getValue();
+            noiseValueCountArray[entry.getKey()+this.b] = entry.getValue();
+            /*
             // ===> 这里对bug做增强
             int newIndex = (int)Math.round(BasicArrayUtil.getLinearTransformValue(minimalIntegerValue, maximalIntegerValue, entry.getKey(), 0, this.outputSize - 1));
             noiseValueCountArray[newIndex] = entry.getValue();
-            // <===
+            // <==
+             */
         }
         Double[] resultRatio = StatisticTool.getExpectationMaximizationSmooth(this.transformMatrix, noiseValueCountArray, Constant.DEFAULT_STOP_VALUE_TAO, Constant.DEFAULT_ONE_DIMENSIONAL_COEFFICIENTS, this.initAverageRatio);
         TreeMap<Integer, Double> resultMap = new TreeMap<>();

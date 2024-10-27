@@ -26,8 +26,47 @@ public class LDPTraceRun {
     private static final Integer maxTravelDistance = Constant.TrajectorySamplingLengthUpperBound;
 
 
+    public static ExperimentResult run(List<List<TwoDimensionalIntegerPoint>> trajectoryDataSet, final TreeMap<TwoDimensionalIntegerPoint, Double> rawDataStatistic, double unitCellLength, double inputLength, Double epsilon) {
+        Integer gridSideLength = (int)Math.round(inputLength / unitCellLength);
+        LDPTrace ldpTrace = new LDPTrace(gridSideLength, gridSideLength, epsilon, maxTravelDistance);
 
-    protected static TrajectoryEstimationStruct trajectoryDisturbAndCollection(List<List<TwoDimensionalIntegerPoint>> trajectoryData, LDPTrace ldpTrace, TwoDimensionalDoublePoint leftBottomPoint, TwoDimensionalDoublePoint rightTopPoint) {
+        long startTime = System.currentTimeMillis();
+        TrajectoryEstimationStruct trajectoryEstimationStruct = trajectoryDisturbAndCollection(trajectoryDataSet, ldpTrace);
+        ldpTrace.setTrajectoryEstimationStruct(trajectoryEstimationStruct);
+        List<List<TwoDimensionalIntegerPoint>> generatingTrajectoryList = new ArrayList<>(Constant.generatingTrajectorySizeFromSynthetic);
+        for (int i = 0; i < Constant.generatingTrajectorySizeFromSynthetic; ++i) {
+            generatingTrajectoryList.add(ldpTrace.trajectorySynthesis());
+        }
+        TreeMap<TwoDimensionalIntegerPoint, Double> estimationResult = TrajectoryCommonTool.statistic(generatingTrajectoryList, rawDataStatistic.keySet());
+        long endTime = System.currentTimeMillis();
+        long postProcessTime = endTime - startTime;
+        System.out.println("Total process time is " + postProcessTime);
+        //
+
+        ExperimentResult experimentResult = null;
+        Double wassersteinDistance1 = 0D;
+        Double wassersteinDistance2 = Sinkhorn.getWassersteinDistanceBySinkhorn(estimationResult, rawDataStatistic, 2, Constant.SINKHORN_LAMBDA, Constant.SINKHORN_LOWER_BOUND, Constant.SINKHORN_ITERATOR_UPPERBOUND);
+        Double klDivergence = 0D;
+        experimentResult = new ExperimentResult();
+        // 这里实际上是trajectorySize，变量名和Excel头就不改了
+        experimentResult.addPair(Constant.dataPointSizeKey, String.valueOf(trajectoryDataSet.size()));
+        experimentResult.addPair(Constant.schemeNameKey, Constant.diskSchemeKey);
+        experimentResult.addPair(Constant.postProcessTimeKey, String.valueOf(postProcessTime));
+        experimentResult.addPair(Constant.gridUnitSizeKey, String.valueOf(unitCellLength));
+        experimentResult.addPair(Constant.dataTypeSizeKey, String.valueOf(inputLength * inputLength));
+        experimentResult.addPair(Constant.sizeDKey, String.valueOf(0));
+        experimentResult.addPair(Constant.sizeBKey, String.valueOf(0));
+        experimentResult.addPair(Constant.privacyBudgetKey, String.valueOf(epsilon));
+        experimentResult.addPair(Constant.contributionKKey, String.valueOf(0));
+        experimentResult.addPair(Constant.wassersteinDistance1Key, String.valueOf(wassersteinDistance1));
+        experimentResult.addPair(Constant.wassersteinDistance2Key, String.valueOf(wassersteinDistance2));
+        experimentResult.addPair(Constant.klDivergenceKey, String.valueOf(klDivergence));
+        return experimentResult;
+    }
+
+
+
+    protected static TrajectoryEstimationStruct trajectoryDisturbAndCollection(List<List<TwoDimensionalIntegerPoint>> trajectoryData, LDPTrace ldpTrace) {
 //        List<TwoDimensionalIntegerPoint> tempGridTrajectory;
         UserTrajectoryOriginalStruct tempOriginalTrajectoryInfo;
         UserTrajectoryOneHotStruct tempTrajectoryOneHotStruct;
@@ -62,40 +101,4 @@ public class LDPTraceRun {
         return new TrajectoryEstimationStruct(trajectoryLengthEstimation, neighboringEstimation, startCellEstimation, endCellEstimation);
     }
 
-    public static ExperimentResult run(List<List<TwoDimensionalIntegerPoint>> trajectoryDataSet, final TreeMap<TwoDimensionalIntegerPoint, Double> rawDataStatistic, double cellLength, double inputLength, Integer gridSideLength, Double epsilon, TwoDimensionalDoublePoint leftBottomPoint, TwoDimensionalDoublePoint rightTopPoint) {
-        LDPTrace ldpTrace = new LDPTrace(gridSideLength, gridSideLength, epsilon, maxTravelDistance);
-
-        long startTime = System.currentTimeMillis();
-        TrajectoryEstimationStruct trajectoryEstimationStruct = trajectoryDisturbAndCollection(trajectoryDataSet, ldpTrace, leftBottomPoint, rightTopPoint);
-        ldpTrace.setTrajectoryEstimationStruct(trajectoryEstimationStruct);
-        List<List<TwoDimensionalIntegerPoint>> generatingTrajectoryList = new ArrayList<>(Constant.generatingTrajectorySizeFromSynthetic);
-        for (int i = 0; i < Constant.generatingTrajectorySizeFromSynthetic; ++i) {
-            generatingTrajectoryList.add(ldpTrace.trajectorySynthesis());
-        }
-        TreeMap<TwoDimensionalIntegerPoint, Double> estimationResult = TrajectoryCommonTool.statistic(generatingTrajectoryList, rawDataStatistic.keySet());
-        long endTime = System.currentTimeMillis();
-        long postProcessTime = endTime - startTime;
-        System.out.println("Total process time is " + postProcessTime);
-        //
-
-        ExperimentResult experimentResult = null;
-        Double wassersteinDistance1 = 0D;
-        Double wassersteinDistance2 = Sinkhorn.getWassersteinDistanceBySinkhorn(estimationResult, rawDataStatistic, 2, Constant.SINKHORN_LAMBDA, Constant.SINKHORN_LOWER_BOUND, Constant.SINKHORN_ITERATOR_UPPERBOUND);
-        Double klDivergence = 0D;
-        experimentResult = new ExperimentResult();
-        // 这里实际上是trajectorySize，变量名和Excel头就不改了
-        experimentResult.addPair(Constant.dataPointSizeKey, String.valueOf(trajectoryDataSet.size()));
-        experimentResult.addPair(Constant.schemeNameKey, Constant.diskSchemeKey);
-        experimentResult.addPair(Constant.postProcessTimeKey, String.valueOf(postProcessTime));
-        experimentResult.addPair(Constant.gridUnitSizeKey, String.valueOf(cellLength));
-        experimentResult.addPair(Constant.dataTypeSizeKey, String.valueOf(inputLength * inputLength));
-        experimentResult.addPair(Constant.sizeDKey, String.valueOf(0));
-        experimentResult.addPair(Constant.sizeBKey, String.valueOf(0));
-        experimentResult.addPair(Constant.privacyBudgetKey, String.valueOf(epsilon));
-        experimentResult.addPair(Constant.contributionKKey, String.valueOf(0));
-        experimentResult.addPair(Constant.wassersteinDistance1Key, String.valueOf(wassersteinDistance1));
-        experimentResult.addPair(Constant.wassersteinDistance2Key, String.valueOf(wassersteinDistance2));
-        experimentResult.addPair(Constant.klDivergenceKey, String.valueOf(klDivergence));
-        return experimentResult;
-    }
 }

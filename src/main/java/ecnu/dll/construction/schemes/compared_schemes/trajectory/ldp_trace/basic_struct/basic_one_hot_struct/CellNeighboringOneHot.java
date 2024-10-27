@@ -37,6 +37,10 @@ public class CellNeighboringOneHot extends OneHot<CellNeighboring> {
     @Override
     public void setElement(CellNeighboring cellNeighboring) {
         int index = CellNeighboringOneHotUtils.toOneHotIndex(cellNeighboring);
+        if (index < 0) {
+            // 过滤掉非法设置
+            return;
+        }
         this.data[index] = ONE;
     }
 

@@ -50,7 +50,7 @@ public class CellNeighboringUtils {
     }
 
     /**
-     * 返回相邻两点的相置位置
+     * 返回nextPoint在originalPoint邻域矩阵的坐标
      * @param nextPoint
      * @return
      */
@@ -63,7 +63,7 @@ public class CellNeighboringUtils {
         if (Math.abs(yIndexDiffer) > 1) {
             return null;
         }
-        // 这个结果可能返回(0,0)，代表重合
-        return new int[]{xIndexDiffer, yIndexDiffer};
+        // 这个结果可能返回(1,1)，代表重合
+        return new int[]{1 + xIndexDiffer, 1 + yIndexDiffer};
     }
 }

@@ -11,8 +11,10 @@ public class AbsolutePositionOneHot extends OneHot<TwoDimensionalIntegerPoint> {
     protected int rowSize;
     protected int colSize;
     public AbsolutePositionOneHot(int rowSize, int colSize) {
+        super(rowSize * colSize);
         this.rowSize = rowSize;
         this.colSize = colSize;
+
     }
     protected AbsolutePositionOneHot(boolean... booleans) {
         super(booleans);

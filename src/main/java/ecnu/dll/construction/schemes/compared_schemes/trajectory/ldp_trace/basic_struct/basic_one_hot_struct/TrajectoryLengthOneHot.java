@@ -28,6 +28,6 @@ public class TrajectoryLengthOneHot extends OneHot<Integer> {
 
 
     protected int toOneHotDataIndex(Integer integer) {
-        return integer;
+        return integer - 1;
     }
 }

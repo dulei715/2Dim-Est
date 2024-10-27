@@ -23,6 +23,7 @@ public class CellNeighboring {
     private int colSize;
     private TwoDimensionalIntegerPoint[][] cellNeighboringIndex;
 
+    // 记录方向的偏离位置，x，y坐标取值分别为0到2，
     private int[] directNeighboringInnerIndex;
 
     private CellNeighboring() {}

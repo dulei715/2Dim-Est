@@ -38,6 +38,14 @@ public class GridTools {
         return new int[]{xResultIndex, yResultIndex};
     }
 
+    /**
+     * 将double trajectory映射到其网格中
+     * @param doubleTrajectory
+     * @param gridSideLength
+     * @param leftBottomPoint
+     * @param rightTopPoint
+     * @return
+     */
     public static List<TwoDimensionalIntegerPoint> fromDoubleTrajectoryToGridTrajectory(List<TwoDimensionalDoublePoint> doubleTrajectory, Integer gridSideLength, TwoDimensionalDoublePoint leftBottomPoint, TwoDimensionalDoublePoint rightTopPoint) {
         List<TwoDimensionalIntegerPoint> result = new ArrayList<>(doubleTrajectory.size());
         TwoDimensionalIntegerPoint tempIntegerPoint;
@@ -47,5 +55,14 @@ public class GridTools {
         }
         return result;
     }
+
+    public static List<List<TwoDimensionalIntegerPoint>> fromDoubleTrajectoryListToGridTrajectoryList(List<List<TwoDimensionalDoublePoint>> doubleTrajectoryList, Integer gridSideLength, TwoDimensionalDoublePoint leftBottomPoint, TwoDimensionalDoublePoint rightTopPoint) {
+        List<List<TwoDimensionalIntegerPoint>> resultList = new ArrayList<>(doubleTrajectoryList.size());
+        for (List<TwoDimensionalDoublePoint> doubleTrajectory : doubleTrajectoryList) {
+            resultList.add(fromDoubleTrajectoryToGridTrajectory(doubleTrajectory, gridSideLength, leftBottomPoint, rightTopPoint));
+        }
+        return resultList;
+    }
+
 
 }

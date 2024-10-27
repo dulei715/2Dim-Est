@@ -129,6 +129,7 @@ public class Constant {
     // 实验相对路径
     public static String basicResultPath;
     public static String extendedResultPath;
+    public static String trajectoryResultPath;
 
     public static String damBudgetLPTableGeneratedTotalPath;
     public static String damBudgetLPTableGeneratedPathOnlyForBasic;
@@ -206,6 +207,7 @@ public class Constant {
         // 实验相对路径
         basicResultPath = StringUtil.join(ConstantValues.FILE_SPLIT, projectPath, "result");
         extendedResultPath = StringUtil.join(ConstantValues.FILE_SPLIT, projectPath, "result_extended");
+        trajectoryResultPath = StringUtil.join(ConstantValues.FILE_SPLIT, projectPath, "result_trajectory");
 
 
         damBudgetLPTableGeneratedTotalPath = StringUtil.join(ConstantValues.FILE_SPLIT, basicDatasetPath, "budgetLPTable", "damBudgetLPTable.txt");
@@ -335,6 +337,8 @@ public class Constant {
             StringUtil.join(ConstantValues.FILE_SPLIT, extendedResultPath, "nyc", "nycB"),
             StringUtil.join(ConstantValues.FILE_SPLIT, extendedResultPath, "nyc", "nycC")
     };
+    public static final String trajectoryOutputNYCDir = StringUtil.join(ConstantValues.FILE_SPLIT, trajectoryResultPath, "nyc");
+
     public static final String basicOutputNormalDir = StringUtil.join(ConstantValues.FILE_SPLIT, basicResultPath, "normal");
     public static final String extendedOutputNormalDir = StringUtil.join(ConstantValues.FILE_SPLIT, extendedResultPath, "normal");
     public static final String basicOutputZipfDir = StringUtil.join(ConstantValues.FILE_SPLIT, basicResultPath, "zipf");
@@ -452,6 +456,7 @@ public class Constant {
 //    public static final DataSetAreaInfo[] nycDataSetArray = new DataSetAreaInfo[]{
 //            new DataSetAreaInfo(nycPath, nycKey, 0.0, -75.1675,75.1676)
 //    };
+    public static final DataSetAreaInfo nycTrajectoryDataSet = ConfigureUtils.getDatasetInfoArray(basicDatasetPath, "nyc3")[0];
 
     public static final DataSetAreaInfo twoDimNormalDataSet = ConfigureUtils.getDatasetInfoArray(basicDatasetPath, "norm_2")[0];
 //    public static final DataSetAreaInfo twoDimNormalDataSet = new DataSetAreaInfo(normalPath, normalKey, -4.44, -4.87, 9.45);
@@ -464,7 +469,8 @@ public class Constant {
 
     // for trajectory
     public static final Integer SampleTrajectoryGridSideLength = 300;
-    public static final Integer TrajectorySamplingSize = 10000;
+//    public static final Integer TrajectorySamplingSize = 10000;
+    public static final Integer TrajectorySamplingSize = 1000;
     // 这里的轨迹长度是指轨迹中关注点的数量
     public static final Integer TrajectorySamplingLengthLowerBound = 2;
     public static final Integer TrajectorySamplingLengthUpperBound = 200;
