@@ -45,38 +45,51 @@ public class DataSetTrajectoryRun {
         TwoDimensionalDoublePoint rightTopPoint = new TwoDimensionalDoublePoint(xBound+inputSideLength, yBound + inputSideLength);
 
 
-        List<List<TwoDimensionalIntegerPoint>> integerTrajecotryList = GridTools.fromDoubleTrajectoryListToGridTrajectoryList(doubleTrajectoryList, (int)Math.round(Constant.DEFAULT_SIDE_LENGTH_NUMBER_SIZE_for_DAM_and_SubsetGeoI_Comparison), leftBottomPoint, rightTopPoint);
+        List<List<TwoDimensionalIntegerPoint>> integerTrajectoryList = GridTools.fromDoubleTrajectoryListToGridTrajectoryList(doubleTrajectoryList, (int)Math.round(Constant.DEFAULT_SIDE_LENGTH_NUMBER_SIZE_for_DAM_and_SubsetGeoI_Comparison), leftBottomPoint, rightTopPoint);
 //        List<TwoDimensionalIntegerPoint> integerPointList = Grid.toIntegerPoint(doublePointList, new Double[]{xBound, yBound}, inputSideLength / Constant.DEFAULT_SIDE_LENGTH_NUMBER_SIZE_for_DAM_and_SubsetGeoI_Comparison);
-        List<TwoDimensionalIntegerPoint> integerPointList = TrajectoryCommonTool.fromTrajectoryListToPointList(integerTrajecotryList);
+        List<TwoDimensionalIntegerPoint> integerPointList = TrajectoryCommonTool.fromTrajectoryListToPointList(integerTrajectoryList);
 
         List<TwoDimensionalIntegerPoint> integerPointTypeList = DiscretizedSchemeTool.getRawTwoDimensionalIntegerPointTypeList((int) Math.ceil(Constant.DEFAULT_SIDE_LENGTH_NUMBER_SIZE_for_DAM_and_SubsetGeoI_Comparison));
         TreeMap<TwoDimensionalIntegerPoint, Double> rawStatisticMap = StatisticTool.countHistogramRatioMap(integerPointTypeList, integerPointList);
 
-        String outputFileName;
-
-        System.out.println("Start altering budget run ...");
-        Map<String, List<ExperimentResult>> alteringBudgetResult = AlterParameterBudgetTrajectoryRun.run(integerTrajecotryList, inputSideLength, rawStatisticMap, xBound, yBound);
-        ExperimentResult.addPair(alteringBudgetResult, 1, Constant.areaLengthKey, String.valueOf(inputSideLength));
-        ExperimentResult.addPair(alteringBudgetResult, 0, Constant.dataSetNameKey, datasetName);
-        outputFileName = outputDir + ConstantValues.FILE_SPLIT + Constant.alterBudgetKey + ".csv";
-        ExperimentResultWrite.write(outputFileName, ExperimentResult.getCombineResultList(alteringBudgetResult));
-
-
-        System.out.println("Start altering g run ...");
-        Map<String, List<ExperimentResult>> alteringGResult = AlterParameterGTrajectoryRun.run(doubleTrajectoryList, inputSideLength, xBound, yBound);
-        ExperimentResult.addPair(alteringGResult, 0, Constant.dataSetNameKey, datasetName);
-        outputFileName = outputDir + ConstantValues.FILE_SPLIT + Constant.alterGKey + ".csv";
-        ExperimentResultWrite.write(outputFileName, ExperimentResult.getCombineResultList(alteringGResult));
-
+//        String outputFileName;
         Map<String, Map<String, List<ExperimentResult>>> datasetResult = new HashMap<>();
-        datasetResult.put(Constant.alterBudgetKey, alteringBudgetResult);
-        datasetResult.put(Constant.alterGKey, alteringGResult);
+
+        /**
+         * 执行budget变化
+         */
+        runAlteringBudget(datasetName, outputDir, xBound, yBound, inputSideLength, integerTrajectoryList, rawStatisticMap, datasetResult);
+        /**
+         * 执行g变化
+         */
+        runAlteringG(datasetName, outputDir, xBound, yBound, inputSideLength, doubleTrajectoryList, datasetResult);
 
         System.gc();
         Runtime.getRuntime().gc();
 
         return datasetResult;
 
+    }
+
+    private static void runAlteringG(String datasetName, String outputDir, double xBound, double yBound, double inputSideLength, List<List<TwoDimensionalDoublePoint>> doubleTrajectoryList, Map<String, Map<String, List<ExperimentResult>>> datasetResult) throws InstantiationException, IllegalAccessException, CloneNotSupportedException {
+        String outputFileName;
+        System.out.println("Start altering g run ...");
+        Map<String, List<ExperimentResult>> alteringGResult = AlterParameterGTrajectoryRun.run(doubleTrajectoryList, inputSideLength, xBound, yBound);
+        ExperimentResult.addPair(alteringGResult, 0, Constant.dataSetNameKey, datasetName);
+        outputFileName = outputDir + ConstantValues.FILE_SPLIT + Constant.alterGKey + ".csv";
+        ExperimentResultWrite.write(outputFileName, ExperimentResult.getCombineResultList(alteringGResult));
+        datasetResult.put(Constant.alterGKey, alteringGResult);
+    }
+
+    private static void runAlteringBudget(String datasetName, String outputDir, double xBound, double yBound, double inputSideLength, List<List<TwoDimensionalIntegerPoint>> integerTrajecotryList, TreeMap<TwoDimensionalIntegerPoint, Double> rawStatisticMap, Map<String, Map<String, List<ExperimentResult>>> datasetResult) throws InstantiationException, IllegalAccessException, CloneNotSupportedException {
+        String outputFileName;
+        System.out.println("Start altering budget run ...");
+        Map<String, List<ExperimentResult>> alteringBudgetResult = AlterParameterBudgetTrajectoryRun.run(integerTrajecotryList, inputSideLength, rawStatisticMap, xBound, yBound);
+        ExperimentResult.addPair(alteringBudgetResult, 1, Constant.areaLengthKey, String.valueOf(inputSideLength));
+        ExperimentResult.addPair(alteringBudgetResult, 0, Constant.dataSetNameKey, datasetName);
+        outputFileName = outputDir + ConstantValues.FILE_SPLIT + Constant.alterBudgetKey + ".csv";
+        ExperimentResultWrite.write(outputFileName, ExperimentResult.getCombineResultList(alteringBudgetResult));
+        datasetResult.put(Constant.alterBudgetKey, alteringBudgetResult);
     }
 
     public static void main(String[] args) {

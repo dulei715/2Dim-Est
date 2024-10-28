@@ -90,6 +90,7 @@ public class Constant {
     public static double[] ALTER_SIDE_LENGTH_NUMBER_SIZE;
 
     public static double[] ALTER_SIDE_LENGTH_NUMBER_SIZE_for_DAM_and_SubsetGeoI_Comparison;
+    public static double[] ALTER_SIDE_LENGTH_NUMBER_SIZE_for_DAM_and_Trajectory_Comparison;
 
     public static final double[] ALTER_SIDE_LENGTH_NUMBER_SIZE_for_DAM_and_SubsetGeoI_Comparison_for_KL_Divergence = new double[] { 10.0, 15.0, 20.0, 25.0, 30.0 };
 
@@ -176,6 +177,7 @@ public class Constant {
 
             ALTER_SIDE_LENGTH_NUMBER_SIZE = BasicArrayUtil.toDouArray(PropertyUtil.getValueArryStringByKey(properties, "ALTER_SIDE_LENGTH_NUMBER_SIZE", Constant.propertySplit));
             ALTER_SIDE_LENGTH_NUMBER_SIZE_for_DAM_and_SubsetGeoI_Comparison = BasicArrayUtil.toDouArray(PropertyUtil.getValueArryStringByKey(properties, "ALTER_SIDE_LENGTH_NUMBER_SIZE_for_DAM_and_SubsetGeoI_Comparison", Constant.propertySplit));
+            ALTER_SIDE_LENGTH_NUMBER_SIZE_for_DAM_and_Trajectory_Comparison = BasicArrayUtil.toDouArray(PropertyUtil.getValueArryStringByKey(properties, "ALTER_SIDE_LENGTH_NUMBER_SIZE_for_DAM_and_Trajectory_Comparison", Constant.propertySplit));
 
             DEFAULT_PRIVACY_BUDGET = Double.valueOf(properties.getProperty("DEFAULT_PRIVACY_BUDGET"));
             DEFAULT_PRIVACY_BUDGET_for_b_change = Double.valueOf(properties.getProperty("DEFAULT_PRIVACY_BUDGET_for_b_change"));

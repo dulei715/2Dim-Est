@@ -31,7 +31,8 @@ public class AlterParameterGTrajectoryRun {
         /*
             1. 设置cell大小的变化参数（同时也是设置整数input的边长大小）
          */
-        double[] cellQuantityInSideLength = Constant.ALTER_SIDE_LENGTH_NUMBER_SIZE_for_DAM_and_SubsetGeoI_Comparison;
+//        double[] cellQuantityInSideLength = Constant.ALTER_SIDE_LENGTH_NUMBER_SIZE_for_DAM_and_SubsetGeoI_Comparison;
+        double[] cellQuantityInSideLength = Constant.ALTER_SIDE_LENGTH_NUMBER_SIZE_for_DAM_and_Trajectory_Comparison;
         double[] unitCellLength = new double[arraySize];
         for (int i = 0; i < unitCellLength.length; i++) {
             // 记录每种参数下一个网格的cell的具体长度
