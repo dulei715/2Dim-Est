@@ -45,6 +45,9 @@ public class TrajectoryExponentialMechanism extends ExponentialMechanism<TwoDime
 
     @Override
     public TwoDimensionalDoublePoint disturb(TwoDimensionalDoublePoint inputElement) {
+        if (this.inputList.size() == 0) {
+            throw new RuntimeException("The input domain is zero!");
+        }
         if (!this.inputList.contains(inputElement)) {
             return this.inputList.get(RandomUtil.getRandomInteger(0, this.inputList.size() - 1));
         }

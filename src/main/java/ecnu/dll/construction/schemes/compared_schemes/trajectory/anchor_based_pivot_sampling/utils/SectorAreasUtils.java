@@ -63,9 +63,10 @@ public class SectorAreasUtils {
         double pointY = point.getYIndex();
         List<Line> sortedBorderLineList = sectorAreas.getSectorBorderSortedLineList();
 
-//        if (areaIndex >= sectorAreas.getAreaList().size()) {
-//            System.out.println("haha");
-//        }
+        if (areaIndex >= sectorAreas.getAreaList().size()) {
+            // 增强
+            return false;
+        }
 
         BasicPair<Integer, Integer> areaStatus = sectorAreas.getAreaList().get(areaIndex);
         int[] lineIndexes = SectorAreasUtils.fromAreaIndexToLineIndexes(areaIndex, sortedBorderLineList.size());

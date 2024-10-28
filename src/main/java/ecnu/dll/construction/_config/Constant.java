@@ -471,6 +471,7 @@ public class Constant {
     public static final Integer SampleTrajectoryGridSideLength = 300;
 //    public static final Integer TrajectorySamplingSize = 10000;
     public static final Integer TrajectorySamplingSize = 1000;
+//    public static final Integer TrajectorySamplingSize = 10;
     // 这里的轨迹长度是指轨迹中关注点的数量
     public static final Integer TrajectorySamplingLengthLowerBound = 2;
     public static final Integer TrajectorySamplingLengthUpperBound = 200;

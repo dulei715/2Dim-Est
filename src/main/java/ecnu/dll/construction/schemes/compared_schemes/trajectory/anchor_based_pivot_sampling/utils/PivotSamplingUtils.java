@@ -7,6 +7,7 @@ import cn.edu.dll.differential_privacy.ldp.frequency_oracle.foImp.GeneralizedRan
 import cn.edu.dll.geometry.Line;
 import cn.edu.dll.geometry.LineUtils;
 import cn.edu.dll.struct.pair.BasicPair;
+import cn.edu.dll.struct.pair.IdentityPair;
 import cn.edu.dll.struct.point.TwoDimensionalDoublePoint;
 import cn.edu.dll.struct.point.TwoDimensionalDoublePointUtils;
 import ecnu.dll.construction.schemes.compared_schemes.trajectory.anchor_based_pivot_sampling.basic_struct.SectorAreas;
@@ -191,7 +192,14 @@ public class PivotSamplingUtils {
         return resultSectorSize;
     }
 
-    public static List<List<SectorAreas>> getNeighboringList(List<TwoDimensionalDoublePoint> trajectory, Integer optimalSectorSize) {
+    /**
+     * 给定一个轨迹上的所有有效点，返回所有点的到其邻节点的SectorArea
+     * @param trajectory
+     * @param optimalSectorSize
+     * @return
+     */
+    @Deprecated
+    public static List<List<SectorAreas>> getNeighboringList_before(List<TwoDimensionalDoublePoint> trajectory, Integer optimalSectorSize) {
         TwoDimensionalDoublePoint currentPoint;
         List<SectorAreas> tempNeighboringList;
         int trajectorySize = trajectory.size();
@@ -214,6 +222,37 @@ public class PivotSamplingUtils {
             neighboringList.add(tempNeighboringList);
         }
         return neighboringList;
+    }
+    /**
+     * 给定一个轨迹上的所有有效点，返回所有点的到其邻节点的SectorArea
+     * 这里用双重映射方便存取
+     * IdentityPair<Integer>记录两个键key_1和key_2
+     * 外层key_1代表以trajectory中第key个位置点为pivot点
+     * key_2代表以trajectory中第key_2个点作为target点
+     * currentPoint代表从pivot点到target点的sectorAreas
+     * @param trajectory
+     * @param optimalSectorSize
+     * @return
+     */
+    public static Map<IdentityPair<Integer>, SectorAreas> getNeighboringList(List<TwoDimensionalDoublePoint> trajectory, Integer optimalSectorSize) {
+        TwoDimensionalDoublePoint currentPoint;
+        // 外层Map每个位置对应trajectory上的一个点，内层Map要么是一个元素要么是两个元素
+        Map<IdentityPair<Integer>, SectorAreas> neighboringMap = new TreeMap<>();
+        int trajectorySize = trajectory.size();
+        for (int i = 0; i < trajectorySize; ++i) {
+            currentPoint = trajectory.get(i);
+            if (i > 0) {
+                neighboringMap.put(new IdentityPair<>(i ,i - 1), new SectorAreas(currentPoint, trajectory.get(i - 1), optimalSectorSize));
+            }
+            if (i < trajectorySize - 1) {
+                neighboringMap.put(new IdentityPair<>(i, i + 1), new SectorAreas(currentPoint, trajectory.get(i + 1), optimalSectorSize));
+            }
+        }
+        return neighboringMap;
+    }
+
+    public static SectorAreas generateSectorAreas(TwoDimensionalDoublePoint pivotPoint, TwoDimensionalDoublePoint targetPoint, Integer optimalSectorSize) {
+        return new SectorAreas(pivotPoint, targetPoint, optimalSectorSize);
     }
 
 }

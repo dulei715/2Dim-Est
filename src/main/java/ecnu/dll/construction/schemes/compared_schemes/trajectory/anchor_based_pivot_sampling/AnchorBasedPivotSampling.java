@@ -155,12 +155,12 @@ public class AnchorBasedPivotSampling extends PivotSampling{
         Double epsilonRegion = 0.25 * privacyBudget;
         Double epsilonPivot = privacyBudget - epsilonRegion;
 
-        List<List<SectorAreas>> neighboringList = PivotSamplingUtils.getNeighboringList(trajectory, optimalSectorSize);
+//        List<List<SectorAreas>> neighboringList = PivotSamplingUtils.getNeighboringList(trajectory, optimalSectorSize);
 
         List<TwoDimensionalDoublePoint> regionA = restrictTrajectoryRegion(trajectory, epsilonRegion / 2);
         List<TwoDimensionalDoublePoint> regionB = restrictTrajectoryRegion(trajectory, epsilonRegion / 2);
-        List<TwoDimensionalDoublePoint> perturbedTrajectoryA = super.independentAndPivotPerturbation(trajectory, regionA, epsilonPivot / 2, neighboringList, FlagFirstPivot);
-        List<TwoDimensionalDoublePoint> perturbedTrajectoryB = super.independentAndPivotPerturbation(trajectory, regionB, epsilonPivot / 2, neighboringList, FlagFirstTarget);
+        List<TwoDimensionalDoublePoint> perturbedTrajectoryA = super.independentAndPivotPerturbation(trajectory, regionA, optimalSectorSize, epsilonPivot / 2, FlagFirstPivot);
+        List<TwoDimensionalDoublePoint> perturbedTrajectoryB = super.independentAndPivotPerturbation(trajectory, regionB, optimalSectorSize, epsilonPivot / 2, FlagFirstTarget);
         Set<TwoDimensionalDoublePoint> regionSet = new HashSet<>();
         regionSet.addAll(regionA);
         regionSet.addAll(regionB);

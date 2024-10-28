@@ -24,7 +24,9 @@ public class PivotTraceRun {
         List<TwoDimensionalIntegerPoint> tempEstimationIntegerTrajectory;
         long startTime = System.currentTimeMillis();
         AnchorBasedPivotSampling pivotTrace = new AnchorBasedPivotSampling(basicDoublePointList);
+        int k = 0;
         for (List<TwoDimensionalIntegerPoint> integerTrajectory : trajectoryDataSet) {
+            System.out.println("start pivot trace trajectory " + (k++) + "...");
             tempDoubleTrajectory = TwoDimensionalDoublePointUtils.toSimpleDoublePoint(integerTrajectory);
             tempEstimationDoubleTrajectory = pivotTrace.execute(tempDoubleTrajectory, epsilon);
             tempEstimationIntegerTrajectory = TwoDimensionalIntegerPointUtils.toSimpleIntegerPoint(tempEstimationDoubleTrajectory);

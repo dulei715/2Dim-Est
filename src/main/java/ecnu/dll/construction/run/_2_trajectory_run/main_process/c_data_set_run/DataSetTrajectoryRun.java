@@ -54,6 +54,7 @@ public class DataSetTrajectoryRun {
 
         String outputFileName;
 
+        System.out.println("Start altering budget run ...");
         Map<String, List<ExperimentResult>> alteringBudgetResult = AlterParameterBudgetTrajectoryRun.run(integerTrajecotryList, inputSideLength, rawStatisticMap, xBound, yBound);
         ExperimentResult.addPair(alteringBudgetResult, 1, Constant.areaLengthKey, String.valueOf(inputSideLength));
         ExperimentResult.addPair(alteringBudgetResult, 0, Constant.dataSetNameKey, datasetName);
@@ -61,6 +62,7 @@ public class DataSetTrajectoryRun {
         ExperimentResultWrite.write(outputFileName, ExperimentResult.getCombineResultList(alteringBudgetResult));
 
 
+        System.out.println("Start altering g run ...");
         Map<String, List<ExperimentResult>> alteringGResult = AlterParameterGTrajectoryRun.run(doubleTrajectoryList, inputSideLength, xBound, yBound);
         ExperimentResult.addPair(alteringGResult, 0, Constant.dataSetNameKey, datasetName);
         outputFileName = outputDir + ConstantValues.FILE_SPLIT + Constant.alterGKey + ".csv";

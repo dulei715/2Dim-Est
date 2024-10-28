@@ -25,6 +25,7 @@ public class LDPTraceRun {
 
     private static final Integer maxTravelDistance = Constant.TrajectorySamplingLengthUpperBound;
 
+    private static Integer sampleSize = Constant.generatingTrajectorySizeFromSynthetic;
 
     public static ExperimentResult run(List<List<TwoDimensionalIntegerPoint>> trajectoryDataSet, final TreeMap<TwoDimensionalIntegerPoint, Double> rawDataStatistic, double unitCellLength, double inputLength, Double epsilon) {
         Integer gridSideLength = (int)Math.round(inputLength / unitCellLength);
@@ -33,8 +34,8 @@ public class LDPTraceRun {
         long startTime = System.currentTimeMillis();
         TrajectoryEstimationStruct trajectoryEstimationStruct = trajectoryDisturbAndCollection(trajectoryDataSet, ldpTrace);
         ldpTrace.setTrajectoryEstimationStruct(trajectoryEstimationStruct);
-        List<List<TwoDimensionalIntegerPoint>> generatingTrajectoryList = new ArrayList<>(Constant.generatingTrajectorySizeFromSynthetic);
-        for (int i = 0; i < Constant.generatingTrajectorySizeFromSynthetic; ++i) {
+        List<List<TwoDimensionalIntegerPoint>> generatingTrajectoryList = new ArrayList<>(sampleSize);
+        for (int i = 0; i < sampleSize; ++i) {
             generatingTrajectoryList.add(ldpTrace.trajectorySynthesis());
         }
         TreeMap<TwoDimensionalIntegerPoint, Double> estimationResult = TrajectoryCommonTool.statistic(generatingTrajectoryList, rawDataStatistic.keySet());

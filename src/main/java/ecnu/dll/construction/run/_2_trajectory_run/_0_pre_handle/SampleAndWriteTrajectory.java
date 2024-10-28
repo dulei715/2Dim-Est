@@ -13,16 +13,16 @@ import java.util.List;
 
 public class SampleAndWriteTrajectory {
 
+    private static final Integer bufferSize = 10;
 
-
-    private static void sampleAndWriteTrajectoryWithGivenBuffer(Integer bufferSize) {
+    private static void sampleAndWriteTrajectoryWithGivenBuffer() {
         DataSetAreaInfo datasetInfo = Constant.nycDataSet;
 
         Integer trajectorySamplingLengthLowerBound = Constant.TrajectorySamplingLengthLowerBound;
         Integer trajectorySamplingLengthUpperBound = Constant.TrajectorySamplingLengthUpperBound;
         // 这里的值为10000
         Integer trajectorySamplingSize = Constant.TrajectorySamplingSize;
-//        Integer trajectorySamplingSize = 20;
+//        Integer trajectorySamplingSize = sampleSize;
         // 这里的值为50
         Integer sampleGridSideLength = Constant.SampleTrajectoryGridSideLength;
 //        Integer sampleGridSideLength = 100;
@@ -63,7 +63,7 @@ public class SampleAndWriteTrajectory {
     }
 
     public static void main(String[] args) {
-        sampleAndWriteTrajectoryWithGivenBuffer(10);
+        sampleAndWriteTrajectoryWithGivenBuffer();
 
     }
 }

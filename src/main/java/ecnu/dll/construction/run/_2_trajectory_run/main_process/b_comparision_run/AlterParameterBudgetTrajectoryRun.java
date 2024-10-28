@@ -20,7 +20,7 @@ import java.util.*;
 public class AlterParameterBudgetTrajectoryRun {
     public static Map<String, List<ExperimentResult>> run(final List<List<TwoDimensionalIntegerPoint>> integerTrajectoryData, double inputSideLength, final TreeMap<TwoDimensionalIntegerPoint, Double> rawDataStatistic, double xBound, double yBound) throws InstantiationException, IllegalAccessException, CloneNotSupportedException {
 //        String inputDataPath = Constant.DEFAULT_INPUT_PATH;
-
+//        System.out.println("Start altering budget run ...");
         int arraySize = Constant.ALTER_PRIVACY_BUDGET_ARRAY_for_DAM_and_SubsetGeoI_Comparison.length;
         /*
             1. 设置cell大小的参数（同时也是设置整数input的边长大小）
@@ -70,15 +70,19 @@ public class AlterParameterBudgetTrajectoryRun {
 
             System.out.println("Privacy Budget is " + epsilonArray[i] + ", Input Length Size is " + inputLengthSize);
 
+
+            // for ldpTrace
+            System.out.println("Start LDP Trace...");
+            tempLDPTraceExperimentResult = LDPTraceRun.run(integerTrajectoryData, rawDataStatistic, gridLength, inputSideLength, epsilonArray[i]);
+            ldpTraceExperimentResultList.add(tempLDPTraceExperimentResult);
+
+            System.out.println("Start Pivot Trace...");
             // for pivotTrace
             tempPivotTraceExperimentResult = PivotTraceRun.run(integerTrajectoryData, rawDataStatistic, gridLength, inputSideLength, epsilonArray[i]);
             pivotTraceExperimentResultList.add(tempPivotTraceExperimentResult);
 
-            // for ldpTrace
-            tempLDPTraceExperimentResult = LDPTraceRun.run(integerTrajectoryData, rawDataStatistic, gridLength, inputSideLength, epsilonArray[i]);
-            ldpTraceExperimentResultList.add(tempLDPTraceExperimentResult);
-
             // for DAM
+            System.out.println("Start DAM...");
             tempDiskExperimentResult = DAMRun.run(integerPointList, rawDataStatistic, gridLength, inputSideLength, alterDiskOptimalSizeB[i]*gridLength, epsilonArray[i], kParameter, xBound, yBound);
             diskExperimentResultList.add(tempDiskExperimentResult);
         }
