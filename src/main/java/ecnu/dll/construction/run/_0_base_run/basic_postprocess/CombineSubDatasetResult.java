@@ -119,17 +119,6 @@ public class CombineSubDatasetResult {
     }
 
 
-    public static void main(String[] args) throws ClassNotFoundException, InvocationTargetException, NoSuchMethodException, IllegalAccessException, InstantiationException {
-        composeAllBasicRepeat();
-        combineAllBasicPart();
-
-//        composeAllExtendedRepeat();
-//        combineAllExtendedPart();
-
-//        composeAllExtendedRepeatForKLDivergence();
-//        combineAllExtendedPart();
-
-    }
     public static void main0(String[] args) {
         String[] inputArrayParentPath = new String[]{
                 "F:\\dataset\\test\\result\\crime\\crimeA",
@@ -153,5 +142,16 @@ public class CombineSubDatasetResult {
             tempOutputFilePath = outputParentPath + "\\" + fileName;
             FileTool.combineFilesWithTheSameFirstLine(tempInputFilePathArray, tempOutputFilePath);
         }
+    }
+    public static void main(String[] args) throws ClassNotFoundException, InvocationTargetException, NoSuchMethodException, IllegalAccessException, InstantiationException {
+        composeAllBasicRepeat();
+        combineAllBasicPart();
+
+//        composeAllExtendedRepeat();
+//        combineAllExtendedPart();
+
+//        composeAllExtendedRepeatForKLDivergence();
+//        combineAllExtendedPart();
+
     }
 }

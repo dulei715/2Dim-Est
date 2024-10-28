@@ -321,23 +321,23 @@ public class Constant {
     // 记录dataset输出父路径
     public static final String[] basicOutputCrimeDirArray = new String[] {
             StringUtil.join(ConstantValues.FILE_SPLIT, basicResultPath, "crime", "crimeA"),
-            StringUtil.join(ConstantValues.FILE_SPLIT, basicResultPath, "crime", "crimeB"),
-            StringUtil.join(ConstantValues.FILE_SPLIT, basicResultPath, "crime", "crimeC")
+//            StringUtil.join(ConstantValues.FILE_SPLIT, basicResultPath, "crime", "crimeB"),
+//            StringUtil.join(ConstantValues.FILE_SPLIT, basicResultPath, "crime", "crimeC")
     };
     public static final String[] extendedOutputCrimeDirArray = new String[] {
             StringUtil.join(ConstantValues.FILE_SPLIT, extendedResultPath, "crime", "crimeA"),
-            StringUtil.join(ConstantValues.FILE_SPLIT, extendedResultPath, "crime", "crimeB"),
-            StringUtil.join(ConstantValues.FILE_SPLIT, extendedResultPath, "crime", "crimeC")
+//            StringUtil.join(ConstantValues.FILE_SPLIT, extendedResultPath, "crime", "crimeB"),
+//            StringUtil.join(ConstantValues.FILE_SPLIT, extendedResultPath, "crime", "crimeC")
     };
     public static final String[] basicOutputNYCDirArray = new String[] {
             StringUtil.join(ConstantValues.FILE_SPLIT, basicResultPath, "nyc", "nycA"),
-            StringUtil.join(ConstantValues.FILE_SPLIT, basicResultPath, "nyc", "nycB"),
-            StringUtil.join(ConstantValues.FILE_SPLIT, basicResultPath, "nyc", "nycC")
+//            StringUtil.join(ConstantValues.FILE_SPLIT, basicResultPath, "nyc", "nycB"),
+//            StringUtil.join(ConstantValues.FILE_SPLIT, basicResultPath, "nyc", "nycC")
     };
     public static final String[] extendedOutputNYCDirArray = new String[] {
             StringUtil.join(ConstantValues.FILE_SPLIT, extendedResultPath, "nyc", "nycA"),
-            StringUtil.join(ConstantValues.FILE_SPLIT, extendedResultPath, "nyc", "nycB"),
-            StringUtil.join(ConstantValues.FILE_SPLIT, extendedResultPath, "nyc", "nycC")
+//            StringUtil.join(ConstantValues.FILE_SPLIT, extendedResultPath, "nyc", "nycB"),
+//            StringUtil.join(ConstantValues.FILE_SPLIT, extendedResultPath, "nyc", "nycC")
     };
     public static final String trajectoryOutputNYCDir = StringUtil.join(ConstantValues.FILE_SPLIT, trajectoryResultPath, "nyc");
 

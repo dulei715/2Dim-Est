@@ -26,5 +26,19 @@ set(findobj('FontSize',10),'FontSize',figure_FontSize);
 %ylabel('y (km)');
 xlabel('x');
 ylabel('y');
+
+%for crime
+%xlim([roundn(min(points(:,1)),-1) 42.05]);
+%ylim([roundn(min(points(:,2)),-1) -87.5]);
+
+%for nyc
+%xlim([40.53 41]);
+%ylim([-74.06 -73.7]);
+
+%for multi_normal
+xlim([-5 6.6]);
+ylim([-5 6.6]);
+
+%set(gca,'XTick',roundn(x,-1));
 %axis equal;
 %hold off;

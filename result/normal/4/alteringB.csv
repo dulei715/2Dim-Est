@@ -1,0 +1,6 @@
+DataSetName,DataPointSize,AreaLength,SchemeName,PostProcessTime,GridUnitSize,DataTypeSize,SizeD,SizeB,PrivacyBudget,ContributionK,WassersteinDistance1,WassersteinDistance2,KLDivergence
+TwoDimNormal,231114,9.45,disk,25315,0.63,225,15,1,3.5,0.25,0.0,1.1947309797575338,0.0
+TwoDimNormal,231114,9.45,disk,38511,0.63,225,15,2,3.5,0.25,0.0,1.0220446913781998,0.0
+TwoDimNormal,231114,9.45,disk,34686,0.63,225,15,3,3.5,0.25,0.0,1.0705066626097297,0.0
+TwoDimNormal,231114,9.45,disk,25273,0.63,225,15,4,3.5,0.25,0.0,1.154951458247466,0.0
+TwoDimNormal,231114,9.45,disk,26844,0.63,225,15,5,3.5,0.25,0.0,1.2444967709820811,0.0

@@ -1,0 +1,11 @@
+DataSetName,DataPointSize,AreaLength,SchemeName,PostProcessTime,GridUnitSize,DataTypeSize,SizeD,SizeB,PrivacyBudget,ContributionK,WassersteinDistance1,WassersteinDistance2,KLDivergence
+TwoDimMultiCenterNormal,266110,10.76,disk,1196,2.152,25,5,1,3.5,0.0,0.0,0.15672265451193326,0.0
+TwoDimMultiCenterNormal,266110,10.76,disk,79,2.152,25,5,1,3.5,0.25,0.0,0.867002407735138,0.0
+TwoDimMultiCenterNormal,266110,10.76,disk,78,2.152,25,5,1,3.5,0.5,0.0,0.9362629072703513,0.0
+TwoDimMultiCenterNormal,266110,10.76,disk,78,2.152,25,5,1,3.5,0.75,0.0,0.9666637016303267,0.0
+TwoDimMultiCenterNormal,266110,10.76,disk,77,2.152,25,5,1,3.5,1.0,0.0,0.9813645300709654,0.0
+TwoDimMultiCenterNormal,266110,10.76,hue,1518,2.152,25,5,1,3.5,0.0,0.0,0.3031820968516901,0.0
+TwoDimMultiCenterNormal,266110,10.76,hue,68,2.152,25,5,1,3.5,0.25,0.0,1.249285540667307,0.0
+TwoDimMultiCenterNormal,266110,10.76,hue,72,2.152,25,5,1,3.5,0.5,0.0,1.2732980500218936,0.0
+TwoDimMultiCenterNormal,266110,10.76,hue,70,2.152,25,5,1,3.5,0.75,0.0,1.2803908962606392,0.0
+TwoDimMultiCenterNormal,266110,10.76,hue,69,2.152,25,5,1,3.5,1.0,0.0,1.2857668522182608,0.0
