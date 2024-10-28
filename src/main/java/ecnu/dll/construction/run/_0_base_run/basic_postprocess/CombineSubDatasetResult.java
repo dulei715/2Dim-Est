@@ -144,11 +144,11 @@ public class CombineSubDatasetResult {
         }
     }
     public static void main(String[] args) throws ClassNotFoundException, InvocationTargetException, NoSuchMethodException, IllegalAccessException, InstantiationException {
-        composeAllBasicRepeat();
-        combineAllBasicPart();
+//        composeAllBasicRepeat();
+//        combineAllBasicPart();
 
-//        composeAllExtendedRepeat();
-//        combineAllExtendedPart();
+        composeAllExtendedRepeat();
+        combineAllExtendedPart();
 
 //        composeAllExtendedRepeatForKLDivergence();
 //        combineAllExtendedPart();

@@ -1,6 +1,0 @@
-DataSetName,DataPointSize,AreaLength,SchemeName,PostProcessTime,GridUnitSize,DataTypeSize,SizeD,SizeB,PrivacyBudget,ContributionK,WassersteinDistance1,WassersteinDistance2,KLDivergence
-Chicago,101146,0.36,disk,45688,0.024,225,15,1,3.5,0.25,0.0,0.9443446000686739,0.0
-Chicago,101146,0.36,disk,35902,0.024,225,15,2,3.5,0.25,0.0,0.8214226271031649,0.0
-Chicago,101146,0.36,disk,67626,0.024,225,15,3,3.5,0.25,0.0,0.8639302985115244,0.0
-Chicago,101146,0.36,disk,33929,0.024,225,15,4,3.5,0.25,0.0,0.8891516536790075,0.0
-Chicago,101146,0.36,disk,51004,0.024,225,15,5,3.5,0.25,0.0,0.9323950331820661,0.0
