@@ -82,6 +82,8 @@ public class Constant {
     public static Double DEFAULT_SIDE_LENGTH_NUMBER_SIZE;
 
     public static Double DEFAULT_SIDE_LENGTH_NUMBER_SIZE_for_DAM_and_SubsetGeoI_Comparison;
+    public static Double DEFAULT_SIDE_LENGTH_NUMBER_SIZE_for_DAM_and_Trajectory_Comparison;
+
 
     public static final double DEFAULT_SIDE_LENGTH_NUMBER_SIZE_for_DAM_and_SubsetGeoI_Comparison_for_KL_Divergence = 20.0;
 
@@ -103,6 +105,7 @@ public class Constant {
     public static Double DEFAULT_PRIVACY_BUDGET;    // todo: version 2
     public static Double DEFAULT_PRIVACY_BUDGET_for_b_change;
     public static Double DEFAULT_PRIVACY_BUDGET_for_DAM_and_SubsetGeoI_Comparison;  // todo: version 8
+    public static Double DEFAULT_PRIVACY_BUDGET_for_DAM_and_Trajectory_Comparison;  // todo: version 8
 
     public static final double DEFAULT_PRIVACY_BUDGET_for_DAM_and_SubsetGeoI_Comparison_for_KL_Divergence = 6.0; // 要取最大的
 
@@ -110,6 +113,7 @@ public class Constant {
     public static double[] ALTER_PRIVACY_BUDGET_ARRAY ;
     public static double[] ALTER_PRIVACY_BUDGET_ARRAY_for_DAM_and_SubsetGeoI_Comparison;
     public static final double[] ALTER_PRIVACY_BUDGET_ARRAY_for_DAM_and_SubsetGeoI_Comparison_for_KL_Divergence = new double[] { 6.0, 6.7, 7.4, 8.1, 8.8 };
+    public static double[] ALTER_PRIVACY_BUDGET_ARRAY_for_DAM_and_Trajectory_Comparison;
 
     //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -174,6 +178,7 @@ public class Constant {
             DEFAULT_SIDE_LENGTH_NUMBER_SIZE_for_b_change = Double.valueOf(properties.getProperty("DEFAULT_SIDE_LENGTH_NUMBER_SIZE_for_b_change"));
             DEFAULT_SIDE_LENGTH_NUMBER_SIZE = Double.valueOf(properties.getProperty("DEFAULT_SIDE_LENGTH_NUMBER_SIZE"));
             DEFAULT_SIDE_LENGTH_NUMBER_SIZE_for_DAM_and_SubsetGeoI_Comparison = Double.valueOf(properties.getProperty("DEFAULT_SIDE_LENGTH_NUMBER_SIZE_for_DAM_and_SubsetGeoI_Comparison"));
+            DEFAULT_SIDE_LENGTH_NUMBER_SIZE_for_DAM_and_Trajectory_Comparison = Double.valueOf(properties.getProperty("DEFAULT_SIDE_LENGTH_NUMBER_SIZE_for_DAM_and_Trajectory_Comparison"));
 
             ALTER_SIDE_LENGTH_NUMBER_SIZE = BasicArrayUtil.toDouArray(PropertyUtil.getValueArryStringByKey(properties, "ALTER_SIDE_LENGTH_NUMBER_SIZE", Constant.propertySplit));
             ALTER_SIDE_LENGTH_NUMBER_SIZE_for_DAM_and_SubsetGeoI_Comparison = BasicArrayUtil.toDouArray(PropertyUtil.getValueArryStringByKey(properties, "ALTER_SIDE_LENGTH_NUMBER_SIZE_for_DAM_and_SubsetGeoI_Comparison", Constant.propertySplit));
@@ -182,9 +187,11 @@ public class Constant {
             DEFAULT_PRIVACY_BUDGET = Double.valueOf(properties.getProperty("DEFAULT_PRIVACY_BUDGET"));
             DEFAULT_PRIVACY_BUDGET_for_b_change = Double.valueOf(properties.getProperty("DEFAULT_PRIVACY_BUDGET_for_b_change"));
             DEFAULT_PRIVACY_BUDGET_for_DAM_and_SubsetGeoI_Comparison = Double.valueOf(properties.getProperty("DEFAULT_PRIVACY_BUDGET_for_DAM_and_SubsetGeoI_Comparison"));
+            DEFAULT_PRIVACY_BUDGET_for_DAM_and_Trajectory_Comparison = Double.valueOf(properties.getProperty("DEFAULT_PRIVACY_BUDGET_for_DAM_and_Trajectory_Comparison"));
 
             ALTER_PRIVACY_BUDGET_ARRAY = BasicArrayUtil.toDouArray(PropertyUtil.getValueArryStringByKey(properties, "ALTER_PRIVACY_BUDGET_ARRAY", Constant.propertySplit));
             ALTER_PRIVACY_BUDGET_ARRAY_for_DAM_and_SubsetGeoI_Comparison = BasicArrayUtil.toDouArray(PropertyUtil.getValueArryStringByKey(properties, "ALTER_PRIVACY_BUDGET_ARRAY_for_DAM_and_SubsetGeoI_Comparison", Constant.propertySplit));
+            ALTER_PRIVACY_BUDGET_ARRAY_for_DAM_and_Trajectory_Comparison = BasicArrayUtil.toDouArray(PropertyUtil.getValueArryStringByKey(properties, "ALTER_PRIVACY_BUDGET_ARRAY_for_DAM_and_Trajectory_Comparison", Constant.propertySplit));
 
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -278,6 +285,10 @@ public class Constant {
             alterBudgetKey,
             alterGKey
     };
+    public static final String[] trajectoryAlterKeyArray = new String[] {
+            alterBudgetKey,
+            alterGKey
+    };
 
     // 记录数据集名称
 //    public static final String chicagoAKey = "ChicagoA";
@@ -336,6 +347,11 @@ public class Constant {
     };
     public static final String[] extendedOutputNYCDirArray = new String[] {
             StringUtil.join(ConstantValues.FILE_SPLIT, extendedResultPath, "nyc", "nycA"),
+//            StringUtil.join(ConstantValues.FILE_SPLIT, extendedResultPath, "nyc", "nycB"),
+//            StringUtil.join(ConstantValues.FILE_SPLIT, extendedResultPath, "nyc", "nycC")
+    };
+    public static final String[] trajectoryOutputNYCDirArray = new String[] {
+            StringUtil.join(ConstantValues.FILE_SPLIT, trajectoryResultPath, "nyc", "nycA"),
 //            StringUtil.join(ConstantValues.FILE_SPLIT, extendedResultPath, "nyc", "nycB"),
 //            StringUtil.join(ConstantValues.FILE_SPLIT, extendedResultPath, "nyc", "nycC")
     };

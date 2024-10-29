@@ -21,7 +21,7 @@ public class AlterParameterBudgetTrajectoryRun {
     public static Map<String, List<ExperimentResult>> run(final List<List<TwoDimensionalIntegerPoint>> integerTrajectoryData, double inputSideLength, final TreeMap<TwoDimensionalIntegerPoint, Double> rawDataStatistic, double xBound, double yBound) throws InstantiationException, IllegalAccessException, CloneNotSupportedException {
 //        String inputDataPath = Constant.DEFAULT_INPUT_PATH;
 //        System.out.println("Start altering budget run ...");
-        int arraySize = Constant.ALTER_PRIVACY_BUDGET_ARRAY_for_DAM_and_SubsetGeoI_Comparison.length;
+        int arraySize = Constant.ALTER_PRIVACY_BUDGET_ARRAY_for_DAM_and_Trajectory_Comparison.length;
         /*
             1. 设置cell大小的参数（同时也是设置整数input的边长大小）
          */
@@ -31,7 +31,7 @@ public class AlterParameterBudgetTrajectoryRun {
         /*
             2. 设置隐私预算budget的变化数组
          */
-        double[] epsilonArray = Constant.ALTER_PRIVACY_BUDGET_ARRAY_for_DAM_and_SubsetGeoI_Comparison;
+        double[] epsilonArray = Constant.ALTER_PRIVACY_BUDGET_ARRAY_for_DAM_and_Trajectory_Comparison;
 
         /*
             3. 根据budget，计算Disk方案对应的Optimal sizeB的取值

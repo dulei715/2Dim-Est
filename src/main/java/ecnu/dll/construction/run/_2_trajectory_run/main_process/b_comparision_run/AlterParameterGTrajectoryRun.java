@@ -26,7 +26,7 @@ import java.util.*;
 public class AlterParameterGTrajectoryRun {
     public static Map<String, List<ExperimentResult>> run(final List<List<TwoDimensionalDoublePoint>> doubleTrajectoryData, double inputSideLength, double xBound, double yBound) throws InstantiationException, IllegalAccessException, CloneNotSupportedException {
 
-        int arraySize = Constant.ALTER_SIDE_LENGTH_NUMBER_SIZE_for_DAM_and_SubsetGeoI_Comparison.length;
+        int arraySize = Constant.ALTER_SIDE_LENGTH_NUMBER_SIZE_for_DAM_and_Trajectory_Comparison.length;
 
         /*
             1. 设置cell大小的变化参数（同时也是设置整数input的边长大小）
@@ -42,7 +42,7 @@ public class AlterParameterGTrajectoryRun {
         /*
             2. 设置隐私预算budget
          */
-        double epsilon = Constant.DEFAULT_PRIVACY_BUDGET_for_DAM_and_SubsetGeoI_Comparison;
+        double epsilon = Constant.DEFAULT_PRIVACY_BUDGET_for_DAM_and_Trajectory_Comparison;
 
         /*
             3. 根据inputIntegerSizeLengthArray，分别计算Rhombus和Disk方案对应的Optimal sizeB的取值

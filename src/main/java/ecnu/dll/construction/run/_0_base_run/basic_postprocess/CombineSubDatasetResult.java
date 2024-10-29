@@ -94,6 +94,13 @@ public class CombineSubDatasetResult {
             composeCSVResult(relativeBasicPath, Constant.columnBeanArray, fileNameArray);
         }
     }
+    public static void composeAllTrajectoryRepeat() throws ClassNotFoundException, InvocationTargetException, NoSuchMethodException, IllegalAccessException, InstantiationException {
+        String[] allRelativeBasicDir = BasicArrayUtil.combineArray(new String[][]{{Constant.trajectoryOutputNYCDir}});
+        String[] fileNameArray = StringUtil.concatGiveString(Constant.trajectoryAlterKeyArray, ".csv");
+        for (String relativeBasicPath : allRelativeBasicDir) {
+            composeCSVResult(relativeBasicPath, Constant.columnBeanArray, fileNameArray);
+        }
+    }
 
     public static void composeAllExtendedRepeatForKLDivergence() throws ClassNotFoundException, InvocationTargetException, NoSuchMethodException, IllegalAccessException, InstantiationException {
         String[] allRelativeBasicDir = BasicArrayUtil.combineArray(new String[][]{Constant.extendedOutputCrimeDirArray, Constant.extendedOutputNYCDirArray, new String[]{Constant.extendedOutputNormalDir}, new String[]{Constant.extendedOutputZipfDir}, new String[]{Constant.extendedOutputMultiNormalDir}});
@@ -147,7 +154,10 @@ public class CombineSubDatasetResult {
 //        composeAllBasicRepeat();
 //        combineAllBasicPart();
 
-        composeAllExtendedRepeat();
+//        composeAllExtendedRepeat();
+//        combineAllExtendedPart();
+
+        composeAllTrajectoryRepeat();
         combineAllExtendedPart();
 
 //        composeAllExtendedRepeatForKLDivergence();

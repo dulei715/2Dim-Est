@@ -2,25 +2,29 @@ package ecnu.dll.construction.schemes.compared_schemes.trajectory.anchor_based_p
 
 import cn.edu.dll.basic.BasicArrayUtil;
 import cn.edu.dll.collection.CollectionTools;
+import cn.edu.dll.collection.ListUtils;
 import cn.edu.dll.struct.point.TwoDimensionalDoublePoint;
 import cn.edu.dll.struct.point.TwoDimensionalDoublePointUtils;
 import ecnu.dll.construction.schemes.basic_schemes.square_wave.continued.DoubleSquareWave;
 import ecnu.dll.construction.schemes.basic_schemes.square_wave.continued.SimpleSquareWave;
 import ecnu.dll.construction.schemes.basic_schemes.square_wave.utils.SquareWaveUtils;
-import ecnu.dll.construction.schemes.compared_schemes.trajectory.anchor_based_pivot_sampling.basic_struct.SectorAreas;
 import ecnu.dll.construction.schemes.compared_schemes.trajectory.anchor_based_pivot_sampling.basic_struct.TrajectoryExponentialMechanism;
 import ecnu.dll.construction.schemes.compared_schemes.trajectory.anchor_based_pivot_sampling.utils.PivotSamplingUtils;
 
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 public class AnchorBasedPivotSampling extends PivotSampling{
     protected final List<TwoDimensionalDoublePoint> totalBasicPointList;
+    // 这个仅仅是实验用到
+    protected Set<TwoDimensionalDoublePoint> differentBasicPointSet;
+
     public AnchorBasedPivotSampling(List<TwoDimensionalDoublePoint> totalTrajectoryPointList) {
         super();
         this.totalBasicPointList = totalTrajectoryPointList;
+        this.differentBasicPointSet = new HashSet<>();
+        this.differentBasicPointSet.addAll(this.totalBasicPointList);
     }
 
     public TwoDimensionalDoublePoint getAnchor(List<TwoDimensionalDoublePoint> trajectory) {
@@ -157,6 +161,10 @@ public class AnchorBasedPivotSampling extends PivotSampling{
 
 //        List<List<SectorAreas>> neighboringList = PivotSamplingUtils.getNeighboringList(trajectory, optimalSectorSize);
 
+        if (differentBasicPointSet.size() == 1) {
+            return ListUtils.generateListWithFixedElement(this.differentBasicPointSet.iterator().next(), trajectory.size());
+        }
+
         List<TwoDimensionalDoublePoint> regionA = restrictTrajectoryRegion(trajectory, epsilonRegion / 2);
         List<TwoDimensionalDoublePoint> regionB = restrictTrajectoryRegion(trajectory, epsilonRegion / 2);
         List<TwoDimensionalDoublePoint> perturbedTrajectoryA = super.independentAndPivotPerturbation(trajectory, regionA, optimalSectorSize, epsilonPivot / 2, FlagFirstPivot);
@@ -164,8 +172,7 @@ public class AnchorBasedPivotSampling extends PivotSampling{
         Set<TwoDimensionalDoublePoint> regionSet = new HashSet<>();
         regionSet.addAll(regionA);
         regionSet.addAll(regionB);
-        List<TwoDimensionalDoublePoint> optimalPerturbedTrajectory = getOptimalPerturbedTrajectory(perturbedTrajectoryA, perturbedTrajectoryB, regionSet);
-        return optimalPerturbedTrajectory;
+        return getOptimalPerturbedTrajectory(perturbedTrajectoryA, perturbedTrajectoryB, regionSet);
     }
 
 }

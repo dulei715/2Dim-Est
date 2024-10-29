@@ -44,7 +44,7 @@ public class PivotTraceRun {
         experimentResult = new ExperimentResult();
         // 这里实际上是trajectorySize，变量名和Excel头就不改了
         experimentResult.addPair(Constant.dataPointSizeKey, String.valueOf(trajectoryDataSet.size()));
-        experimentResult.addPair(Constant.schemeNameKey, Constant.diskSchemeKey);
+        experimentResult.addPair(Constant.schemeNameKey, Constant.pivotTraceSchemeKey);
         experimentResult.addPair(Constant.postProcessTimeKey, String.valueOf(postProcessTime));
         experimentResult.addPair(Constant.gridUnitSizeKey, String.valueOf(cellLength));
         experimentResult.addPair(Constant.dataTypeSizeKey, String.valueOf(inputLength * inputLength));

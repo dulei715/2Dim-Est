@@ -64,6 +64,9 @@ public class LDPTrace {
     }
 
     protected TwoDimensionalIntegerPoint sampleNextCell(Double[] cellNeighboringEstimationData, Double[] endEstimationData, int trajectoryLength, TwoDimensionalIntegerPoint currentCell) {
+        if (cellNeighboringEstimationData.length == 0) {
+            return currentCell;
+        }
         int[] innerIndexRange = CellNeighboringOneHotUtils.toOneHotDataIndexRange(currentCell, this.rowSize, this.colSize);
         int endIndex = AbsolutePositionOneHotUtils.toOneHotDataIndex(currentCell, this.colSize);
 //        Integer chosenIndex = RandomUtil.getRandomIndexGivenCountPoint(cellNeighboringEstimationData, innerIndexRange[0], innerIndexRange[1]);
