@@ -58,7 +58,7 @@ public class DataSetTrajectoryRun {
         /**
          * 执行budget变化
          */
-//        runAlteringBudget(datasetName, outputDir, xBound, yBound, inputSideLength, integerTrajectoryList, rawStatisticMap, datasetResult);
+        runAlteringBudget(datasetName, outputDir, xBound, yBound, inputSideLength, integerTrajectoryList, rawStatisticMap, datasetResult);
         /**
          * 执行g变化
          */
