@@ -1,11 +1,9 @@
-package ecnu.dll.construction.run._2_trajectory_run.main_process.a_single_scheme_run;
+package ecnu.dll.construction.run._2_trajectory_run.main_process.a_single_scheme_run.version_1;
 
 import cn.edu.dll.result.ExperimentResult;
 import cn.edu.dll.struct.one_hot.OneHot;
-import cn.edu.dll.struct.point.TwoDimensionalDoublePoint;
 import cn.edu.dll.struct.point.TwoDimensionalIntegerPoint;
 import ecnu.dll.construction._config.Constant;
-import ecnu.dll.construction.common_tools.GridTools;
 import ecnu.dll.construction.schemes.compared_schemes.trajectory.TrajectoryCommonTool;
 import ecnu.dll.construction.schemes.compared_schemes.trajectory.ldp_trace.LDPTrace;
 import ecnu.dll.construction.schemes.compared_schemes.trajectory.ldp_trace.basic_struct.TrajectoryFO;
@@ -28,6 +26,7 @@ public class LDPTraceRun {
     private static Integer sampleSize = Constant.generatingTrajectorySizeFromSynthetic;
 
     public static ExperimentResult run(List<List<TwoDimensionalIntegerPoint>> trajectoryDataSet, final TreeMap<TwoDimensionalIntegerPoint, Double> rawDataStatistic, double unitCellLength, double inputLength, Double epsilon) {
+        System.out.println("Start LDPTrace Run version 1...");
         Integer gridSideLength = (int)Math.round(inputLength / unitCellLength);
         LDPTrace ldpTrace = new LDPTrace(gridSideLength, gridSideLength, epsilon, maxTravelDistance);
 

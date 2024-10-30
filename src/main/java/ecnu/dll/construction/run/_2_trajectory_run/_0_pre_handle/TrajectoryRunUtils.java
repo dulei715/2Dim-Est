@@ -13,4 +13,5 @@ public class TrajectoryRunUtils {
         trajectoryRead.endReading();
         return result;
     }
+
 }

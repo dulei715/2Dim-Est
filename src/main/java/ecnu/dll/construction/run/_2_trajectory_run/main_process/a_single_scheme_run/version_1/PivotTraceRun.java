@@ -1,4 +1,4 @@
-package ecnu.dll.construction.run._2_trajectory_run.main_process.a_single_scheme_run;
+package ecnu.dll.construction.run._2_trajectory_run.main_process.a_single_scheme_run.version_1;
 
 import cn.edu.dll.result.ExperimentResult;
 import cn.edu.dll.struct.point.TwoDimensionalDoublePoint;
@@ -16,6 +16,7 @@ import java.util.TreeMap;
 
 public class PivotTraceRun {
     public static ExperimentResult run(List<List<TwoDimensionalIntegerPoint>> trajectoryDataSet, final TreeMap<TwoDimensionalIntegerPoint, Double> rawDataStatistic, double cellLength, double inputLength, Double epsilon) {
+        System.out.println("Start PivotTrace Run version 1...");
         List<List<TwoDimensionalIntegerPoint>> estimationTrajectoryList = new ArrayList<>(trajectoryDataSet.size());
         List<TwoDimensionalDoublePoint> tempDoubleTrajectory;
         List<TwoDimensionalIntegerPoint> basicIntegerPointList = new ArrayList<>(rawDataStatistic.keySet());

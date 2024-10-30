@@ -146,6 +146,10 @@ public class Constant {
     public static String subsetGeoIBudgetLPTableGeneratedPathOnlyForKLDivergence;
 
 
+    // just for PovitTrace
+    public static String poiPath;
+
+
     static {
         configPath = StringUtil.join(ConstantValues.FILE_SPLIT, projectPath, "config", "parameter_config.xml");
         File configFile = new File(configPath);
@@ -193,6 +197,7 @@ public class Constant {
             ALTER_PRIVACY_BUDGET_ARRAY_for_DAM_and_SubsetGeoI_Comparison = BasicArrayUtil.toDouArray(PropertyUtil.getValueArryStringByKey(properties, "ALTER_PRIVACY_BUDGET_ARRAY_for_DAM_and_SubsetGeoI_Comparison", Constant.propertySplit));
             ALTER_PRIVACY_BUDGET_ARRAY_for_DAM_and_Trajectory_Comparison = BasicArrayUtil.toDouArray(PropertyUtil.getValueArryStringByKey(properties, "ALTER_PRIVACY_BUDGET_ARRAY_for_DAM_and_Trajectory_Comparison", Constant.propertySplit));
 
+
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -213,6 +218,7 @@ public class Constant {
 //        twoNormalMultipleCenterFilePath = ConfigureUtils.getDatasetRelativeFilePathList("norm_multiple_center_2").get(0);
 
 
+        poiPath = StringUtil.join(ConstantValues.FILE_SPLIT, "1_real", "2_nyc", "poi.txt");
         // 实验相对路径
         basicResultPath = StringUtil.join(ConstantValues.FILE_SPLIT, projectPath, "result");
         extendedResultPath = StringUtil.join(ConstantValues.FILE_SPLIT, projectPath, "result_extended");

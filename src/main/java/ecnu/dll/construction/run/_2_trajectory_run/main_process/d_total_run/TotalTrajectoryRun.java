@@ -41,6 +41,36 @@ public class TotalTrajectoryRun {
 
         return resultMap;
     }
+    public static Map<String, Map<String, Map<String, List<ExperimentResult>>>> runAndWriteEnhanced(DataSetAreaInfo nycDataSetInfo, String poiPath, String nycOutputDir) throws IllegalAccessException, CloneNotSupportedException, InstantiationException {
+
+        String dataSetPath, dataSetName;
+        Double xBound, yBound, length;
+
+        Map<String, Map<String, Map<String, List<ExperimentResult>>>> resultMap = new HashMap<>();
+
+        Map<String, Map<String, List<ExperimentResult>>> tempDataSetResult = null;
+
+        int k;
+        DataSetAreaInfo dataSetInfo;
+
+        // NYC
+        if (nycDataSetInfo != null) {
+            MyPrint.showSplitLine("*", 50);
+            System.out.println("Start NYC ...");
+            dataSetInfo = nycDataSetInfo;
+            dataSetPath = dataSetInfo.getDataSetPath();
+            dataSetName = dataSetInfo.getDataSetName();
+            xBound = dataSetInfo.getxBound();
+            yBound = dataSetInfo.getyBound();
+            length = dataSetInfo.getLength();
+            tempDataSetResult = DataSetTrajectoryRun.runAndWriteEnhanced(dataSetPath, dataSetName, poiPath, nycOutputDir, xBound, yBound, length);
+            resultMap.put(dataSetName, tempDataSetResult);
+        }
+
+
+
+        return resultMap;
+    }
 
 
 }
