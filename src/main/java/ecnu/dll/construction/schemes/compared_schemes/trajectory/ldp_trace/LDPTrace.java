@@ -112,6 +112,8 @@ public class LDPTrace {
         return resultList;
     }
 
+
+
 //    public List<TwoDimensionalIntegerPoint> trajectorySynthesis(TrajectoryEstimationStruct trajectoryEstimationStruct) {
 //        return this.trajectorySynthesis(trajectoryEstimationStruct.trajectoryLengthEstimation, trajectoryEstimationStruct.neighboringEstimation, trajectoryEstimationStruct.startCellEstimation, trajectoryEstimationStruct.endCellEstimation);
 //    }
